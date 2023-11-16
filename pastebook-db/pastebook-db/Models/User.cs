@@ -14,6 +14,8 @@ namespace pastebook_db.Models
         public string? MobileNumber { get; set; }
         public byte[] ProfilePicture { get; set; } = null!;
         public bool IsActive { get; set; }
+
+        public ICollection<Friend>? FriendList { get; set; }
     }
 
     public class UserRegister
@@ -39,5 +41,21 @@ namespace pastebook_db.Models
         [Required]
         public Gender Gender { get; set; }
         public string? MobileNumber { get; set; }
+    }
+
+    //Login
+    public class UserLogin
+    {
+        [Required]
+        [EmailAddress]
+        public string? Email { get; set; }
+
+        [Required]
+        public string? Password { get; set; }
+    }
+    public class UserLoginResponse
+    {
+        public string? email { get; set; }
+        public bool? isActive { get; set; }
     }
 }

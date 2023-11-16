@@ -746,3 +746,4 @@ C:\Users\josiah.sabariza\Documents\Case Study\Pastebook-CaseStudy\pastebook-db\p
 C:\Users\josiah.sabariza\Documents\Case Study\Pastebook-CaseStudy\pastebook-db\pastebook-db\obj\Debug\net6.0\pastebook-db.pdb
 C:\Users\josiah.sabariza\Documents\Case Study\Pastebook-CaseStudy\pastebook-db\pastebook-db\obj\Debug\net6.0\pastebook-db.genruntimeconfig.cache
 C:\Users\josiah.sabariza\Documents\Case Study\Pastebook-CaseStudy\pastebook-db\pastebook-db\obj\Debug\net6.0\ref\pastebook-db.dll
+C:\Users\sglba\OneDrive\Desktop\Programming\poiwest_training\case_study\Pastebook-CaseStudy\pastebook-db\pastebook-db\bin\Debug\net6.0\BCrypt.Net-Next.dll
