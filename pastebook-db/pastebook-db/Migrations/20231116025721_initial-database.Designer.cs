@@ -12,8 +12,8 @@ using pastebook_db.Data;
 namespace pastebook_db.Migrations
 {
     [DbContext(typeof(PastebookContext))]
-    [Migration("20231115151407_initial create")]
-    partial class initialcreate
+    [Migration("20231116025721_initial-database")]
+    partial class initialdatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,7 +54,6 @@ namespace pastebook_db.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MobileNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "k2xUN2T1/9XPbHcnmDrJu/YzQ7zsDYrf+8qI5tcQk8ML9H4GAlySa7f+ZDDufnBzZ/n2W09BzM+28NG6OuX+IQ==",
+  "dgSpecHash": "S6OZRHMUzC2F4Z5B3NZ3p1uBrUvPutbeXND01kJE/ztrgVSVCFWoLBaM0OeGy58qx0K89C3QXUqkDvygV4UfIg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\sglba\\OneDrive\\Desktop\\Programming\\poiwest_training\\case_study\\Pointwest-CaseStudy\\pastebook-db\\pastebook-db\\pastebook-db.csproj",
+  "projectFilePath": "C:\\Users\\sglba\\OneDrive\\Desktop\\Programming\\poiwest_training\\case_study\\Pastebook-CaseStudy\\pastebook-db\\pastebook-db\\pastebook-db.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\sglba\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\sglba\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

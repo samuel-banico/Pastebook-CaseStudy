@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\sglba\\OneDrive\\Desktop\\Programming\\poiwest_training\\case_study\\Pointwest-CaseStudy\\pastebook-db\\pastebook-db\\pastebook-db.csproj": {}
+    "C:\\Users\\sglba\\OneDrive\\Desktop\\Programming\\poiwest_training\\case_study\\Pastebook-CaseStudy\\pastebook-db\\pastebook-db\\pastebook-db.csproj": {}
   },
   "projects": {
-    "C:\\Users\\sglba\\OneDrive\\Desktop\\Programming\\poiwest_training\\case_study\\Pointwest-CaseStudy\\pastebook-db\\pastebook-db\\pastebook-db.csproj": {
+    "C:\\Users\\sglba\\OneDrive\\Desktop\\Programming\\poiwest_training\\case_study\\Pastebook-CaseStudy\\pastebook-db\\pastebook-db\\pastebook-db.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sglba\\OneDrive\\Desktop\\Programming\\poiwest_training\\case_study\\Pointwest-CaseStudy\\pastebook-db\\pastebook-db\\pastebook-db.csproj",
+        "projectUniqueName": "C:\\Users\\sglba\\OneDrive\\Desktop\\Programming\\poiwest_training\\case_study\\Pastebook-CaseStudy\\pastebook-db\\pastebook-db\\pastebook-db.csproj",
         "projectName": "pastebook-db",
-        "projectPath": "C:\\Users\\sglba\\OneDrive\\Desktop\\Programming\\poiwest_training\\case_study\\Pointwest-CaseStudy\\pastebook-db\\pastebook-db\\pastebook-db.csproj",
+        "projectPath": "C:\\Users\\sglba\\OneDrive\\Desktop\\Programming\\poiwest_training\\case_study\\Pastebook-CaseStudy\\pastebook-db\\pastebook-db\\pastebook-db.csproj",
         "packagesPath": "C:\\Users\\sglba\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sglba\\OneDrive\\Desktop\\Programming\\poiwest_training\\case_study\\Pointwest-CaseStudy\\pastebook-db\\pastebook-db\\obj\\",
+        "outputPath": "C:\\Users\\sglba\\OneDrive\\Desktop\\Programming\\poiwest_training\\case_study\\Pastebook-CaseStudy\\pastebook-db\\pastebook-db\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

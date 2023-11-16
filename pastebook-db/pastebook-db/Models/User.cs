@@ -9,7 +9,7 @@
         public string Password { get; set; } = null!;
         public DateTime Birthday { get; set; }
         public Gender Gender { get; set; }
-        public string MobileNumber { get; set; } = null!;
+        public string? MobileNumber { get; set; }
         public byte[] ProfilePicture { get; set; } = null!;
         public bool IsActive { get; set; }
     }
