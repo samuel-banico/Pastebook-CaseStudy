@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using pastebook_db.Data;
 
@@ -11,9 +12,10 @@ using pastebook_db.Data;
 namespace pastebook_db.Migrations
 {
     [DbContext(typeof(PastebookContext))]
-    partial class PastebookContextModelSnapshot : ModelSnapshot
+    [Migration("20231116073500_databasev0.01")]
+    partial class databasev001
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,32 +51,6 @@ namespace pastebook_db.Migrations
                     b.HasIndex("User_FriendId");
 
                     b.ToTable("Friends");
-                });
-
-            modelBuilder.Entity("pastebook_db.Models.FriendRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("User_FriendId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("User_FriendId");
-
-                    b.ToTable("FriendRequests");
                 });
 
             modelBuilder.Entity("pastebook_db.Models.User", b =>
@@ -132,21 +108,6 @@ namespace pastebook_db.Migrations
                         .WithMany("FriendList")
                         .HasForeignKey("User_FriendId")
                         .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("User");
-
-                    b.Navigation("User_Friend");
-                });
-
-            modelBuilder.Entity("pastebook_db.Models.FriendRequest", b =>
-                {
-                    b.HasOne("pastebook_db.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.HasOne("pastebook_db.Models.User", "User_Friend")
-                        .WithMany()
-                        .HasForeignKey("User_FriendId");
 
                     b.Navigation("User");
 

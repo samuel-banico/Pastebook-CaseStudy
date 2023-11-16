@@ -1,4 +1,5 @@
 ﻿using pastebook_db.Models;
+using System.Drawing;
 
 namespace pastebook_db.Data
 {
@@ -20,6 +21,11 @@ namespace pastebook_db.Data
         {
             _context.Users.Add(user);
             _context.SaveChanges();
+        }
+
+        public List<User> GetAllUsers() 
+        {
+            return _context.Users.ToList();
         }
     }
 }

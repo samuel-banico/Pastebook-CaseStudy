@@ -15,6 +15,12 @@ namespace pastebook_db.Controllers
             _userRepository = userRepository;
         }
 
+        [HttpGet("getAllUser")]
+        public ActionResult<List<User>> GetAllUser() 
+        {
+            return Ok(_userRepository.GetAllUsers());
+        }
+
         [HttpPost("register")]  
         public ActionResult<User> Register(UserRegister userRegister)
         {

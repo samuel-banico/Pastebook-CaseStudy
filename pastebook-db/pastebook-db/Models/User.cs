@@ -14,6 +14,8 @@ namespace pastebook_db.Models
         public string? MobileNumber { get; set; }
         public byte[] ProfilePicture { get; set; } = null!;
         public bool IsActive { get; set; }
+
+        public ICollection<Friend>? FriendList { get; set; }
     }
 
     public class UserRegister
