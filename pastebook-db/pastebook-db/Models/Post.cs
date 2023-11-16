@@ -12,7 +12,7 @@
 
         public int UserId { get; set; }
         public virtual User User { get; set; } = null!;
-        public int? User_FriendId { get; set; }
-        public virtual User? User_Friend { get; set; }
+        public int? FriendId { get; set; }
+        public virtual Friend? Friend { get; set; }
     }
 }

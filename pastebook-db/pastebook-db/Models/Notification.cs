@@ -9,11 +9,15 @@
         public NotifType NotifType { get; set; }
 
         // Foreign Key
-        public int UserId { get; set; }
-        public virtual User User { get; set; } = null!;
-        public int User_FriendId { get; set; }
-        public virtual User User_Friend { get; set; } = null!;
-        public int PostId { get; set; }
-        public virtual Post Post { get; set; } = null!;
+        public int? FriendRequestId { get; set; }
+        public virtual FriendRequest? FriendRequest { get; set; }
+        public int? PostLikeId { get; set; }
+        public virtual PostLike? PostLike { get; set; }
+        public int? PostCommentId { get; set; }
+        public virtual PostComment? PostComment { get; set; }
+        public int? AlbumImageLikeId { get; set; }
+        public virtual AlbumImageLike? AlbumImageLike { get; set; }
+        public int? AlbumCommentId { get; set; }
+        public virtual AlbumImageComment? AlbumImageComment { get; set; }
     }
 }
