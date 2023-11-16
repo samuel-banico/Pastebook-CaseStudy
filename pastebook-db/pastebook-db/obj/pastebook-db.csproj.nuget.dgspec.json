@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\josiah.sabariza\\Documents\\Case Study\\Pastebook-CaseStudy\\pastebook-db\\pastebook-db\\pastebook-db.csproj": {}
+    "C:\\Users\\aira.sumagui\\Desktop\\Pastebook-CaseStudy\\pastebook-db\\pastebook-db\\pastebook-db.csproj": {}
   },
   "projects": {
-    "C:\\Users\\josiah.sabariza\\Documents\\Case Study\\Pastebook-CaseStudy\\pastebook-db\\pastebook-db\\pastebook-db.csproj": {
+    "C:\\Users\\aira.sumagui\\Desktop\\Pastebook-CaseStudy\\pastebook-db\\pastebook-db\\pastebook-db.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\josiah.sabariza\\Documents\\Case Study\\Pastebook-CaseStudy\\pastebook-db\\pastebook-db\\pastebook-db.csproj",
+        "projectUniqueName": "C:\\Users\\aira.sumagui\\Desktop\\Pastebook-CaseStudy\\pastebook-db\\pastebook-db\\pastebook-db.csproj",
         "projectName": "pastebook-db",
-        "projectPath": "C:\\Users\\josiah.sabariza\\Documents\\Case Study\\Pastebook-CaseStudy\\pastebook-db\\pastebook-db\\pastebook-db.csproj",
-        "packagesPath": "C:\\Users\\josiah.sabariza\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\josiah.sabariza\\Documents\\Case Study\\Pastebook-CaseStudy\\pastebook-db\\pastebook-db\\obj\\",
+        "projectPath": "C:\\Users\\aira.sumagui\\Desktop\\Pastebook-CaseStudy\\pastebook-db\\pastebook-db\\pastebook-db.csproj",
+        "packagesPath": "C:\\Users\\aira.sumagui\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\aira.sumagui\\Desktop\\Pastebook-CaseStudy\\pastebook-db\\pastebook-db\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\josiah.sabariza\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\aira.sumagui\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

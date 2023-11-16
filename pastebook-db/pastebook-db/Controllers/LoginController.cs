@@ -41,9 +41,36 @@ namespace pastebook_db.Controllers
             return Ok(new { result = "registered" });
         }
 
-        /*public IActionResult Login() 
+        [HttpPost("login")]
+        public ActionResult<UserLoginResponse> Login(UserLogin userLogin)
         {
-            return View();
-        }*/
+            try
+            {
+                var user = _userRepository.GetUserByEmail(userLogin.Email);
+
+                if (user == null)
+                {
+                    return NotFound(new { result = "user_not_found" });
+                }
+
+                if (user.Password != userLogin.Password)
+                {
+                    return BadRequest(new { result = "incorrect_credentials" });
+                }
+
+                var userLoginResponse = new UserLoginResponse
+                {
+                    email = user.Email,
+                    isActive = user.IsActive
+                };
+
+                return Ok(userLoginResponse);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error retrieving log in credentials: " + ex.Message);
+                return StatusCode(500, "An error occurred while retrieving log in credentials.");
+            }
+        }
     }
 }
