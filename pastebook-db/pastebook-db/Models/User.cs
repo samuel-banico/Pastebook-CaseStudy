@@ -40,4 +40,20 @@ namespace pastebook_db.Models
         public Gender Gender { get; set; }
         public string? MobileNumber { get; set; }
     }
+
+    //Login
+    public class UserLogin
+    {
+        [Required]
+        [EmailAddress]
+        public string? Email { get; set; }
+
+        [Required]
+        public string? Password { get; set; }
+    }
+    public class UserLoginResponse
+    {
+        public string? email { get; set; }
+        public bool? isActive { get; set; }
+    }
 }
