@@ -1,4 +1,6 @@
-﻿namespace pastebook_db.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace pastebook_db.Models
 {
     public class Post
     {
@@ -14,5 +16,12 @@
         public virtual User User { get; set; } = null!;
         public int? FriendId { get; set; }
         public virtual Friend? Friend { get; set; }
+    }
+
+    public class AddPost
+    {
+        [Required]
+        public string Content { get; set; } = null!;
+        public DateTime CreatedOn { get; set; }
     }
 }
