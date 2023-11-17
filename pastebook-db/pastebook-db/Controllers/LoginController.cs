@@ -39,7 +39,7 @@ namespace pastebook_db.Controllers
                 Password = BCrypt.Net.BCrypt.HashPassword(userRegister.Password),
                 Birthday = userRegister.Birthday,
                 Gender = userRegister.Gender,
-                MobileNumber = userRegister.MobileNumber,
+                MobileNumber = userRegister.MobileNumber
             };
 
             _userRepository.RegisterUser(newUser);
@@ -79,25 +79,18 @@ namespace pastebook_db.Controllers
             }
         }
 
-        [HttpPut("editFirstName/{id}")]
-        public IActionResult EditFirstName(int id, string fname)
+        [HttpPut("{id}")]
+        public ActionResult<User> EditFirstName(int id, User user)
         {
-            if (id == null)
-            {
-                return BadRequest();
-            }
+            var retreivedUser = _userRepository.GetUserById(id);
+            if (retreivedUser == null)
+                return NotFound(new { result = "user_not_found" });
 
-            var user = _userRepository.GetAllUsers().FirstOrDefault(u => u.Id == id);
-
-            if (user == null)
-            {
-                return BadRequest();
-            }
-
-            user.FirstName = fname;
+            retreivedUser = user;
 
             _userRepository.UpdateUser(user);
-            return Ok("FirstName has been updated.");
+
+            return Ok(new { result = "FirstName_has_been_updated.", user });
         }
     }
 }

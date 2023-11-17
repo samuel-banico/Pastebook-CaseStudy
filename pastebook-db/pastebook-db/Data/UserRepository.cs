@@ -29,13 +29,23 @@ namespace pastebook_db.Data
             return _context.Users.ToList();
         }
 
+        public User GetUserById(int id)
+        {
+            return _context.Users.Find(id);
+        }
+
         //edit 
         public void UpdateUser(User user)
         {
+            var existingEntity = _context.Set<User>().Local.SingleOrDefault(e => e.Id == user.Id);
+            if (existingEntity != null)
+            {
+                _context.Entry(existingEntity).State = EntityState.Detached;
+            }
 
             _context.Entry(user).State = EntityState.Modified;
-            _context.SaveChanges();
 
+            _context.SaveChanges();
         }
     }
 }
