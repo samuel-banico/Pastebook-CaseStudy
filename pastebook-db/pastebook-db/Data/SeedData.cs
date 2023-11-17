@@ -7,7 +7,7 @@ namespace pastebook_db.Data
     {
         public static void SeedDatabase(PastebookContext context) 
         {
-            context.Database.Migrate();
+           /* context.Database.Migrate();
 
             if (!context.Users.Any())
             {
@@ -27,7 +27,7 @@ namespace pastebook_db.Data
                 );
             }
 
-            context.SaveChanges();
+            context.SaveChanges();*/
         }
     }
 }
