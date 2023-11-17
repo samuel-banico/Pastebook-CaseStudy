@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using pastebook_db.Data;
 using pastebook_db.Models;
+using pastebook_db.Services.PasswordHash;
 
 namespace pastebook_db.Controllers
 {
@@ -9,10 +10,13 @@ namespace pastebook_db.Controllers
     public class LoginController : ControllerBase
     {
         private readonly UserRepository _userRepository;
+        private readonly IPasswordHash _hashPassword;
 
-        public LoginController(UserRepository userRepository)
+
+        public LoginController(UserRepository userRepository, IPasswordHash hashPassword)
         {
             _userRepository = userRepository;
+            _hashPassword = hashPassword;
         }
 
         [HttpGet("getAllUser")]
@@ -36,10 +40,11 @@ namespace pastebook_db.Controllers
                 FirstName = userRegister.FirstName,
                 LastName = userRegister.LastName,
                 Email = userRegister.Email,
-                Password = BCrypt.Net.BCrypt.HashPassword(userRegister.Password),
+                Password = _hashPassword.HashPassword(userRegister.Password),
                 Birthday = userRegister.Birthday,
                 Gender = userRegister.Gender,
-                MobileNumber = userRegister.MobileNumber
+                MobileNumber = userRegister.MobileNumber,
+                ProfilePicture = _userRepository.DefaultImageToByteArray("wwwroot/images/default_pic.png")
             };
 
             _userRepository.RegisterUser(newUser);
@@ -59,7 +64,7 @@ namespace pastebook_db.Controllers
                     return NotFound(new { result = "user_not_found" });
                 }
 
-                if (user.Password != userLogin.Password)
+                if (_hashPassword.VerifyPassword(userLogin.Password, user.Password))
                 {
                     return BadRequest(new { result = "incorrect_credentials" });
                 }

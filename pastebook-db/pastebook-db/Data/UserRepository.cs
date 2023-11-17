@@ -47,5 +47,19 @@ namespace pastebook_db.Data
 
             _context.SaveChanges();
         }
+
+        public byte[] DefaultImageToByteArray(string imagePath) 
+        {
+            if (!File.Exists(imagePath))
+            {
+                Console.WriteLine("File not found: " + imagePath);
+                return null;
+            }
+
+            // Read all bytes from the image file
+            byte[] imageBytes = File.ReadAllBytes(imagePath);
+
+            return imageBytes;
+        }
     }
 }

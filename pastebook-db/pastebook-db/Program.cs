@@ -1,6 +1,7 @@
 using Microsoft.DotNet.Scaffolding.Shared.ProjectModel;
 using Microsoft.EntityFrameworkCore;
 using pastebook_db.Data;
+using pastebook_db.Services.PasswordHash;
 
 namespace pastebook_db
 {
@@ -14,6 +15,8 @@ namespace pastebook_db
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddSingleton<IPasswordHash, PasswordHasher>();
 
             builder.Services.AddScoped<UserRepository>();
 
