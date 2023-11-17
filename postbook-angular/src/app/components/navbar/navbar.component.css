@@ -1,0 +1,37 @@
+.wrapper {
+    position: relative;
+    text-align: right;
+  }
+  
+  input {
+    opacity: 0;
+    pointer-events: none;
+    touch-action: none;
+  }
+  
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    flex-direction: column;
+    border: 1px solid #ccc; /* Use a lighter border color for a more modern look */
+    background-color: #fff; /* Add a background color to the dropdown */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+    padding: 10px; /* Adjust padding for a more compact appearance */
+    right: 0;
+  }
+  
+  input:checked ~ .dropdown {
+    display: flex;
+  }
+
+  .dropdown a {
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
+  
+  .dropdown a:hover {
+    background-color: #d4d4d4;
+  }
