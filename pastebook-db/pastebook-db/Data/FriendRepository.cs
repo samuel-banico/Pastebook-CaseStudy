@@ -16,5 +16,20 @@ namespace pastebook_db.Data
             _context.FriendRequests.Add(req);
             _context.SaveChanges();
         }
+
+        public FriendRequest GetFriendRequest(int id)
+        {
+            return _context.FriendRequests.FirstOrDefault(u => u.Id == id);
+        }
+
+        public void AddedFriend(Friend addFriend, FriendRequest req)
+        {
+            _context.Friends.Add(addFriend);
+            _context.SaveChanges();
+            _context.Remove(req);
+            _context.SaveChanges();
+        }
+
+
     }
 }
