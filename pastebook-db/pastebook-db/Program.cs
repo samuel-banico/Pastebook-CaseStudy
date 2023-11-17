@@ -19,6 +19,7 @@ namespace pastebook_db
             builder.Services.AddSingleton<IPasswordHash, PasswordHasher>();
 
             builder.Services.AddScoped<UserRepository>();
+            builder.Services.AddScoped<HomeRepository>();
 
             var app = builder.Build();
 
