@@ -1,18 +1,25 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule, Routes} from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { LandingComponent } from './landing/landing.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
+import { RegistrationComponent } from './pages/registration/registration.component';
+
+
+const appRoutes: Routes = [
+  {path: 'registration', component: RegistrationComponent}
+ 
+];
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    LandingComponent,
-    NavbarComponent
+    RegistrationComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [],
   bootstrap: [AppComponent]
