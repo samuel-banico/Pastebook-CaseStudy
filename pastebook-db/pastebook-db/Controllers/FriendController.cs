@@ -26,8 +26,22 @@ namespace pastebook_db.Controllers
             _repo.RequestFriend(friendRequest);
 
             return Ok();
-        } 
+        }
 
+        [HttpPost("accepted")]
+        public IActionResult AddFriend(int friendRequestId)
+        {
+            var request = _repo.GetFriendRequest(friendRequestId);
+            var addFriend = new Friend();
+            addFriend.UserId = request.UserId;
+            addFriend.User_FriendId = request.User_FriendId;
+            addFriend.IsBlocked = false;
+            addFriend.CreatedOn = DateTime.Now;
+
+            _repo.AddedFriend(addFriend, request);
+
+            return Ok();
+        }
 
     }
 }
