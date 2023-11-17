@@ -25,18 +25,16 @@
         </a> 
 
         <!-- Dropdown Button for Profile Picture -->
-        <div class="dropdown ml-3 d-none d-md-block">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="profileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img src="assets/images/profile-picture.png" alt="" class="rounded-circle" width="32px" height="32px">
-            </button>
-            <div class="dropdown-menu" aria-labelledby="profileDropdown">
-                <!-- Add dropdown items here, e.g., profile, settings, logout -->
-                <a class="dropdown-item" routerLink="profile">Profile</a>
-                <a class="dropdown-item" href="settings">Settings</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Logout</a>
+        <div class="wrapper">
+            <input id="toggler" type="checkbox">
+            <label for="toggler">
+              <img width="30px" height="30px" src="assets/images/settings-icon.png" alt="">
+            </label>
+            <div class="dropdown">
+              <a routerLink="settings">settings</a>
+              <a routerLink="login">Logout</a>
             </div>
-        </div>
+          </div>
         <!-- End Dropdown Button for Profile Picture -->
     </div>
 </nav>

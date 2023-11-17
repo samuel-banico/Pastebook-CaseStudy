@@ -7,13 +7,13 @@ namespace pastebook_db.Controllers
 {
     [ApiController]
     [Route("api/users")]
-    public class LoginController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly UserRepository _userRepository;
         private readonly IPasswordHash _hashPassword;
 
 
-        public LoginController(UserRepository userRepository, IPasswordHash hashPassword)
+        public UserController(UserRepository userRepository, IPasswordHash hashPassword)
         {
             _userRepository = userRepository;
             _hashPassword = hashPassword;
@@ -85,17 +85,22 @@ namespace pastebook_db.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<User> EditFirstName(int id, User user)
+        public ActionResult<User> EditUser(int id, User user)
         {
             var retreivedUser = _userRepository.GetUserById(id);
+            bool emailHasEdited = false;
+
             if (retreivedUser == null)
                 return NotFound(new { result = "user_not_found" });
 
+            if(retreivedUser.Email != user.Email)
+                emailHasEdited = true;
+
             retreivedUser = user;
 
-            _userRepository.UpdateUser(user);
+            _userRepository.UpdateUser(user, emailHasEdited);
 
-            return Ok(new { result = "FirstName_has_been_updated.", user });
-        }
+            return Ok(new { result = "user_details_updated.", user });
+        }       
     }
 }

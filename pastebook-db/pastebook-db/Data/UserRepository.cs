@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using pastebook_db.Models;
 using System.Drawing;
+using System.Net.Mail;
+using System.Net;
 
 namespace pastebook_db.Data
 {
@@ -22,6 +24,8 @@ namespace pastebook_db.Data
         {
             _context.Users.Add(user);
             _context.SaveChanges();
+
+            SendEmail(user.Email);
         }
 
         public List<User> GetAllUsers() 
@@ -35,7 +39,7 @@ namespace pastebook_db.Data
         }
 
         //edit 
-        public void UpdateUser(User user)
+        public void UpdateUser(User user, bool emailIsEditted)
         {
             var existingEntity = _context.Set<User>().Local.SingleOrDefault(e => e.Id == user.Id);
             if (existingEntity != null)
@@ -44,8 +48,10 @@ namespace pastebook_db.Data
             }
 
             _context.Entry(user).State = EntityState.Modified;
-
             _context.SaveChanges();
+
+            if (emailIsEditted)
+                SendEmail(user.Email);
         }
 
         public byte[] DefaultImageToByteArray(string imagePath) 
@@ -60,6 +66,30 @@ namespace pastebook_db.Data
             byte[] imageBytes = File.ReadAllBytes(imagePath);
 
             return imageBytes;
+        }
+
+        //Method for Sending email
+        public void SendEmail(string email)
+        {
+            //Send email
+
+            string fromEmail = "aira.sumagui@pointwest.com.ph";
+            string fromPassword = "epecptxartgldeas";
+
+            MailMessage msg = new MailMessage();
+            msg.From = new MailAddress(fromEmail);
+            msg.Subject = "Test subject.";
+            msg.To.Add(new MailAddress(email));
+            msg.Body = "<html><body>test body</body></html>";
+            msg.IsBodyHtml = true;
+
+            var smtpClient = new SmtpClient("smtp.gmail.com")
+            {
+                Port = 587,
+                Credentials = new NetworkCredential(fromEmail, fromPassword),
+                EnableSsl = true
+            };
+            smtpClient.Send(msg);
         }
     }
 }
