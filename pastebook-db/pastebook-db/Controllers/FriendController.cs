@@ -9,10 +9,12 @@ namespace pastebook_db.Controllers
     public class FriendController : Controller
     {
         private readonly FriendRepository _repo;
+        private readonly PastebookContext _context;
 
-        public FriendController(FriendRepository repo)
+        public FriendController(FriendRepository repo, PastebookContext context)
         {
             _repo = repo;
+            _context = context;
         }
 
         [HttpPost("request")]
@@ -26,6 +28,20 @@ namespace pastebook_db.Controllers
             _repo.RequestFriend(friendRequest);
 
             return Ok();
-        } 
+        }
+
+        [HttpPost("accepted")]
+        public IActionResult AddFriend(int userId, int friendId)
+        {
+            var addFriend = new Friend();
+            addFriend.UserId = userId;
+            addFriend.User_FriendId = friendId;
+            addFriend.IsBlocked = false;
+            addFriend.CreatedOn = DateTime.Now;
+
+            _repo.Friend(addFriend);
+            
+            return Ok();
+        }
     }
 }

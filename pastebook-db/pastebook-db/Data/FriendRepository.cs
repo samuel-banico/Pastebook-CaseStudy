@@ -16,5 +16,11 @@ namespace pastebook_db.Data
             _context.FriendRequests.Add(req);
             _context.SaveChanges();
         }
+
+        public void Friend(Friend addFriend)
+        {
+            _context.Friends.Add(addFriend);
+            _context.SaveChanges();
+        }
     }
 }
