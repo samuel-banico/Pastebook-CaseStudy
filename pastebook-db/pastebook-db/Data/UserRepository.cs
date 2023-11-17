@@ -37,7 +37,7 @@ namespace pastebook_db.Data
         }
 
         //edit 
-        public void UpdateUser(User user)
+        public void UpdateUser(User user, bool emailIsEditted)
         {
             var existingEntity = _context.Set<User>().Local.SingleOrDefault(e => e.Id == user.Id);
             if (existingEntity != null)
@@ -45,12 +45,11 @@ namespace pastebook_db.Data
                 _context.Entry(existingEntity).State = EntityState.Detached;
             }
 
-            //If email is edited
-            SendEmail();
-
             _context.Entry(user).State = EntityState.Modified;
-
             _context.SaveChanges();
+
+            if (emailIsEditted)
+                SendEmail();
         }
 
         public byte[] DefaultImageToByteArray(string imagePath) 

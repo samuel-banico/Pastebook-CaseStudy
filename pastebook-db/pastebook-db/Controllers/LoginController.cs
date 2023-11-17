@@ -88,12 +88,17 @@ namespace pastebook_db.Controllers
         public ActionResult<User> EditFirstName(int id, User user)
         {
             var retreivedUser = _userRepository.GetUserById(id);
+            bool emailHasEdited = false;
+
             if (retreivedUser == null)
                 return NotFound(new { result = "user_not_found" });
 
+            if(retreivedUser.Email != user.Email)
+                emailHasEdited = true;
+
             retreivedUser = user;
 
-            _userRepository.UpdateUser(user);
+            _userRepository.UpdateUser(user, emailHasEdited);
 
             return Ok(new { result = "FirstName_has_been_updated.", user });
         }
