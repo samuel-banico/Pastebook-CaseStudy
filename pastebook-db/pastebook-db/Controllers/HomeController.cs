@@ -31,9 +31,8 @@ namespace pastebook_db.Controllers
         [HttpGet("search")]
         public IActionResult SearchUserByString (string user)
         {
-            var users = _repo.getAllUser().Where(u => u.FirstName.Contains(user) || u.LastName.Contains(user)).Take(5).ToList();
+            var users = _repo.getAllUser().Where(u => u.FirstName.ToLower().Contains(user.ToLower()) || u.LastName.ToLower().Contains(user.ToLower())).Take(5).ToList();
             return Ok(users);
-
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
