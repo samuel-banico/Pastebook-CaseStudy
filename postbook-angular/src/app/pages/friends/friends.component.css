@@ -1,0 +1,18 @@
+.profile-name, .album-name {
+    font-weight: 700;
+    color: #0b2154;
+}
+
+.blurb {
+    font-weight: 400;
+    color: #0b2154;
+}
+  
+.bg-buttons {
+    background-color: #68070f;
+}
+
+.nav-item {
+    font-weight: 700;
+    color: white;
+}

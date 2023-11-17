@@ -1,0 +1,55 @@
+* {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/*----------------------------------(This code Important for Modal sizing on large device)-----------------------------------*/
+.modal-dialog {
+    position: relative;
+    width: auto;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+/*----------------------------------------------------------------------------------------------------------------------------*/
+
+.like {
+    color: #68070F;
+    cursor: pointer;
+}
+
+.like:hover {
+    color: #68070F;
+}
+
+.profile-name, .album-name {
+    font-weight: 700;
+    color: #0b2154;
+}
+
+.blurb {
+    font-weight: 400;
+    color: #0b2154;
+}
+  
+.bg-buttons {
+    background-color: #68070f;
+}
+
+.nav-item {
+    font-weight: 700;
+    color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
