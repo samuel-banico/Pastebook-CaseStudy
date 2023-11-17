@@ -1,4 +1,5 @@
-﻿using pastebook_db.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using pastebook_db.Models;
 using System.Drawing;
 
 namespace pastebook_db.Data
@@ -26,6 +27,15 @@ namespace pastebook_db.Data
         public List<User> GetAllUsers() 
         {
             return _context.Users.ToList();
+        }
+
+        //edit 
+        public void UpdateUser(User user)
+        {
+
+            _context.Entry(user).State = EntityState.Modified;
+            _context.SaveChanges();
+
         }
     }
 }

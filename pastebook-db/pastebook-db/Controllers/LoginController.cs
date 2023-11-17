@@ -78,5 +78,26 @@ namespace pastebook_db.Controllers
                 return StatusCode(500, "An error occurred while retrieving log in credentials.");
             }
         }
+
+        [HttpPut("editFirstName/{id}")]
+        public IActionResult EditFirstName(int id, string fname)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
+            var user = _userRepository.GetAllUsers().FirstOrDefault(u => u.Id == id);
+
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            user.FirstName = fname;
+
+            _userRepository.UpdateUser(user);
+            return Ok("FirstName has been updated.");
+        }
     }
 }
