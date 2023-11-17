@@ -24,6 +24,8 @@ namespace pastebook_db.Data
         {
             _context.Users.Add(user);
             _context.SaveChanges();
+
+            SendEmail(user.Email);
         }
 
         public List<User> GetAllUsers() 
@@ -49,7 +51,7 @@ namespace pastebook_db.Data
             _context.SaveChanges();
 
             if (emailIsEditted)
-                SendEmail();
+                SendEmail(user.Email);
         }
 
         public byte[] DefaultImageToByteArray(string imagePath) 
@@ -67,7 +69,7 @@ namespace pastebook_db.Data
         }
 
         //Method for Sending email
-        public void SendEmail()
+        public void SendEmail(string email)
         {
             //Send email
 
@@ -77,7 +79,7 @@ namespace pastebook_db.Data
             MailMessage msg = new MailMessage();
             msg.From = new MailAddress(fromEmail);
             msg.Subject = "Test subject.";
-            msg.To.Add(new MailAddress("sumaguiairamae@gmail.com"));
+            msg.To.Add(new MailAddress(email));
             msg.Body = "<html><body>test body</body></html>";
             msg.IsBodyHtml = true;
 
