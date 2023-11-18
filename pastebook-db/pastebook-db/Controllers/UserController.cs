@@ -19,8 +19,14 @@ namespace pastebook_db.Controllers
             _hashPassword = hashPassword;
         }
 
-        [HttpGet("getAllUser")]
+        [HttpGet]
         public ActionResult<List<User>> GetAllUser() 
+        {
+            return Ok(_userRepository.GetAllUsers());
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<List<User>> GetUserById()
         {
             return Ok(_userRepository.GetAllUsers());
         }

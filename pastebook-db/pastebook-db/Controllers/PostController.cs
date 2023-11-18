@@ -15,7 +15,7 @@ namespace pastebook_db.Controllers
             _postRepository = postRepository;
         }
 
-        [HttpPost("createPost")]
+        [HttpPost]
         public ActionResult<Post> PostCreate(AddPost addPost, int userId)
         {
 

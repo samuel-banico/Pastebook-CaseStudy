@@ -13,6 +13,11 @@ namespace pastebook_db
             builder.Services.AddDbContext<PastebookContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("PastebookContext") ?? throw new InvalidOperationException("Connection string 'PastebookContext' not found.")));
 
+            builder.Services.AddControllers();
+
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
@@ -45,6 +50,9 @@ namespace pastebook_db
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
             SeedData.SeedDatabase(app.Services.CreateScope().ServiceProvider.GetRequiredService<PastebookContext>());
+
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             app.Run();
         }
