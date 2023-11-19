@@ -4,7 +4,6 @@
     {
         public int Id { get; set; }
         public byte[] Image { get; set; } = null!;
-        public bool IsPublic { get; set; }
         public int LikeCount { get; set; }
         public int CommentCount { get; set; }
 

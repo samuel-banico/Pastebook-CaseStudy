@@ -3,6 +3,7 @@
     public class PostLike
     {
         public int Id { get; set; }
+        public DateTime CreatedOn { get; set; }
 
         // Foreign Key
         public int PostId { get; set; }

@@ -1,6 +1,7 @@
 using Microsoft.DotNet.Scaffolding.Shared.ProjectModel;
 using Microsoft.EntityFrameworkCore;
 using pastebook_db.Data;
+using pastebook_db.Database;
 using pastebook_db.Services.PasswordHash;
 
 namespace pastebook_db
@@ -26,9 +27,18 @@ namespace pastebook_db
             builder.Services.AddScoped<UserRepository>();
             builder.Services.AddScoped<HomeRepository>();
             builder.Services.AddScoped<FriendRepository>();
+            builder.Services.AddScoped<PostRepository>();
+            builder.Services.AddScoped<AlbumRepository>();
 
+            builder.Services.AddCors();
 
             var app = builder.Build();
+
+            app.UseCors(builder =>
+                builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+            );
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -48,6 +58,11 @@ namespace pastebook_db
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
 
             SeedData.SeedDatabase(app.Services.CreateScope().ServiceProvider.GetRequiredService<PastebookContext>());
 

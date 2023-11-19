@@ -1,4 +1,6 @@
-﻿using pastebook_db.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using pastebook_db.Database;
+using pastebook_db.Models;
 
 namespace pastebook_db.Data
 {
@@ -10,7 +12,8 @@ namespace pastebook_db.Data
         {
             _context = context;
         }
-
+        
+        // --- Friend Request
         public void RequestFriend(FriendRequest req) 
         {
             _context.FriendRequests.Add(req);
@@ -22,14 +25,33 @@ namespace pastebook_db.Data
             return _context.FriendRequests.FirstOrDefault(u => u.Id == id);
         }
 
+        // Friend
+        public Friend? GetFriendById(int userId)
+        {
+            var friend = _context.Friends.FirstOrDefault(x => x.UserId == userId);
+
+            return friend;
+        }
+
         public void AddedFriend(Friend addFriend, FriendRequest req)
         {
             _context.Friends.Add(addFriend);
             _context.SaveChanges();
+
             _context.Remove(req);
             _context.SaveChanges();
         }
 
+        public void UpdateFriend(Friend friend)
+        {
+            _context.Entry(friend).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
 
+        public void DeleteFriend(Friend friend)
+        {
+            _context.Friends.Remove(friend);
+            _context.SaveChanges();
+        }
     }
 }

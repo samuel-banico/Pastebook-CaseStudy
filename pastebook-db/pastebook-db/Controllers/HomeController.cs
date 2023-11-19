@@ -17,7 +17,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("searchUser")]
-        public IActionResult SearchUserByString(string user)
+        public ActionResult<List<User>> SearchUserByString(string user)
         {
             var users = _repo.getAllUser().Where(u => u.FirstName.ToLower().Contains(user.ToLower()) || u.LastName.ToLower().Contains(user.ToLower())).Take(5).ToList();
             return Ok(users);

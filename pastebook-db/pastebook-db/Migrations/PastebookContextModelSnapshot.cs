@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using pastebook_db.Data;
+using pastebook_db.Database;
 
 #nullable disable
 
@@ -68,9 +68,6 @@ namespace pastebook_db.Migrations
                     b.Property<byte[]>("Image")
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
-
-                    b.Property<bool>("IsPublic")
-                        .HasColumnType("bit");
 
                     b.Property<int>("LikeCount")
                         .HasColumnType("int");
@@ -201,48 +198,32 @@ namespace pastebook_db.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("AlbumCommentId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AlbumImageCommentId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AlbumImageLikeId")
+                    b.Property<int?>("AlbumId")
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("FriendRequestId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("HasSeen")
                         .HasColumnType("bit");
-
-                    b.Property<int>("NotifType")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("NotificationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("PostCommentId")
+                    b.Property<int?>("PostId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PostLikeId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AlbumImageCommentId");
+                    b.HasIndex("AlbumId");
 
-                    b.HasIndex("AlbumImageLikeId");
+                    b.HasIndex("PostId");
 
-                    b.HasIndex("FriendRequestId");
-
-                    b.HasIndex("PostCommentId");
-
-                    b.HasIndex("PostLikeId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Notifications");
                 });
@@ -330,6 +311,9 @@ namespace pastebook_db.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("FriendId")
                         .HasColumnType("int");
 
@@ -384,6 +368,9 @@ namespace pastebook_db.Migrations
                     b.Property<byte[]>("ProfilePicture")
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -483,35 +470,23 @@ namespace pastebook_db.Migrations
 
             modelBuilder.Entity("pastebook_db.Models.Notification", b =>
                 {
-                    b.HasOne("pastebook_db.Models.AlbumImageComment", "AlbumImageComment")
+                    b.HasOne("pastebook_db.Models.Album", "Album")
                         .WithMany()
-                        .HasForeignKey("AlbumImageCommentId");
+                        .HasForeignKey("AlbumId");
 
-                    b.HasOne("pastebook_db.Models.AlbumImageLike", "AlbumImageLike")
+                    b.HasOne("pastebook_db.Models.Post", "Post")
                         .WithMany()
-                        .HasForeignKey("AlbumImageLikeId");
+                        .HasForeignKey("PostId");
 
-                    b.HasOne("pastebook_db.Models.FriendRequest", "FriendRequest")
+                    b.HasOne("pastebook_db.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("FriendRequestId");
+                        .HasForeignKey("UserId");
 
-                    b.HasOne("pastebook_db.Models.PostComment", "PostComment")
-                        .WithMany()
-                        .HasForeignKey("PostCommentId");
+                    b.Navigation("Album");
 
-                    b.HasOne("pastebook_db.Models.PostLike", "PostLike")
-                        .WithMany()
-                        .HasForeignKey("PostLikeId");
+                    b.Navigation("Post");
 
-                    b.Navigation("AlbumImageComment");
-
-                    b.Navigation("AlbumImageLike");
-
-                    b.Navigation("FriendRequest");
-
-                    b.Navigation("PostComment");
-
-                    b.Navigation("PostLike");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("pastebook_db.Models.Post", b =>

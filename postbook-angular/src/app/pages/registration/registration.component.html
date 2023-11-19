@@ -20,7 +20,7 @@
                   <div class="col-md-6 col-lg-7 d-flex align-items-center">
                     <div class="card-body p-4 p-lg-5 text-black">
       
-                      <form>
+                      <form (ngSubmit)="onSubmit()">
                         <div class="d-flex align-items-center mb-3 pb-1">
                             <img src="assets/images/logo.png" alt="Logo" style="width: 2rem; height: 2rem; margin-right: 0.75rem;"/>
                           <span class="h1 fw-bold mb-0">Pastebook</span>
@@ -31,55 +31,55 @@
                         <div class="row mb-4">
                           <div class="col">
                             <div class="form-outline">
-                              <input type="text" id="firstName" class="form-control form-control-lg" required />
-                              <label class="form-label" for="firstName">First Name</label>
+                              <input type="text" id="firstName" class="form-control form-control-lg" name="firstName" [(ngModel)]="user.firstName" required />
+                              <label class="form-label" for="firstName" >First Name</label>
                             </div>
                           </div>
                           <div class="col">
                             <div class="form-outline">
-                              <input type="text" id="lastName" class="form-control form-control-lg" required />
+                              <input type="text" id="lastName" class="form-control form-control-lg" name="lastName" [(ngModel)]="user.lastName" required />
                               <label class="form-label" for="lastName">Last Name</label>
                             </div>
                           </div>
                         </div>
       
                         <div class="form-outline mb-4">
-                          <input type="email" id="email" class="form-control form-control-lg" required />
+                          <input type="email" id="email" class="form-control form-control-lg" name="email" [(ngModel)]="user.email" required />
                           <label class="form-label" for="email">Email address</label>
                         </div>
       
                         <div class="form-outline mb-4">
-                          <input type="password" id="password" class="form-control form-control-lg" required />
+                          <input type="password" id="password" class="form-control form-control-lg" name="password" [(ngModel)]="user.password" required />
                           <label class="form-label" for="password">Password</label>
                         </div>
 
                         <div class="form-outline mb-4">
-                          <input type="confirmpassword" id="confirmpassword" class="form-control form-control-lg" required />
+                          <input type="confirmpassword" id="confirmpassword" class="form-control form-control-lg" name="confirmPassword" [(ngModel)]="confirmPassword" required />
                           <label class="form-label" for="confirmpassword">Confirm Password</label>
                         </div>
       
                         <div class="form-outline mb-4">
-                          <input type="date" id="birthday" class="form-control form-control-lg" required />
+                          <input type="date" id="birthday" class="form-control form-control-lg" name="birthday" [(ngModel)]="user.birthday" required />
                           <label class="form-label" for="birthday">Birthday</label>
                         </div>
       
                         <div class="form-outline mb-4">
-                          <select id="gender" class="form-select form-select-lg">
+                          <select id="gender" class="form-select form-select-lg" name="gender" [(ngModel)]="user.gender">
                             <option value="" disabled selected>Select Gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="other">Other</option>
+                            <option value="0">Male</option>
+                            <option value="1">Female</option>
+                            <option value="2">Others</option>
                           </select>
                           <label class="form-label" for="gender">Gender</label>
                         </div>
       
                         <div class="form-outline mb-4">
-                          <input type="tel" id="mobileNumber" class="form-control form-control-lg" />
+                          <input type="tel" id="mobileNumber" class="form-control form-control-lg" name="mobileNumber" [(ngModel)]="user.mobileNumber" required=""/>
                           <label class="form-label" for="mobileNumber">Mobile Number</label>
                         </div>
       
                         <div class="pt-1 mb-4">
-                          <button routerLink="/login" class="btn btn-dark btn-lg btn-block" type="button">Register</button>
+                          <button class="btn btn-dark btn-lg btn-block" type="button" (click)="onSubmit()">Register</button>
                         </div>
       
                         <p class="mb-5 pb-lg-2" style="color: #0B2154;">Already have an account? <a routerLink="/login"

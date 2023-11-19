@@ -3,10 +3,11 @@ using pastebook_db.Models;
 using System;
 using System.Reflection.Emit;
 
-namespace pastebook_db.Data
+namespace pastebook_db.Database
 {
     public class PastebookContext : DbContext
     {
+        public PastebookContext() { }
         public PastebookContext(DbContextOptions<PastebookContext> options) : base(options) { }
 
         public DbSet<User> Users { get; set; } = null!;
@@ -23,6 +24,14 @@ namespace pastebook_db.Data
         public DbSet<PostComment> PostComments { get; set; } = null!;
 
         public DbSet<Notification> Notifications { get; set; } = null!;
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Data Source=tcp:pointwest-casestudy.database.windows.net,1433;Initial Catalog=teampancit_db;User Id=db_admin@pointwest-casestudy;Password=teamPancit.123");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder mB)
         {

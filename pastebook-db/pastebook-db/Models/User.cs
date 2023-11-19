@@ -15,10 +15,12 @@ namespace pastebook_db.Models
         public byte[] ProfilePicture { get; set; } = null!;
         public bool IsActive { get; set; }
 
+        public string? Token { get; set; }
+
         public ICollection<Friend>? FriendList { get; set; }
     }
 
-    public class UserRegister
+    public class UserRegisterDTO
     {
         [Required]
         public string FirstName { get; set; } = null!;
@@ -34,17 +36,15 @@ namespace pastebook_db.Models
         public string Password { get; set; } = null!;
 
         [Required]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [DataType(DataType.Date)]
-        public DateTime Birthday { get; set; }
+        public string Birthday { get; set; } = null!;
 
         [Required]
-        public Gender Gender { get; set; }
+        public int Gender { get; set; }
         public string? MobileNumber { get; set; }
     }
 
     //Login
-    public class UserLogin
+    public class UserLoginDTO
     {
         [Required]
         [EmailAddress]
@@ -53,6 +53,7 @@ namespace pastebook_db.Models
         [Required]
         public string? Password { get; set; }
     }
+
     public class UserLoginResponse
     {
         public string? email { get; set; }

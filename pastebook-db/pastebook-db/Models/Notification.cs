@@ -6,18 +6,42 @@
         public bool HasSeen { get; set; }
         public DateTime NotificationDate { get; set; }
         public string Content { get; set; } = null!;
-        public NotifType NotifType { get; set; }
 
         // Foreign Key
-        public int? FriendRequestId { get; set; }
-        public virtual FriendRequest? FriendRequest { get; set; }
-        public int? PostLikeId { get; set; }
-        public virtual PostLike? PostLike { get; set; }
-        public int? PostCommentId { get; set; }
-        public virtual PostComment? PostComment { get; set; }
-        public int? AlbumImageLikeId { get; set; }
-        public virtual AlbumImageLike? AlbumImageLike { get; set; }
-        public int? AlbumCommentId { get; set; }
-        public virtual AlbumImageComment? AlbumImageComment { get; set; }
+        // user to receive the notification
+        public int? UserId { get; set; }
+        public virtual User? User { get; set; }
+
+        // Notifications they will receive
+        public int? PostId { get; set; }
+        public virtual Post? Post { get; set; }
+        public int? AlbumId { get; set; }
+        public virtual Album? Album { get; set; }
+    }
+
+    public class Notification_FriendRequestDTO
+    {
+        public bool HasSeen { get; set; }
+        public DateTime NotificationDate { get; set; }
+        public string Content { get; set; } = null!;
+        public int FriendRequestId { get; set; }
+    }
+
+    public class Notification_PostDTO
+    {
+        public bool HasSeen { get; set; }
+        public DateTime NotificationDate { get; set; }
+        public string Content { get; set; } = null!;
+        public int PostId { get; set; }
+        public int FriendId { get; set; }
+    }
+
+    public class Notification_AlbumDTO
+    {
+        public bool HasSeen { get; set; }
+        public DateTime NotificationDate { get; set; }
+        public string Content { get; set; } = null!;
+        public int AlbumId { get; set; }
+        public int FriendId { get; set; }
     }
 }

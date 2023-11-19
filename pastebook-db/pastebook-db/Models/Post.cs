@@ -18,10 +18,10 @@ namespace pastebook_db.Models
         public virtual Friend? Friend { get; set; }
     }
 
-    public class AddPost
+    public class PostDTO
     {
         [Required]
         public string Content { get; set; } = null!;
-        public DateTime CreatedOn { get; set; }
+        public bool IsPublic { get; set; }
     }
 }

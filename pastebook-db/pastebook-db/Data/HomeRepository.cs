@@ -1,4 +1,5 @@
-﻿using pastebook_db.Models;
+﻿using pastebook_db.Database;
+using pastebook_db.Models;
 
 namespace pastebook_db.Data
 {

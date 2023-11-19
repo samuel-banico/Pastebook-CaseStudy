@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes} from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { RegistrationComponent } from './pages/registration/registration.component';
@@ -24,8 +26,7 @@ const appRoutes: Routes = [
   {path: 'friends', component: FriendsComponent},
   {path: 'albums', component: AlbumsComponent},
   {path: 'create', component: CreateAlbumComponent}
-  
- 
+  //{path: '**', component: NotFoundComponent}
 ];
 
 
@@ -45,7 +46,9 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    FormsModule,
+    HttpClientModule
   ],
   exports: [RouterModule],
   providers: [],

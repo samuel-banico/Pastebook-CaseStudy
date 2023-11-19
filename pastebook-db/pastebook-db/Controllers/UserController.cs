@@ -31,35 +31,8 @@ namespace pastebook_db.Controllers
             return Ok(_userRepository.GetAllUsers());
         }
 
-        [HttpPost("register")]  
-        public ActionResult<User> Register(UserRegister userRegister)
-        {
-            // Checks if email is already used.
-            var existingUser = _userRepository.GetUserByEmail(userRegister.Email);
-            if (existingUser != null)
-            {
-                return BadRequest(new { result = "user_already_exist" });
-            }
-                       
-            var newUser = new User
-            {
-                FirstName = userRegister.FirstName,
-                LastName = userRegister.LastName,
-                Email = userRegister.Email,
-                Password = _hashPassword.HashPassword(userRegister.Password),
-                Birthday = userRegister.Birthday,
-                Gender = userRegister.Gender,
-                MobileNumber = userRegister.MobileNumber,
-                ProfilePicture = _userRepository.DefaultImageToByteArray("wwwroot/images/default_pic.png")
-            };
-
-            _userRepository.RegisterUser(newUser);
-
-            return Ok(new { result = "registered" });
-        }
-
         [HttpPost("login")]
-        public ActionResult<UserLoginResponse> Login(UserLogin userLogin)
+        public ActionResult<UserLoginResponse> Login(UserLoginDTO userLogin)
         {
             try
             {
@@ -67,12 +40,12 @@ namespace pastebook_db.Controllers
 
                 if (user == null)
                 {
-                    return NotFound(new { result = "user_not_found" });
+                    return Unauthorized(new { result = "incorrect_credentials" });
                 }
 
-                if (_hashPassword.VerifyPassword(userLogin.Password, user.Password))
+                if (!_hashPassword.VerifyPassword(userLogin.Password, user.Password))
                 {
-                    return BadRequest(new { result = "incorrect_credentials" });
+                    return Unauthorized(new { result = "incorrect_credentials" });
                 }
 
                 var userLoginResponse = new UserLoginResponse
@@ -90,6 +63,34 @@ namespace pastebook_db.Controllers
             }
         }
 
+        [HttpPost("register")]  
+        public ActionResult<User> Register(UserRegisterDTO userRegister)
+        {
+            // Checks if email is already used.
+            var existingUser = _userRepository.GetUserByEmail(userRegister.Email);
+            if (existingUser != null)
+            {
+                return BadRequest(new { result = "user_already_exist" });
+            }
+                       
+            var newUser = new User
+            {
+                FirstName = userRegister.FirstName,
+                LastName = userRegister.LastName,
+                Email = userRegister.Email,
+                Password = _hashPassword.HashPassword(userRegister.Password),
+                Birthday = DateTime.Parse(userRegister.Birthday),
+                Gender = (Gender)userRegister.Gender,
+                MobileNumber = userRegister.MobileNumber,
+                ProfilePicture = _userRepository.DefaultImageToByteArray("wwwroot/images/default_pic.png")
+            };
+
+            if (!_userRepository.RegisterUser(newUser))
+                return BadRequest(new { result = "not_legitimate_email"});
+
+            return Ok(new { result = "registered" });
+        }
+
         [HttpPut("{id}")]
         public ActionResult<User> EditUser(int id, User user)
         {
@@ -104,7 +105,8 @@ namespace pastebook_db.Controllers
 
             retreivedUser = user;
 
-            _userRepository.UpdateUser(user, emailHasEdited);
+            if(!_userRepository.UpdateUser(user, emailHasEdited))
+                return BadRequest(new { result = "not_legitimate_email" });
 
             return Ok(new { result = "user_details_updated.", user });
         }       
