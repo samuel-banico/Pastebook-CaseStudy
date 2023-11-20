@@ -113,5 +113,11 @@ namespace pastebook_db.Data
             _context.PostComments.Remove(postComment);
             _context.SaveChanges();
         }
+
+        //Get all comments post by Post Id
+        public List<PostComment> GetAllPostCommentsByPostId(int postId)
+        {
+            return _context.PostComments.Where(p => p.PostId == postId).ToList();
+        }
     }
 }
