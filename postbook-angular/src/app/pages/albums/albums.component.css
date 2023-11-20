@@ -1,12 +1,12 @@
 .grid-template {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: left;
 }
 
 .grid-template .item {
     flex: 0 0 calc(25% - 10px); /* 25% width for each item with a 10px margin between them */
-    margin-bottom: 20px;
+    margin: 5px;
 }
 
 .grid-template .item img {
@@ -26,3 +26,4 @@
     font-weight: 700;
     color: #0b2154;
 }
+

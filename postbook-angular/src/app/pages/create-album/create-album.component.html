@@ -2,9 +2,9 @@
 <div class="d-flex justify-content-between align-items-center">
     <div class="d-flex">
         <h1 *ngIf="!isEditing" class="album-name ms-3">{{ albumName }}</h1>
-        <input *ngIf="isEditing" [(ngModel)]="editedAlbumName" class="ms-3">
+        <!-- <input *ngIf="isEditing" [(ngModel)]="editedAlbumName" class="ms-3"> -->
         <a *ngIf="isEditing" (click)="saveEdit()"><img src="../../../assets/images/save.png" style="width: 60px; height: 60px; margin-left: 5px"></a>
-        <a *ngIf="!isEditing" (click)="toggleEdit()"><img src="assets/images/edit.png" style="width: 15px; height: 15px"></a>
+        <!-- <a *ngIf="!isEditing" (click)="toggleEdit()"><img src="assets/images/edit.png" style="width: 15px; height: 15px"></a> -->
     </div>
     <div>
         <a class="me-3" (click)="confirmDelete()"><img src="assets/images/delete.png" style="width: 25px; height: 40px"></a>
@@ -24,6 +24,22 @@
             <a href="../../../assets/images/cat.jpeg" data-lightbox="id"><img src="../../../assets/images/cat.jpeg" alt="" class="img-fluid"></a>   
         </div>
         <div class="item with-background"> 
+            <h5 class="album-name">@item.Photo hehe</h5>
+            <a href="../../../assets/images/cat.jpeg" data-lightbox="id"><img src="../../../assets/images/cat.jpeg" alt="" class="img-fluid"></a> 
+        </div>
+        <div class="item with-background">
+            <h5 class="album-name">@item.Photo hehe</h5>
+            <a href="../../../assets/images/cat.jpeg" data-lightbox="id"><img src="../../../assets/images/cat.jpeg" alt="" class="img-fluid"></a> 
+        </div>
+        <div class="item with-background">
+            <h5 class="album-name">@item.Photo hehe</h5>
+            <a href="../../../assets/images/cat.jpeg" data-lightbox="id"><img src="../../../assets/images/cat.jpeg" alt="" class="img-fluid"></a> 
+        </div>
+        <div class="item with-background">
+            <h5 class="album-name">@item.Photo hehe</h5>
+            <a href="../../../assets/images/cat.jpeg" data-lightbox="id"><img src="../../../assets/images/cat.jpeg" alt="" class="img-fluid"></a> 
+        </div>
+        <div class="item with-background">
             <h5 class="album-name">@item.Photo hehe</h5>
             <a href="../../../assets/images/cat.jpeg" data-lightbox="id"><img src="../../../assets/images/cat.jpeg" alt="" class="img-fluid"></a> 
         </div>
