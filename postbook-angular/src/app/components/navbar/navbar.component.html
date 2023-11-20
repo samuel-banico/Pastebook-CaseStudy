@@ -24,8 +24,8 @@
     <div class="collapse navbar-collapse" id="responsive">
         <ul class="navbar-nav mr-auto text-capitalize">
 
-            <li class="nav-item"><a routerLink="home" class="nav-link active">home</a></li>
-            <li class="nav-item"><a routerLink="wall" class="nav-link">profile</a></li>
+            <li class="nav-item"><a routerLink="" class="nav-link active">home</a></li>
+            <li class="nav-item"><a routerLink="profile" class="nav-link">profile</a></li>
 
             <li class="nav-item"><a href="#modalview" class="nav-link" data-toggle="modal">messages</a></li>
             <li class="nav-item"><a href="#" class="nav-link d-md-none">growl</a></li>
@@ -37,22 +37,40 @@
             <input type="text" name="searchUser" id="searchUser" placeholder="Search" class="form-control form-control-sm" (input)="onType($event)" [(ngModel)]="searchUser">
         </form>
 
+        
         <a href="notification.html" class="text-decoration-none" style="color:#CBE4F2;font-size:22px;">
             <i class="far fa-bell ml-3 d-none d-md-block"></i>
         </a> 
 
-        <!-- Dropdown Button for Profile Picture -->
-        <div class="wrapper">
-            <input id="toggler" type="checkbox">
-            <label for="toggler">
-                <img width="30px" height="30px" src="assets/images/settings-icon.png" alt="">
-            </label>
-            <div class="dropdown" style="z-index: 2;">
-                <a routerLink="/settings">settings</a>
-                <a routerLink="/login">Logout</a>
-            </div>
-        </div>
-        <!-- End Dropdown Button for Profile Picture -->
+        <!-- Icon dropdown -->
+      <li mdbDropdown class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdownMenuLink"
+          role="button"
+          mdbDropdownToggle
+          aria-expanded="false"
+        >
+          <i class="fas fa-user"></i>
+        </a>
+        <ul
+          mdbDropdownMenu
+          class="dropdown-menu"
+          aria-labelledby="navbarDropdownMenuLink"
+        >
+          <li>
+            <a class="dropdown-item" href="#">Action</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">Another action</a>
+          </li>
+          <li><hr class="dropdown-divider" /></li>
+          <li>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </li>
+        </ul>
+      </li>
     </div>
 </nav>
 
