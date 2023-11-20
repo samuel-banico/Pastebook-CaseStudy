@@ -1,20 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Page Title</title>
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-
-    <!-- Font Awesome CSS -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="navbar.component.css">
-</head>
-<body>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+<link rel="stylesheet" href="navbar.component.css">
 
 <nav class="navbar navbar-expand-md navbar-dark mb-4" style="background-color:#68070F">
     <a routerLink="/" class="navbar-brand"><img src="assets/images/logo.png" alt="logo" class="img-fluid" width="30px" height="50px"></a>
@@ -24,15 +10,14 @@
     <div class="collapse navbar-collapse" id="responsive">
         <ul class="navbar-nav mr-auto text-capitalize">
 
-            <li class="nav-item"><a routerLink="home" class="nav-link active">home</a></li>
-            <li class="nav-item"><a routerLink="wall" class="nav-link">profile</a></li>
+            <li class="nav-item"><a routerLink="" class="nav-link active">home</a></li>
+            <li class="nav-item"><a routerLink="profile" class="nav-link">profile</a></li>
 
             <li class="nav-item"><a href="#modalview" class="nav-link" data-toggle="modal">messages</a></li>
             <li class="nav-item"><a href="#" class="nav-link d-md-none">growl</a></li>
             <li class="nav-item"><a href="#" class="nav-link d-md-none">logout</a></li>
         </ul>
 
-        <!-- Search Form -->
         <form class="form-inline ml-auto d-none d-md-block">
             <input type="text" name="searchUser" id="searchUser" placeholder="Search" class="form-control form-control-sm" (input)="onType($event)" [(ngModel)]="searchUser">
         </form>
@@ -41,7 +26,6 @@
             <i class="far fa-bell ml-3 d-none d-md-block"></i>
         </a> 
 
-        <!-- Dropdown Button for Profile Picture -->
         <div class="wrapper">
             <input id="toggler" type="checkbox">
             <label for="toggler">
@@ -52,14 +36,9 @@
                 <a routerLink="/login">Logout</a>
             </div>
         </div>
-        <!-- End Dropdown Button for Profile Picture -->
     </div>
 </nav>
 
-<!-- Bootstrap JS (optional) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-</body>
-</html>
