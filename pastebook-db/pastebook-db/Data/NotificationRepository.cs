@@ -99,7 +99,7 @@ namespace pastebook_db.Data
             newNotif.NotificationDate = DateTime.Now;
             newNotif.PostId = postLike.PostId;
 
-            newNotif.UserId = getPostFromPostId(postLike.Id).UserId;
+            newNotif.UserId = getPostFromPostId(postLike.PostId).UserId;
 
 
             var likedUser = getFriendFromPostLike(postLike);
@@ -117,7 +117,7 @@ namespace pastebook_db.Data
             newNotif.NotificationDate = DateTime.Now;
             newNotif.PostId = postComment.PostId;
 
-            newNotif.UserId = getPostFromPostId(postComment.Id).UserId;
+            newNotif.UserId = getPostFromPostId(postComment.PostId).UserId;
             
             var commentedUser = getFriendFromPostComment(postComment);
             newNotif.Content = $"{commentedUser.FirstName} {commentedUser.LastName} has left a comment on your post";
@@ -227,7 +227,8 @@ namespace pastebook_db.Data
 
         private Post getPostFromPostId(int postId) 
         {
-            return _context.Posts.FirstOrDefault(p => p.Id == postId);
+            var post = _context.Posts.FirstOrDefault(p => p.Id == postId);
+            return post;
         }
 
         private Album getAlbumFromAlbumImageId(int albumImageId) 

@@ -8,9 +8,11 @@ namespace pastebook_db.Data
     public class PostRepository
     {
         private readonly PastebookContext _context;
-        public PostRepository(PastebookContext context)
+        private readonly FriendRepository _friendRepository;
+        public PostRepository(PastebookContext context, FriendRepository friendRepository)
         {
             _context = context;
+            _friendRepository  = friendRepository;
         }
 
         public Post? GetPostById(int id)
@@ -77,6 +79,7 @@ namespace pastebook_db.Data
 
         public void CreatePostLike(PostLike postLike)
         {
+            postLike.FriendId = _friendRepository.GetFriendById(postLike.FriendId).Id;
             _context.PostLikes.Add(postLike);
             _context.SaveChanges();
         }
