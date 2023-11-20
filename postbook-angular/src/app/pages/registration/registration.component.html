@@ -47,16 +47,38 @@
                           <input type="email" id="email" class="form-control form-control-lg" name="email" [(ngModel)]="user.email" required />
                           <label class="form-label" for="email">Email address</label>
                         </div>
-      
-                        <div class="form-outline mb-4">
-                          <input type="password" id="password" class="form-control form-control-lg" name="password" [(ngModel)]="user.password" required />
-                          <label class="form-label" for="password">Password</label>
+                        
+                        
+                        <div class="input-group form-outline">
+                          <input
+                            type="{{ showPassword ? 'text' : 'password' }}"
+                            id="password"
+                            class="form-control form-control-lg"
+                            name="password"
+                            [(ngModel)]="user.password"
+                            required
+                          />
+                          <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordVisibility()">
+                            <i class="fa" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+                          </button>
                         </div>
-
+                        
+                        <label class="form-label mb-4" for="password">Password</label>
+                        
+                        
                         <div class="form-outline mb-4">
-                          <input type="confirmpassword" id="confirmpassword" class="form-control form-control-lg" name="confirmPassword" [(ngModel)]="confirmPassword" required />
+                          <input
+                            type="{{ showPassword ? 'text' : 'password' }}"
+                            id="confirmpassword"
+                            class="form-control form-control-lg"
+                            name="confirmPassword"
+                            [(ngModel)]="confirmPassword"
+                            required
+                          />
                           <label class="form-label" for="confirmpassword">Confirm Password</label>
                         </div>
+                        
+                        
       
                         <div class="form-outline mb-4">
                           <input type="date" id="birthday" class="form-control form-control-lg" name="birthday" [(ngModel)]="user.birthday" required />
