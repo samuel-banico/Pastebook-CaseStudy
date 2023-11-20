@@ -87,7 +87,7 @@ namespace pastebook_db.Data
         {
             //Send email
             string fromEmail = "pastebook2023@gmail.com";
-            string fromPassword = "Pastebook.123";
+            string fromPassword = "lrtvwngzwminepyd";
 
             MailMessage msg = new MailMessage();
             msg.From = new MailAddress(fromEmail);

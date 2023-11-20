@@ -19,7 +19,8 @@ import { WallComponent } from './pages/wall/wall.component';
 
 const appRoutes: Routes = [
   {path: 'registration', component: RegistrationComponent},
-  {path: 'home', component: HomeComponent},
+  //Edited 'home' to ''
+  {path: '', component: HomeComponent},
   {path: 'wall', component: WallComponent},
   {path: 'profile', component: ProfileComponent},
   {path: 'login', component: LoginComponent},
