@@ -8,9 +8,11 @@ namespace pastebook_db.Data
     public class PostRepository
     {
         private readonly PastebookContext _context;
-        public PostRepository(PastebookContext context)
+        private readonly FriendRepository _friendRepository;
+        public PostRepository(PastebookContext context, FriendRepository friendRepository)
         {
             _context = context;
+            _friendRepository  = friendRepository;
         }
 
         public Post? GetPostById(int id)
@@ -77,6 +79,7 @@ namespace pastebook_db.Data
 
         public void CreatePostLike(PostLike postLike)
         {
+            postLike.FriendId = _friendRepository.GetFriendById(postLike.FriendId).Id;
             _context.PostLikes.Add(postLike);
             _context.SaveChanges();
         }
@@ -109,6 +112,18 @@ namespace pastebook_db.Data
         {
             _context.PostComments.Remove(postComment);
             _context.SaveChanges();
+        }
+
+        //Get all comments post by Post Id
+        public List<PostComment> GetAllPostCommentsByPostId(int postId)
+        {
+            return _context.PostComments.Where(p => p.PostId == postId).ToList();
+        }
+
+        //Get all comments post by Post Id
+        public List<PostLike> GetAllPostLikesByPostId(int postId)
+        {
+            return _context.PostLikes.Where(p => p.PostId == postId).ToList();
         }
     }
 }

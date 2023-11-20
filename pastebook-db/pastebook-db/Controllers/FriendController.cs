@@ -28,6 +28,27 @@ namespace pastebook_db.Controllers
             return Ok( new { result = "friend", friend });
         }
 
+        [HttpGet("allFriends")]
+        public ActionResult<Friend> GetAllFriends(int userId)
+        {
+            var friend = _friendRepository.GetAllFriends(userId);
+            if(friend == null)
+                return NotFound(new { result = "no_friends" });
+
+            return Ok(new { result = "friends", friend });
+
+        }
+
+        [HttpGet("allRequest")]
+        public ActionResult<FriendRequest> GetAllFriendRequestsByUserId(int userId)
+        {
+            var request = _friendRepository.GetAllFriendRequest(userId);
+            if (request.Count == 0)
+                return NotFound(new { result = "no_requests" });
+
+            return Ok(new { result = "requests", request });
+        }
+
         [HttpPost("request")]
         public ActionResult<FriendRequest> FriendRequest(int userId, int friendId) 
         {
@@ -76,9 +97,9 @@ namespace pastebook_db.Controllers
         }
 
         [HttpDelete]
-        public ActionResult<Friend> RemoveFriend(int friendId)
+        public ActionResult<Friend> RemoveFriend(int friendId, int userId)
         {
-            var userToDelete = _friendRepository.GetFriendById(friendId);
+            var userToDelete = _friendRepository.GetFriendByTwoId(userId, friendId);
 
             if (userToDelete == null)
                 return NotFound(new { result = "not_friend" });

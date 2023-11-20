@@ -29,6 +29,7 @@ namespace pastebook_db
             builder.Services.AddScoped<FriendRepository>();
             builder.Services.AddScoped<PostRepository>();
             builder.Services.AddScoped<AlbumRepository>();
+            builder.Services.AddScoped<NotificationRepository>();
 
             builder.Services.AddCors();
 

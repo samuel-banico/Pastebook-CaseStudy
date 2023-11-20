@@ -208,5 +208,24 @@ namespace pastebook_db.Controllers
 
             return Ok(new { result = "post_unliked" });
         }
+
+        //Get all the post comments
+        [HttpGet("getAllPostComments")]
+        public ActionResult<PostComment> GetAllPostComments(int postId)
+        {
+            var post = _postRepository.GetAllPostCommentsByPostId(postId);
+
+            return Ok(new { result = "retrieved successful", post });
+        }
+
+
+        //Get all post likes
+        [HttpGet("getAllLikesInPost")]
+        public ActionResult<PostComment> GetAllLikesInPost(int postId)
+        {
+            var post = _postRepository.GetAllPostLikesByPostId(postId);
+
+            return Ok(new { result = "retrieved successful", post });
+        }
     }
 }

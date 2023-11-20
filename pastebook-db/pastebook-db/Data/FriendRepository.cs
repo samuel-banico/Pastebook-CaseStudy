@@ -25,10 +25,29 @@ namespace pastebook_db.Data
             return _context.FriendRequests.FirstOrDefault(u => u.Id == id);
         }
 
-        // Friend
-        public Friend? GetFriendById(int userId)
+        public List<FriendRequest> GetAllFriendRequest(int id)
         {
-            var friend = _context.Friends.FirstOrDefault(x => x.UserId == userId);
+            return _context.FriendRequests.Where(r => r.UserId == id || r.User_FriendId == id).ToList();
+        }
+
+        // Friend
+        public Friend? GetFriendById(int friendId)
+        {
+            var friend = _context.Friends.FirstOrDefault(x => x.UserId == friendId || x.User_FriendId == friendId);
+
+            return friend;
+        }
+
+        public Friend? GetFriendByTwoId(int userId, int friendId)
+        {
+            var friend = _context.Friends.FirstOrDefault(x => (x.UserId == friendId && x.User_FriendId == userId) || (x.User_FriendId == friendId && x.UserId == userId));
+
+            return friend;
+        }
+
+        public List<Friend> GetAllFriends(int userId)
+        {
+            var friend = _context.Friends.Where(f => f.UserId == userId).ToList();
 
             return friend;
         }
@@ -51,7 +70,7 @@ namespace pastebook_db.Data
         public void DeleteFriend(Friend friend)
         {
             _context.Friends.Remove(friend);
-            _context.SaveChanges();
+                _context.SaveChanges();
         }
     }
 }

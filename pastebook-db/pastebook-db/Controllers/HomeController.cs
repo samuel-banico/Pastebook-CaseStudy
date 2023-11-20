@@ -17,10 +17,28 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("searchUser")]
-        public ActionResult<List<User>> SearchUserByString(string user)
+        public ActionResult<IEnumerable<UserRegisterDTO>> SearchUserByString(string user)
         {
             var users = _repo.getAllUser().Where(u => u.FirstName.ToLower().Contains(user.ToLower()) || u.LastName.ToLower().Contains(user.ToLower())).Take(5).ToList();
-            return Ok(users);
+
+            var userList = new List<UserRegisterDTO>();
+
+            foreach (var item in users)
+            {
+                var u = new UserRegisterDTO()
+                {
+                    FirstName = item.FirstName,
+                    LastName = item.LastName,
+                    Email = item.Email,
+                    Password = item.Password,
+                    MobileNumber = item.MobileNumber,
+                    Gender = (int)item.Gender,
+                    Birthday = item.Birthday.ToString()
+                };
+
+                userList.Add(u);
+            }
+            return Ok(userList);
         }
     }
 }
