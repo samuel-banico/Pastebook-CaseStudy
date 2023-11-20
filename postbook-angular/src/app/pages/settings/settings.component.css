@@ -59,3 +59,11 @@ body{
 .custom-hr {
     border-top: 1px solid grey;
   }
+
+.security {
+    cursor: pointer;
+}
+
+.general {
+    cursor: pointer;
+}
