@@ -8,7 +8,7 @@
     width: auto;
     max-width: 600px;
     margin: 0 auto;
-  }
+}
 
 /*----------------------------------------------------------------------------------------------------------------------------*/
 
@@ -21,7 +21,8 @@
     color: #68070F;
 }
 
-.profile-name, .album-name {
+.profile-name,
+.album-name {
     font-weight: 700;
     color: #0b2154;
 }
@@ -30,26 +31,30 @@
     font-weight: 400;
     color: #0b2154;
 }
-  
+
 .bg-buttons {
     background-color: #68070f;
 }
 
-.nav-item {
-    font-weight: 700;
-    color: white;
+/* Change background color when a button is hovered */
+.nav-item:hover {
+    background-color: #8c0d28; /* A slightly lighter shade, adjust as needed */
 }
 
 
+/* Optionally, add transition for smooth animation */
+.nav-item,
+.bg-buttons {
+    transition: background-color 0.3s;
+}
 
+/* Text color for the buttons */
+.nav-item {
+    font-weight: 700;
+    color: white; /* Default text color */
+}
 
-
-
-
-
-
-
-
-
-
-
+/* Text color when a button is hovered */
+.nav-item:hover {
+    color: #fff;
+}
