@@ -52,6 +52,13 @@ namespace pastebook_db.Data
             return friend;
         }
 
+        public List<Friend> GetAllBlockedFriends(int userId)
+        {
+            var blockedFriends = _context.Friends.Where(b => b.UserId == userId && b.IsBlocked == true).ToList();
+
+            return blockedFriends;
+        }
+
         public void AddedFriend(Friend addFriend, FriendRequest req)
         {
             _context.Friends.Add(addFriend);
