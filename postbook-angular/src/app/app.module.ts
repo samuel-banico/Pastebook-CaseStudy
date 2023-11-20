@@ -20,7 +20,8 @@ import { WallComponent } from './pages/wall/wall.component';
 const appRoutes: Routes = [
   {path: 'registration', component: RegistrationComponent},
   {path: 'home', component: HomeComponent},
-  {path: 'profile', component: ProfileComponent},
+  // editted hehe
+  {path: 'profile', component: WallComponent}, 
   {path: 'login', component: LoginComponent},
   {path: 'settings', component: SettingsComponent},
   {path: 'friends', component: FriendsComponent},
