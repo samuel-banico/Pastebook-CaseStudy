@@ -28,7 +28,7 @@ namespace pastebook_db.Data
         // Friend
         public Friend? GetFriendById(int userId)
         {
-            var friend = _context.Friends.FirstOrDefault(x => x.UserId == userId);
+            var friend = _context.Friends.FirstOrDefault(x => x.UserId == userId || x.User_FriendId == userId);
 
             return friend;
         }
