@@ -125,5 +125,35 @@ namespace pastebook_db.Data
         {
             return _context.PostLikes.Where(p => p.PostId == postId).ToList();
         }
+
+        //Get all post by user id
+        private List<Post> GetAllPostsByUserId(int userId)
+        {
+            return new List<Post>();
+        }
+
+        //Get friend id of user
+        private List<int> GetFriendIds(int userId)
+        {
+            return new List<int>();
+        }
+
+        //Get all post by user and friend Id
+        public List<Post> GetAllPostByUserAndFriends(int userId)
+        {
+            List<Post> posts = new List<Post>();
+
+            //Get post of user
+            posts.AddRange(GetAllPostsByUserId(userId));
+
+            //Get post of the user's friend
+            var friendIds = GetFriendIds(userId);
+            foreach (var friendId in friendIds)
+            {
+                posts.AddRange(GetAllPostsByUserId(friendId));
+            }
+
+            return _context.Posts.ToList();
+        }
     }
 }
