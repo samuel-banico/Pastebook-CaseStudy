@@ -10,13 +10,10 @@ namespace pastebook_db.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserRepository _userRepository;
-        private readonly IPasswordHash _hashPassword;
 
-
-        public UserController(UserRepository userRepository, IPasswordHash hashPassword)
+        public UserController(UserRepository userRepository)
         {
             _userRepository = userRepository;
-            _hashPassword = hashPassword;
         }
 
         [HttpGet]
@@ -29,66 +26,6 @@ namespace pastebook_db.Controllers
         public ActionResult<List<User>> GetUserById()
         {
             return Ok(_userRepository.GetAllUsers());
-        }
-
-        [HttpPost("login")]
-        public ActionResult<UserLoginResponse> Login(UserLoginDTO userLogin)
-        {
-            try
-            {
-                var user = _userRepository.GetUserByEmail(userLogin.Email);
-
-                if (user == null)
-                {
-                    return Unauthorized(new { result = "incorrect_credentials" });
-                }
-
-                if (!_hashPassword.VerifyPassword(userLogin.Password, user.Password))
-                {
-                    return Unauthorized(new { result = "incorrect_credentials" });
-                }
-
-                var userLoginResponse = new UserLoginResponse
-                {
-                    email = user.Email,
-                    isActive = user.IsActive
-                };
-
-                return Ok(userLoginResponse);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error retrieving log in credentials: " + ex.Message);
-                return StatusCode(500, "An error occurred while retrieving log in credentials.");
-            }
-        }
-
-        [HttpPost("register")]  
-        public ActionResult<User> Register(UserRegisterDTO userRegister)
-        {
-            // Checks if email is already used.
-            var existingUser = _userRepository.GetUserByEmail(userRegister.Email);
-            if (existingUser != null)
-            {
-                return BadRequest(new { result = "user_already_exist" });
-            }
-                       
-            var newUser = new User
-            {
-                FirstName = userRegister.FirstName,
-                LastName = userRegister.LastName,
-                Email = userRegister.Email,
-                Password = _hashPassword.HashPassword(userRegister.Password),
-                Birthday = DateTime.Parse(userRegister.Birthday),
-                Gender = (Gender)userRegister.Gender,
-                MobileNumber = userRegister.MobileNumber,
-                ProfilePicture = _userRepository.DefaultImageToByteArray("wwwroot/images/default_pic.png")
-            };
-
-            if (!_userRepository.RegisterUser(newUser))
-                return BadRequest(new { result = "not_legitimate_email"});
-
-            return Ok(new { result = "registered" });
         }
 
         [HttpPut("{id}")]

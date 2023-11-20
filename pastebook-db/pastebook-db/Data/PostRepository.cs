@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using NuGet.Packaging;
 using pastebook_db.Database;
 using pastebook_db.Models;
 
@@ -9,6 +10,7 @@ namespace pastebook_db.Data
     {
         private readonly PastebookContext _context;
         private readonly FriendRepository _friendRepository;
+
         public PostRepository(PastebookContext context, FriendRepository friendRepository)
         {
             _context = context;
@@ -17,30 +19,63 @@ namespace pastebook_db.Data
 
         public Post? GetPostById(int id)
         {
-            return _context.Posts.FirstOrDefault(p => p.Id == id);
+            var post = _context.Posts
+                            .Include(p => p.PostLikeList)
+                            .Include(p => p.PostCommentList)
+                            .FirstOrDefault(p => p.Id == id);
+            return post;
         }
 
-        public List<Post> GetAllPostByOwner(int userId)
+        public List<Post> GetAllPostOfUserTimeline(int userId)
         {
-            return _context.Posts.Where(p => p.UserId == userId).ToList();
+            return _context.Posts
+                        .Include(pL => pL.PostLikeList)
+                        .Include(pL => pL.PostCommentList)
+                        .Where(p => p.UserId == userId)
+                        .ToList();
         }
 
-        public List<Post> GetAllPostByOther(int retrievedUserId, int loggedUserId)
+        public List<Post> GetAllPostOfOtherTimeline(int retrievedUserId, int loggedUserId)
         {
-            var isFriend = GetFriendByTwoUserId(retrievedUserId, loggedUserId);
+            var isFriend = _friendRepository.GetFriendship(retrievedUserId, loggedUserId);
 
             if (isFriend != null)
-                return _context.Posts.Where(p => p.UserId == retrievedUserId).ToList();
+                return _context.Posts
+                            .Include(pL => pL.PostLikeList)
+                            .Include(pL => pL.PostCommentList)
+                            .Where(p => p.UserId == retrievedUserId)
+                            .ToList();
 
             return _context.Posts.Where(p => p.UserId == retrievedUserId && p.IsPublic == true).ToList();
         }
 
+        //Get all post friend Id
+        public List<Post>? GetAllPostOfFriends(int userId)
+        {
+            var friendList = _friendRepository.GetAllUserFriends(userId);
+
+            if (friendList == null)
+                return null;
+
+            List<Post> posts = new();
+
+            foreach (var friend in friendList)
+            {
+                posts.AddRange(GetAllPostOfUserTimeline(friend.Id));
+            }
+
+            return posts;
+        }
+
+        // --- POST
         public void CreatePost(Post post)
         {
+
             _context.Posts.Add(post);
             _context.SaveChanges();
         }
         
+        // --- PUT
         public void UpdatePost(Post post) 
         {
             var existingEntity = _context.Set<Post>().Local.SingleOrDefault(e => e.Id == post.Id);
@@ -53,6 +88,8 @@ namespace pastebook_db.Data
             _context.SaveChanges();
         }
 
+        // --- DELETE
+        // To be edit, needs to remove all dependency
         public void DeletePost(Post post) 
         {            
             var existingEntity = _context.Set<Post>().Local.SingleOrDefault(e => e.Id == post.Id);
@@ -65,95 +102,35 @@ namespace pastebook_db.Data
             _context.SaveChanges();
         }
 
-        // Helping Methods
-        public Friend? GetFriendByTwoUserId(int id1, int id2)
+        // HELPER METHOD
+        public PostDTO ConvertPostToPostDTO(Post post) 
         {
-            return _context.Friends.FirstOrDefault(f => (f.UserId == id1 && f.User_FriendId == id2) || (f.UserId == id2 && f.User_FriendId == id1));
-        }
+            var likeCount = 0;
+            var commentCount = 0;
 
-        // --- Post Like
-        public PostLike GetPostLikeById(int postLikeId) 
-        {
-            return _context.PostLikes.FirstOrDefault(pL => pL.Id == postLikeId);
-        }
+            if (post.PostLikeList != null)
+                likeCount = post.PostLikeList.Count();
+            if (post.PostCommentList != null)
+                commentCount = post.PostCommentList.Count();
 
-        public void CreatePostLike(PostLike postLike)
-        {
-            postLike.FriendId = _friendRepository.GetFriendById(postLike.FriendId).Id;
-            _context.PostLikes.Add(postLike);
-            _context.SaveChanges();
-        }
-
-        public void RemovePostLike(PostLike postLike) 
-        {
-            _context.PostLikes.Remove(postLike);
-            _context.SaveChanges();
-        }
-
-        // --- Post Comment
-        public PostComment GetPostCommmentById(int postCommentId) 
-        {
-            return _context.PostComments.FirstOrDefault(pC => pC.Id == postCommentId);
-        }
-
-        public void CreatePostComment(PostComment postComment)
-        {
-            _context.PostComments.Add(postComment);
-            _context.SaveChanges();
-        }
-
-        public void UpdatePostComment(PostComment postComment) 
-        {
-            _context.Entry(postComment).State = EntityState.Modified;
-            _context.SaveChanges();
-        }
-
-        public void RemovePostComment(PostComment postComment)
-        {
-            _context.PostComments.Remove(postComment);
-            _context.SaveChanges();
-        }
-
-        //Get all comments post by Post Id
-        public List<PostComment> GetAllPostCommentsByPostId(int postId)
-        {
-            return _context.PostComments.Where(p => p.PostId == postId).ToList();
-        }
-
-        //Get all comments post by Post Id
-        public List<PostLike> GetAllPostLikesByPostId(int postId)
-        {
-            return _context.PostLikes.Where(p => p.PostId == postId).ToList();
-        }
-
-        //Get all post by user id
-        private List<Post> GetAllPostsByUserId(int userId)
-        {
-            return new List<Post>();
-        }
-
-        //Get friend id of user
-        private List<int> GetFriendIds(int userId)
-        {
-            return new List<int>();
-        }
-
-        //Get all post by user and friend Id
-        public List<Post> GetAllPostByUserAndFriends(int userId)
-        {
-            List<Post> posts = new List<Post>();
-
-            //Get post of user
-            posts.AddRange(GetAllPostsByUserId(userId));
-
-            //Get post of the user's friend
-            var friendIds = GetFriendIds(userId);
-            foreach (var friendId in friendIds)
+            var postDto = new PostDTO()
             {
-                posts.AddRange(GetAllPostsByUserId(friendId));
-            }
+                Id = post.Id,
+                Content = post.Content,
+                IsPublic = post.IsPublic,
+                IsEdited = post.IsEdited,
 
-            return _context.Posts.ToList();
+                LikeCount = likeCount,
+                CommentCount = commentCount,
+
+                UserId = post.UserId,
+                FriendId = post.FriendId,
+
+                PostLikeList = post.PostLikeList,
+                PostCommentList = post.PostCommentList
+            };
+
+            return postDto;
         }
     }
 }

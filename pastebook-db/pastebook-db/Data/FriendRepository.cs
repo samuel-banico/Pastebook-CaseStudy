@@ -7,38 +7,14 @@ namespace pastebook_db.Data
     public class FriendRepository
     {
         private readonly PastebookContext _context;
+        private readonly FriendRequestRepository _friendRequestRepository;
 
         public FriendRepository(PastebookContext context)
         {
             _context = context;
         }
-        
-        // --- Friend Request
-        public void RequestFriend(FriendRequest req) 
-        {
-            _context.FriendRequests.Add(req);
-            _context.SaveChanges();
-        }
 
-        public FriendRequest GetFriendRequest(int id)
-        {
-            return _context.FriendRequests.FirstOrDefault(u => u.Id == id);
-        }
-
-        public List<FriendRequest> GetAllFriendRequest(int id)
-        {
-            return _context.FriendRequests.Where(r => r.UserId == id || r.User_FriendId == id).ToList();
-        }
-
-        // Friend
-        public Friend? GetFriendById(int friendId)
-        {
-            var friend = _context.Friends.FirstOrDefault(x => x.UserId == friendId || x.User_FriendId == friendId);
-
-            return friend;
-        }
-
-        public Friend? GetFriendByTwoId(int userId, int friendId)
+        public Friend? GetFriendship(int userId, int friendId)
         {
             var friend = _context.Friends.FirstOrDefault(x => (x.UserId == friendId && x.User_FriendId == userId) || (x.User_FriendId == friendId && x.UserId == userId));
 
@@ -47,9 +23,29 @@ namespace pastebook_db.Data
 
         public List<Friend> GetAllFriends(int userId)
         {
-            var friend = _context.Friends.Where(f => f.UserId == userId).ToList();
+            var friendList = _context.Friends.Where(f => f.UserId == userId || f.User_FriendId == userId).ToList();
 
-            return friend;
+            return friendList;
+        }
+
+        public List<User> GetAllUserFriends(int userId)
+        {
+            var friendList = _context.Friends.Where(f => f.UserId == userId || f.User_FriendId == userId).ToList();
+
+            var friendUserList = new List<User>();
+            
+            int? friendId;
+            foreach (var friend in friendList) 
+            {
+                if (friend.UserId != userId)
+                    friendId = friend.UserId;
+                else
+                    friendId = friend.User_FriendId;
+
+                friendUserList.Add(_context.Users.Find(friendId));
+            }
+
+            return friendUserList;
         }
 
         public List<Friend> GetAllBlockedFriends(int userId)
@@ -64,8 +60,7 @@ namespace pastebook_db.Data
             _context.Friends.Add(addFriend);
             _context.SaveChanges();
 
-            _context.Remove(req);
-            _context.SaveChanges();
+            _friendRequestRepository.DeleteFriendRequest(req);
         }
 
         public void UpdateFriend(Friend friend)
@@ -74,10 +69,11 @@ namespace pastebook_db.Data
             _context.SaveChanges();
         }
 
+        // To be edited -> removes all table relations or change OnDelete
         public void DeleteFriend(Friend friend)
         {
             _context.Friends.Remove(friend);
-                _context.SaveChanges();
+            _context.SaveChanges();
         }
     }
 }

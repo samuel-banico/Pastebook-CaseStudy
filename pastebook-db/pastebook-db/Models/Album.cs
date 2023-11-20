@@ -6,18 +6,23 @@
         public string AlbumName { get; set; } = null!;
         public string AlbumDescription { get; set; } = null!;
         public bool IsPublic { get; set; }
+        public byte[]? CoverAlbumImage { get; set; }
 
         // Foreign Key
         public int UserId { get; set; }
         public virtual User User { get; set; } = null!;
+
+        public ICollection<AlbumImage>? AlbumImageList { get; set; }
     }
 
     public class AlbumDTO
     {
+        public int? Id { get; set; }
         public string AlbumName { get; set; } = null!;
         public string AlbumDescription { get; set; } = null!;
         public bool IsPublic { get; set; }
+        public byte[]? CoverAlbumImage { get; set; }
 
-        public List<IFormFile>? Images { get; set; }
+        public ICollection<AlbumImage>? AlbumImageList { get; set; }
     }
 }

@@ -16,32 +16,19 @@ namespace pastebook_db.Data
             _context = context;
         }
 
+        public User GetUserById(int id)
+        {
+            return _context.Users.Find(id);
+        }
+
         public User GetUserByEmail(string email)
         {
             return _context.Users.FirstOrDefault(f => f.Email == email);
         }
 
-        public bool RegisterUser(User user)
-        {
-            string emailBody = $"<html><body><h6>We’re excited you’ve joined Pastebook!</h6></br><p>Hey {user.FirstName} {user.LastName}. Invite your friends, and share your moments together by using Pastebook!</p></br><p>See you in pastebook :D</p></body></html>";
-
-            if (SendEmail(user.Email, emailBody))
-                return false;
-
-            _context.Users.Add(user);
-            _context.SaveChanges();
-
-            return true;
-        }
-
         public List<User> GetAllUsers() 
         {
             return _context.Users.ToList();
-        }
-
-        public User GetUserById(int id)
-        {
-            return _context.Users.Find(id);
         }
 
         //edit 

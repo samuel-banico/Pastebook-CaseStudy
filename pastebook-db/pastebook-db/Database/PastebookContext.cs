@@ -40,6 +40,30 @@ namespace pastebook_db.Database
                 .WithMany(a => a.FriendList)
                 .HasForeignKey(a => a.User_FriendId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            mB.Entity<AlbumImageComment>()
+                    .HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.ClientCascade);
+
+            mB.Entity<AlbumImageLike>()
+                    .HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.ClientCascade);
+
+            mB.Entity<PostComment>()
+                    .HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.ClientCascade);
+
+            mB.Entity<PostLike>()
+                    .HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.ClientCascade);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace pastebook_db.Models
         public ICollection<Friend>? FriendList { get; set; }
     }
 
-    public class UserRegisterDTO
+    public class UserDTO
     {
         [Required]
         public string FirstName { get; set; } = null!;

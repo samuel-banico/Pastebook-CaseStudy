@@ -24,13 +24,20 @@ namespace pastebook_db
 
             builder.Services.AddSingleton<IPasswordHash, PasswordHasher>();
 
-            builder.Services.AddScoped<UserRepository>();
-            builder.Services.AddScoped<HomeRepository>();
-            builder.Services.AddScoped<FriendRepository>();
-            builder.Services.AddScoped<PostRepository>();
+            builder.Services.AddScoped<AccessRepository>();
+            builder.Services.AddScoped<AlbumImageCommentRepository>();
+            builder.Services.AddScoped<AlbumImageLikeRepository>();
+            builder.Services.AddScoped<AlbumImageRepository>();
             builder.Services.AddScoped<AlbumRepository>();
+            builder.Services.AddScoped<FriendRepository>();
+            builder.Services.AddScoped<FriendRequestRepository>();
+            builder.Services.AddScoped<HomeRepository>();
             builder.Services.AddScoped<NotificationRepository>();
-
+            builder.Services.AddScoped<PostCommentRepository>();
+            builder.Services.AddScoped<PostLikeRepository>();
+            builder.Services.AddScoped<PostRepository>();
+            builder.Services.AddScoped<UserRepository>();
+            
             builder.Services.AddCors();
 
             var app = builder.Build();

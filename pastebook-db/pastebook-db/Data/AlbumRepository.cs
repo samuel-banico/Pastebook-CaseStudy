@@ -15,17 +15,34 @@ namespace pastebook_db.Data
 
         public Album? GetAlbumById(int id)
         {
-            return _context.Albums.FirstOrDefault(p => p.Id == id);
+            return _context.Albums
+                        .Include(a => a.AlbumImageList)
+                        .ThenInclude(aL => aL.AlbumImageLikesList)
+                        .Include(a => a.AlbumImageList)
+                        .ThenInclude(aC => aC.AlbumImageCommentsList)
+                        .FirstOrDefault(p => p.Id == id);
         }
 
         public List<Album> GetAllAlbumByOwner(int userId)
         {
-            return _context.Albums.Where(p => p.UserId == userId).ToList();
+            return _context.Albums
+                        .Include(a => a.AlbumImageList)
+                        .ThenInclude(aL => aL.AlbumImageLikesList)
+                        .Include(a => a.AlbumImageList)
+                        .ThenInclude(aC => aC.AlbumImageCommentsList)
+                        .Where(p => p.UserId == userId)
+                        .ToList();
         }
 
         public List<Album> GetAllAlbumByOther(int userId)
         {
-            return _context.Albums.Where(p => p.UserId == userId && p.IsPublic == true).ToList();
+            return _context.Albums
+                        .Include(a => a.AlbumImageList)
+                        .ThenInclude(aL => aL.AlbumImageLikesList)
+                        .Include(a => a.AlbumImageList)
+                        .ThenInclude(aC => aC.AlbumImageCommentsList)
+                        .Where(p => p.UserId == userId && p.IsPublic == true)
+                        .ToList();
         }
 
         public void CreateAlbum(Album album)
@@ -46,6 +63,7 @@ namespace pastebook_db.Data
             _context.SaveChanges();
         }
 
+        // To be edit
         public void DeleteAlbum(Album album)
         {
             var existingEntity = _context.Set<Album>().Local.SingleOrDefault(e => e.Id == album.Id);
@@ -56,24 +74,6 @@ namespace pastebook_db.Data
 
             _context.Albums.Remove(existingEntity);
             _context.SaveChanges();
-        }
-
-        // Album Images
-        public async void CreateAlbumImage(int albumId, IFormFile image) 
-        {
-            await using var memoryStream = new MemoryStream();
-            image.CopyTo(memoryStream);
-
-            var newAlbumImage = new AlbumImage
-            {
-                Image = memoryStream.ToArray(),
-                LikeCount = 0,
-                CommentCount = 0,
-                AlbumId = albumId
-            };
-
-            _context.AlbumImages.Add(newAlbumImage);
-            await _context.SaveChangesAsync();
         }
     }
 }

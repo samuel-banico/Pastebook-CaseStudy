@@ -17,60 +17,95 @@ namespace pastebook_db.Controllers
             _notificationRepository = notificationRepository;
         }
 
-        [HttpGet("ownUserTimeline")]
-        public ActionResult<List<Post>> OwnUserTimeline(int userId) 
+        [HttpGet("postById")]
+        public ActionResult<PostDTO> GetPostById(int postId)
         {
-            var postList = _postRepository.GetAllPostByOwner(userId);
+            var post = _postRepository.GetPostById(postId);
+            
+            if(post == null)
+                return NotFound(new { result = "no_post" });
 
-            if(postList.Count == 0)
-                return Ok(new { result = "no_post" });
+            var postDto = _postRepository.ConvertPostToPostDTO(post);
 
-            return Ok(new { result = "posted", postList });
+            return Ok(postDto);
         }
 
-        [HttpGet("otherUserTimeline")]
-        public ActionResult<List<Post>> OtherUserTimeline(int retrievedUserId, int loggedUserId)
+        [HttpGet("ownUserTimeline")]
+        public ActionResult<List<PostDTO>> GetUserTimeline(int userId)
         {
-            var postList = _postRepository.GetAllPostByOther(retrievedUserId, loggedUserId);
+            var postList = _postRepository.GetAllPostOfUserTimeline(userId);
 
             if (postList.Count == 0)
                 return Ok(new { result = "no_post" });
 
-            return Ok(new { result = "posted", postList });
+            var userTimeline = new List<PostDTO>();
+            foreach (var post in postList) 
+            {
+                var postDto = _postRepository.ConvertPostToPostDTO(post);
+
+                userTimeline.Add(postDto);
+            }
+
+            return Ok(userTimeline);
         }
 
-        [HttpGet]
-        public ActionResult<Post> GetPost(int postId)
+        [HttpGet("otherUserTimeline")]
+        public ActionResult<List<Post>> GetOtherUserTimeline(int retrievedUserId, int loggedUserId)
         {
-            var post = _postRepository.GetPostById(postId);
+            var postList = _postRepository.GetAllPostOfOtherTimeline(retrievedUserId, loggedUserId);
 
-            var newPost = new PostDTO();
+            if (postList.Count == 0)
+                return Ok(new { result = "no_post" });
 
-            CreatePost(newPost, postId);
+            var otherTimeline = new List<PostDTO>();
+            foreach (var post in postList)
+            {
+                var postDto = _postRepository.ConvertPostToPostDTO(post);
 
-            return Ok(new { result = "retrieved successful", post });
+                otherTimeline.Add(postDto);
+            }
+
+            return Ok(otherTimeline);
+        }
+
+        //Get all posts by user and friends
+        [HttpGet("allPostsOfFriends")]
+        public ActionResult<List<PostDTO>> GetAllPostsOfFriends(int userId)
+        {
+            var friendsPosts = _postRepository.GetAllPostOfFriends(userId);
+
+            if (friendsPosts == null)
+                return NotFound(new { result = "no_post" });
+
+            var feed = new List<PostDTO>();
+
+            foreach (var post in friendsPosts) 
+            {
+                var postDto = _postRepository.ConvertPostToPostDTO(post);
+
+                feed.Add(postDto);
+            }
+
+            return Ok(feed);
         }
 
         [HttpPost]
-        public ActionResult<Post> CreatePost(PostDTO addPost, int userId, int? friendId = null)
+        public ActionResult<Post> CreatePost(PostDTO addPost)
         {
             var newPost = new Post
             {
                 Content = addPost.Content,
                 IsPublic = addPost.IsPublic,
-
-                CreatedOn = DateTime.Now,
                 IsEdited = false,
-                LikeCount = 0,
-                CommentCount = 0,
+                CreatedOn = DateTime.Now,
 
-                UserId = userId,
-                FriendId = friendId
+                UserId = addPost.UserId,
+                FriendId = addPost.FriendId
             };
 
             _postRepository.CreatePost(newPost);
 
-            if (friendId != null)
+            if (addPost.FriendId != null)
                 _notificationRepository.CreateNotifFromFriendPostInTimeline(newPost);
 
             return Ok(new { result = "new_post"});
@@ -91,6 +126,7 @@ namespace pastebook_db.Controllers
             return Ok(new { result = newPost });
         }
 
+        // editing
         [HttpDelete]
         public ActionResult<Post> DeletePost(int postId) 
         {
@@ -99,147 +135,6 @@ namespace pastebook_db.Controllers
             _postRepository.DeletePost(postToDelete);
 
             return Ok(new { result = "post_deleted" });
-        }
-
-        // -- Post Like
-        [HttpPut("likePost")]
-        public ActionResult<Post> LikedPost(int postId, int loggedUserId)
-        {
-            var post = _postRepository.GetPostById(postId);
-            post.LikeCount++;
-
-            _postRepository.UpdatePost(post);
-
-            var postLike = new PostLike
-            {
-                PostId = postId,
-                FriendId = loggedUserId,
-                CreatedOn = DateTime.Now,
-            };
-
-            _postRepository.CreatePostLike(postLike);
-
-            _notificationRepository.CreateNotifPostLike(postLike);
-
-            return Ok(new { result = "post_liked" });
-        }
-
-        [HttpPut("unlikePost")]
-        public ActionResult<Post> UnlikedPost(int postLikeId)
-        {
-            var postLike = _postRepository.GetPostLikeById(postLikeId);
-
-            if (postLike == null)
-                return NotFound(new { result = "post_like_not_found" });
-
-            var post = _postRepository.GetPostById(postLike.PostId);
-
-            if(post == null)
-                return NotFound(new { result = "post_not_found" });
-
-            post.LikeCount--;
-            _postRepository.UpdatePost(post);
-
-            _postRepository.RemovePostLike(postLike);
-
-            return Ok(new { result = "post_unliked" });
-        }
-
-        // -- Post Comment
-        [HttpPut("commentPost")]
-        public ActionResult<Post> CommentPost(int postId, int loggedUserId, string comment)
-        {
-            var post = _postRepository.GetPostById(postId);
-            post.CommentCount++;
-
-            _postRepository.UpdatePost(post);
-
-            var postComment = new PostComment
-            {
-                PostId = postId,
-                FriendId = loggedUserId,
-                Comment = comment,
-                CreatedOn = DateTime.Now,
-                IsEdited = false
-            };
-
-            _postRepository.CreatePostComment(postComment);
-
-            _notificationRepository.CreateNotifPostComment(postComment);
-
-            return Ok(new { result = "post_liked" });
-        }
-
-        [HttpPut("edittedCommentPost")]
-        public ActionResult<Post> EditCommentPost(int postCommentId, string comment)
-        {
-            var postComment = _postRepository.GetPostCommmentById(postCommentId);
-
-            if (postComment == null)
-                return NotFound(new { result = "post_comment_not_found" });
-            
-            postComment.Comment = comment;
-            postComment.IsEdited = true;
-            postComment.CreatedOn = DateTime.Now;
-
-            _postRepository.UpdatePostComment(postComment);
-
-            return Ok(new { result = "post_comment_editted" });
-        }
-
-        //unfinished
-        [HttpPut("uncommentPost")]
-        public ActionResult<Post> UncommentPost(int postCommentId)
-        {
-            var postComment = _postRepository.GetPostCommmentById(postCommentId);
-
-            if (postComment == null)
-                return NotFound(new { result = "post_comment_not_found"});
-
-            var post = _postRepository.GetPostById(postComment.PostId);
-
-            if (post == null)
-                return NotFound(new { result = "post_not_found" });
-
-            post.CommentCount--;
-            _postRepository.UpdatePost(post);
-
-            _postRepository.RemovePostComment(postComment);
-
-            return Ok(new { result = "post_unliked" });
-        }
-
-        //Get all the post comments
-        [HttpGet("getAllPostComments")]
-        public ActionResult<PostComment> GetAllPostComments(int postId)
-        {
-            var post = _postRepository.GetAllPostCommentsByPostId(postId);
-
-            return Ok(new { result = "retrieved successful", post });
-        }
-
-
-        //Get all post likes
-        [HttpGet("getAllLikesInPost")]
-        public ActionResult<PostComment> GetAllLikesInPost(int postId)
-        {
-            var post = _postRepository.GetAllPostLikesByPostId(postId);
-
-            return Ok(new { result = "retrieved successful", post });
-        }
-
-        //Get all posts by user and friends
-        [HttpGet("getAllPostsOfFriends")]
-        public ActionResult<List<Post>> GetAllPostsOfFriends(int userId)
-        {
-            var friendsPosts = _postRepository.GetAllPostByUserAndFriends(userId);
-
-            if (friendsPosts == null)
-            {
-                return Ok(new { result = "no post"});
-            }
-
-            return Ok(new { result = "retrieved successful", friendsPosts });
         }
     }
 }

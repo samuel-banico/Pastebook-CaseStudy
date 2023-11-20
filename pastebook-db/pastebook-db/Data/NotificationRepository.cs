@@ -127,7 +127,7 @@ namespace pastebook_db.Data
         }
 
 
-        public void CreateNotifAlbumLike(AlbumImageLike albumImageLike)
+        public void CreateNotifAlbumImageLike(AlbumImageLike albumImageLike)
         {
             var newNotif = new Notification();
             newNotif.HasSeen = false;
@@ -145,7 +145,7 @@ namespace pastebook_db.Data
         }
 
 
-        public void CreateNotifAlbumComment(AlbumImageComment albumImageComment)
+        public void CreateNotifAlbumImageComment(AlbumImageComment albumImageComment)
         {
             var newNotif = new Notification();
             newNotif.HasSeen = false;
@@ -174,8 +174,8 @@ namespace pastebook_db.Data
         private User getUserFromFriend(Friend friend)
         {
             var user = _context.Friends
-                .Include(f => f.User)
-                .FirstOrDefault(f => f.Id == friend.UserId);
+                            .Include(f => f.User)
+                            .FirstOrDefault(f => f.Id == friend.UserId);
 
             return user.User;
         }
@@ -183,46 +183,39 @@ namespace pastebook_db.Data
         private User getFriendFromPost(Post post) 
         {
             var friend = _context.Friends
-                    .Include(f => f.User_Friend)
-                    .FirstOrDefault(f => f.Id == post.FriendId);
+                                .Include(f => f.User_Friend)
+                                .FirstOrDefault(f => f.Id == post.FriendId);
 
             return friend.User_Friend;
         }
 
         private User getFriendFromPostLike(PostLike postLike) 
         {
-            var user = _context.Friends
-                .Include(f => f.User_Friend)
-                .FirstOrDefault(f => f.Id == postLike.FriendId);
+            var user = _context.Users
+                            .FirstOrDefault(f => f.Id == postLike.UserId);
 
-            return user.User_Friend;
+            return user;
         }
 
         private User getFriendFromPostComment(PostComment postComment)
         {
-            var user = _context.Friends
-                .Include(f => f.User_Friend)
-                .FirstOrDefault(f => f.Id == postComment.FriendId);
-
-            return user.User_Friend;
+            var user = _context.Users
+                            .FirstOrDefault(f => f.Id == postComment.UserId);
+            return user;
         }
 
         private User getFriendFromAlbumImageLike(AlbumImageLike albumImageLike)
         {
-            var user = _context.Friends
-                .Include(f => f.User_Friend)
-                .FirstOrDefault(f => f.Id == albumImageLike.FriendId);
-
-            return user.User_Friend;
+            var user = _context.Users
+                            .FirstOrDefault(f => f.Id == albumImageLike.UserId);
+            return user;
         }
 
         private User getFriendFromAlbumImageComment(AlbumImageComment albumImageComment)
         {
-            var user = _context.Friends
-                .Include(f => f.User_Friend)
-                .FirstOrDefault(f => f.Id == albumImageComment.FriendId);
-
-            return user.User_Friend;
+            var user = _context.Users
+                            .FirstOrDefault(f => f.Id == albumImageComment.UserId);
+            return user;
         }
 
         private Post getPostFromPostId(int postId) 

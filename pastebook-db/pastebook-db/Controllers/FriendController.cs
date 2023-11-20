@@ -9,76 +9,51 @@ namespace pastebook_db.Controllers
     public class FriendController : Controller
     {
         private readonly FriendRepository _friendRepository;
+        private readonly FriendRequestRepository _friendRequestRepository;
         private readonly NotificationRepository _notificationRepository;
 
-        public FriendController(FriendRepository repo, NotificationRepository notificationRepository)
+        public FriendController(FriendRepository repo, NotificationRepository notificationRepository, FriendRequestRepository friendRequestRepository)
         {
             _friendRepository = repo;
             _notificationRepository = notificationRepository;
+            _friendRequestRepository = friendRequestRepository;
         }
 
-        [HttpGet]
-        public ActionResult<Friend> GetFriendById(int userId) 
+        [HttpGet("friend")]
+        public ActionResult<Friend> GetFriendship(int userId, int friendId) 
         {
-            var friend = _friendRepository.GetFriendById(userId);
+            var friendship = _friendRepository.GetFriendship(userId, friendId);
 
-            if(friend == null)
-                return NotFound(new { result = "not_friend"});
+            if (friendship == null)
+                return NotFound(new { result = "not_friends" });
 
-            return Ok( new { result = "friend", friend });
+            return Ok(friendship);
         }
 
-        [HttpGet("allFriends")]
-        public ActionResult<Friend> GetAllFriends(int userId)
+        // returns a list of friends table
+        [HttpGet("friendList")]
+        public ActionResult<List<Friend>> GetAllFriends(int userId)
         {
             var friend = _friendRepository.GetAllFriends(userId);
-            if(friend == null)
+
+            if (friend == null)
                 return NotFound(new { result = "no_friends" });
 
-            return Ok(new { result = "friends", friend });
+            return Ok(friend);
 
         }
 
-        [HttpGet("allRequest")]
-        public ActionResult<FriendRequest> GetAllFriendRequestsByUserId(int userId)
+        // returns a list of user table
+        [HttpGet("userFriendList")]
+        public ActionResult<List<User>> GetAllUserFriends(int userId)
         {
-            var request = _friendRepository.GetAllFriendRequest(userId);
-            if (request.Count == 0)
-                return NotFound(new { result = "no_requests" });
+            var userFriend = _friendRepository.GetAllUserFriends(userId);
 
-            return Ok(new { result = "requests", request });
-        }
+            if(userFriend == null)
+                return NotFound(new { result = "no_friends" });
 
-        [HttpPost("request")]
-        public ActionResult<FriendRequest> FriendRequest(int userId, int friendId) 
-        {
-            var friendRequest = new FriendRequest();
-            friendRequest.UserId = userId;
-            friendRequest.User_FriendId = friendId;
-            friendRequest.CreatedOn = DateTime.Now;
+            return Ok(userFriend);
 
-            _friendRepository.RequestFriend(friendRequest);
-
-            _notificationRepository.CreateNotifFriendRequest(friendRequest);
-
-            return Ok(new { result = "request_sent", friendRequest});
-        }
-
-        [HttpPost("accepted")]
-        public ActionResult<Friend> AddFriend(int friendRequestId)
-        {
-            var request = _friendRepository.GetFriendRequest(friendRequestId);
-            var addFriend = new Friend();
-            addFriend.UserId = request.UserId;
-            addFriend.User_FriendId = request.User_FriendId;
-            addFriend.IsBlocked = false;
-            addFriend.CreatedOn = DateTime.Now;
-
-            _friendRepository.AddedFriend(addFriend, request);
-
-            _notificationRepository.CreateNotifAcceptedFriendRequest(addFriend);
-
-            return Ok(new { result = "request_accepted", request});
         }
 
         [HttpGet("blocked")]
@@ -92,10 +67,27 @@ namespace pastebook_db.Controllers
             return Ok(new { result = "blocked_users", blockedUsers });
         }
 
-        [HttpPut]
-        public ActionResult<Friend> BlockFriend(int friendId)
+        [HttpPost("accepted")]
+        public ActionResult<Friend> AddFriend(int friendRequestId)
         {
-            var userToBlock = _friendRepository.GetFriendById(friendId);
+            var request = _friendRequestRepository.GetFriendRequest(friendRequestId);
+            var addFriend = new Friend();
+            addFriend.UserId = request.UserId;
+            addFriend.User_FriendId = request.User_FriendId;
+            addFriend.IsBlocked = false;
+            addFriend.CreatedOn = DateTime.Now;
+
+            _friendRepository.AddedFriend(addFriend, request);
+
+            _notificationRepository.CreateNotifAcceptedFriendRequest(addFriend);
+
+            return Ok(new { result = "request_accepted", request});
+        }
+
+        [HttpPut]
+        public ActionResult<Friend> BlockFriend(int friendId, int userId)
+        {
+            var userToBlock = _friendRepository.GetFriendship(userId, friendId);
 
             if (userToBlock == null)
                 return NotFound(new { result = "not_friend" });
@@ -107,10 +99,11 @@ namespace pastebook_db.Controllers
             return Ok(new { result = "blocked_user"});
         }
         
+        // editing
         [HttpDelete]
         public ActionResult<Friend> RemoveFriend(int friendId, int userId)
         {
-            var userToDelete = _friendRepository.GetFriendByTwoId(userId, friendId);
+            var userToDelete = _friendRepository.GetFriendship(userId, friendId);
 
             if (userToDelete == null)
                 return NotFound(new { result = "not_friend" });

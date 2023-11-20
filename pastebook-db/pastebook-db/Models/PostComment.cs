@@ -10,7 +10,8 @@
         //Foreign Key
         public int PostId { get; set; }
         public virtual Post Post { get; set; } = null!;
-        public int FriendId { get; set; }
-        public virtual Friend Friend { get; set; } = null!;
+
+        public int UserId { get; set; }
+        public virtual User User { get; set; } = null!;
     }
 }

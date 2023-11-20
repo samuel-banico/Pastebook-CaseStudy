@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using pastebook_db.Database;
 
@@ -11,9 +12,10 @@ using pastebook_db.Database;
 namespace pastebook_db.Migrations
 {
     [DbContext(typeof(PastebookContext))]
-    partial class PastebookContextModelSnapshot : ModelSnapshot
+    [Migration("20231120130824_database-v2.0")]
+    partial class databasev20
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,7 +40,7 @@ namespace pastebook_db.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("CoverAlbumImage")
+                    b.Property<byte[]>("CoverAlbum")
                         .HasColumnType("varbinary(max)");
 
                     b.Property<bool>("IsPublic")
@@ -65,9 +67,15 @@ namespace pastebook_db.Migrations
                     b.Property<int>("AlbumId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CommentCount")
+                        .HasColumnType("int");
+
                     b.Property<byte[]>("Image")
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
+
+                    b.Property<int>("LikeCount")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -94,17 +102,17 @@ namespace pastebook_db.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("FriendId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsEdited")
                         .HasColumnType("bit");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AlbumImageId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("FriendId");
 
                     b.ToTable("AlbumImageComments");
                 });
@@ -120,14 +128,14 @@ namespace pastebook_db.Migrations
                     b.Property<int>("AlbumImageId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("FriendId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AlbumImageId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("FriendId");
 
                     b.ToTable("AlbumImageLikes");
                 });
@@ -233,6 +241,9 @@ namespace pastebook_db.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("CommentCount")
+                        .HasColumnType("int");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -248,6 +259,9 @@ namespace pastebook_db.Migrations
 
                     b.Property<bool>("IsPublic")
                         .HasColumnType("bit");
+
+                    b.Property<int>("LikeCount")
+                        .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -276,20 +290,20 @@ namespace pastebook_db.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("FriendId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsEdited")
                         .HasColumnType("bit");
 
                     b.Property<int>("PostId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("PostId");
+                    b.HasIndex("FriendId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("PostId");
 
                     b.ToTable("PostComments");
                 });
@@ -305,17 +319,17 @@ namespace pastebook_db.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PostId")
+                    b.Property<int>("FriendId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("PostId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PostId");
+                    b.HasIndex("FriendId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("PostId");
 
                     b.ToTable("PostLikes");
                 });
@@ -398,15 +412,15 @@ namespace pastebook_db.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("pastebook_db.Models.User", "User")
+                    b.HasOne("pastebook_db.Models.Friend", "Friend")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .HasForeignKey("FriendId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("AlbumImage");
 
-                    b.Navigation("User");
+                    b.Navigation("Friend");
                 });
 
             modelBuilder.Entity("pastebook_db.Models.AlbumImageLike", b =>
@@ -417,15 +431,15 @@ namespace pastebook_db.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("pastebook_db.Models.User", "User")
+                    b.HasOne("pastebook_db.Models.Friend", "Friend")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .HasForeignKey("FriendId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("AlbumImage");
 
-                    b.Navigation("User");
+                    b.Navigation("Friend");
                 });
 
             modelBuilder.Entity("pastebook_db.Models.Friend", b =>
@@ -499,40 +513,40 @@ namespace pastebook_db.Migrations
 
             modelBuilder.Entity("pastebook_db.Models.PostComment", b =>
                 {
+                    b.HasOne("pastebook_db.Models.Friend", "Friend")
+                        .WithMany()
+                        .HasForeignKey("FriendId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("pastebook_db.Models.Post", "Post")
                         .WithMany("PostCommentList")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("pastebook_db.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
+                    b.Navigation("Friend");
 
                     b.Navigation("Post");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("pastebook_db.Models.PostLike", b =>
                 {
+                    b.HasOne("pastebook_db.Models.Friend", "Friend")
+                        .WithMany()
+                        .HasForeignKey("FriendId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("pastebook_db.Models.Post", "Post")
                         .WithMany("PostLikeList")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("pastebook_db.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
+                    b.Navigation("Friend");
 
                     b.Navigation("Post");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("pastebook_db.Models.Album", b =>
