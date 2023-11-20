@@ -165,11 +165,10 @@ namespace pastebook_db.Data
         // Helper methods
         private User getUserFromFriendRequest(FriendRequest friendRequest)
         {
-            var user = _context.FriendRequests
-                .Include(f => f.User_Friend)
+            var user = _context.Users
                 .FirstOrDefault(f => f.Id == friendRequest.User_FriendId);
 
-            return user.User_Friend;
+            return user;
         }
 
         private User getUserFromFriend(Friend friend)

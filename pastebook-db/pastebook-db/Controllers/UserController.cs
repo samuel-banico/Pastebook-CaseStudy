@@ -26,9 +26,9 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<List<User>> GetUserById()
+        public ActionResult<List<User>> GetUserById(int id)
         {
-            return Ok(_userRepository.GetAllUsers());
+            return Ok(_userRepository.GetUserById(id));
         }
 
         [HttpPost("login")]

@@ -60,7 +60,7 @@ namespace pastebook_db.Controllers
             return Ok(new { result = "request_accepted", request});
         }
 
-        [HttpPut]
+        [HttpPut("block")]
         public ActionResult<Friend> BlockFriend(int friendId)
         {
             var userToBlock = _friendRepository.GetFriendById(friendId);
