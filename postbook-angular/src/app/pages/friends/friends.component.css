@@ -16,3 +16,9 @@
     font-weight: 700;
     color: white;
 }
+
+.pale-background {
+    background-color: #f2f2f2; /* Adjust the color as needed */
+    padding: 20px; /* Adjust the padding as needed */
+    border-radius: 30px;
+}
