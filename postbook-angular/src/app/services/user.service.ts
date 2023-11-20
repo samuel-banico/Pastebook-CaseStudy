@@ -21,4 +21,12 @@ export class UserService {
   register(user: User): Observable<object> {
     return this.http.post(this.baseUrl + '/register', user);
   }
+
+  getUser(id: number) : Observable<Object>{
+    return this.http.get<User[]>(`${this.baseUrl}/${id}`);
+  }
+
+  update(user: User): Observable<Object> {
+    return this.http.put(this.baseUrl + `/${user.id}`, user);
+  }
 }
