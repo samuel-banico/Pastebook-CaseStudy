@@ -81,6 +81,17 @@ namespace pastebook_db.Controllers
             return Ok(new { result = "request_accepted", request});
         }
 
+        [HttpGet("blocked")]
+        public ActionResult<Friend> GetBlockedFriends(int userId)
+        {
+            var blockedUsers = _friendRepository.GetAllBlockedFriends(userId);
+
+            if (blockedUsers.Count == 0)
+                return NotFound(new { result = "no_blocked" });
+
+            return Ok(new { result = "blocked_users", blockedUsers });
+        }
+
         [HttpPut]
         public ActionResult<Friend> BlockFriend(int friendId)
         {
@@ -95,7 +106,7 @@ namespace pastebook_db.Controllers
 
             return Ok(new { result = "blocked_user"});
         }
-
+        
         [HttpDelete]
         public ActionResult<Friend> RemoveFriend(int friendId, int userId)
         {
