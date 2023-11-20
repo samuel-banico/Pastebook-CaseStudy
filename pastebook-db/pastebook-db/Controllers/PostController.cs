@@ -227,5 +227,19 @@ namespace pastebook_db.Controllers
 
             return Ok(new { result = "retrieved successful", post });
         }
+
+        //Get all posts by user and friends
+        [HttpGet("getAllPostsOfFriends")]
+        public ActionResult<List<Post>> GetAllPostsOfFriends(int userId)
+        {
+            var friendsPosts = _postRepository.GetAllPostByUserAndFriends(userId);
+
+            if (friendsPosts == null)
+            {
+                return Ok(new { result = "no post"});
+            }
+
+            return Ok(new { result = "retrieved successful", friendsPosts });
+        }
     }
 }
