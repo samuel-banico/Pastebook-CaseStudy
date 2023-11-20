@@ -119,5 +119,11 @@ namespace pastebook_db.Data
         {
             return _context.PostComments.Where(p => p.PostId == postId).ToList();
         }
+
+        //Get all comments post by Post Id
+        public List<PostLike> GetAllPostLikesByPostId(int postId)
+        {
+            return _context.PostLikes.Where(p => p.PostId == postId).ToList();
+        }
     }
 }
