@@ -59,4 +59,5 @@ namespace pastebook_db.Models
         public string? email { get; set; }
         public bool? isActive { get; set; }
     }
+
 }

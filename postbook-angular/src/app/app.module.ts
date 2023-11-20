@@ -21,8 +21,7 @@ const appRoutes: Routes = [
   {path: 'registration', component: RegistrationComponent},
   //Edited 'home' to ''
   {path: '', component: HomeComponent},
-  {path: 'wall', component: WallComponent},
-  {path: 'profile', component: ProfileComponent},
+  {path: 'profile', component: WallComponent}, 
   {path: 'login', component: LoginComponent},
   {path: 'settings', component: SettingsComponent},
   {path: 'friends', component: FriendsComponent},

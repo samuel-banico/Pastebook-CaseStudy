@@ -1,26 +1,34 @@
+<app-navbar></app-navbar>
 <app-profile></app-profile>
 
 
-<div class="grid-template container my-4 text-center">
-    <div class="item-1 ">    
-        <h5>Create Album</h5>
-        <a href="portfolio/addPhoto.png" data-lightbox="id"><img src="portfolio/addPhoto.png" alt="" class="img-fluid" style="width:255px; height: 255px;"></a>     
-    </div>
-    <!-- @for item in blahblah {
+<div class="pale-background">
+    <div class="grid-template container text-center">
+        <div class="item">    
+            <h5 class="album-name">Create Album</h5>
+            <a routerLink="/create"><img src="../../../assets/images/addPhoto.png" alt="Create Album" class="img-fluid"></a>     
+        </div>
+    
+        <!-- Repeat the following block for each album item -->
+        <div class="item">
+            <h5 class="album-name">@item.AlbumName</h5>
+            <a href="../../../assets/images/geo.JPG" data-lightbox="id"><img src="../../../assets/images/geo.JPG" alt="" class="img-fluid"></a>   
+        </div>
+        <div class="item">
+            <h5 class="album-name">@item.AlbumName</h5>
+            <a href="../../../assets/images/geo.JPG" data-lightbox="id"><img src="../../../assets/images/geo.JPG" alt="" class="img-fluid"></a> 
+        </div>
+        <div class="item">
+            <h5 class="album-name">@item.AlbumName</h5>
+            <a href="../../../assets/images/geo.JPG" data-lightbox="id"><img src="../../../assets/images/geo.JPG" alt="" class="img-fluid"></a> 
+        </div>
+        <div class="item">
+            <h5 class="album-name">@item.AlbumName</h5>
+            <a href="../../../assets/images/geo.JPG" data-lightbox="id"><img src="../../../assets/images/geo.JPG" alt="" class="img-fluid"></a> 
+        </div>
+        <!-- End repeat -->
+    </div>    
 
-    } -->
-    <div class="item-2">
-        <h5>@item.AlbumName</h5>
-        <a href="portfolio/img2.jpg"data-lightbox="id"> <img src="portfolio/img2.jpg" alt="" class="img-fluid" style="width:255px; height: 255px;"></a>   
-    </div>
-    <div class="item-3">
-        <h5>@item.AlbumName</h5>
-        <a href="portfolio/img3.jpg"data-lightbox="id"> <img src="portfolio/img3.jpg" alt="" class="img-fluid" style="width:255px; height: 255px;"></a> 
-    </div>
-    <div class="item-4">
-        <h5>@item.AlbumName</h5>
-        <a href="portfolio/img4.jpg"data-lightbox="id"> <img src="portfolio/img4.jpg" alt="" class="img-fluid" style="width:255px; height: 255px;"></a> 
-    </div>
 </div>
 
 

@@ -1,39 +1,43 @@
 
-<title>Create Album</title>
-
-<div class="d-flex">
-   <div class="d-flex justify-content-center">
-        <h1 class="album-name">Album Name Here</h1> 
-        <img src="assets/images/edit.png" style="width: 15px; height: 15px">
+<div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex">
+        <h1 *ngIf="!isEditing" class="album-name ms-3">{{ albumName }}</h1>
+        <input *ngIf="isEditing" [(ngModel)]="editedAlbumName" class="ms-3">
+        <a *ngIf="isEditing" (click)="saveEdit()"><img src="../../../assets/images/save.png" style="width: 60px; height: 60px; margin-left: 5px"></a>
+        <a *ngIf="!isEditing" (click)="toggleEdit()"><img src="assets/images/edit.png" style="width: 15px; height: 15px"></a>
     </div>
-    <div class="d-flex justify-content-end">
-        <img src="assets/images/delete.png" style="width: 25px; height: 40px">
+    <div>
+        <a class="me-3" (click)="confirmDelete()"><img src="assets/images/delete.png" style="width: 25px; height: 40px"></a>
     </div> 
-
 </div>
-    
 
-    <div class="grid-template container my-4 text-center">
-        <div class="item-1 ">    
-            <h5>Add Photos</h5>
-            <a href="assets/images/addPhoto.png" data-lightbox="id"><img src="assets/images/addPhoto.png" alt="" class="img-fluid" style="width:255px; height: 255px;"></a>     
+<div class="pale-background ">
+    <div class="grid-template container text-center">
+        <div class="item">    
+            <h5 class="album-name">Add Photo</h5>
+            <a routerLink="#"><img src="../../../assets/images/addPhoto.png" alt="Add Photo" class="img-fluid"></a>     
         </div>
-    <!--     @for item in blahblah {
-
-        } -->
-        <div class="item-2">
-            <h5>@item.Photo hehe</h5>
-            <a href="assets/images/cat.jpeg" data-lightbox="id"> <img src="assets/images/cat.jpeg" alt="" class="img-fluid" style="width:255px; height: 255px;"></a>  
+      
+        <!-- code ng FOR LOOP each image na meron kada album na nakastore sa database -->
+        <div class="item with-background">
+            <h5 class="album-name">@item.Photo hehe</h5>
+            <a href="../../../assets/images/cat.jpeg" data-lightbox="id"><img src="../../../assets/images/cat.jpeg" alt="" class="img-fluid"></a>   
         </div>
-        <div class="item-3">
-            <h5>@item.Photo hehe</h5>
-            <a href="assets/images/cat.jpeg" data-lightbox="id"> <img src="assets/images/cat.jpeg" alt="" class="img-fluid" style="width:255px; height: 255px;"></a> 
+        <div class="item with-background"> 
+            <h5 class="album-name">@item.Photo hehe</h5>
+            <a href="../../../assets/images/cat.jpeg" data-lightbox="id"><img src="../../../assets/images/cat.jpeg" alt="" class="img-fluid"></a> 
         </div>
-        <div class="item-4">
-            <h5>@item.Photo hehe</h5>
-            <a href="assets/images/cat.jpeg" data-lightbox="id"> <img src="assets/images/cat.jpeg" alt="" class="img-fluid" style="width:255px; height: 255px;"></a> 
+        <div class="item with-background">
+            <h5 class="album-name">@item.Photo hehe</h5>
+            <a href="../../../assets/images/cat.jpeg" data-lightbox="id"><img src="../../../assets/images/cat.jpeg" alt="" class="img-fluid"></a> 
+        </div>
+        <div class="item with-background">
+            <h5 class="album-name">@item.Photo hehe</h5>
+            <a href="../../../assets/images/cat.jpeg" data-lightbox="id"><img src="../../../assets/images/cat.jpeg" alt="" class="img-fluid"></a> 
         </div>
     </div>
+</div>
+
 
 
 
