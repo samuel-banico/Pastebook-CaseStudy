@@ -4,6 +4,7 @@ import { User } from '@models/user';
 import { Obj } from '@popperjs/core';
 import { UserService } from '@services/user.service';
 import Swal from 'sweetalert2';
+import { SessionService } from '@services/session.service';
 
 @Component({
   selector: 'app-settings',
@@ -16,10 +17,15 @@ export class SettingsComponent implements OnInit{
   constructor(
     private userService: UserService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private session: SessionService
   ){
-    let userId: number = this.route.snapshot.params['id'];
-    userService.getUser(userId).subscribe((response: Object)=>{this.user = response})
+    let userId: number = Number.parseInt(this.session.getId());
+    userService.getUser(userId).subscribe((response: Object)=> 
+    {
+      this.user = response
+      console.log(response);
+    })
   }
   
   div1:boolean=true;

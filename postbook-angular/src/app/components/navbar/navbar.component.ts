@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HomeService } from '@services/home.service';
 import { SessionService } from '@services/session.service';
+import { UserService } from '@services/user.service';
 import { User } from '@models/user';
 import { Router, NavigationEnd } from '@angular/router';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
@@ -24,7 +25,7 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private homeService: HomeService,
-
+    private userService: UserService,
     private router: Router,
     private modalService: MdbModalService,
     private sessionService: SessionService
@@ -58,6 +59,7 @@ export class NavbarComponent implements OnInit {
 
 
   openNotifModal() {
+
     this.modalRef = this.modalService.open(NotifnavbarmodalComponent)
   }
 
