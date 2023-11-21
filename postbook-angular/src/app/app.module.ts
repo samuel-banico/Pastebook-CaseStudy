@@ -19,6 +19,7 @@ import { CreatealbummodalComponent } from './components/createalbummodal/createa
 import { MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { PostmodalComponent } from './components/postmodal/postmodal.component';
 import { NotifnavbarmodalComponent } from './components/notifnavbarmodal/notifnavbarmodal.component';
+import { SearchmodalComponent } from './components/searchmodal/searchmodal.component';
 
 
 
@@ -51,7 +52,8 @@ const appRoutes: Routes = [
     WallComponent,
     CreatealbummodalComponent,
     PostmodalComponent,
-    NotifnavbarmodalComponent
+    NotifnavbarmodalComponent,
+    SearchmodalComponent
 
   ],
   imports: [

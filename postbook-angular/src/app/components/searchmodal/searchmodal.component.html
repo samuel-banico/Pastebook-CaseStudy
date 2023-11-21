@@ -1,0 +1,45 @@
+<div class="modal-content" style="width: 37vw; height: 52vh;">
+    <!-- Your existing modal content goes here -->
+    <div class="modal-header">
+      <h5 class="modal-title" style="letter-spacing: 2px;">FRIENDS</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+    </div>
+    <div class="modal-body">
+      <div class="d-flex">
+        <input placeholder="Search here!" style="width: 100%;">
+      <button type="button" class="red" (click)="close()">Search</button>
+      </div>
+      <div *NgFor="" class="pale-background">
+          FRIENDS HERE
+      </div>
+      <!-- to remove 'tong nasa baba, placeholder lang' -->
+      <div>
+        <div class="row mt-3">
+          <!-- First User -->
+          <div class="col-md-1"></div>
+          <div class="col-md-5">
+            <div class="d-flex align-items-center justify-content-start pale-background">
+              <img src="https://images.pexels.com/photos/7871166/pexels-photo-7871166.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="User 1" class="rounded-circle" width="40px" height="40px">
+              <div class="ml-3">
+                <h4 class="profile-name" style="font-size: small;">Samuel Geo Banico</h4>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <!-- (click)="$event.stopPropagation()" -->
+    <!-- <div class="modal-footer" >
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          {{ selectedOption }}
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><a class="dropdown-item" (click)="onOptionSelect('Public')">Public</a></li>
+          <li><a class="dropdown-item" (click)="onOptionSelect('Friends only')">Friends only</a></li>
+        </ul>
+      </div>   
+      <button type="button" class="red" (click)="close()"> 
+        Post
+      </button>
+    </div> -->
+  </div>

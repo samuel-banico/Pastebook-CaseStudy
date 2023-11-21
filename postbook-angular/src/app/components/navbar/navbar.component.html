@@ -17,7 +17,7 @@
         </ul>
 
         <form class="form-inline ml-auto d-none d-md-block">
-            <input type="text" name="searchUser" id="searchUser" placeholder="Search" class="form-control form-control-sm" (input)="onType($event)" [(ngModel)]="searchUser">
+            <input type="text" name="searchUser" id="searchUser" placeholder="Search" class="form-control form-control-sm" (input)="onType($event)" [(ngModel)]="searchUser" (click)="openSearchModal()">
         </form>
 
         

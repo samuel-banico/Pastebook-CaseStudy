@@ -5,6 +5,7 @@ import { User } from '@models/user';
 import { Router, NavigationEnd } from '@angular/router';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { NotifnavbarmodalComponent } from '@components/notifnavbarmodal/notifnavbarmodal.component';
+import { SearchmodalComponent } from '@components/searchmodal/searchmodal.component';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class NavbarComponent implements OnInit {
   user: User[] = []
 
   modalRef: MdbModalRef<NotifnavbarmodalComponent> | null = null;
+  searchRef: MdbModalRef<SearchmodalComponent> | null = null;
 
   constructor(
     private homeService: HomeService,
@@ -65,6 +67,10 @@ export class NavbarComponent implements OnInit {
   
   logout(): void {
     this.sessionService.clear();
+  }
+
+  openSearchModal() {
+    this.searchRef = this.modalService.open(SearchmodalComponent)
   }
 
  
