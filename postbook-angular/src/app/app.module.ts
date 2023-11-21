@@ -15,6 +15,9 @@ import { FriendsComponent } from './pages/friends/friends.component';
 import { AlbumsComponent } from './pages/albums/albums.component';
 import { CreateAlbumComponent } from './pages/create-album/create-album.component';
 import { WallComponent } from './pages/wall/wall.component';
+import { CreatealbummodalComponent } from './components/createalbummodal/createalbummodal.component';
+import { MdbModalService } from 'mdb-angular-ui-kit/modal';
+
 
 
 const appRoutes: Routes = [
@@ -43,7 +46,8 @@ const appRoutes: Routes = [
     FriendsComponent,
     AlbumsComponent,
     CreateAlbumComponent,
-    WallComponent
+    WallComponent,
+    CreatealbummodalComponent
   ],
   imports: [
     BrowserModule,
@@ -51,8 +55,8 @@ const appRoutes: Routes = [
     FormsModule,
     HttpClientModule
   ],
-  exports: [RouterModule],
-  providers: [],
+  exports: [RouterModule, CreatealbummodalComponent],
+  providers: [MdbModalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
