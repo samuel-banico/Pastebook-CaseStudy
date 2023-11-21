@@ -6,7 +6,7 @@ using pastebook_db.Models;
 namespace pastebook_db.Controllers
 {
     [ApiController]
-    [Route("api/posts")]
+    [Route("api/albums")]
     public class AlbumController : Controller
     {
         private readonly AlbumRepository _albumRepository;
