@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HomeService } from '@services/home.service';
 import { SessionService } from '@services/session.service';
 import { User } from '@models/user';
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { NotifnavbarmodalComponent } from '@components/notifnavbarmodal/notifnavbarmodal.component';
 
 @Component({
   selector: 'app-navbar',
@@ -12,8 +14,11 @@ export class NavbarComponent implements OnInit {
   searchUser: string = "";
   user: User[] = []
 
+  modalRef: MdbModalRef<NotifnavbarmodalComponent> | null = null;
+
   constructor(
     private homeService: HomeService,
+    private modalService: MdbModalService,
     private sessionService: SessionService
     
   ) {}
@@ -31,10 +36,15 @@ export class NavbarComponent implements OnInit {
     console.log(this.user);
   }
 
+  openModal() {
+    this.modalRef = this.modalService.open(NotifnavbarmodalComponent)
+  }
+  
   logout(): void {
     this.sessionService.clear();
   }
+
  
 }
 
-
+}
