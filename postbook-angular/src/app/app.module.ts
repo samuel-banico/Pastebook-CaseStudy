@@ -23,6 +23,7 @@ import { SearchmodalComponent } from './components/searchmodal/searchmodal.compo
 import { LandingComponent } from '@components/landing/landing.component';
 import { ForgotpasswordComponent } from './pages/forgotpassword/forgotpassword.component';
 import { FriendrequestmodalComponent } from './components/friendrequestmodal/friendrequestmodal.component';
+import { LandingComponent } from '@components/landing/landing.component';
 
 
 
@@ -36,8 +37,9 @@ const appRoutes: Routes = [
   {path: 'friends', component: FriendsComponent},
   {path: 'albums', component: AlbumsComponent},
   {path: 'create', component: CreateAlbumComponent},
+  {path: 'landing', component:LandingComponent}
   {path: 'forgotpassword', component: ForgotpasswordComponent}
-  //{path: '**', component: NotFoundComponent}
+
 ];
 
 
@@ -58,6 +60,7 @@ const appRoutes: Routes = [
     NotifnavbarmodalComponent,
     ForgotpasswordComponent,
     PostmodalComponent,
+    LandingComponent,
     NotifnavbarmodalComponent,
     SearchmodalComponent,
     FriendrequestmodalComponent
