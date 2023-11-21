@@ -132,6 +132,9 @@ namespace pastebook_db.Controllers
         {
             var postToDelete = _postRepository.GetPostById(postId);
 
+            if (postToDelete == null)
+                return NotFound(new { result = "post_does_not_exist"});
+
             _postRepository.DeletePost(postToDelete);
 
             return Ok(new { result = "post_deleted" });

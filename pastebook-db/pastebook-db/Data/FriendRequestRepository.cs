@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using pastebook_db.Database;
 using pastebook_db.Models;
 
@@ -29,10 +30,15 @@ namespace pastebook_db.Data
             return _context.FriendRequests.FirstOrDefault(u => u.Id == id);
         }
 
-        public void DeleteFriendRequest(FriendRequest friendRequest) 
+        public void DeleteFriendRequest(int friendRequestId) 
         {
-            _context.Remove(friendRequest);
-            _context.SaveChanges();
+            var rejectRequest = _context.FriendRequests.Find(friendRequestId);
+
+            if (rejectRequest != null)
+            {
+                _context.FriendRequests.Remove(rejectRequest);
+                _context.SaveChanges();
+            }
         }
     }
 }

@@ -22,13 +22,25 @@ export class SessionService {
     return localStorage.getItem('email')!;
   }
 
+  getId() : string {
+    return localStorage.getItem('id')!;
+  }
+
   setToken(value:string) : void {
     this.hasToken.emit(true);
     localStorage.setItem('token',value);
   }
 
+  setId(value:string) : string {
+    return localStorage.setItem('id', value)!;
+  }
+
   setEmail(value:string) : void {
     localStorage.setItem('email',value);
+  }
+
+  setId(value: string) : void {
+    localStorage.setItem('id', value);
   }
 
   clear() : void {

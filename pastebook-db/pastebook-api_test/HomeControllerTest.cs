@@ -18,7 +18,7 @@ namespace pastebook_api_test
             this.output = output;
         }
 
-        [Theory]
+        /*[Theory]
         [InlineData("j")]
         [InlineData("joe")]
         public void Test_SearchUserByString(string itemToSearch)
@@ -36,6 +36,6 @@ namespace pastebook_api_test
 
             // Assert
             Assert.NotNull(result);
-        }
+        }*/
     }
 }

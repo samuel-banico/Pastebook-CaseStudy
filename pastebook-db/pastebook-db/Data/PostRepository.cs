@@ -40,11 +40,7 @@ namespace pastebook_db.Data
             var isFriend = _friendRepository.GetFriendship(retrievedUserId, loggedUserId);
 
             if (isFriend != null)
-                return _context.Posts
-                            .Include(pL => pL.PostLikeList)
-                            .Include(pL => pL.PostCommentList)
-                            .Where(p => p.UserId == retrievedUserId)
-                            .ToList();
+                return GetAllPostOfUserTimeline(retrievedUserId);
 
             return _context.Posts.Where(p => p.UserId == retrievedUserId && p.IsPublic == true).ToList();
         }
@@ -78,27 +74,14 @@ namespace pastebook_db.Data
         // --- PUT
         public void UpdatePost(Post post) 
         {
-            var existingEntity = _context.Set<Post>().Local.SingleOrDefault(e => e.Id == post.Id);
-            if (existingEntity != null)
-            {
-                _context.Entry(existingEntity).State = EntityState.Detached;
-            }
-
             _context.Entry(post).State = EntityState.Modified;
             _context.SaveChanges();
         }
 
         // --- DELETE
-        // To be edit, needs to remove all dependency
         public void DeletePost(Post post) 
         {            
-            var existingEntity = _context.Set<Post>().Local.SingleOrDefault(e => e.Id == post.Id);
-            if (existingEntity != null)
-            {
-                _context.Entry(existingEntity).State = EntityState.Detached;
-            }
-
-            _context.Posts.Remove(existingEntity);
+            _context.Posts.Remove(post);
             _context.SaveChanges();
         }
 

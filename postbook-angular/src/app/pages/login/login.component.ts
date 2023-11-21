@@ -13,7 +13,7 @@ import { SessionService } from '@services/session.service';
 export class LoginComponent implements OnInit {
   email: string = "";
   password: string = "";
-  id: number = 0;
+
   constructor(
     private sessionService: SessionService,
     private userService: UserService,
@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
 
   successfullLogin(response: Record<string, any>) {
     this.sessionService.setEmail(response['email']);
+    this.sessionService.setId(response['id']);
     this.sessionService.setToken(response['token']);
     this.router.navigate(['']).then(() => {
       //Full page reload to ensure cache of the localStorage is removed.

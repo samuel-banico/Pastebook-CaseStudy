@@ -24,8 +24,13 @@
             <input type="text" name="searchUser" id="searchUser" placeholder="Search" class="form-control form-control-sm" (input)="onType($event)" [(ngModel)]="searchUser">
         </form>
 
-        
-        <a href="javascript:void(0);" class="btn btn-primary" (click)="openModal()" class="text-decoration-none" style="color:#CBE4F2;font-size:22px;">
+        &nbsp;
+
+        <a href="javascript:void(0);" class="btn btn-primary" (click)="openFriendModal()" class="text-decoration-none" style="color:#fff;font-size:22px;">
+            <img width="30px" height="30px" src="assets/images/friends-icon.png" alt="">
+        </a> 
+
+        <a href="javascript:void(0);" class="btn btn-primary" (click)="openNotifModal()" class="text-decoration-none" style="color:#fff;font-size:22px;">
             <i class="far fa-bell ml-3 d-none d-md-block"></i>
         </a> 
 

@@ -13,7 +13,7 @@ namespace pastebook_db
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddDbContext<PastebookContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("PastebookContext") ?? throw new InvalidOperationException("Connection string 'PastebookContext' not found.")));
+               options.UseSqlServer(builder.Configuration.GetConnectionString("PastebookContext") ?? throw new InvalidOperationException("Connection string 'PastebookContext' not found.")));
 
             builder.Services.AddControllers();
 

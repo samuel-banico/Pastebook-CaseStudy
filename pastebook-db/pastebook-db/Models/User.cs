@@ -22,23 +22,12 @@ namespace pastebook_db.Models
 
     public class UserDTO
     {
-        [Required]
+        public int? Id { get; set; }
         public string FirstName { get; set; } = null!;
-
-        [Required]
         public string LastName { get; set; } = null!;
-
-        [Required]
-        [EmailAddress]
         public string Email { get; set; } = null!;
-
-        [Required]
         public string Password { get; set; } = null!;
-
-        [Required]
         public string Birthday { get; set; } = null!;
-
-        [Required]
         public int Gender { get; set; }
         public string? MobileNumber { get; set; }
     }
@@ -56,8 +45,9 @@ namespace pastebook_db.Models
 
     public class UserLoginResponse
     {
+        public int? id { get; set; }
+        public string? token { get; set; }
         public string? email { get; set; }
         public bool? isActive { get; set; }
     }
-
 }

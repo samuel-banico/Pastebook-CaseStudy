@@ -19,7 +19,12 @@ namespace pastebook_db.Controllers
         [HttpGet("searchUser")]
         public ActionResult<IEnumerable<UserDTO>> SearchUserByString(string user)
         {
-            var users = _repo.getAllUser().Where(u => u.FirstName.ToLower().Contains(user.ToLower()) || u.LastName.ToLower().Contains(user.ToLower())).Take(5).ToList();
+            var users = _repo.GetSearchedUser(user);
+
+            if(users == null || users.Count == 0)
+            {
+                return NotFound(new { result = "no_match"});
+            }
 
             var userList = new List<UserDTO>();
 
@@ -27,6 +32,7 @@ namespace pastebook_db.Controllers
             {
                 var u = new UserDTO()
                 {
+                    Id = item.Id,
                     FirstName = item.FirstName,
                     LastName = item.LastName,
                     Email = item.Email,
@@ -38,6 +44,7 @@ namespace pastebook_db.Controllers
 
                 userList.Add(u);
             }
+
             return Ok(userList);
         }
     }
