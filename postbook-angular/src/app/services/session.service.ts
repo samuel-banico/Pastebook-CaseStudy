@@ -43,7 +43,4 @@ export class SessionService {
     localStorage.clear();
     this.hasToken.emit(false);
   }
-
-
-
 }
