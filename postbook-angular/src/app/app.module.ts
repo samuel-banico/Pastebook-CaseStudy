@@ -19,10 +19,10 @@ import { CreatealbummodalComponent } from './components/createalbummodal/createa
 import { MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { PostmodalComponent } from './components/postmodal/postmodal.component';
 import { NotifnavbarmodalComponent } from './components/notifnavbarmodal/notifnavbarmodal.component';
+import { SearchmodalComponent } from './components/searchmodal/searchmodal.component';
 import { LandingComponent } from '@components/landing/landing.component';
 import { ForgotpasswordComponent } from './pages/forgotpassword/forgotpassword.component';
 import { FriendrequestmodalComponent } from './components/friendrequestmodal/friendrequestmodal.component';
-
 
 
 
@@ -58,9 +58,9 @@ const appRoutes: Routes = [
     NotifnavbarmodalComponent,
     ForgotpasswordComponent,
     PostmodalComponent,
+    NotifnavbarmodalComponent,
+    SearchmodalComponent,
     FriendrequestmodalComponent
-
-
   ],
   imports: [
     BrowserModule,
