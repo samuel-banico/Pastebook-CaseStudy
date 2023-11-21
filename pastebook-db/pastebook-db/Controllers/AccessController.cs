@@ -15,9 +15,11 @@ namespace pastebook_db.Controllers
 
         private readonly IPasswordHash _hashPassword;
 
-        public AccessController(IPasswordHash hashPassword)
+        public AccessController(IPasswordHash hashPassword, AccessRepository accessRepository, UserRepository userRepository)
         {
             _hashPassword = hashPassword;
+            _accessRepository = accessRepository;
+            _userRepository = userRepository;
         }
 
         [HttpPost("login")]
