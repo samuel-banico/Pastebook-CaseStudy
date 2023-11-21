@@ -36,8 +36,7 @@ export class LoginComponent implements OnInit {
     this.sessionService.setId(response['id']);
     this.sessionService.setToken(response['token']);
     this.router.navigate(['']).then(() => {
-      //Full page reload to ensure cache of the localStorage is removed.
-      window.location.href = "/home";
+      window.location.href = "/";
     });
   };
 

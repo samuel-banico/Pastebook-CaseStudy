@@ -20,6 +20,7 @@ import { MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { PostmodalComponent } from './components/postmodal/postmodal.component';
 import { NotifnavbarmodalComponent } from './components/notifnavbarmodal/notifnavbarmodal.component';
 import { FriendrequestmodalComponent } from './components/friendrequestmodal/friendrequestmodal.component';
+import { LandingComponent } from '@components/landing/landing.component';
 
 
 
@@ -32,7 +33,8 @@ const appRoutes: Routes = [
   {path: 'settings', component: SettingsComponent},
   {path: 'friends', component: FriendsComponent},
   {path: 'albums', component: AlbumsComponent},
-  {path: 'create', component: CreateAlbumComponent}
+  {path: 'create', component: CreateAlbumComponent},
+  {path: 'landing', component:LandingComponent}
   //{path: '**', component: NotFoundComponent}
 ];
 
@@ -53,7 +55,8 @@ const appRoutes: Routes = [
     CreatealbummodalComponent,
     NotifnavbarmodalComponent,
     PostmodalComponent,
-    FriendrequestmodalComponent
+    FriendrequestmodalComponent,
+    LandingComponent
 
   ],
   imports: [
