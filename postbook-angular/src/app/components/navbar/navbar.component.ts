@@ -57,7 +57,7 @@ export class NavbarComponent implements OnInit {
 
 
   
-}
+
 
   openModal() {
     this.modalRef = this.modalService.open(NotifnavbarmodalComponent)
@@ -70,5 +70,5 @@ export class NavbarComponent implements OnInit {
  
 }
 
-}
+
 
