@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; 
 import { UserService } from '@services/user.service';
 import { User } from '@models/user';
-import { Gender } from '@models/gender';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -13,7 +12,6 @@ import Swal from 'sweetalert2';
 export class RegistrationComponent implements OnInit {
   user: User = new User();
   confirmPassword: string = "";
-  genders = Object.values(Gender);
   showPassword: boolean = false;
 
   constructor(
