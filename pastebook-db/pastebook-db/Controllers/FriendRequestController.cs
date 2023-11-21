@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using pastebook_db.Data;
 using pastebook_db.Models;
 
@@ -40,6 +41,13 @@ namespace pastebook_db.Controllers
             _notificationRepository.CreateNotifFriendRequest(friendRequest);
 
             return Ok(new { result = "request_sent", friendRequest });
+        }
+
+        [HttpDelete("rejectRequest")]
+        public ActionResult<FriendRequest> RejectFriendReq(int friendReq)
+        {
+            _friendRequestRepository.DeleteFriendRequest(friendReq);
+            return Ok(new { result = "friend_request_rejected" });
         }
     }
 }
