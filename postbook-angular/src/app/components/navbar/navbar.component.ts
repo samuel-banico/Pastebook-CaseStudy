@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from '@services/home.service';
+import { SessionService } from '@services/session.service';
 import { User } from '@models/user';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { NotifnavbarmodalComponent } from '@components/notifnavbarmodal/notifnavbarmodal.component';
@@ -17,7 +18,8 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private homeService: HomeService,
-    private modalService: MdbModalService
+    private modalService: MdbModalService,
+    private sessionService: SessionService
     
   ) {}
 
@@ -36,6 +38,11 @@ export class NavbarComponent implements OnInit {
 
   openModal() {
     this.modalRef = this.modalService.open(NotifnavbarmodalComponent)
+  }
+  
+  logout(): void {
+    this.sessionService.clear();
+  }
 
  
 }
