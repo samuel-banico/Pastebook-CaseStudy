@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
 
   successfullLogin(response: Record<string, any>) {
     this.sessionService.setEmail(response['email']);
+    this.sessionService.setId(response['id']);
     this.sessionService.setToken(response['token']);
     this.router.navigate(['']).then(() => {
       //Full page reload to ensure cache of the localStorage is removed.

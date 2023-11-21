@@ -16,6 +16,13 @@ namespace pastebook_db.Data
         {
             return _context.Users.ToList();
         }
+
+        public List<User> GetSearchedUser(string toSearch) 
+        {
+            var users = getAllUser().Where(u => u.FirstName.ToLower().Contains(toSearch.ToLower()) || u.LastName.ToLower().Contains(toSearch.ToLower()) || $"{u.FirstName.ToLower()} {u.LastName.ToLower()}".Contains(toSearch.ToLower())).Take(5).ToList();
+
+            return users;
+        }
     }
 
 }
