@@ -18,6 +18,7 @@ import { WallComponent } from './pages/wall/wall.component';
 import { CreatealbummodalComponent } from './components/createalbummodal/createalbummodal.component';
 import { MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { NotifnavbarmodalComponent } from './components/notifnavbarmodal/notifnavbarmodal.component';
+import { FriendrequestmodalComponent } from './components/friendrequestmodal/friendrequestmodal.component';
 
 
 
@@ -49,7 +50,8 @@ const appRoutes: Routes = [
     CreateAlbumComponent,
     WallComponent,
     CreatealbummodalComponent,
-    NotifnavbarmodalComponent
+    NotifnavbarmodalComponent,
+    FriendrequestmodalComponent
   ],
   imports: [
     BrowserModule,
