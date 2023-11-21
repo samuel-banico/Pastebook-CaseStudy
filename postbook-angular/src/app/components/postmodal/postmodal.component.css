@@ -1,0 +1,41 @@
+.red {
+    background-color: #0b2154;
+    border-radius: 10%;
+    height: 40px;
+    width: 80px;
+    color: aliceblue;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.btn-secondary {
+    background-color: #68070f !important;
+    border-radius: 10%;
+    color: aliceblue;
+    font-weight: 700;
+    letter-spacing: 1px;
+    height: 40px;
+}
+
+/* .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; 
+  }
+
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5%;
+    z-index: 1001; 
+    width: 50%;
+    height: 50%;
+  } */
+  

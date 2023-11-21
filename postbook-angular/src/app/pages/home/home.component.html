@@ -1,4 +1,4 @@
-
+<app-navbar></app-navbar>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -48,7 +48,7 @@
                             <form class="form-inline" >
 
                                 <div class="input-group w-100">
-                                 <input type="text" name="message" id="message" placeholder="Message" class="form-control form-control-md">
+                                 <input type="text" name="message" id="message" placeholder="Message" class="form-control form-control-md" (click)="openModal()">
 
                                  <div class="input-group-append">
                                     <!--Added button by Sam to test the connection-->

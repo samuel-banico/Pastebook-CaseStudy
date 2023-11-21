@@ -6,6 +6,7 @@ import { User } from '@models/user';
 import { Router, NavigationEnd } from '@angular/router';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { NotifnavbarmodalComponent } from '@components/notifnavbarmodal/notifnavbarmodal.component';
+import { FriendrequestmodalComponent } from '@components/friendrequestmodal/friendrequestmodal.component';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class NavbarComponent implements OnInit {
   searchUser: string = "";
   user: User[] = []
 
-  modalRef: MdbModalRef<NotifnavbarmodalComponent> | null = null;
+  modalRef: MdbModalRef<NotifnavbarmodalComponent> | MdbModalRef<FriendrequestmodalComponent> | null = null;
 
   constructor(
     private homeService: HomeService,
@@ -55,11 +56,15 @@ export class NavbarComponent implements OnInit {
 
     console.log(this.user);
   }
-  
 
 
-  openModal() {
+  openNotifModal() {
+
     this.modalRef = this.modalService.open(NotifnavbarmodalComponent)
+  }
+
+  openFriendModal() {
+    this.modalRef = this.modalService.open(FriendrequestmodalComponent)
   }
   
   logout(): void {
