@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HomeService } from '@services/home.service';
 import { User } from '@models/user';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -8,13 +9,28 @@ import { User } from '@models/user';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  @ViewChild('togglerCheckbox') togglerCheckbox: ElementRef | undefined;
+
+
   searchUser: string = "";
   user: User[] = []
 
   constructor(
-    private homeService: HomeService
+    private homeService: HomeService,
+    private router: Router
     
-  ) {}
+  ) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Reset the checkbox state when the route changes
+        if (this.togglerCheckbox) {
+          this.togglerCheckbox.nativeElement.checked = false;
+        }
+      }
+    });
+    }
+
+
 
   ngOnInit(): void {
     
@@ -29,7 +45,5 @@ export class NavbarComponent implements OnInit {
     console.log(this.user);
   }
 
- 
+  
 }
-
-

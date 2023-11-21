@@ -1,0 +1,21 @@
+.drag-drop-area {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .picture-collection {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .picture-item {
+    margin: 5px;
+  }
+  
+  .picture-item img {
+    max-width: 100px; /* Adjust the size as needed */
+    max-height: 100px; /* Adjust the size as needed */
+  }
+  
