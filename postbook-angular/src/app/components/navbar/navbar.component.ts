@@ -48,13 +48,12 @@ export class NavbarComponent implements OnInit {
     
   }
 
-  onType(event: any) {
+  onType(event : any) {
     console.log(this.searchUser);
     this.homeService.search(this.searchUser).subscribe((response: User[]) => {
-      this.user = response
+      this.user = response;
+      console.log(response);
     })
-
-    console.log(this.user);
   }
 
 
