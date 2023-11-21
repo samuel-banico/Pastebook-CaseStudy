@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using pastebook_db.Data;
 using pastebook_db.Database;
 using pastebook_db.Services.PasswordHash;
+using System.Text.Json.Serialization;
 
 namespace pastebook_db
 {
@@ -39,6 +40,10 @@ namespace pastebook_db
             builder.Services.AddScoped<UserRepository>();
             
             builder.Services.AddCors();
+            //Added to ignore circular reference
+            builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
 
             var app = builder.Build();
 
