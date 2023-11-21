@@ -6,6 +6,8 @@
         public string AlbumName { get; set; } = null!;
         public string AlbumDescription { get; set; } = null!;
         public bool IsPublic { get; set; }
+        public bool IsEdited { get; set; }
+        public DateTime CreatedOn { get; set; }
         public byte[]? CoverAlbumImage { get; set; }
 
         // Foreign Key
@@ -21,7 +23,11 @@
         public string AlbumName { get; set; } = null!;
         public string AlbumDescription { get; set; } = null!;
         public bool IsPublic { get; set; }
+        public bool IsEdited { get; set; }
+        public string? CreatedOn { get; set; }
         public byte[]? CoverAlbumImage { get; set; }
+
+        public int UserId { get; set; }
 
         public ICollection<AlbumImage>? AlbumImageList { get; set; }
     }
