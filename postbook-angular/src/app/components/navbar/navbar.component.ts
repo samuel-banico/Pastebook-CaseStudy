@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from '@services/home.service';
+import { SessionService } from '@services/session.service';
 import { User } from '@models/user';
 
 @Component({
@@ -12,7 +13,8 @@ export class NavbarComponent implements OnInit {
   user: User[] = []
 
   constructor(
-    private homeService: HomeService
+    private homeService: HomeService,
+    private sessionService: SessionService
     
   ) {}
 
@@ -29,6 +31,9 @@ export class NavbarComponent implements OnInit {
     console.log(this.user);
   }
 
+  logout(): void {
+    this.sessionService.clear();
+  }
  
 }
 

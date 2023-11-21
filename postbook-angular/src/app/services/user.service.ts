@@ -9,17 +9,18 @@ import { User } from '@models/user';
 })
 export class UserService {
   private baseUrl: string = 'https://localhost:7185/api/users';
+  private accessUrl: string = 'https://localhost:7185/api/access';
   
   constructor(
     private http: HttpClient,
   ) { }
 
   login(email: string, password: string): Observable<object> {
-    return this.http.post(this.baseUrl + '/login', {email, password});
+    return this.http.post(this.accessUrl + '/login', {email, password});
   }
 
   register(user: User): Observable<object> {
-    return this.http.post(this.baseUrl + '/register', user);
+    return this.http.post(this.accessUrl + '/register', user);
   }
 
   getUser(id: number) : Observable<Object>{

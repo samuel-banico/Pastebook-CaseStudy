@@ -16,12 +16,12 @@ namespace pastebook_db.Data
             _context = context;
         }
 
-        public User GetUserById(int id)
+        public User? GetUserById(int id)
         {
             return _context.Users.Find(id);
         }
 
-        public User GetUserByEmail(string email)
+        public User? GetUserByEmail(string email)
         {
             return _context.Users.FirstOrDefault(f => f.Email == email);
         }
