@@ -27,6 +27,7 @@ namespace pastebook_db.Controllers
             {
                 var u = new UserDTO()
                 {
+                    Id = item.Id,
                     FirstName = item.FirstName,
                     LastName = item.LastName,
                     Email = item.Email,
@@ -38,6 +39,7 @@ namespace pastebook_db.Controllers
 
                 userList.Add(u);
             }
+
             return Ok(userList);
         }
     }

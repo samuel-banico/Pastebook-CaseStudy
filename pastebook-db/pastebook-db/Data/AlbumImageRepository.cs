@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using pastebook_db.Database;
 using pastebook_db.Models;
 
@@ -8,20 +9,44 @@ namespace pastebook_db.Data
     {
         private readonly PastebookContext _context;
 
-        // Album Images
-        public async void CreateAlbumImage(int albumId, IFormFile image)
+        // --- GET
+        public AlbumImage? GetAlbumImageById(int id)
         {
-            await using var memoryStream = new MemoryStream();
-            image.CopyTo(memoryStream);
+            var post = _context.AlbumImages
+                        .Include(a => a.AlbumImageLikesList)
+                        .Include(a => a.AlbumImageCommentsList)
+                        .FirstOrDefault(a => a.Id == id);
+            return post;
+        }
 
-            var newAlbumImage = new AlbumImage
-            {
-                Image = memoryStream.ToArray(),
-                AlbumId = albumId
-            };
+        public List<AlbumImage> GetAllAlbumImagesByAlbumId(int albumId)
+        {
+            return _context.AlbumImages
+                        .Include(a => a.AlbumImageLikesList)
+                        .Include(a => a.AlbumImageCommentsList)
+                        .Where(p => p.AlbumId == albumId)
+                        .ToList();
+        }
 
-            _context.AlbumImages.Add(newAlbumImage);
+        // --- POST
+        public async void CreateAlbumImage(AlbumImage albumImage)
+        {
+            _context.AlbumImages.Add(albumImage);
             await _context.SaveChangesAsync();
+        }
+
+        // PUT
+        public void UpdateAlbumImage(AlbumImage albumImage)
+        {
+            _context.Entry(albumImage).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        // --- DELETE
+        public void DeleteAlbumImage(AlbumImage albumImage)
+        {
+            _context.AlbumImages.Remove(albumImage);
+            _context.SaveChanges();
         }
     }
 }

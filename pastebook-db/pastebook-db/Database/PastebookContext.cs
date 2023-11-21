@@ -64,6 +64,30 @@ namespace pastebook_db.Database
                     .WithMany()
                     .HasForeignKey(e => e.UserId)
                     .OnDelete(DeleteBehavior.ClientCascade);
+
+            /*mB.Entity<Post>()
+                .HasMany(e => e.PostLikeList)
+                .WithOne()
+                .HasForeignKey(e => e.PostId)
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            mB.Entity<Post>()
+                .HasMany(e => e.PostCommentList)
+                .WithOne()
+                .HasForeignKey(e => e.PostId)
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            mB.Entity<AlbumImage>()
+                .HasMany(e => e.AlbumImageLikesList)
+                .WithOne()
+                .HasForeignKey(e => e.AlbumImageId)
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            mB.Entity<AlbumImage>()
+                .HasMany(e => e.AlbumImageCommentsList)
+                .WithOne()
+                .HasForeignKey(e => e.AlbumImageId)
+                .OnDelete(DeleteBehavior.ClientCascade);*/
         }
     }
 }

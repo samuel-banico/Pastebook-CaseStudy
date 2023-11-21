@@ -15,9 +15,11 @@ namespace pastebook_db.Controllers
 
         private readonly IPasswordHash _hashPassword;
 
-        public AccessController(IPasswordHash hashPassword)
+        public AccessController(IPasswordHash hashPassword, AccessRepository accessRepository, UserRepository userRepository)
         {
             _hashPassword = hashPassword;
+            _accessRepository = accessRepository;
+            _userRepository = userRepository;
         }
 
         [HttpPost("login")]
@@ -36,7 +38,9 @@ namespace pastebook_db.Controllers
                 var userLoginResponse = new UserLoginResponse
                 {
                     email = user.Email,
-                    isActive = user.IsActive
+                    isActive = user.IsActive,
+                    id = user.Id,
+                    token = "sampleToken"
                 };
 
                 return Ok(userLoginResponse);

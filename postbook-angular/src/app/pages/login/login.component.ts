@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 import { UserService } from '@services/user.service';
+import { SessionService } from '@services/session.service';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ export class LoginComponent implements OnInit {
   password: string = "";
 
   constructor(
+    private sessionService: SessionService,
     private userService: UserService,
     private router: Router
   ) {}
@@ -30,6 +32,9 @@ export class LoginComponent implements OnInit {
   }
 
   successfullLogin(response: Record<string, any>) {
+    this.sessionService.setEmail(response['email']);
+    this.sessionService.setId(response['id']);
+    this.sessionService.setToken(response['token']);
     this.router.navigate(['']).then(() => {
       //Full page reload to ensure cache of the localStorage is removed.
       window.location.href = "/home";

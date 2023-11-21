@@ -60,7 +60,7 @@ namespace pastebook_db.Data
             _context.Friends.Add(addFriend);
             _context.SaveChanges();
 
-            _friendRequestRepository.DeleteFriendRequest(req);
+            _friendRequestRepository.DeleteFriendRequest(req.Id);
         }
 
         public void UpdateFriend(Friend friend)

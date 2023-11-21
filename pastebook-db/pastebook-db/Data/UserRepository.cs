@@ -16,12 +16,12 @@ namespace pastebook_db.Data
             _context = context;
         }
 
-        public User GetUserById(int id)
+        public User? GetUserById(int id)
         {
             return _context.Users.Find(id);
         }
 
-        public User GetUserByEmail(string email)
+        public User? GetUserByEmail(string email)
         {
             return _context.Users.FirstOrDefault(f => f.Email == email);
         }
@@ -34,11 +34,8 @@ namespace pastebook_db.Data
         //edit 
         public bool UpdateUser(User user, bool emailIsEditted)
         {
-            var existingEntity = _context.Set<User>().Local.SingleOrDefault(e => e.Id == user.Id);
-            if (existingEntity != null)
-            {
-                _context.Entry(existingEntity).State = EntityState.Detached;
-            }
+            _context.Entry(user).State = EntityState.Modified;
+            _context.SaveChanges();
 
             var hasSent = true;
             if (emailIsEditted)
@@ -48,9 +45,6 @@ namespace pastebook_db.Data
 
                 hasSent = SendEmail(user.Email, emailBody);
             }
-
-            _context.Entry(user).State = EntityState.Modified;
-            _context.SaveChanges();
 
             return hasSent;
         }
