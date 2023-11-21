@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes} from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -20,6 +20,9 @@ import { MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { PostmodalComponent } from './components/postmodal/postmodal.component';
 import { NotifnavbarmodalComponent } from './components/notifnavbarmodal/notifnavbarmodal.component';
 import { SearchmodalComponent } from './components/searchmodal/searchmodal.component';
+import { LandingComponent } from '@components/landing/landing.component';
+import { ForgotpasswordComponent } from './pages/forgotpassword/forgotpassword.component';
+import { FriendrequestmodalComponent } from './components/friendrequestmodal/friendrequestmodal.component';
 
 
 
@@ -32,7 +35,8 @@ const appRoutes: Routes = [
   {path: 'settings', component: SettingsComponent},
   {path: 'friends', component: FriendsComponent},
   {path: 'albums', component: AlbumsComponent},
-  {path: 'create', component: CreateAlbumComponent}
+  {path: 'create', component: CreateAlbumComponent},
+  {path: 'forgotpassword', component: ForgotpasswordComponent}
   //{path: '**', component: NotFoundComponent}
 ];
 
@@ -51,10 +55,12 @@ const appRoutes: Routes = [
     CreateAlbumComponent,
     WallComponent,
     CreatealbummodalComponent,
+    NotifnavbarmodalComponent,
+    ForgotpasswordComponent,
     PostmodalComponent,
     NotifnavbarmodalComponent,
-    SearchmodalComponent
-
+    SearchmodalComponent,
+    FriendrequestmodalComponent
   ],
   imports: [
     BrowserModule,
