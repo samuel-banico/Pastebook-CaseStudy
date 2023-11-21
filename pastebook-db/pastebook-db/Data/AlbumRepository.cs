@@ -6,7 +6,8 @@ namespace pastebook_db.Data
 {
     public class AlbumRepository
     {
-        readonly PastebookContext _context;
+        private readonly PastebookContext _context;
+        private readonly FriendRepository _friendRepository; 
 
         public AlbumRepository(PastebookContext context)
         {
@@ -16,14 +17,14 @@ namespace pastebook_db.Data
         public Album? GetAlbumById(int id)
         {
             return _context.Albums
-                        .Include(a => a.AlbumImageList)
-                        .ThenInclude(aL => aL.AlbumImageLikesList)
-                        .Include(a => a.AlbumImageList)
-                        .ThenInclude(aC => aC.AlbumImageCommentsList)
-                        .FirstOrDefault(p => p.Id == id);
+                .Include(a => a.AlbumImageList)
+                    .ThenInclude(aL => aL.AlbumImageLikesList)
+                .Include(a => a.AlbumImageList)
+                    .ThenInclude(aC => aC.AlbumImageCommentsList)
+                .FirstOrDefault(p => p.Id == id);
         }
 
-        public List<Album> GetAllAlbumByOwner(int userId)
+        public List<Album>? GetAllAlbumByOwner(int userId)
         {
             return _context.Albums
                         .Include(a => a.AlbumImageList)
@@ -34,14 +35,19 @@ namespace pastebook_db.Data
                         .ToList();
         }
 
-        public List<Album> GetAllAlbumByOther(int userId)
+        public List<Album> GetAllAlbumByOther(int retrievedUserId, int loggedUserId)
         {
+            var isFriend = _friendRepository.GetFriendship(retrievedUserId, loggedUserId);
+
+            if (isFriend != null)
+                return GetAllAlbumByOwner(retrievedUserId);
+
             return _context.Albums
                         .Include(a => a.AlbumImageList)
                         .ThenInclude(aL => aL.AlbumImageLikesList)
                         .Include(a => a.AlbumImageList)
                         .ThenInclude(aC => aC.AlbumImageCommentsList)
-                        .Where(p => p.UserId == userId && p.IsPublic == true)
+                        .Where(p => p.UserId == retrievedUserId && p.IsPublic == true)
                         .ToList();
         }
 
@@ -53,12 +59,6 @@ namespace pastebook_db.Data
 
         public void UpdateAlbum(Album album)
         {
-            var existingEntity = _context.Set<Album>().Local.SingleOrDefault(e => e.Id == album.Id);
-            if (existingEntity != null)
-            {
-                _context.Entry(existingEntity).State = EntityState.Detached;
-            }
-
             _context.Entry(album).State = EntityState.Modified;
             _context.SaveChanges();
         }
@@ -66,14 +66,28 @@ namespace pastebook_db.Data
         // To be edit
         public void DeleteAlbum(Album album)
         {
-            var existingEntity = _context.Set<Album>().Local.SingleOrDefault(e => e.Id == album.Id);
-            if (existingEntity != null)
-            {
-                _context.Entry(existingEntity).State = EntityState.Detached;
-            }
-
-            _context.Albums.Remove(existingEntity);
+            _context.Albums.Remove(album);
             _context.SaveChanges();
+        }
+
+        // HELPER METHODS
+        public AlbumDTO ConvertAlbumToAlbumDTO(Album album)
+        {
+            var albumDTO = new AlbumDTO()
+            {
+                Id = album.Id,
+                AlbumName = album.AlbumName,
+                AlbumDescription = album.AlbumDescription,
+                IsPublic = album.IsPublic,
+                IsEdited = album.IsEdited,
+                CreatedOn = album.CreatedOn.ToString(),
+                CoverAlbumImage = album.CoverAlbumImage,
+
+                UserId = album.UserId,
+                AlbumImageList = album.AlbumImageList
+            };
+
+            return albumDTO;
         }
     }
 }
