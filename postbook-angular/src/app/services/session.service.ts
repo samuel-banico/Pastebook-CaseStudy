@@ -39,6 +39,10 @@ export class SessionService {
     localStorage.setItem('email',value);
   }
 
+  setId(value: string) : void {
+    localStorage.setItem('id', value);
+  }
+
   clear() : void {
     localStorage.clear();
     this.hasToken.emit(false);

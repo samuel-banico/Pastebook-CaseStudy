@@ -10,7 +10,8 @@ import { User } from '@models/user';
 export class UserService {
   private baseUrl: string = 'https://localhost:7185/api/users';
   private accessUrl: string = 'https://localhost:7185/api/access';
-  
+
+
   constructor(
     private http: HttpClient,
   ) { }
