@@ -7,7 +7,9 @@ export class User {
         public password?: string,
         public birthday?: string,
         public gender?: number,
-        public mobileNumber?: string
+        public mobileNumber?: string,
+        public userBio?: string,
+        public profilePicture?: string
     ){}
 
 }
