@@ -14,7 +14,7 @@ namespace pastebook_db.Data
             _context = context;
         }
 
-        public Album? GetAlbumById(int id)
+        public Album? GetAlbumById(Guid id)
         {
             return _context.Albums
                 .Include(a => a.AlbumImageList)
@@ -24,7 +24,7 @@ namespace pastebook_db.Data
                 .FirstOrDefault(p => p.Id == id);
         }
 
-        public List<Album>? GetAllAlbumByOwner(int userId)
+        public List<Album>? GetAllAlbumByOwner(Guid userId)
         {
             return _context.Albums
                         .Include(a => a.AlbumImageList)
@@ -35,7 +35,7 @@ namespace pastebook_db.Data
                         .ToList();
         }
 
-        public List<Album> GetAllAlbumByOther(int retrievedUserId, int loggedUserId)
+        public List<Album> GetAllAlbumByOther(Guid retrievedUserId, Guid loggedUserId)
         {
             var isFriend = _friendRepository.GetFriendship(retrievedUserId, loggedUserId);
 

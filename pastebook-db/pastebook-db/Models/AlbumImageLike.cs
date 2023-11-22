@@ -2,13 +2,13 @@
 {
     public class AlbumImageLike
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         // Foreign Key
-        public int AlbumImageId { get; set; }
+        public Guid AlbumImageId { get; set; }
         public virtual AlbumImage AlbumImage { get; set; } = null!;
 
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public virtual User User { get; set; } = null!;
     }
 }

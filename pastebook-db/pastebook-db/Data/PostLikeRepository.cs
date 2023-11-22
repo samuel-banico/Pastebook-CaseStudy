@@ -13,7 +13,7 @@ namespace pastebook_db.Data
             _context = context;
         }
 
-        public PostLike GetPostLikeById(int postLikeId)
+        public PostLike? GetPostLikeById(Guid postLikeId)
         {
             return _context.PostLikes.FirstOrDefault(pL => pL.Id == postLikeId);
         }

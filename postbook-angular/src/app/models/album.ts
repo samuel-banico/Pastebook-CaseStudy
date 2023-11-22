@@ -1,12 +1,12 @@
 export class Album {
-    id?: number;
+    id?: string;
     albumName?: string;
     albumDescription?: string;
     isPublic?: boolean;
     isEdited?: boolean;
     createdOn?: string;
     coverAlbumImage?: Uint8Array;
-    userId?: number;
+    userId?: string;
     ImageList?: File[];
 }
 

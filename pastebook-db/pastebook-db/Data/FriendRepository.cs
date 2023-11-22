@@ -14,27 +14,27 @@ namespace pastebook_db.Data
             _context = context;
         }
 
-        public Friend? GetFriendship(int userId, int friendId)
+        public Friend? GetFriendship(Guid userId, Guid friendId)
         {
             var friend = _context.Friends.FirstOrDefault(x => (x.UserId == friendId && x.User_FriendId == userId) || (x.User_FriendId == friendId && x.UserId == userId));
 
             return friend;
         }
 
-        public List<Friend> GetAllFriends(int userId)
+        public List<Friend> GetAllFriends(Guid userId)
         {
             var friendList = _context.Friends.Where(f => f.UserId == userId || f.User_FriendId == userId).ToList();
 
             return friendList;
         }
 
-        public List<User> GetAllUserFriends(int userId)
+        public List<User> GetAllUserFriends(Guid userId)
         {
             var friendList = _context.Friends.Where(f => f.UserId == userId || f.User_FriendId == userId).ToList();
 
             var friendUserList = new List<User>();
-            
-            int? friendId;
+
+            Guid? friendId;
             foreach (var friend in friendList) 
             {
                 if (friend.UserId != userId)
@@ -48,7 +48,7 @@ namespace pastebook_db.Data
             return friendUserList;
         }
 
-        public List<Friend> GetAllBlockedFriends(int userId)
+        public List<Friend> GetAllBlockedFriends(Guid userId)
         {
             var blockedFriends = _context.Friends.Where(b => b.UserId == userId && b.IsBlocked == true).ToList();
 

@@ -14,9 +14,9 @@ namespace pastebook_db.Data
             _context = context;
         }
 
-        public List<FriendRequest> GetAllFriendRequest(int id)
+        public List<FriendRequest> GetAllFriendRequest(Guid id)
         {
-            return _context.FriendRequests.Where(r => r.UserId == id || r.User_FriendId == id).ToList();
+            return _context.FriendRequests.Where(r => r.UserId == id || r.User_FriendId == id).ToList();    
         }
 
         public void RequestFriend(FriendRequest req)
@@ -25,12 +25,12 @@ namespace pastebook_db.Data
             _context.SaveChanges();
         }
 
-        public FriendRequest GetFriendRequest(int id)
+        public FriendRequest? GetFriendRequest(Guid id)
         {
             return _context.FriendRequests.FirstOrDefault(u => u.Id == id);
         }
 
-        public void DeleteFriendRequest(int friendRequestId) 
+        public void DeleteFriendRequest(Guid friendRequestId) 
         {
             var rejectRequest = _context.FriendRequests.Find(friendRequestId);
 

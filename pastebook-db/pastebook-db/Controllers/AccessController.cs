@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using pastebook_db.Data;
 using pastebook_db.Models;
 using pastebook_db.Services.PasswordHash;
+using pastebook_db.Services.Token.TokenData;
+using pastebook_db.Services.Token.TokenGenerator;
+using System.Security.Claims;
 
 namespace pastebook_db.Controllers
 {
@@ -14,19 +18,24 @@ namespace pastebook_db.Controllers
         private readonly UserRepository _userRepository;
 
         private readonly IPasswordHash _hashPassword;
+        private readonly TokenController _tokenController;
 
-        public AccessController(IPasswordHash hashPassword, AccessRepository accessRepository, UserRepository userRepository)
+        public AccessController(IPasswordHash hashPassword, AccessRepository accessRepository, UserRepository userRepository, TokenController tokenController)
         {
             _hashPassword = hashPassword;
             _accessRepository = accessRepository;
             _userRepository = userRepository;
+            _tokenController = tokenController;
         }
 
         [HttpPost("login")]
-        public ActionResult<UserLoginResponse> Login(UserLoginDTO userLogin)
+        public async Task<ActionResult<UserLoginResponse>> Login(UserLoginDTO userLogin)
         {
-            try
-            {
+            try 
+            { 
+                if (string.IsNullOrEmpty(userLogin.Email) || string.IsNullOrEmpty( userLogin.Password))
+                return BadRequest(new { result = "empty_field" });
+
                 var user = _userRepository.GetUserByEmail(userLogin.Email);
 
                 if (user == null)
@@ -35,11 +44,13 @@ namespace pastebook_db.Controllers
                 if (!_hashPassword.VerifyPassword(userLogin.Password, user.Password))
                     return Unauthorized(new { result = "incorrect_credentials" });
 
+                var createdtoken = await _tokenController.Authenticate(user);
+
                 var userLoginResponse = new UserLoginResponse
                 {
                     email = user.Email,
                     id = user.Id,
-                    token = "sampleToken"
+                    token = createdtoken
                 };
 
                 return Ok(userLoginResponse);
@@ -54,6 +65,7 @@ namespace pastebook_db.Controllers
         [HttpPost("register")]
         public ActionResult<User> Register(UserReceiveDTO userRegister)
         {
+
             var existingUser = _userRepository.GetUserByEmail(userRegister.Email);
             if (existingUser != null)
                 return BadRequest(new { result = "user_already_exist" });
@@ -75,6 +87,21 @@ namespace pastebook_db.Controllers
                 return BadRequest(new { result = "not_legitimate_email" });
 
             return Ok(new { result = "registered" });
+        }
+
+        [Authorize]
+        [HttpDelete("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            string rawUserId = HttpContext.User.FindFirstValue("id");
+
+            if (!Guid.TryParse(rawUserId, out Guid userId))
+            {
+                return Unauthorized();
+            }
+
+            await _tokenController.DeleteAll(userId);
+            return NoContent();
         }
     }
 }

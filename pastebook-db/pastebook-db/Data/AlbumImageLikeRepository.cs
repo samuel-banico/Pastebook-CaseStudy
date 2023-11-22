@@ -12,7 +12,7 @@ namespace pastebook_db.Data
             _context = context;
         }
 
-        public AlbumImageLike GetAlbumImageLikeById(int albumImageLikeId)
+        public AlbumImageLike? GetAlbumImageLikeById(Guid albumImageLikeId)
         {
             return _context.AlbumImageLikes.FirstOrDefault(pL => pL.Id == albumImageLikeId);
         }
