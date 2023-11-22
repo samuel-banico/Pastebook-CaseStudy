@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { SessionService } from './session.service';
 
 import { User } from '@models/user';
 
@@ -13,7 +14,8 @@ export class UserService {
 
 
   constructor(
-    private http: HttpClient,
+    private http: HttpClient, 
+    private sessionService:SessionService
   ) { }
 
   login(email: string, password: string): Observable<object> {

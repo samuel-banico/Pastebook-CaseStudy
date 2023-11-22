@@ -50,7 +50,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<User> EditUser(int id, UserReceiveDTO user)
+        public ActionResult<User> EditUser(int id, EditUserReceiveDTO user)
         {
             var retreivedUser = _userRepository.GetUserById(id);
             if (retreivedUser == null)
@@ -68,7 +68,6 @@ namespace pastebook_db.Controllers
             retreivedUser.Gender = (Gender)user.Gender;
             retreivedUser.UserBio = user.UserBio;
             retreivedUser.MobileNumber = user.MobileNumber;
-            retreivedUser.ProfilePicture = _userRepository.ImageToByteArray(user.ProfilePicture);
 
             if (!_userRepository.UpdateUser(retreivedUser, emailHasEdited))
                 return BadRequest(new { result = "not_legitimate_email" });

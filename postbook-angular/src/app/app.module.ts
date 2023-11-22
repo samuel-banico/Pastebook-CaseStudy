@@ -41,7 +41,6 @@ const appRoutes: Routes = [
   {path: 'landing', component:LandingComponent},
   {path: 'forgotpassword', component: ForgotpasswordComponent},
   {path: 'post', component:PostComponent}
-
 ];
 
 

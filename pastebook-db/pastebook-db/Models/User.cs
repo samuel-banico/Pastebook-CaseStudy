@@ -24,15 +24,28 @@ namespace pastebook_db.Models
     public class UserReceiveDTO
     {
         public int? Id { get; set; }
-        public string FirstName { get; set; } = null!;
-        public string LastName { get; set; } = null!;
-        public string Email { get; set; } = null!;
-        public string Password { get; set; } = null!;
-        public string Birthday { get; set; } = null!;
-        public int Gender { get; set; }
+        public string? FirstName { get; set; } = null!;
+        public string? LastName { get; set; } = null!;
+        public string? Email { get; set; } = null!;
+        public string? Password { get; set; } = null!;
+        public string? Birthday { get; set; } = null!;
+        public int? Gender { get; set; }
         public string? UserBio { get; set; } 
         public string? MobileNumber { get; set; }
         public IFormFile? ProfilePicture { get; set; }
+    }
+
+    public class EditUserReceiveDTO
+    {
+        public int? Id { get; set; }
+        public string? FirstName { get; set; } = null!;
+        public string? LastName { get; set; } = null!;
+        public string? Email { get; set; } = null!;
+        public string? Password { get; set; } = null!;
+        public string? Birthday { get; set; } = null!;
+        public int? Gender { get; set; }
+        public string? UserBio { get; set; }
+        public string? MobileNumber { get; set; }
     }
 
     public class UserSendDTO

@@ -97,7 +97,6 @@
                   <input type="password" class="form-control" placeholder="Enter password" [(ngModel)]="securityPassword" name="password">
                 </div>
 
-
                 <!-- Display fields only if password is correct -->
                 <div *ngIf="isPasswordCorrect">
 
@@ -110,10 +109,7 @@
                     <a *ngIf="!editMode['email']" (click)="enableEdit('email')" class="edit-button">Edit</a>
                   </div>
                 </div>
-            
-                  
-
-
+           
                   <div class="form-group row align-items-center">
                     <label for="mobileNum" class="col-form-label">Mobile Number</label>
                     <div class="col-sm-10">
