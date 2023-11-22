@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit{
     let userId: number = Number.parseInt(this.sessionService.getId());
     this.userService.getUser(userId).subscribe((response : any) => {
       this.user = response;
-
+      console.log(response);
       const pictureBytes = response.profilePicture;
       if(pictureBytes)
         this.profilePicture = 'data:image/jpeg;base64,' + btoa(String.fromCharCode(...new Uint8Array(pictureBytes)));
@@ -27,9 +27,6 @@ export class ProfileComponent implements OnInit{
   }
 
   ngOnInit(): void {}
-
-  getUser(){
-    
-  }
+ 
 
 }

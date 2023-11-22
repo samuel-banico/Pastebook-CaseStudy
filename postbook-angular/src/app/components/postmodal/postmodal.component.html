@@ -4,23 +4,25 @@
       <h5 class="modal-title" style="letter-spacing: 2px;">POST</h5>
       <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
     </div>
+    <form (ngSubmit)="onPost()">
     <div class="modal-body">
-      <textarea placeholder="What's on your mind?" style="width: 35vw; height: 30vh; resize: none;"></textarea>
+      <textarea placeholder="What's on your mind?" [(ngModel)]="post.content" name="content" style="width: 35vw; height: 30vh; resize: none;"></textarea>
 
     </div>
     <!-- (click)="$event.stopPropagation()" -->
     <div class="modal-footer" >
       <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" name="isPublic">
           {{ selectedOption }}
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
           <li><a class="dropdown-item" (click)="onOptionSelect('Public')">Public</a></li>
-          <li><a class="dropdown-item" (click)="onOptionSelect('Friends only')">Friends only</a></li>
+          <li><a class="dropdown-item" (click)="onOptionSelect('Friends Only')">Friends Only</a></li>
         </ul>
       </div>   
-      <button type="button" class="red" (click)="close()"> 
+      <button type="submit" class="red" (click)="close()"> 
         Post
       </button>
     </div>
+    </form>
   </div>

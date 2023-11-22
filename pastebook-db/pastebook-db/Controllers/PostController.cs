@@ -90,7 +90,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Post> CreatePost(PostDTO addPost)
+        public ActionResult<Post> CreatePost([FromBody]PostReceiveDTO addPost)
         {
             var newPost = new Post
             {

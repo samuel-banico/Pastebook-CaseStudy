@@ -46,7 +46,7 @@ export class SettingsComponent implements OnInit{
 
   ngOnInit(): void {}
   
-  onUpdate(): void {
+  onUpdate() {
     this.userService.update(this.user).subscribe((response: Record<string, any>)=>{
       if(response['result'] === 'updated'){
         Swal.fire('Update Successful','Profile updated successfully','success');
