@@ -38,7 +38,6 @@ namespace pastebook_db.Controllers
                 var userLoginResponse = new UserLoginResponse
                 {
                     email = user.Email,
-                    isActive = user.IsActive,
                     id = user.Id,
                     token = "sampleToken"
                 };
@@ -53,7 +52,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpPost("register")]
-        public ActionResult<User> Register(UserDTO userRegister)
+        public ActionResult<User> Register(UserReceiveDTO userRegister)
         {
             var existingUser = _userRepository.GetUserByEmail(userRegister.Email);
             if (existingUser != null)
@@ -68,7 +67,8 @@ namespace pastebook_db.Controllers
                 Birthday = DateTime.Parse(userRegister.Birthday),
                 Gender = (Gender)userRegister.Gender,
                 MobileNumber = userRegister.MobileNumber,
-                ProfilePicture = _userRepository.DefaultImageToByteArray("wwwroot/images/default_pic.png")
+                ProfilePicture = _userRepository.ImageToByteArray(null),
+                UserBio = "Hi, Everyone! I am new to Pastebook."
             };
 
             if (!_accessRepository.RegisterUser(newUser))

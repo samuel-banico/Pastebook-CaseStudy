@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Net.Mail;
 using System.Net;
 using pastebook_db.Database;
+using System.IO;
 
 namespace pastebook_db.Data
 {
@@ -34,6 +35,12 @@ namespace pastebook_db.Data
         //edit 
         public bool UpdateUser(User user, bool emailIsEditted)
         {
+            var existingEntity = _context.Set<User>().Local.SingleOrDefault(e => e.Id == user.Id);
+            if (existingEntity != null)
+            {
+                _context.Entry(existingEntity).State = EntityState.Detached;
+            }
+
             _context.Entry(user).State = EntityState.Modified;
             _context.SaveChanges();
 
@@ -49,18 +56,38 @@ namespace pastebook_db.Data
             return hasSent;
         }
 
-        public byte[] DefaultImageToByteArray(string imagePath) 
+        // HELPER METHODS
+        public UserSendDTO ConvertUserToUserSendDTO(User user) 
         {
-            if (!File.Exists(imagePath))
+            var userDTO = new UserSendDTO() 
             {
-                Console.WriteLine("File not found: " + imagePath);
-                return null;
-            }
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Password = user.Password,
+                Birthday = user.Birthday.ToString("yyyy-MM-dd"),
+                Gender = (int)user.Gender,
+                UserBio = user.UserBio,
+                MobileNumber = user.MobileNumber,
+                ProfilePicture = user.ProfilePicture
+            };
 
-            // Read all bytes from the image file
-            byte[] imageBytes = File.ReadAllBytes(imagePath);
+            return userDTO;
+        }
 
-            return imageBytes;
+        public byte[] ImageToByteArray(IFormFile? file) 
+        {
+            // returns default
+            if (file == null)
+                return File.ReadAllBytes("wwwroot/images/default_pic.png");
+
+            //
+            using var memoryStream = new MemoryStream();
+            file.CopyTo(memoryStream);
+            byte[] fileData = memoryStream.ToArray();
+
+            return fileData;
         }
 
         //Method for Sending email

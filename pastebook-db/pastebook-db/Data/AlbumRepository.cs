@@ -84,7 +84,7 @@ namespace pastebook_db.Data
                 CoverAlbumImage = album.CoverAlbumImage,
 
                 UserId = album.UserId,
-                AlbumImageList = album.AlbumImageList
+                //ImageList = album.AlbumImageList
             };
 
             return albumDTO;

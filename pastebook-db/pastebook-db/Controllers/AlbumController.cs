@@ -10,10 +10,14 @@ namespace pastebook_db.Controllers
     public class AlbumController : Controller
     {
         private readonly AlbumRepository _albumRepository;
+        private readonly AlbumImageRepository _albumImageRepository;
+        private readonly UserRepository _userRepository;
 
-        public AlbumController(AlbumRepository repo)
+        public AlbumController(AlbumRepository repo, AlbumImageRepository albumImageRepository, UserRepository userRepository)
         {
             _albumRepository = repo;
+            _albumImageRepository = albumImageRepository;
+            _userRepository = userRepository;
         }
 
         // --- GET
@@ -72,22 +76,41 @@ namespace pastebook_db.Controllers
             {
                 AlbumName = album.AlbumName,
                 AlbumDescription = album.AlbumDescription,
-                IsPublic = album.IsPublic,
-                CoverAlbumImage = album.CoverAlbumImage,
-
+                IsPublic = true,
                 UserId = album.UserId,
-
-                AlbumImageList = album.AlbumImageList
             };
 
             _albumRepository.CreateAlbum(newAlbum);
 
-            return Ok();
+            if (album.ImageList != null || album.ImageList.Count > 0) 
+            {
+                foreach (var image in album.ImageList) 
+                {
+                    var albumImage = new AlbumImage
+                    {
+                        Image = _userRepository.ImageToByteArray(image),
+                        CreatedOn = DateTime.Now,
+                        IsEdited = false,
+                        AlbumId = newAlbum.Id
+                    };
+
+                    _albumImageRepository.CreateAlbumImage(albumImage);
+
+                    if (newAlbum.CoverAlbumImage != null) 
+                    {
+                        newAlbum.CoverAlbumImage = albumImage.Image;
+                        _albumRepository.UpdateAlbum(newAlbum);
+                    }
+                }
+            }
+
+            return Ok(new { result = "added_album"});
         }
 
         // --- PUT
+        // To be edit
         [HttpPut]
-        public ActionResult<Album> AlbumPost(int albumId, AlbumDTO newAlbum)
+        public ActionResult<Album> UpdateAlbum(int albumId, AlbumDTO newAlbum)
         {
             var albumToEdit = _albumRepository.GetAlbumById(albumId);
 
@@ -96,11 +119,11 @@ namespace pastebook_db.Controllers
 
             albumToEdit.AlbumName = newAlbum.AlbumName;
             albumToEdit.AlbumDescription = newAlbum.AlbumDescription;
-            albumToEdit.IsPublic = newAlbum.IsPublic;
+            albumToEdit.IsPublic = true;
             albumToEdit.IsEdited = true;
             albumToEdit.CreatedOn = DateTime.Now;
             albumToEdit.CoverAlbumImage = newAlbum.CoverAlbumImage;
-            albumToEdit.AlbumImageList = newAlbum.AlbumImageList;
+            //albumToEdit.AlbumImageList = newAlbum.AlbumImageList;
 
             _albumRepository.UpdateAlbum(albumToEdit);
 
