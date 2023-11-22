@@ -32,7 +32,33 @@ export class SettingsComponent implements OnInit{
    div2:boolean=false;
 
   showPassword = false;
-    
+  // Inside your component class
+
+securityPassword: string = '';
+isPasswordCorrect: boolean = false;
+
+onUpdateSecurity() {
+  // Log the entered password to see what's being entered
+  console.log('Entered Password:', this.securityPassword);
+
+  // Perform password validation logic here (compare with the correct password)
+  // For example, you might have a service that validates the password
+  const correctPassword = 'correctPassword'; // Replace with your actual correct password
+
+  // Log the correct password to verify
+  console.log('Correct Password:', correctPassword);
+
+  this.isPasswordCorrect = this.securityPassword === correctPassword;
+
+  // Log the result of the password validation
+  console.log('Is Password Correct:', this.isPasswordCorrect);
+
+  // Clear the entered password for security reasons
+  this.securityPassword = '';
+}
+
+// ... Other methods and properties in your component class ...
+
 
   div1Function(){
       this.div1=true;
@@ -46,12 +72,39 @@ export class SettingsComponent implements OnInit{
 
   ngOnInit(): void {}
   
-  onUpdate() {
+  onUpdate(): void {
+    console.log(this.user);
     this.userService.update(this.user).subscribe((response: Record<string, any>)=>{
-      if(response['result'] === 'updated'){
+      if(response['result'] === 'user_details_updated.'){
         Swal.fire('Update Successful','Profile updated successfully','success');
         }
       });
   }
+
+  // Inside your component class
+editMode: { [key: string]: boolean } = {
+  firstName: false,
+  lastName: false,
+  birthday: false,
+  gender: false,
+};
+
+enableEdit(field: string) {
+  // Use type assertion to tell TypeScript that 'field' is a valid key
+  (this.editMode as { [key: string]: boolean })[field] = true;
+}
+
+resetChanges() {
+  // Reset the fields to their default values
+  // You need to implement this based on how default values are stored in your application
+  this.user = { firstName: 'defaultFirstName', lastName: 'defaultLastName', /* other fields */ };
+  
+  // Disable edit mode for all fields
+  Object.keys(this.editMode).forEach((key) => {
+    (this.editMode as { [key: string]: boolean })[key] = false;
+  });
+}
+
+
 }
 
