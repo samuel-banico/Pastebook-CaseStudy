@@ -11,5 +11,4 @@ export class User {
         public userBio?: string,
         public profilePicture?: string
     ){}
-
 }

@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit{
     private sessionService: SessionService
 
     ){
-      let userId: number = Number.parseInt(this.sessionService.getId());
+      let userId: number = this.sessionService.getId();
       userService.getUser(userId).subscribe((response: Object)=>{
         this.user = response;
       })

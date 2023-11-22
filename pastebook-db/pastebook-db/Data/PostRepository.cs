@@ -88,7 +88,9 @@ namespace pastebook_db.Data
         // HELPER METHOD
         public PostDTO ConvertPostToPostDTO(Post post) 
         {
+            
             var likeCount = 0;
+
             var commentCount = 0;
 
             if (post.PostLikeList != null)

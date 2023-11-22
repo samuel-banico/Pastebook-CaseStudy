@@ -22,8 +22,8 @@ export class SessionService {
     return localStorage.getItem('email')!;
   }
 
-  getId() : string {
-    return localStorage.getItem('id')!;
+  getId() : number {
+    return Number.parseInt(localStorage.getItem('id')!);
   }
 
   setToken(value:string) : void {
@@ -31,7 +31,7 @@ export class SessionService {
     localStorage.setItem('token',value);
   }
 
-  setId(value:string) : string {
+  setId(value:string) : Number {
     return localStorage.setItem('id', value)!;
   }
 

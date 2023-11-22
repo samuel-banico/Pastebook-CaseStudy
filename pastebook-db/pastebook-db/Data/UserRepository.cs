@@ -35,6 +35,18 @@ namespace pastebook_db.Data
         //edit 
         public bool UpdateUser(User user, bool emailIsEditted)
         {
+            bool hasSent = true;
+            if (emailIsEditted)
+            {
+                string emailBody = @$"
+                <html><body><b>New email Address!</b></br><p>Hey {user.FirstName} {user.LastName}. You have changed your email address, kindly use this email when accessing Pastebok.</p><p> See you in Pastebook :D</p></body></html>";
+
+                hasSent = SendEmail(user.Email, emailBody);
+            }
+
+            if (!hasSent)
+                return hasSent;
+
             var existingEntity = _context.Set<User>().Local.SingleOrDefault(e => e.Id == user.Id);
             if (existingEntity != null)
             {
@@ -43,15 +55,6 @@ namespace pastebook_db.Data
 
             _context.Entry(user).State = EntityState.Modified;
             _context.SaveChanges();
-
-            var hasSent = true;
-            if (emailIsEditted)
-            {
-                string emailBody = @$"
-                <html><body><b>New email Address!</b></br><p>Hey {user.FirstName} {user.LastName}. You have changed your email address, kindly use this email when accessing Pastebok.</p><p> See you in Pastebook :D</p></body></html>";
-
-                hasSent = SendEmail(user.Email, emailBody);
-            }
 
             return hasSent;
         }

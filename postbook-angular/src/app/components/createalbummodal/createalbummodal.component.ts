@@ -33,7 +33,7 @@ export class CreatealbummodalComponent {
   }
 
   saveData() {
-    this.album.userId = Number.parseInt(this.sessionService.getId());
+    this.album.userId = this.sessionService.getId();
 
     this.albumService.createAlbum(this.album).subscribe((response: any) => {
       console.log(response);
