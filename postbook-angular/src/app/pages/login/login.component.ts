@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
     this.sessionService.setId(response['id']);
     this.sessionService.setToken(response['token']);
     this.router.navigate(['']).then(() => {
-      window.location.href = "/";
+      window.location.href = "/home";
     });
   };
 

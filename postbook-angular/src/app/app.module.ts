@@ -31,7 +31,8 @@ import { PostlikelistComponent } from './components/postlikelist/postlikelist.co
 const appRoutes: Routes = [
   {path: 'registration', component: RegistrationComponent},
   //Edited 'home' to ''
-  {path: '', component: HomeComponent},
+  {path: '', component: LandingComponent},
+  {path: 'home', component: HomeComponent},
   {path: 'profile', component: WallComponent}, 
   {path: 'login', component: LoginComponent},
   {path: 'settings', component: SettingsComponent},
