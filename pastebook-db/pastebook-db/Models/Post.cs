@@ -12,6 +12,7 @@ namespace pastebook_db.Models
 
         public int UserId { get; set; }
         public virtual User User { get; set; } = null!;
+
         public int? FriendId { get; set; }
         public virtual Friend? Friend { get; set; }
 

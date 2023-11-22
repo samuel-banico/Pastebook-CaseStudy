@@ -8,8 +8,8 @@
         public bool IsEdited { get; set; }
 
         // Foreign Key
-        public int AlbumId { get; set; }
-        public virtual Album Album { get; set; } = null!;
+        public int? AlbumId { get; set; }
+        public virtual Album? Album { get; set; } = null!;
 
         public ICollection<AlbumImageLike>? AlbumImageLikesList { get; set; }
         public ICollection<AlbumImageComment>? AlbumImageCommentsList { get; set; }

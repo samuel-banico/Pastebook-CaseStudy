@@ -1,4 +1,6 @@
-﻿namespace pastebook_db.Models
+﻿using Microsoft.Extensions.FileProviders;
+
+namespace pastebook_db.Models
 {
     public class Album
     {
@@ -30,5 +32,11 @@
         public int UserId { get; set; }
 
         public ICollection<IFormFile>? ImageList { get; set; }
+    }
+
+    public class ReceiveImageDTO 
+    {
+        public int Id { get; set; }
+        public IFormFile Image { get; set; }
     }
 }
