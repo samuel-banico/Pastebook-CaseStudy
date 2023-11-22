@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { SessionService } from './session.service';
 
 import { User } from '@models/user';
+import { SessionService } from './session.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +15,9 @@ export class UserService {
 
 
   constructor(
-    private http: HttpClient, 
-    private sessionService:SessionService
-  ) { }
+    private http: HttpClient,
+    private session : SessionService
+  ) {}
 
   login(email: string, password: string): Observable<object> {
     return this.http.post(this.accessUrl + '/login', {email, password});
@@ -31,6 +32,7 @@ export class UserService {
   }
 
   update(user: User): Observable<Object> {
-    return this.http.put(this.baseUrl + `/${user.id}`, user);
+    let userId: number = Number.parseInt(this.session.getId());
+    return this.http.put(this.baseUrl + `/${userId}`, user);
   }
 }

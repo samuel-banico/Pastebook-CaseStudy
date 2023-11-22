@@ -20,6 +20,8 @@ export class PostService {
     
     //Add Post
     createPost(post:Post):Observable<Object>{
-      return this.http.post(this.baseUrl + '',post);
+      return this.http.post(this.baseUrl, post);
     }
+
+    
 }

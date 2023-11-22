@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import { UserService } from '@services/user.service';
 import { SessionService } from '@services/session.service';
 import { User } from '@models/user';
+import { Post } from '@models/post';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home',
@@ -42,5 +44,6 @@ export class HomeComponent implements OnInit{
   openModal() {
     this.modalRef = this.modalService.open(PostmodalComponent)
   }
+ 
 }
 

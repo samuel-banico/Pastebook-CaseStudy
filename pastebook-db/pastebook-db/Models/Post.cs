@@ -19,10 +19,18 @@ namespace pastebook_db.Models
         public ICollection<PostComment>? PostCommentList { get; set; }
     }
 
+    public class PostReceiveDTO 
+    {
+        public string? Content { get; set; }
+        public bool IsPublic { get; set; }
+        public int UserId { get; set; }
+        public int? FriendId { get; set; }
+    }
+
     public class PostDTO
     {
         public int? Id { get; set; }
-        public string Content { get; set; } = null!;
+        public string? Content { get; set; } = null!;
         public bool IsPublic { get; set; }
         public bool IsEdited { get; set; }
         public string CreatedOn { get; set; }
