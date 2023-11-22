@@ -4,6 +4,7 @@ import { UserService } from '@services/user.service';
 import { User } from '@models/user';
 import Swal from 'sweetalert2';
 
+
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
