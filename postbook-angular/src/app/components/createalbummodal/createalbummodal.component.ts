@@ -19,6 +19,7 @@ export class CreatealbummodalComponent {
   pictureList: string[] = [];
   pictureFileList: File[] = [];
   album: Album = new Album();
+  id: number = 0;
 
   constructor(
       public modalRef: MdbModalRef<CreatealbummodalComponent>,
@@ -32,18 +33,23 @@ export class CreatealbummodalComponent {
   }
 
   saveData() {
-    this.album.ImageList = this.pictureFileList;
     this.album.userId = Number.parseInt(this.sessionService.getId());
-    // Implement your save logic here
-    console.log(this.album);
-    this.albumService.createAlbum(this.album).subscribe((response: Record<string, any>) => {
-      if(response['result'] === 'added_album') {
-        Swal.fire({
+
+    this.albumService.createAlbum(this.album).subscribe((response: any) => {
+      console.log(response);
+      this.id = response.id;
+      console.log(this.id);
+
+      this.pictureFileList.forEach(image => {
+      this.albumService.createAlbumImage(image, this.id).subscribe((r) => {
+        console.log("Image save")
+      })});
+
+        /*Swal.fire({
           title: `Album Created`,
           text: `(${this.album.albumName}) has been added successfully`,
           icon: 'success'
-        })
-      }
+        })*/
     })
     console.log('Data saved:', this.input1, this.input2);
     console.log(this.pictureFileList);
