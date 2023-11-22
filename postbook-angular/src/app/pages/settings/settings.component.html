@@ -34,64 +34,116 @@
               <h6>General</h6>
               <hr class="custom-hr">
               <form (ngSubmit)="onUpdate()">
-                <div class="form-group">
-                  <label for="firstName">First Name</label>
-                  <input type="text" class="form-control" [(ngModel)]="user.firstName" id="firstName" name="firstName" placeholder="Enter your first name" value=
-                  {{user.firstName}}>
-                </div>
-                <div class="form-group">
-                    <label for="lastName">Last Name</label>
-                    <input type="text" class="form-control" [(ngModel)]="user.lastName" name="lastName" placeholder="Enter your last name" value="">
+                <div class="form-group row align-items-center">
+                  <label for="firstName" class="col-form-label">First Name</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" [(ngModel)]="user.firstName" id="firstName" name="firstName" placeholder="Enter your first name" [disabled]="!editMode['firstName']">
                   </div>
-                <div class="form-group">
-                    <label class="form-label" for="birthday">Birthday</label>
-                    <input type="date" [(ngModel)]="user.birthday" class="form-control" name="birthday"/>
+                  <div class="col-sm-2">
+                    <a *ngIf="!editMode['firstName']" (click)="enableEdit('firstName')" class="edit-button">Edit</a>
+                  </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-label" for="gender">Gender</label>
-                    <select [(ngModel)]="user.gender" id="gender" name="gender" class="form-select">
-                        <option value="" disabled selected>Select Gender</option>
-                        <option value="0">Male</option>
-                        <option value="1">Female</option>
-                        <option value="2">Other</option>
-                      </select>
+            
+                <div class="form-group row align-items-center">
+                  <label for="lastName" class="col-form-label">Last Name</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" [(ngModel)]="user.lastName" name="lastName" placeholder="Enter your last name" [disabled]="!editMode['lastName']">
+                  </div>
+                  <div class="col-sm-2">
+                    <a *ngIf="!editMode['lastName']" (click)="enableEdit('lastName')" class="edit-button">Edit</a>
+                  </div>
                 </div>
+            
+                <div class="form-group row align-items-center">
+                  <label for="birthday" class="col-form-label">Birthday</label>
+                  <div class="col-sm-10">
+                    <input type="date" [(ngModel)]="user.birthday" class="form-control" name="birthday" [disabled]="!editMode['birthday']" />
+                  </div>
+                  <div class="col-sm-2">
+                    <a *ngIf="!editMode['birthday']" (click)="enableEdit('birthday')" class="edit-button">Edit</a>
+                  </div>
+                </div>
+            
+                <div class="form-group row align-items-center">
+                  <label for="gender" class="col-form-label">Gender</label>
+                  <div class="col-sm-10">
+                    <select [(ngModel)]="user.gender" id="gender" name="gender" class="form-select" [disabled]="!editMode['gender']">
+                      <option value="" disabled selected>Select Gender</option>
+                      <option value="0">Male</option>
+                      <option value="1">Female</option>
+                      <option value="2">Other</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-2">
+                    <a *ngIf="!editMode['gender']" (click)="enableEdit('gender')" class="edit-button">Edit</a>
+                  </div>
+                </div>
+            
                 <button type="submit" class="btn btn-danger" style="background-color: #68070f;">Update Profile</button>
-                <button type="reset" class="btn btn-light">Reset Changes</button>
+                <button type="button" class="btn btn-light" (click)="resetChanges()">Reset Changes</button>
               </form>
             </div>
+            
+            
             <div *ngIf="div2" class="tab-pane active" id="security">
               <h6>Security</h6>
               <hr class="custom-hr">
-              <form>
-                <div class="form-group">
-                  <label for="Email">Email</label>
-                  <input name="email" [(ngModel)]="user.email" type="email" class="form-control" id="email" placeholder="sample@gmail.com" value="">
+            
+              <form (ngSubmit)="onUpdateSecurity()">
+                <!-- Password Input -->
+                <!-- Inside the form for Security tab -->
+                <div *ngIf="!isPasswordCorrect" class="form-group">
+                  <label for="Password">Password</label>
+                  <input type="password" class="form-control" placeholder="Enter password" [(ngModel)]="securityPassword" name="password">
                 </div>
-                <div class="form-group">
-                  <label for="mobileNum">Mobile Number</label>
-                  <input name="mobileNumber" [(ngModel)]="user.mobileNumber" type="number" class="form-control" id="mobileNumber" placeholder="+639876543211" value="">
+
+                <!-- Display fields only if password is correct -->
+                <div *ngIf="isPasswordCorrect">
+
+                  <div class="form-group row align-items-center">
+                    <label for="Email" class="col-form-label">Email</label>
+                    <div class="col-sm-10">
+                    <input name="email" [(ngModel)]="user.email" type="email" class="form-control" id="email" placeholder="sample@gmail.com"[disabled]="!editMode['email']">
+                  </div>
+                  <div class="col-sm-2">
+                    <a *ngIf="!editMode['email']" (click)="enableEdit('email')" class="edit-button">Edit</a>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label class="d-block">Change Password</label>
-                  <input type="password" class="form-control" placeholder="Enter your old password">
-                  <div class="input-group mt-3">
-                    <input [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="New password">
-                    <div class="input-group-append">
-                      <button type="button" class="btn btn-outline-secondary" (click)="showPassword = !showPassword">
-                        <i class="fa" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
-                      </button>
+           
+                  <div class="form-group row align-items-center">
+                    <label for="mobileNum" class="col-form-label">Mobile Number</label>
+                    <div class="col-sm-10">
+                      <input name="mobileNumber" [(ngModel)]="user.mobileNumber" type="number" class="form-control" id="mobileNum" placeholder="+639876543211" [disabled]="!editMode['mobileNum']">
+                    </div>
+                    <div class="col-sm-2">
+                      <a *ngIf="!editMode['mobileNum']" (click)="enableEdit('mobileNum')" class="edit-button">Edit</a>
                     </div>
                   </div>
-                  <input [type]="showPassword ? 'text' : 'password'" class="form-control mt-3" placeholder="Confirm new password">
+                  
+            
+                  <div class="form-group">
+                    <label class="d-block">Change Password</label>
+                    <div class="input-group mt-3">
+                      <input [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="New password" [disabled]="!editMode['password']">
+                      <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-secondary" (click)="showPassword = !showPassword" *ngIf="editMode['password']">
+                          <i class="fa" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+                        </button>
+                      </div>
+                      <div class="col-sm-2">
+                        <a *ngIf="!editMode['password']" (click)="enableEdit('password')" class="edit-button">Edit</a>
+                      </div>
+                    </div>
+                    <input [type]="showPassword ? 'text' : 'password'" class="form-control mt-3" placeholder="Confirm new password" *ngIf="editMode['password']">
+                  </div>
+            
+                  <!-- Update and Reset buttons -->
+                  <button type="submit" class="btn btn-danger" style="background-color: #68070f;">Update Profile</button>
+                  <button type="button" class="btn btn-light" (click)="resetChanges()">Reset Changes</button>
                 </div>
-                <button type="button" class="btn btn-danger" style="background-color: #68070f;">Update Profile</button>
-                <button type="reset" class="btn btn-light">Reset Changes</button>
               </form>
-              
-          
-
             </div>
+            
           </div>
         </div>
       </div>

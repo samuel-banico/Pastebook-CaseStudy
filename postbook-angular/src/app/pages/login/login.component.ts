@@ -13,6 +13,7 @@ import { SessionService } from '@services/session.service';
 export class LoginComponent implements OnInit {
   email: string = "";
   password: string = "";
+  showPassword: boolean = false;
 
   constructor(
     private sessionService: SessionService,
@@ -42,5 +43,8 @@ export class LoginComponent implements OnInit {
 
   failedLogin(result: Record<string, any>){
     Swal.fire('Login Failed', 'Incorrect Credentials, kindly try again.', 'error');
+  }
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 }
