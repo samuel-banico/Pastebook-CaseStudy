@@ -19,7 +19,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet]
-        public ActionResult<AlbumImageComment> GetAlbumImageCommentById(int id)
+        public ActionResult<AlbumImageComment> GetAlbumImageCommentById(Guid id)
         {
             var albumImageComment = _albumImageCommentRepository.GetAlbumImageCommmentById(id);
 
@@ -41,7 +41,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpPut("commentAlbumImage")]
-        public ActionResult<AlbumImageComment> CommentAlbumImage(int albumImageId, int loggedUserId, string comment)
+        public ActionResult<AlbumImageComment> CommentAlbumImage(Guid albumImageId, Guid loggedUserId, string comment)
         {
             var albumImageComment = new AlbumImageComment
             {
@@ -60,7 +60,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpPut("edittedCommentAlbumImage")]
-        public ActionResult<AlbumImageComment> EditCommentAlbumImage(int albumImageCommentId, string comment)
+        public ActionResult<AlbumImageComment> EditCommentAlbumImage(Guid albumImageCommentId, string comment)
         {
             var albumImageComment = _albumImageCommentRepository.GetAlbumImageCommmentById(albumImageCommentId);
 
@@ -78,7 +78,7 @@ namespace pastebook_db.Controllers
 
         //unfinished
         [HttpPut("uncommentAlbumImage")]
-        public ActionResult<AlbumImageComment> UncommentAlbumImage(int albumImageCommentId)
+        public ActionResult<AlbumImageComment> UncommentAlbumImage(Guid albumImageCommentId)
         {
             var albumImageComment = _albumImageCommentRepository.GetAlbumImageCommmentById(albumImageCommentId);
 

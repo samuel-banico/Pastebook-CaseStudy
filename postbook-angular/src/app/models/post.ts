@@ -1,7 +1,7 @@
 export class Post {
     constructor(
         //PK
-        public id?: number,
+        public id?: string,
         public content?: string,
         public isPublic?: boolean,
         public isEdited?: boolean,
@@ -9,8 +9,8 @@ export class Post {
         public likeCount?: number,
         public commentCount?: number,
         //FK
-        public userId?: number,
-        public friendId?: number,
+        public userId?: string,
+        public friendId?: string,
     )
     {}
 }

@@ -18,7 +18,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<AlbumImage> GetAlbumImageById(int id)
+        public ActionResult<AlbumImage> GetAlbumImageById(Guid id)
         {
             var album = _albumImageRepository.GetAlbumImageById(id);
 
@@ -29,7 +29,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("getAllAlbumImage")]
-        public ActionResult<AlbumImage> GetAllAlbumImageByAlbumId(int albumId) 
+        public ActionResult<AlbumImage> GetAllAlbumImageByAlbumId(Guid albumId) 
         {
             var albumImageList = _albumImageRepository.GetAllAlbumImagesByAlbumId(albumId);
 
@@ -40,7 +40,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpPost]
-        public ActionResult<AlbumImage> CreateAlbumImage(int albumId, IFormFile image) 
+        public ActionResult<AlbumImage> CreateAlbumImage(Guid albumId, IFormFile image) 
         {
             using var memoryStream = new MemoryStream();
             image.CopyTo(memoryStream);
@@ -59,7 +59,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpPut]
-        public ActionResult<AlbumImage> UpdateAlbumImage(int albumImageId, AlbumImageDTO albumImage) 
+        public ActionResult<AlbumImage> UpdateAlbumImage(Guid albumImageId, AlbumImageDTO albumImage) 
         {
             var aImage = _albumImageRepository.GetAlbumImageById(albumImageId);
 
@@ -76,7 +76,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpDelete]
-        public ActionResult<AlbumImage> DeleteAlbumImageById(int albumImageId) 
+        public ActionResult<AlbumImage> DeleteAlbumImageById(Guid albumImageId) 
         {
             var image = _albumImageRepository.GetAlbumImageById(albumImageId);
 

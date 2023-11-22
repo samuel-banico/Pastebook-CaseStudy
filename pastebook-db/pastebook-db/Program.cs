@@ -1,8 +1,14 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.DotNet.Scaffolding.Shared.ProjectModel;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using pastebook_db.Data;
 using pastebook_db.Database;
 using pastebook_db.Services.PasswordHash;
+using pastebook_db.Services.Token;
+using pastebook_db.Services.Token.TokenData;
+using pastebook_db.Services.Token.TokenGenerator;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace pastebook_db
@@ -23,8 +29,16 @@ namespace pastebook_db
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            builder.Services.AddSingleton<IPasswordHash, PasswordHasher>();
+            AuthenticationConfiguration authenticationConfiguration = new AuthenticationConfiguration();
 
+            builder.Configuration.Bind("Authentication", authenticationConfiguration);
+            builder.Services.AddSingleton(authenticationConfiguration);
+
+            builder.Services.AddSingleton<IPasswordHash, PasswordHasher>();
+            builder.Services.AddSingleton<GenerateAccessToken>();
+            builder.Services.AddSingleton<GenerateToken>();
+
+            builder.Services.AddScoped<TokenRepository>();
             builder.Services.AddScoped<AccessRepository>();
             builder.Services.AddScoped<AlbumImageCommentRepository>();
             builder.Services.AddScoped<AlbumImageLikeRepository>();
@@ -44,6 +58,19 @@ namespace pastebook_db
             builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(o =>
+            {
+                o.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                {
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationConfiguration.AccessTokenSecret)),
+                    ValidIssuer = authenticationConfiguration.Issuer,
+                    ValidAudience = authenticationConfiguration.Audience,
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
 
             var app = builder.Build();
 

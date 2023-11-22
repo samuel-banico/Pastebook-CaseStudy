@@ -4,7 +4,7 @@ namespace pastebook_db.Models
 {
     public class User
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public string Email { get; set; } = null!;
@@ -23,7 +23,7 @@ namespace pastebook_db.Models
 
     public class UserReceiveDTO
     {
-        public int? Id { get; set; }
+        public Guid? Id { get; set; }
         public string? FirstName { get; set; } = null!;
         public string? LastName { get; set; } = null!;
         public string? Email { get; set; } = null!;
@@ -37,7 +37,7 @@ namespace pastebook_db.Models
 
     public class EditUserReceiveGeneralDTO
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? Birthday { get; set; }
@@ -53,7 +53,7 @@ namespace pastebook_db.Models
 
     public class UserSendDTO
     {
-        public int? Id { get; set; }
+        public Guid? Id { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? Email { get; set; }
@@ -78,7 +78,7 @@ namespace pastebook_db.Models
 
     public class UserLoginResponse
     {
-        public int? id { get; set; }
+        public Guid? id { get; set; }
         public string? token { get; set; }
         public string? email { get; set; }
     }

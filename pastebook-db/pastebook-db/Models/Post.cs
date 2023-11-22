@@ -4,16 +4,16 @@ namespace pastebook_db.Models
 {
     public class Post
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Content { get; set; } = null!;
         public bool IsPublic { get; set; }
         public bool IsEdited { get; set; }
         public DateTime CreatedOn { get; set; }
 
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public virtual User User { get; set; } = null!;
 
-        public int? FriendId { get; set; }
+        public Guid? FriendId { get; set; }
         public virtual Friend? Friend { get; set; }
 
         public ICollection<PostLike>? PostLikeList { get; set; }
@@ -24,13 +24,13 @@ namespace pastebook_db.Models
     {
         public string? Content { get; set; }
         public bool IsPublic { get; set; }
-        public int UserId { get; set; }
-        public int? FriendId { get; set; }
+        public Guid UserId { get; set; }
+        public Guid? FriendId { get; set; }
     }
 
     public class PostDTO
     {
-        public int? Id { get; set; }
+        public Guid? Id { get; set; }
         public string? Content { get; set; } = null!;
         public bool IsPublic { get; set; }
         public bool IsEdited { get; set; }
@@ -39,8 +39,8 @@ namespace pastebook_db.Models
         public int? LikeCount { get; set; }
         public int? CommentCount { get; set; }
 
-        public int UserId { get; set; }
-        public int? FriendId { get; set; }
+        public Guid UserId { get; set; }
+        public Guid? FriendId { get; set; }
 
         public ICollection<PostLike>? PostLikeList { get; set; }
         public ICollection<PostComment>? PostCommentList { get; set; }

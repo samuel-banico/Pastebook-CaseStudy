@@ -4,7 +4,7 @@ namespace pastebook_db.Models
 {
     public class Album
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string AlbumName { get; set; } = null!;
         public string AlbumDescription { get; set; } = null!;
         public bool IsPublic { get; set; }
@@ -13,7 +13,7 @@ namespace pastebook_db.Models
         public byte[]? CoverAlbumImage { get; set; }
 
         // Foreign Key
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public virtual User User { get; set; } = null!;
 
         public ICollection<AlbumImage>? AlbumImageList { get; set; }
@@ -21,7 +21,7 @@ namespace pastebook_db.Models
 
     public class AlbumDTO
     {
-        public int? Id { get; set; }
+        public Guid? Id { get; set; }
         public string? AlbumName { get; set; }
         public string? AlbumDescription { get; set; }
         public bool? IsPublic { get; set; }
@@ -29,14 +29,14 @@ namespace pastebook_db.Models
         public string? CreatedOn { get; set; }
         public byte[]? CoverAlbumImage { get; set; }
 
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
 
         public ICollection<IFormFile>? ImageList { get; set; }
     }
 
     public class ReceiveImageDTO 
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public IFormFile Image { get; set; }
     }
 }

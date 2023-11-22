@@ -12,8 +12,8 @@ namespace pastebook_db.Data
         {
             _context = context;
         }
-
-        public PostComment GetPostCommmentById(int postCommentId)
+            
+        public PostComment GetPostCommmentById(Guid postCommentId)
         {
             return _context.PostComments.FirstOrDefault(pC => pC.Id == postCommentId);
         }

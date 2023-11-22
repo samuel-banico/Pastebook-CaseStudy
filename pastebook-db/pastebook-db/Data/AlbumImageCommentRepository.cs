@@ -13,7 +13,7 @@ namespace pastebook_db.Data
             _context = context;
         }
 
-        public AlbumImageComment GetAlbumImageCommmentById(int albumImageCommentId)
+        public AlbumImageComment? GetAlbumImageCommmentById(Guid albumImageCommentId)
         {
             return _context.AlbumImageComments.FirstOrDefault(pC => pC.Id == albumImageCommentId);
         }

@@ -17,7 +17,7 @@ namespace pastebook_db.Data
             _friendRepository  = friendRepository;
         }
 
-        public Post? GetPostById(int id)
+        public Post? GetPostById(Guid id)
         {
             var post = _context.Posts
                             .Include(p => p.PostLikeList)
@@ -26,7 +26,7 @@ namespace pastebook_db.Data
             return post;
         }
 
-        public List<Post> GetAllPostOfUserTimeline(int userId)
+        public List<Post> GetAllPostOfUserTimeline(Guid userId)
         {
             return _context.Posts
                         .Include(pL => pL.PostLikeList)
@@ -35,7 +35,7 @@ namespace pastebook_db.Data
                         .ToList();
         }
 
-        public List<Post> GetAllPostOfOtherTimeline(int retrievedUserId, int loggedUserId)
+        public List<Post> GetAllPostOfOtherTimeline(Guid retrievedUserId, Guid loggedUserId)
         {
             var isFriend = _friendRepository.GetFriendship(retrievedUserId, loggedUserId);
 
@@ -46,7 +46,7 @@ namespace pastebook_db.Data
         }
 
         //Get all post friend Id
-        public List<Post>? GetAllPostOfFriends(int userId)
+        public List<Post>? GetAllPostOfFriends(Guid userId)
         {
             var friendList = _friendRepository.GetAllUserFriends(userId);
 

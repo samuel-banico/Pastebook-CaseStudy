@@ -17,7 +17,7 @@ namespace pastebook_db.Data
             _context = context;
         }
 
-        public User? GetUserById(int id)
+        public User? GetUserById(Guid id)
         {
             return _context.Users.Find(id);
         }

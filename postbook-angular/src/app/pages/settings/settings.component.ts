@@ -21,7 +21,7 @@ export class SettingsComponent implements OnInit{
     private route: ActivatedRoute,
     private session: SessionService
   ){
-    let userId: number = this.session.getId();
+    let userId: string = this.session.getId();
     userService.getUser(userId).subscribe((response: User)=> 
     {
       this.user = {...response};

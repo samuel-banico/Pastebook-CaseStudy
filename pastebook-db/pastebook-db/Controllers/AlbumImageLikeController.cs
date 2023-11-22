@@ -19,7 +19,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet]
-        public ActionResult<Post> GetPostLikeById(int id)
+        public ActionResult<Post> GetPostLikeById(Guid id)
         {
             var postLike = _albumImageLikeRepository.GetAlbumImageLikeById(id);
             return Ok(postLike);
@@ -34,7 +34,7 @@ namespace pastebook_db.Controllers
 
         // A friend has liked a user's post
         [HttpPut("likeAlbumImage")]
-        public ActionResult<Post> LikedAlbumImage(int albumImageId, int loggedUserId)
+        public ActionResult<Post> LikedAlbumImage(Guid albumImageId, Guid loggedUserId)
         {
             var albumImageLike = new AlbumImageLike
             {
@@ -51,7 +51,7 @@ namespace pastebook_db.Controllers
 
         // A friend has unliked a user's post
         [HttpPut("unlikeAlbumImage")]
-        public ActionResult<Post> UnlikedAlbumImage(int albumImageLikeId)
+        public ActionResult<Post> UnlikedAlbumImage(Guid albumImageLikeId)
         {
             var albumImageLike = _albumImageLikeRepository.GetAlbumImageLikeById(albumImageLikeId);
 

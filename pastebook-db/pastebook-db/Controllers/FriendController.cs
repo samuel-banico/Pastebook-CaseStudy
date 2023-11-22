@@ -20,7 +20,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("friend")]
-        public ActionResult<Friend> GetFriendship(int userId, int friendId) 
+        public ActionResult<Friend> GetFriendship(Guid userId, Guid friendId) 
         {
             var friendship = _friendRepository.GetFriendship(userId, friendId);
 
@@ -32,7 +32,7 @@ namespace pastebook_db.Controllers
 
         // returns a list of friends table
         [HttpGet("friendList")]
-        public ActionResult<List<Friend>> GetAllFriends(int userId)
+        public ActionResult<List<Friend>> GetAllFriends(Guid userId)
         {
             var friend = _friendRepository.GetAllFriends(userId);
 
@@ -45,7 +45,7 @@ namespace pastebook_db.Controllers
 
         // returns a list of user table
         [HttpGet("userFriendList")]
-        public ActionResult<List<User>> GetAllUserFriends(int userId)
+        public ActionResult<List<User>> GetAllUserFriends(Guid userId)
         {
             var userFriend = _friendRepository.GetAllUserFriends(userId);
 
@@ -57,7 +57,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("blocked")]
-        public ActionResult<Friend> GetBlockedFriends(int userId)
+        public ActionResult<Friend> GetBlockedFriends(Guid userId)
         {
             var blockedUsers = _friendRepository.GetAllBlockedFriends(userId);
 
@@ -68,7 +68,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpPost("accepted")]
-        public ActionResult<Friend> AddFriend(int friendRequestId)
+        public ActionResult<Friend> AddFriend(Guid friendRequestId)
         {
             var request = _friendRequestRepository.GetFriendRequest(friendRequestId);
             var addFriend = new Friend();
@@ -85,7 +85,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpPut]
-        public ActionResult<Friend> BlockFriend(int friendId, int userId)
+        public ActionResult<Friend> BlockFriend(Guid friendId, Guid userId)
         {
             var userToBlock = _friendRepository.GetFriendship(userId, friendId);
 
@@ -101,7 +101,7 @@ namespace pastebook_db.Controllers
         
         // editing
         [HttpDelete]
-        public ActionResult<Friend> RemoveFriend(int friendId, int userId)
+        public ActionResult<Friend> RemoveFriend(Guid friendId, Guid userId)
         {
             var userToDelete = _friendRepository.GetFriendship(userId, friendId);
 

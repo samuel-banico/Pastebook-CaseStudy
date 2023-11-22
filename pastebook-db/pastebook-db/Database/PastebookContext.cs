@@ -25,6 +25,9 @@ namespace pastebook_db.Database
 
         public DbSet<Notification> Notifications { get; set; } = null!;
 
+        public DbSet<UserToken> Tokens { get; set; } = null!;
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)

@@ -14,7 +14,7 @@ namespace pastebook_db.Data
         }
 
         // Get All Notifications
-        public List<Notification> GetAllNotifications(int userId)
+        public List<Notification> GetAllNotifications(Guid userId)
         {
             var notif = _context.Notifications.Where(n => n.UserId == userId).ToList();
 
@@ -22,7 +22,7 @@ namespace pastebook_db.Data
         }
 
         // Get Unseen Notification
-        public List<Notification> GetUnseenNotifications(int userId) 
+        public List<Notification> GetUnseenNotifications(Guid userId) 
         {
             var notif = _context.Notifications.Where(n => n.UserId == userId && n.HasSeen == false).ToList();
 
@@ -30,7 +30,7 @@ namespace pastebook_db.Data
         }
 
         // Get Unseen Notification
-        public void SeenNotification(int notifId)
+        public void SeenNotification(Guid notifId)
         {
             var notif = _context.Notifications.FirstOrDefault(n => n.Id == notifId);
 
@@ -218,13 +218,13 @@ namespace pastebook_db.Data
             return user;
         }
 
-        private Post getPostFromPostId(int postId) 
+        private Post getPostFromPostId(Guid postId) 
         {
             var post = _context.Posts.FirstOrDefault(p => p.Id == postId);
             return post;
         }
 
-        private Album getAlbumFromAlbumImageId(int albumImageId) 
+        private Album getAlbumFromAlbumImageId(Guid albumImageId) 
         {
             var albumImage = _context.AlbumImages
                                 .Include(a => a.Album)

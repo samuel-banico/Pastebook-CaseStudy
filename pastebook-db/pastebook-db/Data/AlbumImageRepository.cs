@@ -15,7 +15,7 @@ namespace pastebook_db.Data
         }
 
         // --- GET
-        public AlbumImage? GetAlbumImageById(int id)
+        public AlbumImage? GetAlbumImageById(Guid id)
         {
             var post = _context.AlbumImages
                         .Include(a => a.AlbumImageLikesList)
@@ -24,7 +24,7 @@ namespace pastebook_db.Data
             return post;
         }
 
-        public List<AlbumImage> GetAllAlbumImagesByAlbumId(int albumId)
+        public List<AlbumImage> GetAllAlbumImagesByAlbumId(Guid albumId)
         {
             return _context.AlbumImages
                         .Include(a => a.AlbumImageLikesList)

@@ -16,7 +16,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("unseenNotification")]
-        public ActionResult<Notification> GetUnseenNotification(int userId) 
+        public ActionResult<Notification> GetUnseenNotification(Guid userId) 
         {
             var notifs = _repo.GetUnseenNotifications(userId);
 
@@ -27,7 +27,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("allNotification")]
-        public ActionResult<Notification> GetAllNotifications(int userId)
+        public ActionResult<Notification> GetAllNotifications(Guid userId)
         {
             var notifs = _repo.GetAllNotifications(userId);
 
@@ -38,7 +38,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpPut]
-        public ActionResult<Notification> SeenNotification(int notifId)
+        public ActionResult<Notification> SeenNotification(Guid notifId)
         {
             _repo.SeenNotification(notifId);
 

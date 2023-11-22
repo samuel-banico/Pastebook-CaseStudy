@@ -20,7 +20,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("allRequest")]
-        public ActionResult<FriendRequest> GetAllFriendRequestsByUserId(int userId)
+        public ActionResult<FriendRequest> GetAllFriendRequestsByUserId(Guid userId)
         {
             var request = _friendRequestRepository.GetAllFriendRequest(userId);
             if (request.Count == 0)
@@ -30,7 +30,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpPost("request")]
-        public ActionResult<FriendRequest> FriendRequest(int userId, int friendId)
+        public ActionResult<FriendRequest> FriendRequest(Guid userId, Guid friendId)
         {
             var friendRequest = new FriendRequest();
             friendRequest.UserId = userId;
@@ -44,7 +44,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpDelete("rejectRequest")]
-        public ActionResult<FriendRequest> RejectFriendReq(int friendReq)
+        public ActionResult<FriendRequest> RejectFriendReq(Guid friendReq)
         {
             _friendRequestRepository.DeleteFriendRequest(friendReq);
             return Ok(new { result = "friend_request_rejected" });

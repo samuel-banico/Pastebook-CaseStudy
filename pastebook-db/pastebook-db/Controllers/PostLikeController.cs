@@ -19,7 +19,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet]
-        public ActionResult<Post> GetPostLikeById(int id) 
+        public ActionResult<Post> GetPostLikeById(Guid id) 
         {
             var postLike = _postLikeRepository.GetPostLikeById(id);
             return Ok(postLike);
@@ -34,7 +34,7 @@ namespace pastebook_db.Controllers
 
         // A friend has liked a user's post
         [HttpPut("likePost")]
-        public ActionResult<Post> LikedPost(int postId, int loggedUserId)
+        public ActionResult<Post> LikedPost(Guid postId, Guid loggedUserId)
         {
             var postLike = new PostLike
             {
@@ -51,7 +51,7 @@ namespace pastebook_db.Controllers
 
         // A friend has unliked a user's post
         [HttpPut("unlikePost")]
-        public ActionResult<Post> UnlikedPost(int postLikeId)
+        public ActionResult<Post> UnlikedPost(Guid postLikeId)
         {
             var postLike = _postLikeRepository.GetPostLikeById(postLikeId);
 

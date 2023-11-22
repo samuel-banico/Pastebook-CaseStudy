@@ -22,7 +22,7 @@ namespace pastebook_db.Controllers
 
         // --- GET
         [HttpGet("{id}")]
-        public ActionResult<Album> GetAlbumById(int albumId) 
+        public ActionResult<Album> GetAlbumById(Guid albumId) 
         {
             var album = _albumRepository.GetAlbumById(albumId);
 
@@ -30,7 +30,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("allAlbumByUser")]
-        public ActionResult<List<AlbumDTO>> GetAllAlbumsByOwner(int userId)
+        public ActionResult<List<AlbumDTO>> GetAllAlbumsByOwner(Guid userId)
         {
             var albums = _albumRepository.GetAllAlbumByOwner(userId);
 
@@ -50,7 +50,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("allAlbumByOther")]
-        public ActionResult<List<AlbumDTO>> GetAllAlbumsOfOthers(int retrievedUserId, int loggedUserId)
+        public ActionResult<List<AlbumDTO>> GetAllAlbumsOfOthers(Guid retrievedUserId, Guid loggedUserId)
         {
             var albums = _albumRepository.GetAllAlbumByOther(retrievedUserId, loggedUserId);
 
@@ -113,7 +113,7 @@ namespace pastebook_db.Controllers
         // --- PUT
         // To be edit
         [HttpPut]
-        public ActionResult<Album> UpdateAlbum(int albumId, AlbumDTO newAlbum)
+        public ActionResult<Album> UpdateAlbum(Guid albumId, AlbumDTO newAlbum)
         {
             var albumToEdit = _albumRepository.GetAlbumById(albumId);
 
@@ -135,7 +135,7 @@ namespace pastebook_db.Controllers
         
         // --- DELETE
         [HttpDelete]
-        public ActionResult<Album> DeleteAlbum(int albumImageId)
+        public ActionResult<Album> DeleteAlbum(Guid albumImageId)
         {
             var albumToDelete = _albumRepository.GetAlbumById(albumImageId);
 

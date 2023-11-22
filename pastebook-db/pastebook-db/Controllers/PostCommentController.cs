@@ -21,7 +21,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet]
-        public ActionResult<Post> GetPostCommentById(int id) 
+        public ActionResult<Post> GetPostCommentById(Guid id) 
         {
             var postComment = _postCommentRepository.GetPostCommmentById(id);
 
@@ -43,7 +43,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpPut("commentPost")]
-        public ActionResult<Post> CommentPost(int postId, int loggedUserId, string comment)
+        public ActionResult<Post> CommentPost(Guid postId, Guid loggedUserId, string comment)
         {
             var postComment = new PostComment
             {
@@ -62,7 +62,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpPut("edittedCommentPost")]
-        public ActionResult<Post> EditCommentPost(int postCommentId, string comment)
+        public ActionResult<Post> EditCommentPost(Guid postCommentId, string comment)
         {
             var postComment = _postCommentRepository.GetPostCommmentById(postCommentId);
 
@@ -80,7 +80,7 @@ namespace pastebook_db.Controllers
 
         //unfinished
         [HttpPut("uncommentPost")]
-        public ActionResult<Post> UncommentPost(int postCommentId)
+        public ActionResult<Post> UncommentPost(Guid postCommentId)
         {
             var postComment = _postCommentRepository.GetPostCommmentById(postCommentId);
 

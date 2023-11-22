@@ -26,7 +26,7 @@ export class UserService {
     return this.http.post(this.accessUrl + '/register', user);
   }
 
-  getUser(id: number) : Observable<Object>{
+  getUser(id: string) : Observable<Object>{
     return this.http.get<User[]>(`${this.baseUrl}/${id}`);
   }
 

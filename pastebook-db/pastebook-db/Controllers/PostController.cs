@@ -18,7 +18,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("postById")]
-        public ActionResult<PostDTO> GetPostById(int postId)
+        public ActionResult<PostDTO> GetPostById(Guid postId)
         {
             var post = _postRepository.GetPostById(postId);
             
@@ -31,7 +31,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("ownUserTimeline")]
-        public ActionResult<List<PostDTO>> GetUserTimeline(int userId)
+        public ActionResult<List<PostDTO>> GetUserTimeline(Guid userId)
         {
             var postList = _postRepository.GetAllPostOfUserTimeline(userId);
 
@@ -50,7 +50,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("otherUserTimeline")]
-        public ActionResult<List<Post>> GetOtherUserTimeline(int retrievedUserId, int loggedUserId)
+        public ActionResult<List<Post>> GetOtherUserTimeline(Guid retrievedUserId, Guid loggedUserId)
         {
             var postList = _postRepository.GetAllPostOfOtherTimeline(retrievedUserId, loggedUserId);
 
@@ -70,7 +70,7 @@ namespace pastebook_db.Controllers
 
         //Get all posts by user and friends
         [HttpGet("allPostsOfFriends")]
-        public ActionResult<List<PostDTO>> GetAllPostsOfFriends(int userId)
+        public ActionResult<List<PostDTO>> GetAllPostsOfFriends(Guid userId)
         {
             var friendsPosts = _postRepository.GetAllPostOfFriends(userId);
 
@@ -112,7 +112,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpPut]
-        public ActionResult<Post> UpdatePost(int postId, PostDTO newPost) 
+        public ActionResult<Post> UpdatePost(Guid postId, PostDTO newPost) 
         {
             var postToEdit = _postRepository.GetPostById(postId);
 
@@ -128,7 +128,7 @@ namespace pastebook_db.Controllers
 
         // editing
         [HttpDelete]
-        public ActionResult<Post> DeletePost(int postId) 
+        public ActionResult<Post> DeletePost(Guid postId) 
         {
             var postToDelete = _postRepository.GetPostById(postId);
 

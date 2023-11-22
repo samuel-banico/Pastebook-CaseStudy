@@ -37,7 +37,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<List<UserSendDTO>> GetUserById(int id)
+        public ActionResult<List<UserSendDTO>> GetUserById(Guid id)
         {
             var user = _userRepository.GetUserById(id);
 
@@ -50,7 +50,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("getPassword")]
-        public ActionResult<bool> GetUserPasswordById([FromQuery] int id, [FromQuery] string password)
+        public ActionResult<bool> GetUserPasswordById([FromQuery] Guid id, [FromQuery] string password)
         {
             var user = _userRepository.GetUserById(id);
 
@@ -64,7 +64,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpPut("editUserGeneral")]
-        public ActionResult<User> EditUserGeneral(int id, [FromBody] EditUserReceiveGeneralDTO user)
+        public ActionResult<User> EditUserGeneral(Guid id, [FromBody] EditUserReceiveGeneralDTO user)
         {
             var retreivedUser = _userRepository.GetUserById(id);
             if (retreivedUser == null)
@@ -82,7 +82,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpPut("editUserSecurity")]
-        public ActionResult<User> EditUserSecurity(int id, [FromBody] EditUserReceiveSecurityDTO user)
+        public ActionResult<User> EditUserSecurity(Guid id, [FromBody] EditUserReceiveSecurityDTO user)
         {
             var retreivedUser = _userRepository.GetUserById(id);
             if (retreivedUser == null)
