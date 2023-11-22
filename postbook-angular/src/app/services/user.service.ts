@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { SessionService } from './session.service';
 
 import { User } from '@models/user';
-import { SessionService } from './session.service';
 
 @Injectable({
   providedIn: 'root'
