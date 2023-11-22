@@ -43,8 +43,16 @@ export class SearchmodalComponent implements OnInit {
     this.searchRef.close(closeMessage)
   }
 
-  selectedOption = 'Public';
-  onOptionSelect(option: string) {
-    this.selectedOption = option;
-  }
+  // Assuming you have a function to handle user click events in your component class
+userClicked(clickedUser: any) {
+  // Do something with the clicked user, for example, log the user's information
+  console.log('User clicked:', clickedUser);
+}
+
+// Assuming you have a function to show all results
+showAllResults() {
+  // Implement the logic to show all results
+  console.log('Show all results');
+}
+
 }
