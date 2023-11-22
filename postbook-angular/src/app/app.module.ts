@@ -38,7 +38,6 @@ const appRoutes: Routes = [
   {path: 'create', component: CreateAlbumComponent},
   {path: 'landing', component:LandingComponent},
   {path: 'forgotpassword', component: ForgotpasswordComponent}
-
 ];
 
 
