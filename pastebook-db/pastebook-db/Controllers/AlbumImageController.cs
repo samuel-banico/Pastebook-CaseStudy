@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
 using pastebook_db.Data;
 using pastebook_db.Models;
 
@@ -47,6 +48,8 @@ namespace pastebook_db.Controllers
             var newAlbumImage = new AlbumImage
             {
                 Image = memoryStream.ToArray(),
+                CreatedOn = DateTime.Now,
+                IsEdited = false,
                 AlbumId = albumId
             };
 

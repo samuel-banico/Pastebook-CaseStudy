@@ -16,7 +16,7 @@ namespace pastebook_db.Models
         public string? UserBio { get; set; }
         public bool IsActive { get; set; }
 
-        public string? Token { get; set; }
+        //public string? Token { get; set; }
 
         public ICollection<Friend>? FriendList { get; set; }
     }

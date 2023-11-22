@@ -9,6 +9,11 @@ namespace pastebook_db.Data
     {
         private readonly PastebookContext _context;
 
+        public AlbumImageRepository(PastebookContext context)
+        {
+            _context = context;
+        }
+
         // --- GET
         public AlbumImage? GetAlbumImageById(int id)
         {
@@ -29,10 +34,10 @@ namespace pastebook_db.Data
         }
 
         // --- POST
-        public async void CreateAlbumImage(AlbumImage albumImage)
+        public void CreateAlbumImage(AlbumImage albumImage)
         {
             _context.AlbumImages.Add(albumImage);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         // PUT

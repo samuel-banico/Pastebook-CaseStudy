@@ -82,7 +82,10 @@ namespace pastebook_db.Controllers
 
             _albumRepository.CreateAlbum(newAlbum);
 
-            if (album.ImageList != null || album.ImageList.Count > 0) 
+            /*var albumList = _albumRepository.GetAllAlbumByOwner(album.UserId);
+            newAlbum.Id = albumList[albumList.Count - 1].Id;*/
+
+            /*if (album.ImageList != null || album.ImageList.Count > 0) 
             {
                 foreach (var image in album.ImageList) 
                 {
@@ -102,9 +105,9 @@ namespace pastebook_db.Controllers
                         _albumRepository.UpdateAlbum(newAlbum);
                     }
                 }
-            }
+            }*/
 
-            return Ok(new { result = "added_album"});
+            return Ok(newAlbum);
         }
 
         // --- PUT
