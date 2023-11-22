@@ -1,0 +1,37 @@
+<app-navbar></app-navbar>
+
+<div class="card mx-auto my-5" style="width: 50rem;">
+    <div class="card-body">
+        <div class="media">
+            <img src="assets/images/De Guzman, Christian.JPG" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
+            <div class="media-body">
+                <h5>Christian De Guzman</h5>
+                <p class="text-justify">Hays, ayaw q na. 🥺 Joke.</p>
+                <div class="bg-white">
+                    <div class="d-flex flex-row fs-12">
+                        <div class="like p-2 cursor" onclick="toggleLike()">
+                            <i class="fa fa-thumbs-o-up"></i>
+                            <span class="ml-1">Like</span>
+                        </div>
+                        <div class="like p-2 cursor"><i class="fa fa-commenting-o"></i><span class="ml-1">Comment</span></div>
+                        </div>
+                        <hr class="custom-hr my-1">
+                        <div class="like-count-btn p-2 cursor" (click)="openLikeList()">
+                            <span class="ml-1"> <img src="./assets/images/like.png" alt="logo" class="img-fluid" width="30px" height="50px">10</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="custom-hr">
+        <div class="bg-light p-2">
+            <div class="d-flex flex-row align-items-start"><img class="rounded-circle" src="assets/images/De Guzman, Christian.JPG" width="40"><textarea class="form-control ml-1 shadow-none textarea"></textarea></div>
+            <div class="mt-2 text-right"><button class="btn btn-primary btn-sm" type="button" style="background-color: #68070f;">Comment</button><button class="btn btn-primary btn-sm ml-1 shadow-none" type="button" style="background-color: #0B2154;">Cancel</button></div>
+        </div>
+        <div class="media mb-3">
+            <img src="assets/images/work.jpg" alt="img" width="45px" height="45px" class="rounded-circle mr-2">
+            <div class="media-body">
+                <p class="card-text text-justify"><strong>Dingdong Dentist</strong> Yehey! Wala naman nagmamahal sayo</p>
+            </div>
+        </div>
+    </div>
+</div>
