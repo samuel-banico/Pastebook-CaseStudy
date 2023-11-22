@@ -49,30 +49,59 @@ namespace pastebook_db.Controllers
             return Ok(userDTO);
         }
 
-        [HttpPut("{id}")]
-        public ActionResult<User> EditUser(int id, EditUserReceiveDTO user)
+        [HttpGet("getPassword")]
+        public ActionResult<bool> GetUserPasswordById([FromQuery] int id, [FromQuery] string password)
+        {
+            var user = _userRepository.GetUserById(id);
+
+            if (user == null)
+                return BadRequest(new { result = "user_not_found" });
+
+            if (!_passwordHasher.VerifyPassword(password, user.Password))
+                return Unauthorized(new { result = "password_incorrect" });
+
+            return Ok(true);
+        }
+
+        [HttpPut("editUserGeneral")]
+        public ActionResult<User> EditUserGeneral(int id, [FromBody] EditUserReceiveGeneralDTO user)
         {
             var retreivedUser = _userRepository.GetUserById(id);
             if (retreivedUser == null)
                 return BadRequest(new { result = "user_not_found" });
 
-            bool emailHasEdited = false;
-            if(retreivedUser.Email != user.Email)
-                emailHasEdited = true;
-
             retreivedUser.FirstName = user.FirstName;
             retreivedUser.LastName = user.LastName;
-            retreivedUser.Email = user.Email;
-            retreivedUser.Password = _passwordHasher.HashPassword(user.Password);
             retreivedUser.Birthday = DateTime.Parse(user.Birthday);
             retreivedUser.Gender = (Gender)user.Gender;
-            retreivedUser.UserBio = user.UserBio;
-            retreivedUser.MobileNumber = user.MobileNumber;
 
-            if (!_userRepository.UpdateUser(retreivedUser, emailHasEdited))
+            if (!_userRepository.UpdateUser(retreivedUser, false))
                 return BadRequest(new { result = "not_legitimate_email" });
 
             return Ok(new { result = "user_details_updated.", user });
-        }       
+        }
+
+        [HttpPut("editUserSecurity")]
+        public ActionResult<User> EditUserSecurity(int id, [FromBody] EditUserReceiveSecurityDTO user)
+        {
+            var retreivedUser = _userRepository.GetUserById(id);
+            if (retreivedUser == null)
+                return BadRequest(new { result = "user_not_found" });
+
+            bool emailHasBeenEdited = false;
+            if(!retreivedUser.Email.Equals(user.Email, StringComparison.CurrentCultureIgnoreCase))
+                emailHasBeenEdited = true;
+
+            retreivedUser.Email = user.Email;
+            retreivedUser.MobileNumber = user.MobileNumber;
+
+            if(user.Password != null && user.Password != "")
+                retreivedUser.Password = _passwordHasher.HashPassword(user.Password);
+
+            if (!_userRepository.UpdateUser(retreivedUser, emailHasBeenEdited))
+                return BadRequest(new { result = "not_legitimate_email" });
+
+            return Ok(new { result = "user_details_updated.", user });
+        }
     }
 }

@@ -30,8 +30,23 @@ export class UserService {
     return this.http.get<User[]>(`${this.baseUrl}/${id}`);
   }
 
-  update(user: User): Observable<Object> {
-    let userId: number = Number.parseInt(this.session.getId());
-    return this.http.put(this.baseUrl + `/${userId}`, user);
+  updateGeneral(user: User): Observable<Object> {
+    user.id = this.session.getId();
+    return this.http.put(this.baseUrl + `/editUserGeneral?id=${user.id}`, user);
+  }
+
+  updateSecurity(user: User): Observable<Object> {
+    user.id = this.session.getId();
+    return this.http.put(this.baseUrl + `/editUserSecurity?id=${user.id}`, user);
+  }
+
+  editUserSecurityVerifyPassword(pass: string) : Observable<object> 
+  { 
+    let params = {
+      id: this.session.getId(),
+      password: pass
+    };
+
+    return this.http.get(this.baseUrl+ `/getPassword`, { params })
   }
 }

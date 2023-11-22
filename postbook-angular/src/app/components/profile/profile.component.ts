@@ -16,7 +16,7 @@ export class ProfileComponent implements OnInit{
     private userService : UserService,
     private sessionService : SessionService
   ){
-    let userId: number = Number.parseInt(this.sessionService.getId());
+    let userId: number = this.sessionService.getId();
     this.userService.getUser(userId).subscribe((response : any) => {
       this.user = response;
       console.log(response);

@@ -12,19 +12,20 @@ import { SessionService } from '@services/session.service';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit{
-
+  userDefault: User = new User();
   user: User = new User();
+
   constructor(
     private userService: UserService,
     private router: Router,
     private route: ActivatedRoute,
     private session: SessionService
   ){
-    let userId: number = Number.parseInt(this.session.getId());
-    userService.getUser(userId).subscribe((response: Object)=> 
+    let userId: number = this.session.getId();
+    userService.getUser(userId).subscribe((response: User)=> 
     {
-      this.user = response
-      console.log(response);
+      this.user = {...response};
+      this.userDefault = {...response};
     })
   }
   
@@ -37,27 +38,28 @@ export class SettingsComponent implements OnInit{
 securityPassword: string = '';
 isPasswordCorrect: boolean = false;
 
-onUpdateSecurity() {
-  // Log the entered password to see what's being entered
-  console.log('Entered Password:', this.securityPassword);
+passwordVerify(event: any) {
+  this.userService.editUserSecurityVerifyPassword(this.securityPassword).subscribe((response: Record<string, any>)=>{
+    this.isPasswordCorrect = true
+    }, (error) => {
+      Swal.fire('Unauthorized','Incorrect Password', 'error');
+    });
 
-  // Perform password validation logic here (compare with the correct password)
-  // For example, you might have a service that validates the password
-  const correctPassword = 'correctPassword'; // Replace with your actual correct password
-
-  // Log the correct password to verify
-  console.log('Correct Password:', correctPassword);
-
-  this.isPasswordCorrect = this.securityPassword === correctPassword;
-
-  // Log the result of the password validation
-  console.log('Is Password Correct:', this.isPasswordCorrect);
-
-  // Clear the entered password for security reasons
   this.securityPassword = '';
 }
 
-// ... Other methods and properties in your component class ...
+newPassword: string = '';
+confirmNewPassword: string = '';
+
+onUpdateSecurity() {
+  this.user.password = this.newPassword;
+  console.log(this.user);
+  this.userService.updateSecurity(this.user).subscribe((response: Record<string, any>)=>{
+    if(response['result'] === 'user_details_updated.'){
+      Swal.fire('Update Successful','Profile updated successfully','success');
+      }
+    });
+}
 
 
   div1Function(){
@@ -74,7 +76,7 @@ onUpdateSecurity() {
   
   onUpdate(): void {
     console.log(this.user);
-    this.userService.update(this.user).subscribe((response: Record<string, any>)=>{
+    this.userService.updateGeneral(this.user).subscribe((response: Record<string, any>)=>{
       if(response['result'] === 'user_details_updated.'){
         Swal.fire('Update Successful','Profile updated successfully','success');
         }
@@ -95,9 +97,7 @@ enableEdit(field: string) {
 }
 
 resetChanges() {
-  // Reset the fields to their default values
-  // You need to implement this based on how default values are stored in your application
-  this.user = { firstName: 'defaultFirstName', lastName: 'defaultLastName', /* other fields */ };
+  this.user = {...this.userDefault};
   
   // Disable edit mode for all fields
   Object.keys(this.editMode).forEach((key) => {
