@@ -20,15 +20,15 @@
     public class AlbumDTO
     {
         public int? Id { get; set; }
-        public string AlbumName { get; set; } = null!;
-        public string AlbumDescription { get; set; } = null!;
-        public bool IsPublic { get; set; }
-        public bool IsEdited { get; set; }
+        public string? AlbumName { get; set; }
+        public string? AlbumDescription { get; set; }
+        public bool? IsPublic { get; set; }
+        public bool? IsEdited { get; set; }
         public string? CreatedOn { get; set; }
         public byte[]? CoverAlbumImage { get; set; }
 
         public int UserId { get; set; }
 
-        public ICollection<AlbumImage>? AlbumImageList { get; set; }
+        public ICollection<IFormFile>? ImageList { get; set; }
     }
 }

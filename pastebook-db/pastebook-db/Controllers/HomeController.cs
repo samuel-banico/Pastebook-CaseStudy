@@ -17,7 +17,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("searchUser")]
-        public ActionResult<IEnumerable<UserDTO>> SearchUserByString(string user)
+        public ActionResult<IEnumerable<UserSendDTO>> SearchUserByString(string user)
         {
             var users = _repo.GetSearchedUser(user);
 
@@ -26,20 +26,16 @@ namespace pastebook_db.Controllers
                 return NotFound(new { result = "no_match"});
             }
 
-            var userList = new List<UserDTO>();
+            var userList = new List<UserSendDTO>();
 
             foreach (var item in users)
             {
-                var u = new UserDTO()
+                var u = new UserSendDTO()
                 {
                     Id = item.Id,
                     FirstName = item.FirstName,
                     LastName = item.LastName,
-                    Email = item.Email,
-                    Password = item.Password,
-                    MobileNumber = item.MobileNumber,
-                    Gender = (int)item.Gender,
-                    Birthday = item.Birthday.ToString()
+                    ProfilePicture = item.ProfilePicture,
                 };
 
                 userList.Add(u);
