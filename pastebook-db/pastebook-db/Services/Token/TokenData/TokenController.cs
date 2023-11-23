@@ -15,7 +15,7 @@ namespace pastebook_db.Services.Token.TokenData
             _tokenRepository = tokenrepository;
         }
 
-        public async Task<string> Authenticate(User user)
+        public string Authenticate(User user)
         {
             // Adding our tokens
             string accessToken = _generateAccessToken.GenerateToken(user);
@@ -26,7 +26,7 @@ namespace pastebook_db.Services.Token.TokenData
                 UserId = user.Id
             };
 
-            await _tokenRepository.Create(userAccessToken);
+            _tokenRepository.Create(userAccessToken);
 
             return accessToken;
         }

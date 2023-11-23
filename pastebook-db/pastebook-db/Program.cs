@@ -38,6 +38,7 @@ namespace pastebook_db
             builder.Services.AddSingleton<GenerateAccessToken>();
             builder.Services.AddSingleton<GenerateToken>();
 
+            builder.Services.AddScoped<TokenController>();
             builder.Services.AddScoped<TokenRepository>();
             builder.Services.AddScoped<AccessRepository>();
             builder.Services.AddScoped<AlbumImageCommentRepository>();

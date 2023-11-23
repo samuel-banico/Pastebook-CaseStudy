@@ -15,11 +15,10 @@ namespace pastebook_db.Services.Token.TokenData
             _context = context;
         }
 
-        public async Task Create(UserToken refreshToken)
+        public void Create(UserToken accessToken)
         {
-            _context.Tokens.Add(refreshToken);
-            await _context.SaveChangesAsync();
-
+            _context.Tokens.Add(accessToken);
+            _context.SaveChangesAsync();
         }
 
         public async Task Delete(Guid id)
