@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pastebook - Registration</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-</head>
-<body>
+<title>Pastebook - Registration</title>
+<link rel="stylesheet" href="registration.component.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
 <section class="vh-100" style="background-image: url('assets/images/background.jpg'); background-size: cover;">
     <div class="container pt-5 h-100" >
@@ -22,7 +16,7 @@
                     <form (ngSubmit)="onSubmit()" class="pt-0 px-4 pb-0">
                         <div class="text-center mb-4">
                             <!-- <img src="assets/images/logo.png" alt="Logo" style="width: 4rem; height: 4rem;" /> -->
-                            <h1 class="h2 fw-bold mb-0">Pastebook Registration</h1>
+                            <h1 class="h2 fw-bold mb-0" style="color: #68070F;">Pastebook Registration</h1>
                         </div>
             
                         <div class="mb-3 row">
@@ -41,8 +35,6 @@
                             <input type="email" id="email" class="form-control" name="email" [(ngModel)]="user.email" required />
                         </div>
             
-                        <!-- Add more form elements as needed -->
-                        
                         <div class="mb-3 row">
                           <div class="col-md-6">
                             <label for="password" class="form-label">Password</label>
@@ -74,8 +66,6 @@
                         </div>
                         </div>
                         
-            
-                        <!-- Continue with the rest of your form elements -->
                         <div class="mb-3 row">
                         <div class="form-outline col-md-6">
                           <label for="birthday" class="form-label">Birthday</label>
@@ -98,14 +88,12 @@
                           <input type="tel" id="mobileNumber" class="form-control" name="mobileNumber" [(ngModel)]="user.mobileNumber" required=""/>                              
                         </div>
 
-                        
                         <div class="pt-2 justify-content-center text-center">
-                            <button class="btn btn-dark btn-lg btn-block" type="button" (click)="onSubmit()">Register</button>
+                            <button class="btn btn-dark btn-lg btn-block rounded-md border-2 p-4" style="background-color: #0B2154; border: 2px solid white;" type="button" (click)="onSubmit()">Register</button>
                         </div>
             
                         <p class="mt-4 mb-2 text-center" style="color: #0B2154;">Already have an account? <a routerLink="/login"
                             style="color: #0B2154;">Login here</a></p>
-                        <p class="text-center small text-muted mb-0">By clicking Register, you agree to our <a href="#!">Terms of Use</a> and <a href="#!">Privacy Policy</a>.</p>
                     </form>
                 </div>
             </div>
@@ -115,11 +103,3 @@
     </div>
   </div>
 </section>
-                
-                
-      
-                        
-      
-                 
-            
-         
