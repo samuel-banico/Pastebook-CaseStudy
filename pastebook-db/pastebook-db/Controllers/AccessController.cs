@@ -44,7 +44,7 @@ namespace pastebook_db.Controllers
                 if (!_hashPassword.VerifyPassword(userLogin.Password, user.Password))
                     return Unauthorized(new { result = "incorrect_credentials" });
 
-                var createdtoken = await _tokenController.Authenticate(user);
+                var createdtoken = _tokenController.Authenticate(user);
 
                 var userLoginResponse = new UserLoginResponse
                 {
