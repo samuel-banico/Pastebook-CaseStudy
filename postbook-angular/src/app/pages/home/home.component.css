@@ -118,6 +118,10 @@
     border-radius: 10px;
 }
 
+.left-column-sticky {
+    position: sticky;
+    top: 0;
+}
 
 
 
