@@ -22,6 +22,11 @@ export class UserService {
     return this.http.post(this.accessUrl + '/login', {email, password});
   }
 
+  logout(id: string) : Observable<object> 
+  {
+    return this.http.delete(this.accessUrl + `/${id}`);
+  }
+
   register(user: User): Observable<object> {
     return this.http.post(this.accessUrl + '/register', user);
   }

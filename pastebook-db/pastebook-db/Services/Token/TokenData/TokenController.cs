@@ -31,9 +31,9 @@ namespace pastebook_db.Services.Token.TokenData
             return accessToken;
         }
 
-        public async Task DeleteAll(Guid userId) 
+        public void DeleteAll(Guid userId) 
         {
-            await _tokenRepository.DeleteAll(userId);
+            _tokenRepository.DeleteAll(userId);
         }
     }
 }

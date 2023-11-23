@@ -7,6 +7,7 @@ import { FriendrequestmodalComponent } from '@components/friendrequestmodal/frie
 
 import { SessionService } from '@services/session.service';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { UserService } from '@services/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -22,9 +23,8 @@ export class NavbarComponent implements OnInit {
   constructor(
     private router: Router,
     private modalService: MdbModalService,
-    private sessionService: SessionService
-
-    
+    private sessionService: SessionService,
+    private userService: UserService
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -50,6 +50,11 @@ export class NavbarComponent implements OnInit {
   }
   
   logout(): void {
+    let id: string = this.sessionService.getId();
+    this.userService.logout(id).subscribe((r) => {
+      console.log("Image save")
+    });
+
     this.sessionService.clear();
   }
 
