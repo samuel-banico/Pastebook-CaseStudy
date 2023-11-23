@@ -18,7 +18,7 @@ namespace pastebook_db.Services.Token.TokenData
         public void Create(UserToken accessToken)
         {
             _context.Tokens.Add(accessToken);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public async Task Delete(Guid id)
@@ -32,14 +32,14 @@ namespace pastebook_db.Services.Token.TokenData
             }
         }
 
-        public async Task DeleteAll(Guid userId)
+        public void DeleteAll(Guid userId)
         {
-            IEnumerable<UserToken> refreshTokens = await _context.Tokens
+            IEnumerable<UserToken> refreshTokens = _context.Tokens
                 .Where(t => t.UserId == userId)
-                .ToListAsync();
+                .ToList();
 
             _context.Tokens.RemoveRange(refreshTokens);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public async Task<UserToken> GetByToken(string token)

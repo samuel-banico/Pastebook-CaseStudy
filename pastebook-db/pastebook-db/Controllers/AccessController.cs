@@ -89,18 +89,15 @@ namespace pastebook_db.Controllers
             return Ok(new { result = "registered" });
         }
 
-        [Authorize]
-        [HttpDelete("logout")]
-        public async Task<IActionResult> Logout()
+        [HttpDelete("{id}")]
+        public IActionResult Logout(Guid id)
         {
-            string rawUserId = HttpContext.User.FindFirstValue("id");
+            var user = _userRepository.GetUserById(id);
 
-            if (!Guid.TryParse(rawUserId, out Guid userId))
-            {
-                return Unauthorized();
-            }
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
 
-            await _tokenController.DeleteAll(userId);
+            _tokenController.DeleteAll(user.Id);
             return NoContent();
         }
     }
