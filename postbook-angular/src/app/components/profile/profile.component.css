@@ -58,3 +58,62 @@
 .nav-item:hover {
     color: #fff;
 }
+
+.edit-icon {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 5px;
+    font-size: 0.8em;
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+}
+
+.banner-title {
+    position: relative;
+}
+
+  .profile-picture-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+  
+  .profile-picture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: filter 0.3s ease; /* Add transition for smooth effect */
+  }
+  
+  .profile-picture:hover {
+    filter: brightness(70%); /* Adjust the percentage for the desired dimming effect */
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    color: #fff;
+    border-radius: 50%;
+    overflow: hidden; /* Ensure the overlay stays inside the rounded circle */
+    transition: background-color 0.3s ease; /* Add transition for smooth effect */
+  }
+  
+  .profile-picture-container:hover .overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+
+.edit-icon {
+    cursor: pointer;
+}
