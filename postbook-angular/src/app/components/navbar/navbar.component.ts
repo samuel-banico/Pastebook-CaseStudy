@@ -4,7 +4,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { NotifnavbarmodalComponent } from '@components/notifnavbarmodal/notifnavbarmodal.component';
 import { SearchmodalComponent } from '@components/searchmodal/searchmodal.component';
 import { FriendrequestmodalComponent } from '@components/friendrequestmodal/friendrequestmodal.component';
-
+import Swal from 'sweetalert2';
 import { SessionService } from '@services/session.service';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { UserService } from '@services/user.service';
@@ -50,14 +50,24 @@ export class NavbarComponent implements OnInit {
   }
   
   logout(): void {
-    let id: string = this.sessionService.getId();
-    this.userService.logout(id).subscribe((r) => {
-      console.log("Image save")
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will be logged out',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, logout!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let id: string = this.sessionService.getId();
+        this.userService.logout(id).subscribe((r) => {
+          console.log("Image save")
+        });
+        this.sessionService.clear();
+        this.router.navigate(['/login']); // Optionally navigate to the login page after logout
+      }
     });
-
-    this.sessionService.clear();
   }
-
   openSearchModal() {
     this.searchRef = this.modalService.open(SearchmodalComponent)
   }
