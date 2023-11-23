@@ -15,7 +15,7 @@
           <div class="card mb-0 pb-0" style="border-radius: 1rem;" style="background-color: rgba(228, 228, 228, 0.8);">
             <div class="row g-2">
               <div class="col-md-6 col-lg-5 d-none d-md-block">
-                <img src="assets/images/pastebook.png" alt="registration form" class="img-fluid" style="border-radius: 1rem 0 0 1rem; max-width: 480px;" />
+                <img src="assets/images/pastebook.png" alt="registration form" class="img-fluid" style="border-radius: 1rem 0 0 1rem; max-height: 670px;" />
               </div>
               <div class="col-md-6 col-lg-7 d-flex align-items-center">
                 <div class="card-body text-black pb-0">
@@ -42,8 +42,9 @@
                         </div>
             
                         <!-- Add more form elements as needed -->
-            
-                        <div class="mb-3">
+                        
+                        <div class="mb-3 row">
+                          <div class="col-md-6">
                             <label for="password" class="form-label">Password</label>
                             <div class="input-group form-outline">
                                 <input
@@ -60,7 +61,7 @@
                             </div>
                         </div>
             
-                        <div class="mb-3">
+                        <div class="col-md-6">
                             <label for="confirmpassword" class="form-label">Confirm Password</label>
                             <input
                                 type="{{ showPassword ? 'text' : 'password' }}"
@@ -71,6 +72,8 @@
                                 required
                             />
                         </div>
+                        </div>
+                        
             
                         <!-- Continue with the rest of your form elements -->
                         <div class="mb-3 row">
