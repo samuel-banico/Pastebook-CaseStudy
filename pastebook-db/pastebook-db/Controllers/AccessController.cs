@@ -6,6 +6,7 @@ using pastebook_db.Models;
 using pastebook_db.Services.PasswordHash;
 using pastebook_db.Services.Token.TokenData;
 using pastebook_db.Services.Token.TokenGenerator;
+using pastebook_db.Services.Token.TokenValidator;
 using System.Security.Claims;
 
 namespace pastebook_db.Controllers
@@ -19,17 +20,26 @@ namespace pastebook_db.Controllers
 
         private readonly IPasswordHash _hashPassword;
         private readonly TokenController _tokenController;
+        private readonly ValidateToken _validateToken;
 
-        public AccessController(IPasswordHash hashPassword, AccessRepository accessRepository, UserRepository userRepository, TokenController tokenController)
+        public AccessController(IPasswordHash hashPassword, AccessRepository accessRepository, UserRepository userRepository, TokenController tokenController, ValidateToken validateToken)
         {
             _hashPassword = hashPassword;
             _accessRepository = accessRepository;
             _userRepository = userRepository;
             _tokenController = tokenController;
+            _validateToken = validateToken;
+        }
+
+        [HttpGet("validateToken")]
+        public ActionResult<bool> ValidateToken(string token) 
+        {
+            bool result = _validateToken.Validate(token);
+            return Ok(result);
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UserLoginResponse>> Login(UserLoginDTO userLogin)
+        public ActionResult<UserLoginResponse> Login(UserLoginDTO userLogin)
         {
             try 
             { 
@@ -89,10 +99,11 @@ namespace pastebook_db.Controllers
             return Ok(new { result = "registered" });
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Logout(Guid id)
+        [HttpDelete("logout")]
+        public IActionResult Logout()
         {
-            var user = _userRepository.GetUserById(id);
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
 
             if (user == null)
                 return BadRequest(new { result = "no_user" });

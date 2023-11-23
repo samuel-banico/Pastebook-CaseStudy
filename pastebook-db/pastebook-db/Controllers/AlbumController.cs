@@ -50,9 +50,15 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("allAlbumByOther")]
-        public ActionResult<List<AlbumDTO>> GetAllAlbumsOfOthers(Guid retrievedUserId, Guid loggedUserId)
+        public ActionResult<List<AlbumDTO>> GetAllAlbumsOfOthers(Guid retrievedUserId)
         {
-            var albums = _albumRepository.GetAllAlbumByOther(retrievedUserId, loggedUserId);
+            var token = Request.Headers["Authorization"];
+            var loggedUserId = _userRepository.GetUserByToken(token);
+
+            if (loggedUserId == null)
+                return BadRequest(new { result = "no_user" });
+
+            var albums = _albumRepository.GetAllAlbumByOther(retrievedUserId, loggedUserId.Id);
 
             if (albums.Count == 0)
                 return Ok(new { result = "no_album" });
@@ -72,40 +78,21 @@ namespace pastebook_db.Controllers
         [HttpPost]
         public ActionResult<Album> CreateAlbum(AlbumDTO album)
         {
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+
+            if (user == null)
+                return BadRequest(new { result = "no_user"});
+
             var newAlbum  = new Album 
             {
                 AlbumName = album.AlbumName,
                 AlbumDescription = album.AlbumDescription,
                 IsPublic = true,
-                UserId = album.UserId,
+                UserId = user.Id,
             };
 
             _albumRepository.CreateAlbum(newAlbum);
-
-            /*var albumList = _albumRepository.GetAllAlbumByOwner(album.UserId);
-            newAlbum.Id = albumList[albumList.Count - 1].Id;*/
-
-            /*if (album.ImageList != null || album.ImageList.Count > 0) 
-            {
-                foreach (var image in album.ImageList) 
-                {
-                    var albumImage = new AlbumImage
-                    {
-                        Image = _userRepository.ImageToByteArray(image),
-                        CreatedOn = DateTime.Now,
-                        IsEdited = false,
-                        AlbumId = newAlbum.Id
-                    };
-
-                    _albumImageRepository.CreateAlbumImage(albumImage);
-
-                    if (newAlbum.CoverAlbumImage != null) 
-                    {
-                        newAlbum.CoverAlbumImage = albumImage.Image;
-                        _albumRepository.UpdateAlbum(newAlbum);
-                    }
-                }
-            }*/
 
             return Ok(newAlbum);
         }
@@ -132,7 +119,23 @@ namespace pastebook_db.Controllers
 
             return Ok(albumToEdit);
         }
-        
+
+        [HttpPut("addCoverPhoto")]
+        public ActionResult<Album> AssignCoverToAlbum(Guid albumId)
+        {
+            var albumToEdit = _albumRepository.GetAlbumById(albumId);
+            var coverImage = _albumImageRepository.GetFirstPhotoOfAlbum(albumId);
+
+            if (coverImage == null)
+                return Ok(new { result = "no_albumImage" });
+
+            albumToEdit.CoverAlbumImage = coverImage;
+
+            _albumRepository.UpdateAlbum(albumToEdit);
+
+            return Ok(albumToEdit);
+        }
+
         // --- DELETE
         [HttpDelete]
         public ActionResult<Album> DeleteAlbum(Guid albumImageId)

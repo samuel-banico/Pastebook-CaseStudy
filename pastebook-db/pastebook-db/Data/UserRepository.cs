@@ -27,6 +27,16 @@ namespace pastebook_db.Data
             return _context.Users.FirstOrDefault(f => f.Email == email);
         }
 
+        public User? GetUserByToken(string token) 
+        {
+            var userId = _context.Tokens.FirstOrDefault(t => t.Token == token);
+
+            if (userId == null)
+                return null;
+
+            return _context.Users.FirstOrDefault(u => u.Id == userId.UserId);
+        }
+
         public List<User> GetAllUsers() 
         {
             return _context.Users.ToList();
@@ -62,7 +72,7 @@ namespace pastebook_db.Data
         // HELPER METHODS
         public UserSendDTO ConvertUserToUserSendDTO(User user) 
         {
-            var userDTO = new UserSendDTO() 
+            var userDTO = new UserSendDTO()
             {
                 Id = user.Id,
                 FirstName = user.FirstName,
@@ -73,7 +83,7 @@ namespace pastebook_db.Data
                 Gender = (int)user.Gender,
                 UserBio = user.UserBio,
                 MobileNumber = user.MobileNumber,
-                ProfilePicture = user.ProfilePicture
+                ProfilePicture = $"data:image/png;base64,{Convert.ToBase64String(user.ProfilePicture)}"
             };
 
             return userDTO;

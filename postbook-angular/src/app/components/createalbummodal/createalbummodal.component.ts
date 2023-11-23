@@ -33,28 +33,31 @@ export class CreatealbummodalComponent {
   }
 
   saveData() {
-    this.album.userId = this.sessionService.getId();
+    let token: string = this.sessionService.getToken();
 
-    this.albumService.createAlbum(this.album).subscribe((response: any) => {
+    this.albumService.createAlbum(this.album, token).subscribe((response: any) => {
       console.log(response);
       this.id = response.id;
-      console.log(this.id);
 
       this.pictureFileList.forEach(image => {
-      this.albumService.createAlbumImage(image, this.id).subscribe((r) => {
-        console.log("Image save")
-      })});
+        this.albumService.createAlbumImage(image, response.id).subscribe()
+      });
 
+      console.log(response.id);
+      this.albumService.assignCoverImageToAlbum(response.id).subscribe();
+    })
+    
+    console.log('Data saved:', this.input1, this.input2);
+    console.log(this.pictureFileList);
+    this.closeModal();
+  }
+
+  
         /*Swal.fire({
           title: `Album Created`,
           text: `(${this.album.albumName}) has been added successfully`,
           icon: 'success'
         })*/
-    })
-    console.log('Data saved:', this.input1, this.input2);
-    console.log(this.pictureFileList);
-    this.closeModal();
-  }
 
   onFileSelected(event: any) {
     // Handle file selection logic
@@ -82,9 +85,13 @@ export class CreatealbummodalComponent {
         // Perform any additional processing or validation if needed
         // For now, just add the file path to the pictureList
         this.pictureList.push(URL.createObjectURL(file));
-        console.log(this.pictureList)
+        console.log('Picture List');
+        console.log(this.pictureList);
 
         this.pictureFileList.push(file);
+        console.log('Picture File List');
+        console.log(this.pictureFileList);
+
       }
     }
   }

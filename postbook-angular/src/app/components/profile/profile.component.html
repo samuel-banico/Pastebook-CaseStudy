@@ -1,7 +1,9 @@
 <div class="banner">
     <div class="banner-title d-flex flex-column justify-content-center align-items-center">
       <div class="profile-picture-container" (mouseover)="showOverlay()" (mouseout)="hideOverlay()">
-        <img src="assets/images/geo.JPG" alt="img" class="profile-picture" width="150px" height="150px">
+        <img [src]="user.profilePicture" alt="img" class="profile-picture" width="150px" height="150px">
+
+        <!--<img src="assets/images/geo.JPG" alt="img" class="profile-picture" width="150px" height="150px">-->
         <div class="overlay">
           <p class="text-overlay">Change</p>
         </div>

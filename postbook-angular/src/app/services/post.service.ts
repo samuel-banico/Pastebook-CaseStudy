@@ -14,9 +14,10 @@ export class PostService {
 
   //Based Url 
   private baseUrl: string = "https://localhost:7185/api/posts"
-  private httpHeaders:HttpHeaders = new HttpHeaders({
-    'Authorization': `Bearer ${this.sessionService.getToken()}`
+  private headers: HttpHeaders = new HttpHeaders({
+    'Authorization': `${this.sessionService.getToken()}`
   })
+
   constructor(
     //To pass data
     private http:HttpClient,
@@ -28,8 +29,8 @@ export class PostService {
       return this.http.post(this.baseUrl, post);
     }
 
-    getUserTimeline(id:string):Observable<Object>{
-      return this.http.get<Post[]>(this.baseUrl + '/otherUserTimeline', {headers:this.httpHeaders})
+    getUserTimeline():Observable<Object>{
+      return this.http.get<Post[]>(this.baseUrl + '/otherUserTimeline', { headers: this.headers })
     };
 
     

@@ -23,8 +23,7 @@ export class PostmodalComponent implements OnInit{
     private userService: UserService,
     private sessionService: SessionService
     ) {
-      let userId: string = this.sessionService.getId();
-      userService.getUser(userId).subscribe((response: Object)=>{
+      userService.getUserByToken().subscribe((response: Object)=>{
         this.user = response;
       })
     }

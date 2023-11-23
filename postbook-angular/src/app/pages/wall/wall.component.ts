@@ -12,10 +12,9 @@ import { SessionService } from '@services/session.service';
 export class WallComponent implements OnInit {
   constructor(
     private postService:PostService,
-    private session:SessionService
+    private sessionService:SessionService
   ){
-    let userId: string = this.session.getId();
-    this.getOwnUserTimeline(userId);
+    this.getOwnUserTimeline();
   }
 
   posts:Post = new Post();
@@ -24,9 +23,8 @@ export class WallComponent implements OnInit {
   }
 
   //GetOwnUserTimeline
-  getOwnUserTimeline(userId:string) {
-    console.log(userId);
-    this.postService.getUserTimeline(userId).subscribe((response: Object) => {
+  getOwnUserTimeline() {
+    this.postService.getUserTimeline().subscribe((response: Object) => {
       this.posts = response;
     })
   }

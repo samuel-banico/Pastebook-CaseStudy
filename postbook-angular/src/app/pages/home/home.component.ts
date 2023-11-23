@@ -41,9 +41,8 @@ export class HomeComponent implements OnInit{
         this.router.navigate(['landing']);
       }
       else {
-        let userId: string = this.sessionService.getId();
-      userService.getUser(userId).subscribe((response: Object)=>{
-        this.user = response;
+        userService.getUserByToken().subscribe((response: Object) => {
+          this.user = response;
       })
       }
       
