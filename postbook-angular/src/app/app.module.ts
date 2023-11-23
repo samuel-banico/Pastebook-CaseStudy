@@ -25,23 +25,27 @@ import { ForgotpasswordComponent } from './pages/forgotpassword/forgotpassword.c
 import { FriendrequestmodalComponent } from './components/friendrequestmodal/friendrequestmodal.component';
 import { PostComponent } from './pages/post/post.component';
 import { PostlikelistComponent } from './components/postlikelist/postlikelist.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 
 
 const appRoutes: Routes = [
+  // Does not need to login to access but should have no token to access
+  {path: 'landing', component: LandingComponent},
   {path: 'registration', component: RegistrationComponent},
-  //Edited 'home' to ''
-  {path: '', component: LandingComponent},
-  {path: 'home', component: HomeComponent},
-  {path: 'profile', component: WallComponent}, 
   {path: 'login', component: LoginComponent},
+  {path: 'forgotpassword', component: ForgotpasswordComponent},
+  {path: 'page-not-found', component: NotFoundComponent},
+  // Needs token to access
+  {path: '', component: HomeComponent},
   {path: 'settings', component: SettingsComponent},
+  {path: 'profile', component: WallComponent}, 
   {path: 'friends', component: FriendsComponent},
+  {path: 'post', component: PostComponent},
   {path: 'albums', component: AlbumsComponent},
   {path: 'create', component: CreateAlbumComponent},
-  {path: 'landing', component:LandingComponent},
-  {path: 'forgotpassword', component: ForgotpasswordComponent},
-  {path: 'post', component:PostComponent}
+  {path: '**', component: NotFoundComponent},
+
 ];
 
 
@@ -67,7 +71,8 @@ const appRoutes: Routes = [
     SearchmodalComponent,
     FriendrequestmodalComponent,
     PostComponent,
-    PostlikelistComponent
+    PostlikelistComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

@@ -19,14 +19,22 @@ export class SettingsComponent implements OnInit{
     private userService: UserService,
     private router: Router,
     private route: ActivatedRoute,
-    private session: SessionService
+    private sessionService: SessionService
   ){
-    let userId: string = this.session.getId();
+    let token: string = this.sessionService.getToken();
+    if(!token)
+    {
+      this.router.navigate(['page-not-found']);
+    }
+    else {
+      let userId: string = this.sessionService.getId();
     userService.getUser(userId).subscribe((response: User)=> 
     {
       this.user = {...response};
       this.userDefault = {...response};
     })
+    }
+    
   }
   
   div1:boolean=true;
@@ -79,6 +87,8 @@ onUpdateSecurity() {
     this.userService.updateGeneral(this.user).subscribe((response: Record<string, any>)=>{
       if(response['result'] === 'user_details_updated.'){
         Swal.fire('Update Successful','Profile updated successfully','success');
+        this.user = {...response};
+        this.userDefault = {...response};
         }
       });
   }

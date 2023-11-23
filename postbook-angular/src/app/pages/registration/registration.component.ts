@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; 
-import { UserService } from '@services/user.service';
-import { User } from '@models/user';
 import Swal from 'sweetalert2';
+
+import { UserService } from '@services/user.service';
+import { SessionService } from '@services/session.service';
+
+import { User } from '@models/user';
 
 
 @Component({
@@ -17,8 +20,15 @@ export class RegistrationComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private userService: UserService
-  ) { }
+    private userService: UserService,
+    private sessionService: SessionService
+  ) {
+    let token: string = this.sessionService.getToken();
+    if(token)
+    {
+      this.router.navigate(['page-not-found']);
+    }
+   }
 
   ngOnInit(): void {
   }

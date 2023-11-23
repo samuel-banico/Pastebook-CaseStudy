@@ -19,7 +19,13 @@ export class LoginComponent implements OnInit {
     private sessionService: SessionService,
     private userService: UserService,
     private router: Router
-  ) {}
+  ) {
+    let token: string = this.sessionService.getToken();
+    if(token)
+    {
+      this.router.navigate(['']);
+    }
+  }
 
   ngOnInit(): void {
     
@@ -36,9 +42,7 @@ export class LoginComponent implements OnInit {
     this.sessionService.setEmail(response['email']);
     this.sessionService.setId(response['id']);
     this.sessionService.setToken(response['token']);
-    this.router.navigate(['']).then(() => {
-      window.location.href = "/home";
-    });
+    this.router.navigate(['']);
   };
 
   failedLogin(result: Record<string, any>){

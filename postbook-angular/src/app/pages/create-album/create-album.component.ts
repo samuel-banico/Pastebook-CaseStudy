@@ -1,13 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+
+import { SessionService } from '@services/session.service';
 
 @Component({
     selector: 'CreateAlbumComponent',
     templateUrl: './create-album.component.html',
     styleUrls: ['./create-album.component.css']
 })
-export class CreateAlbumComponent {
+export class CreateAlbumComponent implements OnInit {
 
+    constructor(
+        private sessionService: SessionService,
+        private router: Router
+    ){
+        let token: string = this.sessionService.getToken();
+        if(!token) {
+            this.router.navigate(['page-not-found']);
+        }
+    }
+
+    ngOnInit(): void {
+        
+    }
     isEditing: boolean = false;
     albumName: string = 'Album Name Here';
     editedAlbumName: string = '';
