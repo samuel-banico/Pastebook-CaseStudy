@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SessionService } from './session.service';
 
@@ -12,46 +12,49 @@ export class UserService {
   private baseUrl: string = 'https://localhost:7185/api/users';
   private accessUrl: string = 'https://localhost:7185/api/access';
 
+  private headers: HttpHeaders = new HttpHeaders({
+    'Authorization': `${this.sessionService.getToken()}`
+  })
 
   constructor(
     private http: HttpClient,
-    private session : SessionService
+    private sessionService : SessionService
   ) {}
 
+  // --- Access Controller
   login(email: string, password: string): Observable<object> {
+
     return this.http.post(this.accessUrl + '/login', {email, password});
   }
 
-  logout(id: string) : Observable<object> 
+  logout() : Observable<object> 
   {
-    return this.http.delete(this.accessUrl + `/${id}`);
+    return this.http.delete(this.accessUrl + `/logout`, { headers: this.headers });
   }
 
   register(user: User): Observable<object> {
     return this.http.post(this.accessUrl + '/register', user);
   }
 
-  getUser(id: string) : Observable<Object>{
-    return this.http.get<User[]>(`${this.baseUrl}/${id}`);
+  validateToken() : Observable<object> {
+    return this.http.get(this.accessUrl + `/validateToken`, {headers: this.headers});
+  }
+
+  // --- User Controller
+  getUserByToken() : Observable<Object>{
+    return this.http.get<any>(this.baseUrl + `/userIdFromToken`, {headers: this.headers});
   }
 
   updateGeneral(user: User): Observable<Object> {
-    user.id = this.session.getId();
-    return this.http.put(this.baseUrl + `/editUserGeneral?id=${user.id}`, user);
+    return this.http.put<User>(this.baseUrl + `/editUserGeneral`, user, {headers: this.headers});
   }
 
   updateSecurity(user: User): Observable<Object> {
-    user.id = this.session.getId();
-    return this.http.put(this.baseUrl + `/editUserSecurity?id=${user.id}`, user);
+    return this.http.put<User>(this.baseUrl + `/editUserSecurity?id=${user.id}`, user, {headers: this.headers});
   }
 
   editUserSecurityVerifyPassword(pass: string) : Observable<object> 
   { 
-    let params = {
-      id: this.session.getId(),
-      password: pass
-    };
-
-    return this.http.get(this.baseUrl+ `/getPassword`, { params })
+    return this.http.get(this.baseUrl+ `/getPassword?password=${pass}`, { headers: this.headers } )
   }
 }

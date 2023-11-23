@@ -26,13 +26,9 @@ export class ProfileComponent implements OnInit {
       this.router.navigate(['page-not-found']);
     }
     else {
-      let userId: string = this.sessionService.getId();
-      this.userService.getUser(userId).subscribe((response: any) => {
+      this.userService.getUserByToken().subscribe((response: any) => {
         this.user = response;
         console.log(response);
-        const pictureBytes = response.profilePicture;
-        if (pictureBytes)
-          this.profilePicture = 'data:image/jpeg;base64,' + btoa(String.fromCharCode(...new Uint8Array(pictureBytes)));
       });
     }
   }

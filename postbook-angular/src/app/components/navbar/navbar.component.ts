@@ -59,8 +59,7 @@ export class NavbarComponent implements OnInit {
       cancelButtonText: 'Cancel'
     }).then((result) => {
       if (result.isConfirmed) {
-        let id: string = this.sessionService.getId();
-        this.userService.logout(id).subscribe((r) => {
+        this.userService.logout().subscribe((r) => {
           console.log("Image save")
         });
         this.sessionService.clear();

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+
+import { SessionService } from './session.service';
 
 import { User } from '@models/user';
 
@@ -10,10 +12,14 @@ import { User } from '@models/user';
 export class HomeService {
 
   private baseUrl: string = 'https://localhost:7185/api/home';
+
+  private headers: HttpHeaders = new HttpHeaders({
+    'Authorization': `${this.sessionService.getToken()}`
+  })
   
   constructor(
-    private http: HttpClient
-    
+    private http: HttpClient,
+    private sessionService: SessionService
   ) { }
 
   search(searchUser: string): Observable<User[]> {

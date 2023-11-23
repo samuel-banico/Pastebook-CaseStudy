@@ -24,6 +24,17 @@ namespace pastebook_db.Data
             return post;
         }
 
+        public byte[]? GetFirstPhotoOfAlbum(Guid albumId) 
+        {
+            var photo = _context.AlbumImages
+                        .FirstOrDefault(a => a.AlbumId == albumId);
+
+            if(photo == null)
+                return null;
+
+            return photo.Image;
+        }
+
         public List<AlbumImage> GetAllAlbumImagesByAlbumId(Guid albumId)
         {
             return _context.AlbumImages

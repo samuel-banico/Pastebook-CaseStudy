@@ -62,7 +62,7 @@ namespace pastebook_db.Models
         public int? Gender { get; set; }
         public string? UserBio { get; set; }
         public string? MobileNumber { get; set; }
-        public byte[]? ProfilePicture { get; set; }
+        public string? ProfilePicture { get; set; }
     }
 
     //Login

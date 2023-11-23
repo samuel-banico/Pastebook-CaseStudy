@@ -17,26 +17,10 @@ export class SessionService {
   getToken() : string {
     return localStorage.getItem('token')!;
   }
-
-  getEmail() : string {
-    return localStorage.getItem('email')!;
-  }
-
-  getId() : string {
-    return localStorage.getItem('id')!;
-  }
   
   setToken(value:string) : void {
     this.hasToken.emit(true);
     localStorage.setItem('token',value);
-  }
-
-  setId(value:string) : void {
-    localStorage.setItem('id', value)!;
-  }
-
-  setEmail(value:string) : void {
-    localStorage.setItem('email',value);
   }
 
   clear() : void {

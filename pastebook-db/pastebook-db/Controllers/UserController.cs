@@ -46,13 +46,28 @@ namespace pastebook_db.Controllers
 
             var userDTO = _userRepository.ConvertUserToUserSendDTO(user);
 
+            return Ok(new { user = userDTO });
+        }
+
+        [HttpGet("userIdFromToken")]
+        public ActionResult<UserSendDTO> GetUserByToken() 
+        {
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
+
+            var userDTO = _userRepository.ConvertUserToUserSendDTO(user);
+
             return Ok(userDTO);
         }
 
         [HttpGet("getPassword")]
-        public ActionResult<bool> GetUserPasswordById([FromQuery] Guid id, [FromQuery] string password)
+        public ActionResult<bool> GetUserPasswordById(string password)
         {
-            var user = _userRepository.GetUserById(id);
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
 
             if (user == null)
                 return BadRequest(new { result = "user_not_found" });
@@ -63,10 +78,24 @@ namespace pastebook_db.Controllers
             return Ok(true);
         }
 
-        [HttpPut("editUserGeneral")]
-        public ActionResult<User> EditUserGeneral(Guid id, [FromBody] EditUserReceiveGeneralDTO user)
+        [HttpGet("getProfilePic")]
+        public ActionResult<byte[]> GetUsersprofilePic() 
         {
-            var retreivedUser = _userRepository.GetUserById(id);
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
+
+            return Ok();
+        }
+
+        [HttpPut("editUserGeneral")]
+        public ActionResult<User> EditUserGeneral([FromBody] EditUserReceiveGeneralDTO user)
+        {
+            var token = Request.Headers["Authorization"];
+            var retreivedUser = _userRepository.GetUserByToken(token);
+
             if (retreivedUser == null)
                 return BadRequest(new { result = "user_not_found" });
 
@@ -78,13 +107,16 @@ namespace pastebook_db.Controllers
             if (!_userRepository.UpdateUser(retreivedUser, false))
                 return BadRequest(new { result = "not_legitimate_email" });
 
-            return Ok(new { result = "user_details_updated.", user });
+            var userDTO = _userRepository.ConvertUserToUserSendDTO(retreivedUser);
+
+            return Ok(userDTO);
         }
 
         [HttpPut("editUserSecurity")]
-        public ActionResult<User> EditUserSecurity(Guid id, [FromBody] EditUserReceiveSecurityDTO user)
+        public ActionResult<User> EditUserSecurity([FromBody] EditUserReceiveSecurityDTO user)
         {
-            var retreivedUser = _userRepository.GetUserById(id);
+            var token = Request.Headers["Authorization"];
+            var retreivedUser = _userRepository.GetUserByToken(token);
             if (retreivedUser == null)
                 return BadRequest(new { result = "user_not_found" });
 
@@ -101,7 +133,9 @@ namespace pastebook_db.Controllers
             if (!_userRepository.UpdateUser(retreivedUser, emailHasBeenEdited))
                 return BadRequest(new { result = "not_legitimate_email" });
 
-            return Ok(new { result = "user_details_updated.", user });
+            var userDTO = _userRepository.ConvertUserToUserSendDTO(retreivedUser);
+
+            return Ok(userDTO);
         }
     }
 }

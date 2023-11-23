@@ -21,9 +21,19 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) {
     let token: string = this.sessionService.getToken();
+    var useableToken;
+
     if(token)
     {
-      this.router.navigate(['']);
+      this.userService.validateToken().subscribe((r) => {
+        useableToken = r;
+      })
+      if(!useableToken) {
+        this.sessionService.clear();
+        this.router.navigate(['login']);
+      } else {
+        this.router.navigate(['']);
+      }
     }
   }
 
@@ -39,9 +49,8 @@ export class LoginComponent implements OnInit {
   }
 
   successfullLogin(response: Record<string, any>) {
-    this.sessionService.setEmail(response['email']);
-    this.sessionService.setId(response['id']);
     this.sessionService.setToken(response['token']);
+    console.log(this.sessionService.getToken());
     this.router.navigate(['']);
   };
 

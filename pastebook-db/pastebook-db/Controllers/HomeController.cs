@@ -35,7 +35,7 @@ namespace pastebook_db.Controllers
                     Id = item.Id,
                     FirstName = item.FirstName,
                     LastName = item.LastName,
-                    ProfilePicture = item.ProfilePicture,
+                    ProfilePicture = Convert.ToBase64String(item.ProfilePicture)
                 };
 
                 userList.Add(u);

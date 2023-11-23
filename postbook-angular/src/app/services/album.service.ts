@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -16,8 +16,13 @@ export class AlbumService {
     private http: HttpClient
   ) { }
 
-  createAlbum(album: Album): Observable<object> {
-    return this.http.post(this.albumUrl, album);
+  createAlbum(album: Album, token: string): Observable<object> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    });
+
+    return this.http.post(this.albumUrl, album, { headers });
   }
 
   createAlbumImage(image: File, albumId: number) : Observable<any> {
@@ -25,5 +30,9 @@ export class AlbumService {
     formData.append('image', image);
 
     return this.http.post(this.albumImageUrl+`?albumId=${albumId}`, formData);
+  }
+
+  assignCoverImageToAlbum(albumId: number) : Observable<object> {
+    return this.http.put(this.albumUrl+`/addCoverPhoto`, albumId);
   }
 }

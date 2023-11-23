@@ -8,6 +8,7 @@ using pastebook_db.Services.PasswordHash;
 using pastebook_db.Services.Token;
 using pastebook_db.Services.Token.TokenData;
 using pastebook_db.Services.Token.TokenGenerator;
+using pastebook_db.Services.Token.TokenValidator;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -40,6 +41,7 @@ namespace pastebook_db
 
             builder.Services.AddScoped<TokenController>();
             builder.Services.AddScoped<TokenRepository>();
+            builder.Services.AddScoped<ValidateToken>();
             builder.Services.AddScoped<AccessRepository>();
             builder.Services.AddScoped<AlbumImageCommentRepository>();
             builder.Services.AddScoped<AlbumImageLikeRepository>();

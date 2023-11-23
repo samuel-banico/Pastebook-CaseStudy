@@ -13,6 +13,7 @@ import { SessionService } from '@services/session.service';
 })
 export class AlbumsComponent {
   modalRef: MdbModalRef<CreatealbummodalComponent> | null = null;
+  
 
   constructor(
       private router: Router,
@@ -24,6 +25,8 @@ export class AlbumsComponent {
         this.router.navigate(['page-not-found']);
       }
   }
+
+
 
   openModal() {
     this.modalRef = this.modalService.open(CreatealbummodalComponent)

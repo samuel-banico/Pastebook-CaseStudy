@@ -27,12 +27,14 @@ export class SettingsComponent implements OnInit{
       this.router.navigate(['page-not-found']);
     }
     else {
-      let userId: string = this.sessionService.getId();
-    userService.getUser(userId).subscribe((response: User)=> 
-    {
-      this.user = {...response};
-      this.userDefault = {...response};
-    })
+      userService.getUserByToken().subscribe((response: User)=> 
+      {
+        this.user = {...response};
+        this.userDefault = {...response};
+
+        console.log(this.user);
+        console.log(this.userDefault);
+      })
     }
     
   }
@@ -60,13 +62,17 @@ newPassword: string = '';
 confirmNewPassword: string = '';
 
 onUpdateSecurity() {
-  this.user.password = this.newPassword;
-  console.log(this.user);
-  this.userService.updateSecurity(this.user).subscribe((response: Record<string, any>)=>{
-    if(response['result'] === 'user_details_updated.'){
+  this.userService.updateSecurity(this.user).subscribe((response: User)=>{
+    if(response) {
       Swal.fire('Update Successful','Profile updated successfully','success');
-      }
-    });
+      this.user = {...response};
+      this.userDefault = {...response};
+
+      console.log(this.user);
+      console.log(this.userDefault);
+      this.resetChanges();
+    }
+  });
 }
 
 
@@ -83,13 +89,16 @@ onUpdateSecurity() {
   ngOnInit(): void {}
   
   onUpdate(): void {
-    console.log(this.user);
-    this.userService.updateGeneral(this.user).subscribe((response: Record<string, any>)=>{
-      if(response['result'] === 'user_details_updated.'){
+    this.userService.updateGeneral(this.user).subscribe((response: User)=>{
+      if(response) {
         Swal.fire('Update Successful','Profile updated successfully','success');
         this.user = {...response};
         this.userDefault = {...response};
-        }
+  
+        console.log(this.user);
+        console.log(this.userDefault);
+        this.resetChanges();
+      }
       });
   }
 
