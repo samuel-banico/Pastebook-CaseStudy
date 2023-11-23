@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { User } from '@models/user';
+
 import { UserService } from '@services/user.service';
 import { SessionService } from '@services/session.service';
 
@@ -14,16 +17,24 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private router: Router
   ) {
-    let userId: string = this.sessionService.getId();
-    this.userService.getUser(userId).subscribe((response: any) => {
-      this.user = response;
-      console.log(response);
-      const pictureBytes = response.profilePicture;
-      if (pictureBytes)
-        this.profilePicture = 'data:image/jpeg;base64,' + btoa(String.fromCharCode(...new Uint8Array(pictureBytes)));
-    });
+    let token: string = this.sessionService.getToken();
+    if(!token)
+    {
+      this.router.navigate(['page-not-found']);
+    }
+    else {
+      let userId: string = this.sessionService.getId();
+      this.userService.getUser(userId).subscribe((response: any) => {
+        this.user = response;
+        console.log(response);
+        const pictureBytes = response.profilePicture;
+        if (pictureBytes)
+          this.profilePicture = 'data:image/jpeg;base64,' + btoa(String.fromCharCode(...new Uint8Array(pictureBytes)));
+      });
+    }
   }
 
   ngOnInit(): void {}
