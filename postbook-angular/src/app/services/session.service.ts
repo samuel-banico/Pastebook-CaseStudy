@@ -25,7 +25,7 @@ export class SessionService {
   getId() : string {
     return localStorage.getItem('id')!;
   }
-
+  
   setToken(value:string) : void {
     this.hasToken.emit(true);
     localStorage.setItem('token',value);
