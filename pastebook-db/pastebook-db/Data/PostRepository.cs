@@ -34,6 +34,7 @@ namespace pastebook_db.Data
                         .Include(pL => pL.PostLikeList)
                         .Include(pL => pL.PostCommentList)
                         .Where(p => p.UserId == userId)
+                        .OrderByDescending(p => p.CreatedOn)
                         .ToList();
         }
 
@@ -44,7 +45,7 @@ namespace pastebook_db.Data
             if (isFriend != null)
                 return GetAllPostOfUserTimeline(retrievedUserId);
 
-            return _context.Posts.Where(p => p.UserId == retrievedUserId && p.IsPublic == true).ToList();
+            return _context.Posts.Where(p => p.UserId == retrievedUserId && p.IsPublic == true).OrderByDescending(p => p.CreatedOn).ToList();
         }
 
         //Get all post friend Id

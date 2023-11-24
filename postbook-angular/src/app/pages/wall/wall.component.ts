@@ -28,13 +28,6 @@ export class WallComponent implements OnInit {
   }
 
   //GetOwnUserTimeline
-  // getOwnUserTimeline() {
-  //   this.postService.getUserTimeline().subscribe((response: Object) => {
-  //     this.posts = response;
-  //   })
-  // }
-
-  //GetOwnUserTimeline
   getOwnUserTimeline() {
       this.postService.getUserTimeline().subscribe((response: any) => {
         this.posts = response;
