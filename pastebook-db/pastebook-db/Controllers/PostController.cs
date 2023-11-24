@@ -10,11 +10,13 @@ namespace pastebook_db.Controllers
     {
         private readonly PostRepository _postRepository;
         private readonly NotificationRepository _notificationRepository;
+        private readonly UserRepository _userRepository;
 
-        public PostController(PostRepository postRepository, NotificationRepository notificationRepository)
+        public PostController(PostRepository postRepository, NotificationRepository notificationRepository, UserRepository userRepository)
         {
             _postRepository = postRepository;
             _notificationRepository = notificationRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet("postById")]
@@ -31,9 +33,11 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("ownUserTimeline")]
-        public ActionResult<List<PostDTO>> GetUserTimeline(Guid userId)
+        public ActionResult<List<PostDTO>> GetUserTimeline()
         {
-            var postList = _postRepository.GetAllPostOfUserTimeline(userId);
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+            var postList = _postRepository.GetAllPostOfUserTimeline(user.Id);
 
             if (postList.Count == 0)
                 return Ok(new { result = "no_post" });
@@ -70,9 +74,11 @@ namespace pastebook_db.Controllers
 
         //Get all posts by user and friends
         [HttpGet("allPostsOfFriends")]
-        public ActionResult<List<PostDTO>> GetAllPostsOfFriends(Guid userId)
+        public ActionResult<List<PostDTO>> GetAllPostsOfFriends()
         {
-            var friendsPosts = _postRepository.GetAllPostOfFriends(userId);
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+            var friendsPosts = _postRepository.GetAllPostOfFriends(user.Id);
 
             if (friendsPosts == null)
                 return NotFound(new { result = "no_post" });
