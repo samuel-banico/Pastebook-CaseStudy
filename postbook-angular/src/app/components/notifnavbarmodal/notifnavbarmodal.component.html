@@ -6,6 +6,7 @@
         <h5 class="notifications" id="box">Notifications</h5>
         <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
     </div>
+    <!-- *ngFor -->
     <div class="modal-body">
         <div class="notifications-item" routerLink="/post">
             <img src="./assets/images/selfie.jpg" alt="img">
@@ -21,5 +22,9 @@
                 <p>Dingdong Dentist commented on your post.</p>
             </div>
         </div>
+    </div>
+    <div class="modal-footer">
+        <button class="button rounded-pill"><h6>Clear</h6></button>
+        <button class="button rounded-pill"><h6>Show All Notifications</h6></button>
     </div>
 </div>
