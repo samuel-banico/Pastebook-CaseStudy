@@ -9,7 +9,7 @@
 
 *,:after,:before {
     box-sizing: border-box;
-    border: 0 solid
+    border: 0 solid;
 }
 
 :after,:before {
