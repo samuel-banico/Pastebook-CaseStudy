@@ -34,7 +34,7 @@ export class PostService {
       return this.http.get<Post[]>(this.baseUrl + '/ownUserTimeline',{ headers: this.headers });
     };
 
-    getUserFeed():Observable<Object>{
+    getUserFeed():Observable<Post[]>{
       return this.http.get<Post[]>(this.baseUrl + '/allPostsOfFriends', {headers: this.headers})
     };
 }
