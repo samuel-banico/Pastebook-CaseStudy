@@ -24,12 +24,15 @@ namespace pastebook_db.Data
         // Get Unseen Notification
         public List<Notification> GetUnseenNotifications(Guid userId) 
         {
-            var notif = _context.Notifications.Where(n => n.UserId == userId && n.HasSeen == false).ToList();
-
+            var notif = _context.Notifications
+                                .Where(n => n.UserId == userId && n.HasSeen == false)
+                                .ToList();
             return notif;
         }
 
-        // Update Unseen to Seen Notification
+
+        // Get Seen Notification
+
         public void SeenNotification(Guid notifId)
         {
             var notif = _context.Notifications.FirstOrDefault(n => n.Id == notifId);
@@ -39,6 +42,20 @@ namespace pastebook_db.Data
                 notif.HasSeen = true;
 
                 _context.Entry(notif).State = EntityState.Modified;
+                _context.SaveChanges();
+            }
+        }
+
+        // Clear Seen Notifs
+        public void ClearNotification(Guid userId)
+        {
+            var notif = GetUnseenNotifications(userId);
+
+            foreach (var item in notif)
+            {
+                item.HasSeen = true;
+
+                _context.Entry(item).State = EntityState.Modified;
                 _context.SaveChanges();
             }
         }

@@ -54,5 +54,16 @@ namespace pastebook_db.Controllers
             return Ok(new { result = "notification_seen"});
         }
 
+        [HttpPut("clearNotification")]
+        public ActionResult<Notification> ClearNotification()
+        {
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+
+            _repo.ClearNotification(user.Id);
+
+            return Ok(new { result = "notification_seen" });
+        }
+
     }
 }
