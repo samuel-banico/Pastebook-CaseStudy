@@ -33,9 +33,11 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("ownUserTimeline")]
-        public ActionResult<List<PostDTO>> GetUserTimeline(Guid userId)
+        public ActionResult<List<PostDTO>> GetUserTimeline()
         {
-            var postList = _postRepository.GetAllPostOfUserTimeline(userId);
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+            var postList = _postRepository.GetAllPostOfUserTimeline(user.Id);
 
             if (postList.Count == 0)
                 return Ok(new { result = "no_post" });

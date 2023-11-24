@@ -9,12 +9,14 @@ namespace pastebook_db.Data
     public class PostRepository
     {
         private readonly PastebookContext _context;
+        private readonly UserRepository _userRepository;
         private readonly FriendRepository _friendRepository;
 
-        public PostRepository(PastebookContext context, FriendRepository friendRepository)
+        public PostRepository(PastebookContext context, FriendRepository friendRepository, UserRepository userRepository)
         {
             _context = context;
-            _friendRepository  = friendRepository;
+            _friendRepository = friendRepository;
+            _userRepository = userRepository;
         }
 
         public Post? GetPostById(Guid id)
@@ -98,13 +100,15 @@ namespace pastebook_db.Data
             if (post.PostCommentList != null)
                 commentCount = post.PostCommentList.Count();
 
+            var user = _userRepository.GetUserById(post.UserId);
+
             var postDto = new PostDTO()
             {
                 Id = post.Id,
                 Content = post.Content,
                 IsPublic = post.IsPublic,
                 IsEdited = post.IsEdited,
-
+                FullName = $"{user.FirstName} {user.LastName}",
                 LikeCount = likeCount,
                 CommentCount = commentCount,
 
