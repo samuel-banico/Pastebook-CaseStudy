@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FriendRequest } from '@models/friend';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
+import Swal from 'sweetalert2';
 
 import { FriendService } from '@services/friend.service';
 
@@ -30,5 +31,35 @@ export class FriendrequestmodalComponent implements OnInit {
     this.friendService.getFriendRequests().subscribe((response: FriendRequest[])=>{
       this.requests = response;
     })
+  }
+  
+  Accept(): void {
+    Swal.fire({
+      title: 'New friend alert!',
+      text: 'User.name is now your friend',
+      icon: 'success',
+      showCancelButton: true,
+      confirmButtonText: 'Visit Profile',
+      cancelButtonText: 'Close'
+    })
+    // .then((result) => 
+    //     this.router.navigate(['/login']); // Optionally navigate to the login page after logout
+    //   }
+    // })
+    ;
+  }
+
+  Reject(): void {
+    Swal.fire({
+      title: 'Friend request rejected',
+      text: 'You rejected user.name friend request',
+      icon: 'error',
+      // confirmButtonText: 'Yes, logout!',
+    })
+    // .then((result) => 
+    //     this.router.navigate(['/login']); // Optionally navigate to the login page after logout
+    //   }
+    // })
+    ;
   }
 }

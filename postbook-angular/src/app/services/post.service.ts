@@ -30,10 +30,6 @@ export class PostService {
       return this.http.post(this.baseUrl, post);
     }
 
-    // getUserTimeline():Observable<Object>{
-    //   return this.http.get<Post[]>(this.baseUrl + '/otherUserTimeline', { headers: this.headers })
-    // };
-
     getUserTimeline():Observable<Post[]>{
       return this.http.get<Post[]>(this.baseUrl + '/ownUserTimeline',{ headers: this.headers });
     };

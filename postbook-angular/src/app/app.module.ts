@@ -3,7 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes} from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { RegistrationComponent } from './pages/registration/registration.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -26,6 +27,7 @@ import { FriendrequestmodalComponent } from './components/friendrequestmodal/fri
 import { PostComponent } from './pages/post/post.component';
 import { PostlikelistComponent } from './components/postlikelist/postlikelist.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { ResultsComponent } from './pages/results/results.component';
 
 
 
@@ -44,7 +46,8 @@ const appRoutes: Routes = [
   {path: 'post', component: PostComponent},
   {path: 'albums', component: AlbumsComponent},
   {path: 'create', component: CreateAlbumComponent},
-  {path: '**', component: NotFoundComponent},
+  {path: 'results', component: ResultsComponent},
+  {path: '**', component: NotFoundComponent}
 
 ];
 
@@ -72,13 +75,17 @@ const appRoutes: Routes = [
     FriendrequestmodalComponent,
     PostComponent,
     PostlikelistComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ResultsComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    CommonModule,
+    ReactiveFormsModule
+    
   ],
   exports: [RouterModule, CreatealbummodalComponent],
   providers: [MdbModalService],

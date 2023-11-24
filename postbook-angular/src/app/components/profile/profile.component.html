@@ -1,12 +1,13 @@
-<div class="banner">
+<div class="banner mt-5 pt-5">
     <div class="banner-title d-flex flex-column justify-content-center align-items-center">
       <div class="profile-picture-container" (mouseover)="showOverlay()" (mouseout)="hideOverlay()">
         <img [src]="user.profilePicture" alt="img" class="profile-picture" width="150px" height="150px">
 
         <!--<img src="assets/images/geo.JPG" alt="img" class="profile-picture" width="150px" height="150px">-->
         <div class="overlay">
+          <img src="assets/images/camera.png" alt="Icon">
           <p class="text-overlay">Change</p>
-        </div>
+      </div>      
       </div>
       <h3 class="profile-name mt-4">{{ user.firstName }} {{ user.lastName }}</h3>
       <p class="blurb">{{ user.userBio }}<img src="assets/images/edit.png" alt="Edit" class="edit-icon" (click)="changeImage()"></p>
