@@ -53,12 +53,17 @@
                         <a class="small text-muted ms-auto" routerLink="/forgotpassword">Forgot password?</a>
                       </div>
     
+                      <div>
+                        <input type="checkbox" id="rememberMe" class="mx-1">
+                        <label for="rememberMe">Remember Me</label>
+                      </div>
+                      
                       <div class="pt-1 mb-4 ms-auto">
                         <button class="btn btn-dark btn-lg btn-block rounded-md px-4" type="button" (click)="onSubmit()" style="background-color: #0B2154; border: 2px solid white; font-family: 'Quicksand', sans-serif;">Login</button>
                       </div>
                       
                       </form>
-                      <p class="mb-5 pb-lg-2">Don't have an account? 
+                      <p class="mb-2 pb-lg-2">Don't have an account? 
                         <a routerLink="/registration" style="color: #0B2154; text-decoration: underline;">
                           Register here
                         </a>

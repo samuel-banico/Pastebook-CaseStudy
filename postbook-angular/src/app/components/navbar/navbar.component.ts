@@ -67,6 +67,7 @@ export class NavbarComponent implements OnInit {
       }
     });
   }
+  
   openSearchModal() {
     this.searchRef = this.modalService.open(SearchmodalComponent)
   }
