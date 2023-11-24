@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; 
 import Swal from 'sweetalert2';
-
 import { UserService } from '@services/user.service';
 import { SessionService } from '@services/session.service';
-
 import { User } from '@models/user';
-
 
 @Component({
   selector: 'app-registration',
@@ -17,6 +14,7 @@ export class RegistrationComponent implements OnInit {
   user: User = new User();
   confirmPassword: string = "";
   showPassword: boolean = false;
+  passwordMismatch: boolean = false;
 
   constructor(
     private router: Router,
@@ -24,11 +22,10 @@ export class RegistrationComponent implements OnInit {
     private sessionService: SessionService
   ) {
     let token: string = this.sessionService.getToken();
-    if(token)
-    {
+    if(token) {
       this.router.navigate(['page-not-found']);
     }
-   }
+  }
 
   ngOnInit(): void {
   }
@@ -52,5 +49,21 @@ export class RegistrationComponent implements OnInit {
 
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
+  }
+
+  confirmPasswordMismatch() {
+    return this.passwordMismatch;
+  }
+
+  onConfirmPasswordInput() {
+    this.passwordMismatch = this.user.password !== this.confirmPassword;
+  }
+
+  // Calculate the minimum date for the age validation
+  calculateMinDate(): string {
+    const currentDate = new Date();
+    return new Date(currentDate.getFullYear() - 13, currentDate.getMonth(), currentDate.getDate())
+      .toISOString()
+      .split('T')[0];
   }
 }
