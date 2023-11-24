@@ -104,14 +104,24 @@
     border-radius: 50%;
     overflow: hidden; /* Ensure the overlay stays inside the rounded circle */
     transition: background-color 0.3s ease; /* Add transition for smooth effect */
+    text-align: center;
   }
+
+  .overlay img {
+    width: 50px; /* Adjust the width to make the icon smaller */
+    height: auto; /* Maintain the aspect ratio */
+    display: block; /* Remove any default inline spacing */
+    margin: 0 auto; /* Center the image within the div */
+  }
+  
   
   .profile-picture-container:hover .overlay {
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
+    flex-direction: column; /* Display text below the image */
     justify-content: center;
     align-items: center;
-  }
+}
   
 
 .edit-icon {
