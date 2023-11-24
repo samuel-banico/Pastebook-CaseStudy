@@ -47,11 +47,8 @@ export class HomeComponent implements OnInit{
           this.user = response;
       })
       }
-      this.postService.getUserFeed().subscribe((response: any) =>{
-        this.posts = response;
-        console.log(response);
-      });
-      //this.getFeed();
+      
+      this.getFeed();
       
 
     }
@@ -68,8 +65,10 @@ export class HomeComponent implements OnInit{
     this.modalRef = this.modalService.open(PostmodalComponent)
   }
  
-  // getFeed(){
-    
-  // }
+  getFeed(){
+    this.postService.getUserFeed().subscribe((response: Post[]) =>{
+      this.posts = response;
+    }); 
+  }
 }
 

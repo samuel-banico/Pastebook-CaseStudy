@@ -7,19 +7,22 @@
         <h6>Friend Requests:</h6>
     </div>
     <div class="modal-body">
+        <div *ngFor="let request of requests">
         <a class="friendrequest-item" href="#">
             <img src="../../../assets/images/jean.JPG" alt="" class="rounded-circle" style="width: 50px; height: 50px;">
-            <div class="text-left user-item" style="display: inline-block; margin-left: 10px; width: 100px;">
-                Jean DeVera
+            <div class="text-left user-item" style="display: inline-block; margin-left: 10px; width: 200px;">
+                Friend Name Goes Here
             </div>
         </a>
-        <span class="text-right">
+        <div style="display: inline-block;">
             <input type="button" class="btn btn-danger btn-sm" style="background-color: #68070f;" value="Accept">
             &nbsp;
             <input type="button" class="btn btn-secondary btn-sm" value="Reject" style="background-color: #0B2154;">
-        </span>
+        </div>
         <hr>
-        <a class="friendrequest-item" href="#">
+        </div>
+        
+        <!-- <a class="friendrequest-item" href="#">
             <img src="../../../assets/images/sam.JPG" class="rounded-circle" style="width: 50px; height: 50px;">
             <div class="text-left user-item" style="display: inline-block; margin-left: 10px; width: 100px;">
                 Sam Sumagui
@@ -29,6 +32,6 @@
             <input type="button" class="btn btn-danger btn-sm" style="background-color: #68070f;" value="Accept">
             &nbsp;
             <input type="button" class="btn btn-secondary btn-sm" value="Reject" style="background-color: #0B2154;">
-        </div>
+        </div> -->
     </div>
 </div>

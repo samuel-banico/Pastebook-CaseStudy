@@ -12,21 +12,25 @@ namespace pastebook_db.Controllers
     {
         private readonly FriendRequestRepository _friendRequestRepository;
         private readonly NotificationRepository _notificationRepository;
+        private readonly UserRepository _userRepository;
 
-        public FriendRequestController(FriendRequestRepository friendRepository, NotificationRepository notificationRepository)
+        public FriendRequestController(FriendRequestRepository friendRepository, NotificationRepository notificationRepository, UserRepository userRepository)
         {
             _friendRequestRepository = friendRepository;
             _notificationRepository = notificationRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet("allRequest")]
-        public ActionResult<FriendRequest> GetAllFriendRequestsByUserId(Guid userId)
+        public ActionResult<FriendRequest> GetAllFriendRequestsByUserId()
         {
-            var request = _friendRequestRepository.GetAllFriendRequest(userId);
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+            var request = _friendRequestRepository.GetAllFriendRequest(user.Id);
             if (request.Count == 0)
                 return NotFound(new { result = "no_requests" });
 
-            return Ok(new { result = "requests", request });
+            return Ok(request);
         }
 
         [HttpPost("request")]
