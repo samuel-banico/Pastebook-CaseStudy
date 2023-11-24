@@ -23,9 +23,19 @@ constructor(
     private sessionService:SessionService
   ) { }
 
-  //Get notification
+  //Get All Notification
   getAllNotif():Observable<Notification[]>{
     return this.http.get<Notification[]>(this.baseUrl + '/allNotification',{ headers: this.headers })
   };
+
+  //Get Unseen Notification
+  getUnseenNotif():Observable<Notification[]>{
+    return this.http.get<Notification[]>(this.baseUrl + '/unseenNotification', {headers: this.headers })
+  }
+
+  //Update notification to hasSeen = true
+  updateSeenNotification(notif:Notification):Observable<Object>{
+    return this.http.put<Notification[]>(this.baseUrl,notif,{ headers: this.headers });
+  }
 
 }
