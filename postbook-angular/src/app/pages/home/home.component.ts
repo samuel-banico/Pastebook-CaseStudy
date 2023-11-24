@@ -12,6 +12,7 @@ import { SessionService } from '@services/session.service';
 
 import { User } from '@models/user';
 import { Post } from '@models/post';
+import { Obj } from '@popperjs/core';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class HomeComponent implements OnInit{
   // firstName: string;
   // lastName: string;
   user: User = new User();
+  posts: Post[] = [];
 
   constructor(
     private postService:PostService,
@@ -45,7 +47,13 @@ export class HomeComponent implements OnInit{
           this.user = response;
       })
       }
+      this.postService.getUserFeed().subscribe((response: any) =>{
+        this.posts = response;
+        console.log(response);
+      });
+      //this.getFeed();
       
+
     }
   
   ngOnInit(): void {
@@ -60,5 +68,8 @@ export class HomeComponent implements OnInit{
     this.modalRef = this.modalService.open(PostmodalComponent)
   }
  
+  // getFeed(){
+    
+  // }
 }
 

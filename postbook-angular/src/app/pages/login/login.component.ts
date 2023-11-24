@@ -51,7 +51,9 @@ export class LoginComponent implements OnInit {
   successfullLogin(response: Record<string, any>) {
     this.sessionService.setToken(response['token']);
     console.log(this.sessionService.getToken());
-    this.router.navigate(['']);
+    this.router.navigate(['login']).then(()=>{
+      window.location.href = "/"; // full page reload to ensure cache of the localStorage is removed.
+    });
   };
 
   failedLogin(result: Record<string, any>){
