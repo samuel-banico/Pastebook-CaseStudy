@@ -127,3 +127,20 @@
 .edit-icon {
     cursor: pointer;
 }
+
+  
+
+    .profile-page .profile-body .left-wrapper .social-links a {
+width: 30px;
+height: 30px;
+}
+
+.add-friend-icon {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 5px;
+    font-size: 0.8em;
+    cursor: pointer;
+    width: 20px; /* Adjust the width to your preference */
+    height: 20px; /* Adjust the height to your preference */
+}
