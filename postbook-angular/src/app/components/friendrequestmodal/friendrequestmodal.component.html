@@ -7,7 +7,7 @@
         <h5>Friend Requests</h5>
     </div>
 
-    <!-- *ngFor here -->
+    <div *ngFor="let request of requests">
     <div class="modal-body d-flex align-items-center">
         <a class="friendrequest-item" routerLink="/otherprofile">
             <img src="../../../assets/images/jean.JPG" alt="" class="rounded-circle" style="width: 50px; height: 50px;">
@@ -21,5 +21,6 @@
         </div>
         <hr>
     </div>
+  </div>
     
 </div>

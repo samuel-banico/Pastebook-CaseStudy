@@ -27,7 +27,9 @@ import { FriendrequestmodalComponent } from './components/friendrequestmodal/fri
 import { PostComponent } from './pages/post/post.component';
 import { PostlikelistComponent } from './components/postlikelist/postlikelist.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { AddphotomodalComponent } from './components/addphotomodal/addphotomodal.component';
 import { ResultsComponent } from './pages/results/results.component';
+
 
 
 
@@ -75,8 +77,10 @@ const appRoutes: Routes = [
     FriendrequestmodalComponent,
     PostComponent,
     PostlikelistComponent,
+    AddphotomodalComponent,
     NotFoundComponent,
     ResultsComponent
+
   ],
   imports: [
     BrowserModule,
@@ -87,7 +91,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule
     
   ],
-  exports: [RouterModule, CreatealbummodalComponent],
+  exports: [RouterModule, CreatealbummodalComponent, AddphotomodalComponent],
   providers: [MdbModalService],
   bootstrap: [AppComponent]
 })

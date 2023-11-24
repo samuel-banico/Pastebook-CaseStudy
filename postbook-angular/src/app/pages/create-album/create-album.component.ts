@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { AddphotomodalComponent } from '@components/addphotomodal/addphotomodal.component';
 
 import { SessionService } from '@services/session.service';
 
@@ -10,10 +12,12 @@ import { SessionService } from '@services/session.service';
     styleUrls: ['./create-album.component.css']
 })
 export class CreateAlbumComponent implements OnInit {
+    modalRef: MdbModalRef<AddphotomodalComponent> | null = null;
 
     constructor(
         private sessionService: SessionService,
-        private router: Router
+        private router: Router,
+        private modalService: MdbModalService
     ){
         let token: string = this.sessionService.getToken();
         if(!token) {
@@ -68,4 +72,8 @@ export class CreateAlbumComponent implements OnInit {
             'success'
         );
     }
+
+    openModalAddPhoto() {
+        this.modalRef = this.modalService.open(AddphotomodalComponent)
+      }
 }

@@ -6,20 +6,12 @@
         <h5 class="notifications" id="box">Notifications</h5>
         <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
     </div>
-    <!-- *ngFor -->
-    <div class="modal-body">
-        <div class="notifications-item" routerLink="/post">
+    <div class="modal-body" *ngFor="let notif of notifs">
+        <div class="notifications-item" (click)="goToSinglePage()">
             <img src="./assets/images/selfie.jpg" alt="img">
             <div class="text">
                 <h4><strong>Armored Clavio</strong></h4>
-                <p>Armored Clavio liked your post.</p>
-            </div>
-        </div>
-        <div class="notifications-item" routerLink="/post">
-            <img src="./assets/images/work.jpg" alt="img">
-            <div class="text">
-                <h4><strong>Dingdong Dentist</strong></h4>
-                <p>Dingdong Dentist commented on your post.</p>
+                <p>{{notif.content}}</p>
             </div>
         </div>
     </div>
