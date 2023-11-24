@@ -27,6 +27,7 @@ import { FriendrequestmodalComponent } from './components/friendrequestmodal/fri
 import { PostComponent } from './pages/post/post.component';
 import { PostlikelistComponent } from './components/postlikelist/postlikelist.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { OtherprofileComponent } from './pages/otherprofile/otherprofile.component';
 
 
 
@@ -73,7 +74,8 @@ const appRoutes: Routes = [
     FriendrequestmodalComponent,
     PostComponent,
     PostlikelistComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    OtherprofileComponent
   ],
   imports: [
     BrowserModule,
