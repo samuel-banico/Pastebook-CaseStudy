@@ -10,22 +10,36 @@ import { SessionService } from '@services/session.service';
 })
 
 export class WallComponent implements OnInit {
+
+  posts:Post[] = [];
+
   constructor(
     private postService:PostService,
     private sessionService:SessionService
   ){
+    //this.getOwnUserTimeline();
+  }
+
+
+  //posts:Post = new Post();
+
+  ngOnInit(): void {
     this.getOwnUserTimeline();
   }
 
-  posts:Post = new Post();
-  ngOnInit(): void {
-    
-  }
+  //GetOwnUserTimeline
+  // getOwnUserTimeline() {
+  //   this.postService.getUserTimeline().subscribe((response: Object) => {
+  //     this.posts = response;
+  //   })
+  // }
 
   //GetOwnUserTimeline
   getOwnUserTimeline() {
-    this.postService.getUserTimeline().subscribe((response: Object) => {
-      this.posts = response;
-    })
-  }
+      this.postService.getUserTimeline().subscribe((response: any) => {
+        this.posts = response;
+        console.log(response);
+      })
+    }
+  
 }

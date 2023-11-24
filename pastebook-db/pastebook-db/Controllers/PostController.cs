@@ -10,11 +10,13 @@ namespace pastebook_db.Controllers
     {
         private readonly PostRepository _postRepository;
         private readonly NotificationRepository _notificationRepository;
+        private readonly UserRepository _userRepository;
 
-        public PostController(PostRepository postRepository, NotificationRepository notificationRepository)
+        public PostController(PostRepository postRepository, NotificationRepository notificationRepository, UserRepository userRepository)
         {
             _postRepository = postRepository;
             _notificationRepository = notificationRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet("postById")]
@@ -31,9 +33,11 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("ownUserTimeline")]
-        public ActionResult<List<PostDTO>> GetUserTimeline(Guid userId)
+        public ActionResult<List<PostDTO>> GetUserTimeline()
         {
-            var postList = _postRepository.GetAllPostOfUserTimeline(userId);
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+            var postList = _postRepository.GetAllPostOfUserTimeline(user.Id);
 
             if (postList.Count == 0)
                 return Ok(new { result = "no_post" });

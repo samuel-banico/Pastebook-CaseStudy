@@ -60,13 +60,13 @@
                         </div>
                     </form>
                 </div>
-    <!-- GetOwnUserTimeline -->        
-   <div class="card-body">
+    <!-- GetOwnUserTimeline START-->        
+   <div class="card-body" *ngFor="let item of posts">
     <div class="media mb-4">
         <img src="assets/images/De Guzman, Christian.JPG" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
         <div class="media-body">
-            <h5>Christian De Guzman</h5>
-            <p class="card-text text-justify">Hays, ayaw q na. 🥺 Joke.</p>
+            <h5>{{item.fullName}}</h5>
+            <p class="card-text text-justify">{{item.content}}</p>
         </div>
     </div>
 
@@ -83,7 +83,8 @@
             </a>
         </div>
     </div>
-</div>                      
+</div> 
+<!-- GetOwnUserTimeline END -->                     
 <hr class="custom-hr">
 
  <div class="card-body">

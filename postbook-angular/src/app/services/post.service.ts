@@ -18,6 +18,7 @@ export class PostService {
     'Authorization': `${this.sessionService.getToken()}`
   })
 
+  post:Post[] = [];
   constructor(
     //To pass data
     private http:HttpClient,
@@ -29,8 +30,12 @@ export class PostService {
       return this.http.post(this.baseUrl, post);
     }
 
-    getUserTimeline():Observable<Object>{
-      return this.http.get<Post[]>(this.baseUrl + '/otherUserTimeline', { headers: this.headers })
+    // getUserTimeline():Observable<Object>{
+    //   return this.http.get<Post[]>(this.baseUrl + '/otherUserTimeline', { headers: this.headers })
+    // };
+
+    getUserTimeline():Observable<Post[]>{
+      return this.http.get<Post[]>(this.baseUrl + '/ownUserTimeline',{ headers: this.headers });
     };
 
     
