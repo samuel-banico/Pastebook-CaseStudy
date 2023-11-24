@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using pastebook_db.Data;
 using pastebook_db.Models;
 
@@ -18,9 +19,12 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("unseenNotification")]
-        public ActionResult<Notification> GetUnseenNotification(Guid userId) 
+        public ActionResult<Notification> GetUnseenNotification()
         {
-            var notifs = _repo.GetUnseenNotifications(userId);
+            //Added for Notif Connection
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+            var notifs = _repo.GetUnseenNotifications(user.Id);
 
             if (notifs == null)
                 return NotFound(new { result = "no_notification" });

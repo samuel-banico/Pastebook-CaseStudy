@@ -7,7 +7,7 @@
         <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
     </div>
     <div class="modal-body" *ngFor="let notif of notifs">
-        <div class="notifications-item" routerLink="/post">
+        <div class="notifications-item" (click)="goToSinglePage()">
             <img src="./assets/images/selfie.jpg" alt="img">
             <div class="text">
                 <h4><strong>Armored Clavio</strong></h4>

@@ -11,6 +11,7 @@ import { Notification } from '@models/notification'; // Import the Model
 })
 export class NotifnavbarmodalComponent implements OnInit {
   notifs:Notification[] = [];
+  notif:Notification = new Notification();
     constructor(
       public modalRef: MdbModalRef<NotifnavbarmodalComponent>,
       private router: Router, 
@@ -27,14 +28,32 @@ export class NotifnavbarmodalComponent implements OnInit {
     }
 
     ngOnInit(): void {
-      this.getAllNotifications();
+      //this.getAllNotifications();
+      this.getUnseenNotifications();
+      this.goToSinglePage();
     }
 
     //Get All Notifications
-    getAllNotifications(){
-      this.notifService.getAllNotif().subscribe((response:any)=>{
+    // getAllNotifications(){
+    //   this.notifService.getAllNotif().subscribe((response:any)=>{
+    //     this.notifs = response;
+    //     console.log(response);
+    //   })
+    // }
+
+    //Get Unseen Notifications
+    getUnseenNotifications(){
+      this.notifService.getUnseenNotif().subscribe((response:any)=>{
         this.notifs = response;
-        console.log(response);
       })
+    }
+
+    //If clicked then it will update the hasSeen as true.
+    goToSinglePage()
+    {
+      this.notifService.updateSeenNotification(this.notif).subscribe((response:Record<string,any>)=>{
+        response['result'] === 'notification_seen';
+      })  
+      this.router.navigate(['/post']);
     }
 }

@@ -29,7 +29,7 @@ namespace pastebook_db.Data
             return notif;
         }
 
-        // Get Unseen Notification
+        // Update Unseen to Seen Notification
         public void SeenNotification(Guid notifId)
         {
             var notif = _context.Notifications.FirstOrDefault(n => n.Id == notifId);
