@@ -118,10 +118,22 @@
     border-radius: 10px;
 }
 
-.left-column-sticky {
+/* .bg-friends {
+    background-color: rgb(164, 180, 190);
+    border-radius: 2rem;
+} */
+
+.bg-albums {
+    /* background-color: rgb(164, 180, 190);
+    border-radius: 1rem; */
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* .left-column-sticky {
     position: sticky;
     top: 0;
-}
+} */
 
 
 

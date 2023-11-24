@@ -7,86 +7,65 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
 
-<div class="container">
+<div class="container mt-5 pt-4">
     <div class="row">
         <div class="col-12 col-lg-3 left-column-sticky">
-            <div class="left-column">
-                <div class="card card-left1 mb-4" >
-                    <img src="assets/images/photo-1455448972184-de647495d428.jpg" alt="" class="card-img-top img-fluid">
-                    <div class="card-body text-center ">
-                        <img [src]="user.profilePicture" alt="img" width="120px" height="120px" class="rounded-circle mt-n5">
-                        <h5 class="card-title">{{user.firstName}} {{user.lastName}}</h5>
-                        <p class="card-text text-justify mb-2">{{user.userBio}}</p>
-                        <ul class="list-unstyled nav justify-content-center">
-                            <a href="#" class="text-dark text-decoration-none"> <li class="nav-item">Friends <br> <strong>12M</strong></li></a>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="card shadow-sm card-left3 mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Photos</h5>
-                        <div class="row">
-                            <div class="col-6 p-1">
-                                <a href="assets/images/cat.jpeg" data-lightbox="id" ><img src="assets/images/cat.jpeg" alt="img" class="img-fluid my-2"></a>  
-                                <a href="assets/images/work.jpg"data-lightbox="id"><img src="assets/images/work.jpg" alt="img" class="img-fluid my-2"></a>
-                            </div>
-
-                            <div class="col-6 p-1">
-                                <a href="assets/images/selfie.jpg"data-lightbox="id"><img src="assets/images/selfie.jpg" alt="img" class="img-fluid my-2"></a>
-                                </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="rounded-3 shadow mb-3 border" style="border-color: #e0e0e0;">
+              <div class="text-center pt-4">
+                <img src="assets/images/De Guzman, Christian.JPG" alt="Profile" width="120px" height="120px" class="rounded-circle">
+                <a routerLink="/profile" class="text-decoration-none text-dark">
+                  <h5 class="mt-2">{{ user.firstName }} {{ user.lastName }}</h5>
+                </a>
+                <p class="mt-3">{{ user.userBio }}</p>
+              </div>
             </div>
-        </div>
-            <!--Post to pastebook-->
+          
+            <div class="rounded-3 shadow container-fluid text-center p-2 border" style="border-color: #e0e0e0;">
+              <ul class="list-unstyled nav justify-content-center">
+                <a routerLink="/friends" class="text-dark text-decoration-none">
+                  <li class="nav-item"><strong>Friends</strong></li>
+                  user.FriendsNumber 
+                </a>
+              </ul>
+            </div>
+          
+            <div class="rounded-3 shadow container-fluid my-3 border" style="border-color: #e0e0e0;">
+              <div class="d-flex">
+                <a routerLink="/albums" class="text-decoration-none text-dark bg-albums my-2">Albums</a>
+              </div>
+              <div class="row">
+                <div class="col-md-6 p-1">
+                  <a href="assets/images/cat.jpeg" data-lightbox="id">
+                    <img src="assets/images/cat.jpeg" alt="Cat" class="img-fluid rounded">
+                  </a>
+                  <a href="assets/images/work.jpg" data-lightbox="id">
+                    <img src="assets/images/work.jpg" alt="Work" class="img-fluid rounded">
+                  </a>
+                </div>
+                <div class="col-md-6 p-1">
+                  <a href="assets/images/selfie.jpg" data-lightbox="id">
+                    <img src="assets/images/selfie.jpg" alt="Selfie" class="img-fluid rounded">
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+
         <div class="col-12 col-lg-9" >
-            <div class="middle-column">
-                <div class="card" >
-                    <div class="card-header bg-transparent">
-                        <form class="form-inline">
-                            <div class="input-group w-100">
-                                <input type="text" name="message" id="message" placeholder="Message" class="form-control form-control-md" (click)="openModal()">
-                                <div class="input-group-append">
-                                <button type="submit" class="btn btn-danger" style="background-color: #68070f;">Post</button>
-                                </div>
-                            </div>  
-                        </form>
-                    </div>
-                </div>
-                <!-- Display Post -->
-                <div class="card mt-2" *ngFor="let post of posts">
-                    <div class="card-body">
-                        <div class="media">
-                            <img src="assets/images/De Guzman, Christian.JPG" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
-                            <div class="media-body mb-4">
-                                <h5>Display Friend Name Here</h5>
-                                <p class="card-text">{{post.content}}</p>
-                            </div>
+            <!-- <div class="middle-column"> -->
+                <div class="rounded-3 shadow container-fluid border p-3" style="border-color: #e0e0e0;">
+                    <form class="form-inline">
+                      <div class="input-group w-100">
+                        <input type="text" name="message" id="message" placeholder="What's on your mind?" class="form-control form-control-md" (click)="openModal()">
+                        <div class="input-group-append">
+                          <!-- <button type="submit" class="btn btn-danger" style="background-color: #68070f;">Post</button> -->
                         </div>
-    
-                        <div class="d-flex row justify-content-center">
-                            <div class="col-6 custom-border text-center">
-                                <a href="#">
-                                    <img src="../../../assets/images/heart.png" alt="img" width="25px" height="25px" class="mr-3">
-                                </a>
-                            </div>
-                        
-                            <div class="col-6 custom-border text-center">
-                                <a href="">
-                                    <img src="../../../assets/images/comment.png" alt="img" width="25px" height="25px" class="mr-3">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-light p-2">
-                        <div class="d-flex flex-row align-items-start"><img class="rounded-circle" src="assets/images/De Guzman, Christian.JPG" width="40"><textarea class="form-control" style="resize: none;"></textarea></div>
-                        <div class="mt-2 text-right"><button class="btn btn-primary btn-sm" type="button" style="background-color: #68070f;">Comment</button><button class="btn btn-primary btn-sm ml-1 shadow-none" type="button" style="background-color: #0B2154;">Cancel</button></div>
-                    </div>
-                </div>
-                <!-- End of Diplay Post -->
-                <!-- <div class="card mt-2">
+                      </div>
+                    </form>
+                  </div>
+                
+                <div class="card mt-2">
                     <div class="card-body">
                         <div class="media">
                             <img src="assets/images/De Guzman, Christian.JPG" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
@@ -118,7 +97,7 @@
                             <div class="media-body">
                                 <h5>Samuel Geo Banico</h5>
                                 <p class="text-justify">Pancit Supremacy!! ❤</p>
-                                <div class="bg-white">
+                                <!-- <div class="bg-white">
                                     <div class="d-flex flex-row fs-12">
                                         <div class="like p-2 cursor" onclick="toggleLike()">
                                             <i class="fa fa-thumbs-o-up"></i>
@@ -126,7 +105,7 @@
                                         </div>
                                         <div class="like p-2 cursor"><i class="fa fa-commenting-o"></i><span class="ml-1">Comment</span></div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="media mb-3">
@@ -142,7 +121,7 @@
                         <div class="d-flex flex-row align-items-start"><img class="rounded-circle" src="assets/images/De Guzman, Christian.JPG" width="40"><textarea class="form-control" style="resize: none;"></textarea></div>
                         <div class="mt-2 text-right"><button class="btn btn-primary btn-sm" type="button" style="background-color: #68070f;">Comment</button><button class="btn btn-primary btn-sm ml-1 shadow-none" type="button" style="background-color: #0B2154;">Cancel</button></div>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="card my-3">
                     <div class="card-body">
@@ -174,7 +153,7 @@
                         <div class="mt-2 text-right"><button class="btn btn-primary btn-sm" type="button" style="background-color: #68070f;">Comment</button><button class="btn btn-primary btn-sm ml-1 shadow-none" type="button" style="background-color: #0B2154;">Cancel</button></div>
                     </div>
                 </div>
-            </div>
+            <!-- </div> --> 
         </div>
     </div>
 </div>
