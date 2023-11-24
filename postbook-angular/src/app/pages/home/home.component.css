@@ -130,10 +130,12 @@
     font-weight: 700;
 }
 
-/* .left-column-sticky {
+.left-column-sticky {
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
-} */
+  }
+  
 
 
 

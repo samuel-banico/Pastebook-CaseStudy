@@ -1,152 +1,154 @@
 <app-navbar></app-navbar>
 <link rel="stylesheet" href="settings.component.css">
-<div class="container">
-
-    <div class="row gutters-sm">
-      <div class="col-md-4 d-none d-md-block">
-        <div class="card">
-          <div class="card-body">
-            <nav class="nav flex-column nav-pills nav-gap-y-1">
-              <a (click)="div1Function()" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded general">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings mr-2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>General
-              </a>
-              <a (click)="div2Function()" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded security">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield mr-2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>Security
-              </a>
-            </nav>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-header border-bottom mb-3 d-flex d-md-none">
-            <ul class="nav nav-tabs card-header-tabs nav-gap-x-1" role="tablist">
-              <li class="nav-item">
-                <a (click)="div1Function()" data-toggle="tab" class="nav-link has-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings"><circle cx="12" cy="12" r="3"></circle></svg></a>
-              </li>
-              <li class="nav-item">
-                <a (click)="div2Function()" data-toggle="tab" class="nav-link has-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield"></svg></a>
-              </li>
-            </ul>
-          </div>
-          <div class="card-body tab-content">
-            <div *ngIf="div1" class="tab-pane active" id="profile">
-              <h6>General</h6>
-              <hr class="custom-hr">
-              <form (ngSubmit)="onUpdate()">
-                <div class="form-group row align-items-center">
-                  <label for="firstName" class="col-form-label">First Name</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" [(ngModel)]="user.firstName" id="firstName" name="firstName" placeholder="Enter your first name" [disabled]="!editMode['firstName']">
-                  </div>
-                  <div class="col-sm-2">
-                    <a *ngIf="!editMode['firstName']" (click)="enableEdit('firstName')" class="edit-button">Edit</a>
-                  </div>
-                </div>
-            
-                <div class="form-group row align-items-center">
-                  <label for="lastName" class="col-form-label">Last Name</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" [(ngModel)]="user.lastName" name="lastName" placeholder="Enter your last name" [disabled]="!editMode['lastName']">
-                  </div>
-                  <div class="col-sm-2">
-                    <a *ngIf="!editMode['lastName']" (click)="enableEdit('lastName')" class="edit-button">Edit</a>
-                  </div>
-                </div>
-            
-                <div class="form-group row align-items-center">
-                  <label for="birthday" class="col-form-label">Birthday</label>
-                  <div class="col-sm-10">
-                    <input type="date" [(ngModel)]="user.birthday" class="form-control" name="birthday" [disabled]="!editMode['birthday']" />
-                  </div>
-                  <div class="col-sm-2">
-                    <a *ngIf="!editMode['birthday']" (click)="enableEdit('birthday')" class="edit-button">Edit</a>
-                  </div>
-                </div>
-            
-                <div class="form-group row align-items-center">
-                  <label for="gender" class="col-form-label">Gender</label>
-                  <div class="col-sm-10">
-                    <select [(ngModel)]="user.gender" id="gender" name="gender" class="form-select" [disabled]="!editMode['gender']">
-                      <option value="" disabled selected>Select Gender</option>
-                      <option value="0">Male</option>
-                      <option value="1">Female</option>
-                      <option value="2">Other</option>
-                    </select>
-                  </div>
-                  <div class="col-sm-2">
-                    <a *ngIf="!editMode['gender']" (click)="enableEdit('gender')" class="edit-button">Edit</a>
-                  </div>
-                </div>
-            
-                <button type="submit" class="btn btn-danger" style="background-color: #68070f;">Update Profile</button>
-                <button type="button" class="btn btn-light" (click)="resetChanges()">Reset Changes</button>
-              </form>
-            </div>
-            
-            
-            <div *ngIf="div2" class="tab-pane active" id="security">
-              <h6>Security</h6>
-              <hr class="custom-hr">
-            
-              <form>
-                <!-- Password Input -->
-                <!-- Inside the form for Security tab -->
-                <div *ngIf="!isPasswordCorrect" class="form-group">
-                  <label for="Password">Password</label>
-                  <input type="password" class="form-control" placeholder="Enter password" [(ngModel)]="securityPassword" name="password" (keyup.enter)="passwordVerify($event)">
-                </div>
-
-                <!-- Display fields only if password is correct -->
-                <div *ngIf="isPasswordCorrect">
-
-                  <div class="form-group row align-items-center">
-                    <label for="Email" class="col-form-label">Email</label>
-                    <div class="col-sm-10">
-                    <input name="email" [(ngModel)]="user.email" type="email" class="form-control" id="email" placeholder="sample@gmail.com"[disabled]="!editMode['email']">
-                  </div>
-                  <div class="col-sm-2">
-                    <a *ngIf="!editMode['email']" (click)="enableEdit('email')" class="edit-button">Edit</a>
-                  </div>
-                </div>
-           
-                  <div class="form-group row align-items-center">
-                    <label for="mobileNum" class="col-form-label">Mobile Number</label>
-                    <div class="col-sm-10">
-                      <input name="mobileNumber" [(ngModel)]="user.mobileNumber" type="text" class="form-control" id="mobileNum" placeholder="+639876543211" [disabled]="!editMode['mobileNum']">
-                    </div>
-                    <div class="col-sm-2">
-                      <a *ngIf="!editMode['mobileNum']" (click)="enableEdit('mobileNum')" class="edit-button">Edit</a>
-                    </div>
-                  </div>
-                  
-            
-                  <div class="form-group">
-                    <label class="d-block">Change Password</label>
-                    <div class="input-group mt-3">
-                      <input name="password" [(ngModel)]="newPassword" [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="New password" [disabled]="!editMode['password']">
-                      <div class="input-group-append">
-                        <button type="button" class="btn btn-outline-secondary" (click)="showPassword = !showPassword" *ngIf="editMode['password']">
-                          <i class="fa" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
-                        </button>
-                      </div>
-                      <div class="col-sm-2">
-                        <a *ngIf="!editMode['password']" (click)="enableEdit('password')" class="edit-button">Edit</a>
-                      </div>
-                    </div>
-                    <input name="confirmPassword" [(ngModel)]="confirmNewPassword" [type]="showPassword ? 'text' : 'password'" class="form-control mt-3" placeholder="Confirm new password" *ngIf="editMode['password']">
-                  </div>
-            
-                  <!-- Update and Reset buttons -->
-                  <button type="submit" class="btn btn-danger" style="background-color: #68070f;" (click)="onUpdateSecurity()">Update Profile</button>
-                  <button type="button" class="btn btn-light" (click)="resetChanges()">Reset Changes</button>
-                </div>
-              </form>
-            </div>
-            
-          </div>
+<div class="container mt-5 pt-5">
+  <div class="row gutters-sm">
+    <div class="col-md-4 d-none d-md-block">
+      <div class="card">
+        <div class="card-body">
+          <nav class="nav flex-column nav-pills nav-gap-y-1">
+            <a (click)="div1Function()" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded general">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings mr-2"><circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+              General
+            </a>
+            <a (click)="div2Function()" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded security">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield mr-2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>Security
+            </a>
+          </nav>
         </div>
       </div>
     </div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header border-bottom mb-3 d-flex d-md-none">
+          <ul class="nav nav-tabs card-header-tabs nav-gap-x-1" role="tablist">
+            <li class="nav-item">
+              <a (click)="div1Function()" data-toggle="tab" class="nav-link has-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings"><circle cx="12" cy="12" r="3"></circle></svg></a>
+            </li>
+            <li class="nav-item">
+              <a (click)="div2Function()" data-toggle="tab" class="nav-link has-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield"></svg></a>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body tab-content">
+          <div *ngIf="div1" class="tab-pane active" id="profile">
+            <h6>General</h6>
+            <hr class="custom-hr">
+            <form (ngSubmit)="onUpdate()">
+              <div class="form-group row align-items-center">
+                <label for="firstName" class="col-form-label">First Name</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" [(ngModel)]="user.firstName" id="firstName" name="firstName" placeholder="Enter your first name" [disabled]="!editMode['firstName']">
+                </div>
+                <div class="col-sm-2">
+                  <a *ngIf="!editMode['firstName']" (click)="enableEdit('firstName')" class="edit-button">Edit</a>
+                </div>
+              </div>
+          
+              <div class="form-group row align-items-center">
+                <label for="lastName" class="col-form-label">Last Name</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" [(ngModel)]="user.lastName" name="lastName" placeholder="Enter your last name" [disabled]="!editMode['lastName']">
+                </div>
+                <div class="col-sm-2">
+                  <a *ngIf="!editMode['lastName']" (click)="enableEdit('lastName')" class="edit-button">Edit</a>
+                </div>
+              </div>
+          
+              <div class="form-group row align-items-center">
+                <label for="birthday" class="col-form-label">Birthday</label>
+                <div class="col-sm-10">
+                  <input type="date" [(ngModel)]="user.birthday" class="form-control" name="birthday" [disabled]="!editMode['birthday']" />
+                </div>
+                <div class="col-sm-2">
+                  <a *ngIf="!editMode['birthday']" (click)="enableEdit('birthday')" class="edit-button">Edit</a>
+                </div>
+              </div>
+          
+              <div class="form-group row align-items-center">
+                <label for="gender" class="col-form-label">Gender</label>
+                <div class="col-sm-10">
+                  <select [(ngModel)]="user.gender" id="gender" name="gender" class="form-select" [disabled]="!editMode['gender']">
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="0">Male</option>
+                    <option value="1">Female</option>
+                    <option value="2">Other</option>
+                  </select>
+                </div>
+                <div class="col-sm-2">
+                  <a *ngIf="!editMode['gender']" (click)="enableEdit('gender')" class="edit-button">Edit</a>
+                </div>
+              </div>
+          
+              <button type="submit" class="btn btn-danger" style="background-color: #68070f;">Update Profile</button>
+              <button type="button" class="btn btn-light" (click)="resetChanges()">Reset Changes</button>
+            </form>
+          </div>
+          
+          
+          <div *ngIf="div2" class="tab-pane active" id="security">
+            <h6>Security</h6>
+            <hr class="custom-hr">
+          
+            <form>
+              <!-- Password Input -->
+              <!-- Inside the form for Security tab -->
+              <div *ngIf="!isPasswordCorrect" class="form-group">
+                <label for="Password">Password</label>
+                <input type="password" class="form-control" placeholder="Enter password" [(ngModel)]="securityPassword" name="password" (keyup.enter)="passwordVerify($event)">
+              </div>
 
+              <!-- Display fields only if password is correct -->
+              <div *ngIf="isPasswordCorrect">
+
+                <div class="form-group row align-items-center">
+                  <label for="Email" class="col-form-label">Email</label>
+                  <div class="col-sm-10">
+                  <input name="email" [(ngModel)]="user.email" type="email" class="form-control" id="email" placeholder="sample@gmail.com"[disabled]="!editMode['email']">
+                </div>
+                <div class="col-sm-2">
+                  <a *ngIf="!editMode['email']" (click)="enableEdit('email')" class="edit-button">Edit</a>
+                </div>
+              </div>
+          
+                <div class="form-group row align-items-center">
+                  <label for="mobileNum" class="col-form-label">Mobile Number</label>
+                  <div class="col-sm-10">
+                    <input name="mobileNumber" [(ngModel)]="user.mobileNumber" type="text" class="form-control" id="mobileNum" placeholder="+639876543211" [disabled]="!editMode['mobileNum']">
+                  </div>
+                  <div class="col-sm-2">
+                    <a *ngIf="!editMode['mobileNum']" (click)="enableEdit('mobileNum')" class="edit-button">Edit</a>
+                  </div>
+                </div>
+                
+          
+                <div class="form-group">
+                  <label class="d-block">Change Password</label>
+                  <div class="input-group mt-3">
+                    <input name="password" [(ngModel)]="newPassword" [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="New password" [disabled]="!editMode['password']">
+                    <div class="input-group-append">
+                      <button type="button" class="btn btn-outline-secondary" (click)="showPassword = !showPassword" *ngIf="editMode['password']">
+                        <i class="fa" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+                      </button>
+                    </div>
+                    <div class="col-sm-2">
+                      <a *ngIf="!editMode['password']" (click)="enableEdit('password')" class="edit-button">Edit</a>
+                    </div>
+                  </div>
+                  <input name="confirmPassword" [(ngModel)]="confirmNewPassword" [type]="showPassword ? 'text' : 'password'" class="form-control mt-3" placeholder="Confirm new password" *ngIf="editMode['password']">
+                </div>
+          
+                <!-- Update and Reset buttons -->
+                <button type="submit" class="btn btn-danger" style="background-color: #68070f;" (click)="onUpdateSecurity()">Update Profile</button>
+                <button type="button" class="btn btn-light" (click)="resetChanges()">Reset Changes</button>
+              </div>
+            </form>
+          </div>
+          
+        </div>
+      </div>
+    </div>
   </div>
+
+</div>

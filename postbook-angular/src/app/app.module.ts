@@ -28,6 +28,8 @@ import { PostComponent } from './pages/post/post.component';
 import { PostlikelistComponent } from './components/postlikelist/postlikelist.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AddphotomodalComponent } from './components/addphotomodal/addphotomodal.component';
+import { ResultsComponent } from './pages/results/results.component';
+
 
 
 
@@ -46,7 +48,8 @@ const appRoutes: Routes = [
   {path: 'post', component: PostComponent},
   {path: 'albums', component: AlbumsComponent},
   {path: 'create', component: CreateAlbumComponent},
-  {path: '**', component: NotFoundComponent},
+  {path: 'results', component: ResultsComponent},
+  {path: '**', component: NotFoundComponent}
 
 ];
 
@@ -75,7 +78,9 @@ const appRoutes: Routes = [
     PostComponent,
     PostlikelistComponent,
     AddphotomodalComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ResultsComponent
+
   ],
   imports: [
     BrowserModule,

@@ -4,31 +4,23 @@
 
 <div class="modal-content">
     <div class="modal-header">    
-        <h6>Friend Requests:</h6>
+        <h5>Friend Requests</h5>
     </div>
-    <div class="modal-body">
-        <a class="friendrequest-item" href="#">
+
+    <div *ngFor="let request of requests">
+    <div class="modal-body d-flex align-items-center">
+        <a class="friendrequest-item" routerLink="/otherprofile">
             <img src="../../../assets/images/jean.JPG" alt="" class="rounded-circle" style="width: 50px; height: 50px;">
-            <div class="text-left user-item" style="display: inline-block; margin-left: 10px; width: 100px;">
+            <div class="text-left user-item" style="display: inline-block; margin-left: 10px; width: 100px;" routerLink="/otherprofile">
                 Jean DeVera
             </div>
         </a>
-        <span class="text-right">
-            <input type="button" class="btn btn-danger btn-sm" style="background-color: #68070f;" value="Accept">
-            &nbsp;
-            <input type="button" class="btn btn-secondary btn-sm" value="Reject" style="background-color: #0B2154;">
-        </span>
-        <hr>
-        <a class="friendrequest-item" href="#">
-            <img src="../../../assets/images/sam.JPG" class="rounded-circle" style="width: 50px; height: 50px;">
-            <div class="text-left user-item" style="display: inline-block; margin-left: 10px; width: 100px;">
-                Sam Sumagui
-            </div>
-        </a>
-        <div style="display: inline-block;">
-            <input type="button" class="btn btn-danger btn-sm" style="background-color: #68070f;" value="Accept">
-            &nbsp;
-            <input type="button" class="btn btn-secondary btn-sm" value="Reject" style="background-color: #0B2154;">
+        <div class="ml-auto">
+            <input type="button" class="btn btn-danger btn-sm mx-2" style="background-color: #68070f;" value="Accept" (click)="Accept()">
+            <input type="button" class="btn btn-secondary btn-sm mx-2" value="Reject" style="background-color: #0B2154;" (click)="Reject()">
         </div>
+        <hr>
     </div>
+  </div>
+    
 </div>

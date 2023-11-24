@@ -11,12 +11,14 @@ namespace pastebook_db.Controllers
         private readonly FriendRepository _friendRepository;
         private readonly FriendRequestRepository _friendRequestRepository;
         private readonly NotificationRepository _notificationRepository;
+        private readonly UserRepository _userRepository;
 
-        public FriendController(FriendRepository repo, NotificationRepository notificationRepository, FriendRequestRepository friendRequestRepository)
+        public FriendController(FriendRepository repo, NotificationRepository notificationRepository, FriendRequestRepository friendRequestRepository, UserRepository userRepository)
         {
             _friendRepository = repo;
             _notificationRepository = notificationRepository;
             _friendRequestRepository = friendRequestRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet("friend")]
@@ -45,9 +47,11 @@ namespace pastebook_db.Controllers
 
         // returns a list of user table
         [HttpGet("userFriendList")]
-        public ActionResult<List<User>> GetAllUserFriends(Guid userId)
+        public ActionResult<List<User>> GetAllUserFriends()
         {
-            var userFriend = _friendRepository.GetAllUserFriends(userId);
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+            var userFriend = _friendRepository.GetAllUserFriends(user.Id);
 
             if(userFriend == null)
                 return NotFound(new { result = "no_friends" });
