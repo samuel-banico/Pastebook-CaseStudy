@@ -16,7 +16,7 @@ namespace pastebook_db.Data
         // Get All Notifications
         public List<Notification> GetAllNotifications(Guid userId)
         {
-            var notif = _context.Notifications.Where(n => n.UserId == userId).ToList();
+            var notif = _context.Notifications.Where(n => n.UserId == userId).OrderByDescending(p => p.NotificationDate).ToList();
 
             return notif;
         }
