@@ -39,25 +39,25 @@ export class CreatealbummodalComponent {
       console.log(response);
       this.id = response.id;
 
-      this.pictureFileList.forEach(image => {
-        this.albumService.createAlbumImage(image, response.id).subscribe()
-      });
+      for (let i = 0; i < this.pictureFileList.length; i++) {
+        const image = this.pictureFileList[i];
+        console.log(i);
 
-      console.log(response.id);
-      this.albumService.assignCoverImageToAlbum(response.id).subscribe();
+        if(i == 0) {
+          this.albumService.assignCoverImageToAlbum(response.id, image).subscribe();
+        }
+        
+        this.albumService.createAlbumImage(response.id, image).subscribe();
+        console.log(image);
+      }
+
+      Swal.fire({
+        title: `Album Created`,
+        text: `(${this.album.albumName}) has been added successfully`,
+        icon: 'success'
+      })
     })
-    
-    console.log('Data saved:', this.input1, this.input2);
-    console.log(this.pictureFileList);
-    this.closeModal();
   }
-
-  
-        /*Swal.fire({
-          title: `Album Created`,
-          text: `(${this.album.albumName}) has been added successfully`,
-          icon: 'success'
-        })*/
 
   onFileSelected(event: any) {
     // Handle file selection logic

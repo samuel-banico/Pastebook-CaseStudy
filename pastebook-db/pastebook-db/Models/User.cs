@@ -12,7 +12,7 @@ namespace pastebook_db.Models
         public DateTime Birthday { get; set; }
         public Gender Gender { get; set; }
         public string? MobileNumber { get; set; }
-        public byte[] ProfilePicture { get; set; } = null!;
+        public string? ProfilePicture { get; set; }
         public string? UserBio { get; set; }
         public bool IsActive { get; set; }
 

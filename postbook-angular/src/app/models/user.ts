@@ -9,6 +9,9 @@ export class User {
         public gender?: number,
         public mobileNumber?: string,
         public userBio?: string,
-        public profilePicture?: string
+        public profilePicture?: string,
+
+        // Other Details
+        public friendCount?: number
     ){}
 }

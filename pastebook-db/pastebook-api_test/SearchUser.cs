@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestPlatform.Utilities;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
 using pastebook_db.Data;
 using pastebook_db.Database;
 using pastebook_db.Models;

@@ -10,7 +10,7 @@ namespace pastebook_db.Models
         public bool IsPublic { get; set; }
         public bool IsEdited { get; set; }
         public DateTime CreatedOn { get; set; }
-        public byte[]? CoverAlbumImage { get; set; }
+        public string? CoverAlbumImage { get; set; }
 
         // Foreign Key
         public Guid UserId { get; set; }
@@ -27,7 +27,7 @@ namespace pastebook_db.Models
         public bool? IsPublic { get; set; }
         public bool? IsEdited { get; set; }
         public string? CreatedOn { get; set; }
-        public byte[]? CoverAlbumImage { get; set; }
+        public string? CoverAlbumImage { get; set; }
 
         public Guid UserId { get; set; }
 

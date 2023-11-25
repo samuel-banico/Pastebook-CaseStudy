@@ -121,19 +121,18 @@ namespace pastebook_db.Controllers
         }
 
         [HttpPut("addCoverPhoto")]
-        public ActionResult<Album> AssignCoverToAlbum(Guid albumId)
+        public ActionResult<Album> AssignCoverToAlbum(Guid albumId, IFormFile image)
         {
-            var albumToEdit = _albumRepository.GetAlbumById(albumId);
-            var coverImage = _albumImageRepository.GetFirstPhotoOfAlbum(albumId);
+            var album = _albumRepository.GetAlbumById(albumId);
 
-            if (coverImage == null)
-                return Ok(new { result = "no_albumImage" });
+            if(album == null)
+                return BadRequest(new { result = "no_album"});
 
-            albumToEdit.CoverAlbumImage = coverImage;
+            album.CoverAlbumImage = _userRepository.SaveImageToLocalStorage(image);
 
-            _albumRepository.UpdateAlbum(albumToEdit);
+            _albumRepository.UpdateAlbum(album);
 
-            return Ok(albumToEdit);
+            return Ok(album);
         }
 
         // --- DELETE

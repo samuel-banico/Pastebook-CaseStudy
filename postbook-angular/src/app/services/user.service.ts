@@ -36,8 +36,8 @@ export class UserService {
     return this.http.post(this.accessUrl + '/register', user);
   }
 
-  validateToken() : Observable<object> {
-    return this.http.get(this.accessUrl + `/validateToken`, {headers: this.headers});
+  validateToken() : Observable<boolean> {
+    return this.http.get<boolean>(this.accessUrl + `/validateToken`, {headers: this.headers});
   }
 
   // --- User Controller

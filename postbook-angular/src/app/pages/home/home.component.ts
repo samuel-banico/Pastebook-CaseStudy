@@ -37,7 +37,6 @@ export class HomeComponent implements OnInit{
     private router: Router
 
     ){
-      
       let token: string = this.sessionService.getToken();
       if(!token) {
         this.router.navigate(['landing']);
@@ -45,16 +44,14 @@ export class HomeComponent implements OnInit{
       else {
         userService.getUserByToken().subscribe((response: Object) => {
           this.user = response;
+          console.log(this.user);
       })
       }
-      
-      this.getFeed();
-      
 
     }
   
   ngOnInit(): void {
-
+    this.getFeed();
   }
 
   // onSubmit(){

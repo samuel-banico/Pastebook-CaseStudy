@@ -59,11 +59,14 @@ export class NavbarComponent implements OnInit {
       cancelButtonText: 'Cancel'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.userService.logout().subscribe((r) => {
-          console.log("Image save")
-        });
+        // delete access token from database
+        this.userService.logout().subscribe();
+
+        // delete all tokens
         this.sessionService.clear();
-        this.router.navigate(['/login']); // Optionally navigate to the login page after logout
+
+        // returns to login
+        this.router.navigate(['/login']);
       }
     });
   }

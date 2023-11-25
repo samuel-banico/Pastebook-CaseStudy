@@ -21,13 +21,15 @@ namespace pastebook_db.Data
             return friend;
         }
 
+        // List of all friends but does not contain their user details
         public List<Friend> GetAllFriends(Guid userId)
         {
             var friendList = _context.Friends.Where(f => f.UserId == userId || f.User_FriendId == userId).ToList();
 
             return friendList;
         }
-
+        
+        // List of all friends which also contain their user details
         public List<User> GetAllUserFriends(Guid userId)
         {
             var friendList = _context.Friends.Where(f => f.UserId == userId || f.User_FriendId == userId).ToList();
