@@ -32,9 +32,11 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("validateToken")]
-        public ActionResult<bool> ValidateToken(string token) 
+        public ActionResult<bool> ValidateToken() 
         {
+            var token = Request.Headers["Authorization"];
             bool result = _validateToken.Validate(token);
+
             return Ok(result);
         }
 
@@ -75,7 +77,6 @@ namespace pastebook_db.Controllers
         [HttpPost("register")]
         public ActionResult<User> Register(UserReceiveDTO userRegister)
         {
-
             var existingUser = _userRepository.GetUserByEmail(userRegister.Email);
             if (existingUser != null)
                 return BadRequest(new { result = "user_already_exist" });
@@ -89,7 +90,7 @@ namespace pastebook_db.Controllers
                 Birthday = DateTime.Parse(userRegister.Birthday),
                 Gender = (Gender)userRegister.Gender,
                 MobileNumber = userRegister.MobileNumber,
-                ProfilePicture = _userRepository.ImageToByteArray(null),
+                ProfilePicture = _userRepository.SaveImageToLocalStorage(null),
                 UserBio = "Hi, Everyone! I am new to Pastebook."
             };
 

@@ -16,9 +16,6 @@ namespace pastebook_db.Data
 
         public bool RegisterUser(User user)
         {
-            _context.Users.Add(user);
-            _context.SaveChanges();
-
             string emailBody = $@"
         <html>
             <head>
@@ -100,6 +97,9 @@ namespace pastebook_db.Data
 
             if (!_userRepository.SendEmail(user.Email, emailBody))
                 return false;
+
+            _context.Users.Add(user);
+            _context.SaveChanges();
 
             return true;
         }

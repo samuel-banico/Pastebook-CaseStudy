@@ -5,16 +5,20 @@ using System.Net.Mail;
 using System.Net;
 using pastebook_db.Database;
 using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 
 namespace pastebook_db.Data
 {
     public class UserRepository
     {
         private readonly PastebookContext _context;
+        private readonly IWebHostEnvironment _environment;
 
-        public UserRepository(PastebookContext context)
+        public UserRepository(PastebookContext context, IWebHostEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
 
         public User? GetUserById(Guid id)
@@ -69,7 +73,7 @@ namespace pastebook_db.Data
             return hasSent;
         }
 
-        // HELPER METHODS
+        // --- HELPER METHODS
         public UserSendDTO ConvertUserToUserSendDTO(User user) 
         {
             var userDTO = new UserSendDTO()
@@ -83,24 +87,55 @@ namespace pastebook_db.Data
                 Gender = (int)user.Gender,
                 UserBio = user.UserBio,
                 MobileNumber = user.MobileNumber,
-                ProfilePicture = $"data:image/png;base64,{Convert.ToBase64String(user.ProfilePicture)}"
+                ProfilePicture = SendImageToAngular(user.ProfilePicture)
             };
 
             return userDTO;
         }
 
-        public byte[] ImageToByteArray(IFormFile? file) 
+        public string? SendImageToAngular(string? filePath) 
         {
-            // returns default
+            if (filePath == null)
+                return null;
+
+            byte[] imageData = System.IO.File.ReadAllBytes(filePath);
+
+            return $"data:image/png;base64,{Convert.ToBase64String(imageData)}";
+        }
+
+        public string SaveImageToLocalStorage(IFormFile? file) 
+        {
+            string fileName;
+            string filePath = Path.Combine("wwwroot", "images");
+
             if (file == null)
-                return File.ReadAllBytes("wwwroot/images/default_pic.png");
+            {
+                fileName = "default.png";
+                filePath = Path.Combine(filePath, fileName);
+            }
+            else
+            {
+                fileName = $"{Guid.NewGuid()}_{Path.GetFileName(file.FileName)}";
+                filePath = Path.Combine(filePath, fileName);
 
-            //
-            using var memoryStream = new MemoryStream();
-            file.CopyTo(memoryStream);
-            byte[] fileData = memoryStream.ToArray();
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    file.CopyTo(fileStream);
+            }
 
-            return fileData;
+            return filePath;
+        }
+
+        public bool RemoveImageFromLocalStorage(string filePath) 
+        {
+            var fullPath = Path.Combine(_environment.WebRootPath, filePath);
+
+            if (System.IO.File.Exists(fullPath))
+            {
+                System.IO.File.Delete(fullPath);
+                return true;
+            }
+
+            return false;
         }
 
         //Method for Sending email
@@ -124,15 +159,26 @@ namespace pastebook_db.Data
                 EnableSsl = true
             };
 
+            bool isEmailSent = true;
+
+            smtpClient.SendCompleted += (sender, e) =>
+            {
+                if (e.Error != null)
+                    isEmailSent = false;
+                else if (e.Cancelled)
+                    isEmailSent = false;
+            };
+
             try
             {
                 smtpClient.Send(msg);
-                return true;
             }
             catch (Exception)
             {
-                return false;
+                isEmailSent = false;
             }
+
+            return isEmailSent;
         }
     }
 }

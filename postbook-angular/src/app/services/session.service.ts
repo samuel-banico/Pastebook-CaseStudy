@@ -1,17 +1,17 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionService {
+  private accessUrl: string = 'https://localhost:7185/api/access';
 
-  @Output() hasToken : EventEmitter<boolean> = new EventEmitter();
-  constructor() {
-    if(localStorage.getItem('token')!== null){
-      this.hasToken.emit(true);
-    } else {
-      this.hasToken.emit(false);
-    }
+  constructor(
+    private http: HttpClient
+  ) {
+
   }
 
   getToken() : string {
@@ -19,12 +19,23 @@ export class SessionService {
   }
   
   setToken(value:string) : void {
-    this.hasToken.emit(true);
     localStorage.setItem('token',value);
   }
 
+  // Remember Me
+  getLoginCredentials() : string {
+    return localStorage.getItem('rememberMe')!;
+  }
+
+  setLoginCredentials(value: string) : void {
+    localStorage.setItem('rememberMe',value);
+  }
+
   clear() : void {
-    localStorage.clear();
-    this.hasToken.emit(false);
+    localStorage.removeItem('token');
+  }
+
+  clearRememberMe() : void {
+    localStorage.removeItem('rememberMe');
   }
 }

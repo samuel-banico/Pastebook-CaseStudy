@@ -43,8 +43,16 @@ export class RegistrationComponent implements OnInit {
     this.router.navigate(['login']);
   }
 
-  failedRegister(result: Record<string, any>){
-    Swal.fire('Registration Failed', 'Email already taken, try again using a different email.', 'error');
+  failedRegister(response: Record<string, any>){
+    console.log(response);
+    if(response['result'] === "user_already_exist")
+      Swal.fire('Registration Failed', 'Email already taken, try again using a different email.', 'error');
+    else if(response['result'] === "not_legitimate_email")
+      Swal.fire('Registration Failed', 'Email is not valid, Kindly enter a valid email.', 'error');
+    else
+      Swal.fire('Registration Failed', 'There is wrong at the response, check inspect', 'error');
+
+
   }
 
   togglePasswordVisibility(): void {
