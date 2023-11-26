@@ -142,9 +142,8 @@ namespace pastebook_db.Data
         }
 
         // HELPER METHOD
-        public PostDTO ConvertPostToPostDTO(Post post) 
+        public PostDTO ConvertPostToPostDTO(Post post)
         {
-            
             var likeCount = 0;
 
             var commentCount = 0;
@@ -162,16 +161,22 @@ namespace pastebook_db.Data
                 Content = post.Content,
                 IsPublic = post.IsPublic,
                 IsEdited = post.IsEdited,
-                FullName = $"{user.FirstName} {user.LastName}",
+                CreatedOn = post.CreatedOn.ToString("yyyy-MM-dd"),
+
                 LikeCount = likeCount,
                 CommentCount = commentCount,
 
                 UserId = post.UserId,
                 FriendId = post.FriendId,
+                Friend = post.Friend,
 
                 PostLikeList = post.PostLikeList,
                 PostCommentList = post.PostCommentList
             };
+
+            var UserPostDTO = _userRepository.ConvertUserToUserSendDTO(post.User);
+
+            postDto.User = UserPostDTO;
 
             return postDto;
         }

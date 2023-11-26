@@ -119,7 +119,15 @@
 }
 
 
+.scroll-container {
+    max-height: 100%; /* Set a maximum height for the container */
+    overflow-y: scroll; /* or overflow-y: auto; */
+  }
 
+  /* Customize scrollbar appearance for WebKit browsers (Chrome, Safari) */
+  .scroll-container::-webkit-scrollbar {
+    display: none; /* Set the width of the scrollbar */
+  }
 
 
 
