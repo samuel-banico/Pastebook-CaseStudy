@@ -68,13 +68,13 @@ namespace pastebook_db.Database
                     .HasForeignKey(e => e.UserId)
                     .OnDelete(DeleteBehavior.ClientCascade);
 
-            /*mB.Entity<Post>()
-                .HasMany(e => e.PostLikeList)
-                .WithOne()
-                .HasForeignKey(e => e.PostId)
+            mB.Entity<FriendRequest>()
+                .HasOne(e => e.User)
+                .WithMany()
+                .HasForeignKey(e => e.UserId)
                 .OnDelete(DeleteBehavior.ClientCascade);
 
-            mB.Entity<Post>()
+            /*mB.Entity<Post>()
                 .HasMany(e => e.PostCommentList)
                 .WithOne()
                 .HasForeignKey(e => e.PostId)

@@ -29,6 +29,8 @@ import { PostlikelistComponent } from './components/postlikelist/postlikelist.co
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AddphotomodalComponent } from './components/addphotomodal/addphotomodal.component';
 import { ResultsComponent } from './pages/results/results.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 const appRoutes: Routes = [
   // Does not need to login to access but should have no token to access
@@ -85,8 +87,8 @@ const appRoutes: Routes = [
     FormsModule,
     HttpClientModule,
     CommonModule,
-    ReactiveFormsModule
-    
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
   ],
   exports: [RouterModule, CreatealbummodalComponent, AddphotomodalComponent],
   providers: [MdbModalService],

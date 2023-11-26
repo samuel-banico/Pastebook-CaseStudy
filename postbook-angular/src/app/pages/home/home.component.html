@@ -30,11 +30,11 @@
               </ul>
             </div>
           
-            <div class="rounded-3 shadow container-fluid my-3 border" style="border-color: #e0e0e0;">
+            <div class="rounded-3 shadow container-fluid my-3 border p-3" style="border-color: #e0e0e0;">
               <div class="d-flex">
                 <a routerLink="/albums" class="text-decoration-none text-dark bg-albums my-2">Albums</a>
               </div>
-              <div class="row">
+              <div class="row p-3">
                 <div class="col-md-6 p-1">
                   <a href="assets/images/cat.jpeg" data-lightbox="id">
                     <img src="assets/images/cat.jpeg" alt="Cat" class="img-fluid rounded">
@@ -72,7 +72,7 @@
                         <div class="media">
                             <img src="assets/images/De Guzman, Christian.JPG" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
                             <div class="media-body mb-4">
-                                <h5>{{post.fullName}}</h5>
+                                <h5>{{post.user?.firstName}}</h5>
                                 <p class="card-text">{{post.content}}</p>
                             </div>
                         </div>

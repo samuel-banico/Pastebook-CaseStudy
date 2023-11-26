@@ -33,9 +33,15 @@
         </div>
         <div class="card-body tab-content">
           <div *ngIf="div1" class="tab-pane active" id="profile">
-            <h6>General</h6>
+            <h2>General</h2>
             <hr class="custom-hr">
             <form (ngSubmit)="onUpdate()">
+              <div class="">
+                <label
+                  for="publicPost">View Public Posts</label>
+                <input type="checkbox" id="publicPost" class="mx-1" [(ngModel)]="user.viewPublic" name="publicPost">
+              </div>
+
               <div class="form-group row align-items-center">
                 <label for="firstName" class="col-form-label">First Name</label>
                 <div class="col-sm-10">
@@ -45,7 +51,7 @@
                   <a *ngIf="!editMode['firstName']" (click)="enableEdit('firstName')" class="edit-button">Edit</a>
                 </div>
               </div>
-          
+
               <div class="form-group row align-items-center">
                 <label for="lastName" class="col-form-label">Last Name</label>
                 <div class="col-sm-10">

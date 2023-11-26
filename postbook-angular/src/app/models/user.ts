@@ -10,6 +10,7 @@ export class User {
         public mobileNumber?: string,
         public userBio?: string,
         public profilePicture?: string,
+        public viewPublic?:boolean,
 
         // Other Details
         public friendCount?: number
