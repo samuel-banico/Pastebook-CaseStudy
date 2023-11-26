@@ -9,6 +9,7 @@ import { PostmodalComponent } from '@components/postmodal/postmodal.component';
 import { PostService } from '@services/post.service';
 import { UserService } from '@services/user.service';
 import { SessionService } from '@services/session.service';
+import { ScrollService } from '@services/scroll.service';
 
 import { User } from '@models/user';
 import { Post } from '@models/post';
@@ -28,14 +29,16 @@ export class HomeComponent implements OnInit{
   user: User = new User();
   posts: Post[] = [];
 
+
   constructor(
     private postService:PostService,
     private modalService: MdbModalService,
+    private sessionService: SessionService,
+    private scrollService: ScrollService,
+
     private httpClient: HttpClient,
     private userService: UserService,
-    private sessionService: SessionService,
     private router: Router
-
     ){
       let token: string = this.sessionService.getToken();
       if(!token) {
@@ -44,14 +47,17 @@ export class HomeComponent implements OnInit{
       else {
         userService.getUserByToken().subscribe((response: Object) => {
           this.user = response;
-          console.log(this.user);
       })
       }
-
     }
   
   ngOnInit(): void {
     this.getFeed();
+  }
+
+  onScroll() {
+    console.log('Scroll event triggered!');
+    this.scrollService.loadData();
   }
 
   // onSubmit(){
@@ -63,7 +69,11 @@ export class HomeComponent implements OnInit{
  
   getFeed(){
     this.postService.getUserFeed().subscribe((response: Post[]) =>{
-      this.posts = response;
+      this.scrollService.initializeData(response);
+
+      this.scrollService.getVisibleData().subscribe((data) => {
+        this.posts = data;
+      });
     }); 
   }
 }

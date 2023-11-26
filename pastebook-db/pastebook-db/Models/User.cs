@@ -41,6 +41,7 @@ namespace pastebook_db.Models
         public string? LastName { get; set; }
         public string? Birthday { get; set; }
         public int? Gender { get; set; }
+        public bool ViewPublic {  get; set; }
     }
 
     public class EditUserReceiveSecurityDTO
@@ -62,6 +63,10 @@ namespace pastebook_db.Models
         public string? UserBio { get; set; }
         public string? MobileNumber { get; set; }
         public string? ProfilePicture { get; set; }
+        public bool? ViewPublic { get; set; }
+
+        public int FriendCount { get; set; }
+        public ICollection<Friend> Friends { get; set; }
     }
 
     //Login

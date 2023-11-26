@@ -40,9 +40,11 @@ namespace pastebook_db.Models
         public int? CommentCount { get; set; }
 
         public Guid UserId { get; set; }
+        public UserSendDTO User { get; set; }
 
-        public string FullName { get; set; }
+
         public Guid? FriendId { get; set; }
+        public Friend? Friend { get; set; }
 
         public ICollection<PostLike>? PostLikeList { get; set; }
         public ICollection<PostComment>? PostCommentList { get; set; }
