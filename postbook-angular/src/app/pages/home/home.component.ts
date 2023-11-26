@@ -57,7 +57,6 @@ export class HomeComponent implements OnInit{
   // onSubmit(){
   //   this.postService.createPost()
   // }
-
   openModal() {
     this.modalRef = this.modalService.open(PostmodalComponent)
   }

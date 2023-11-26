@@ -22,20 +22,37 @@ namespace pastebook_db.Data
         public Post? GetPostById(Guid id)
         {
             var post = _context.Posts
-                            .Include(p => p.PostLikeList)
-                            .Include(p => p.PostCommentList)
-                            .FirstOrDefault(p => p.Id == id);
+                .Include(p => p.PostCommentList)
+                .ThenInclude(u => u.User)
+                .Include(p => p.PostLikeList)
+                .ThenInclude(u => u.User)
+                .Include(u => u.User)
+                // Friends Credentials
+                .Include(f => f.Friend)
+                .ThenInclude(u => u.User)
+                .Include(f => f.Friend)
+                .ThenInclude(f => f.User_Friend)
+                .FirstOrDefault(p => p.Id == id);
+
             return post;
         }
 
         public List<Post> GetAllPostOfUserTimeline(Guid userId)
         {
             return _context.Posts
-                        .Include(pL => pL.PostLikeList)
-                        .Include(pL => pL.PostCommentList)
-                        .Where(p => p.UserId == userId)
-                        .OrderByDescending(p => p.CreatedOn)
-                        .ToList();
+                .Include(p => p.PostCommentList)
+                .ThenInclude(u => u.User)
+                .Include(p => p.PostLikeList)
+                .ThenInclude(u => u.User)
+                .Include(u => u.User)
+                // Friends Credentials
+                .Include(f => f.Friend)
+                .ThenInclude(u => u.User)
+                .Include(f => f.Friend)
+                .ThenInclude(f => f.User_Friend)
+                .Where(p => p.UserId == userId)
+                .OrderByDescending(p => p.CreatedOn)
+                .ToList();
         }
 
         public List<Post> GetAllPostOfOtherTimeline(Guid retrievedUserId, Guid loggedUserId)
@@ -45,7 +62,25 @@ namespace pastebook_db.Data
             if (isFriend != null)
                 return GetAllPostOfUserTimeline(retrievedUserId);
 
-            return _context.Posts.Where(p => p.UserId == retrievedUserId && p.IsPublic == true).OrderByDescending(p => p.CreatedOn).ToList();
+            return _context.Posts
+                // Comments
+                .Include(p => p.PostCommentList)
+                // Users who commented
+                .ThenInclude(u => u.User)
+                // Likes
+                .Include(p => p.PostLikeList)
+                // Users who likes
+                .ThenInclude(u => u.User)
+                // The posters credentials
+                .Include(u => u.User)
+                // Friends Credentials
+                .Include(f => f.Friend)
+                .ThenInclude(u => u.User)
+                .Include(f => f.Friend)
+                .ThenInclude(f => f.User_Friend)
+                .Where(p => p.UserId == retrievedUserId && p.IsPublic == true)
+                .OrderByDescending(p => p.CreatedOn)
+                .ToList();
         }
 
         //Get all post friend Id
@@ -65,6 +100,24 @@ namespace pastebook_db.Data
 
             return posts;
         }
+
+        public List<Post>? GetAllPublicPosts() 
+        {
+            return _context.Posts
+                .Include(p => p.PostCommentList)
+                .ThenInclude(u => u.User)
+                .Include(p => p.PostLikeList)
+                .ThenInclude(u => u.User)
+                .Include(u => u.User)
+                // Friends Credentials
+                .Include(f => f.Friend)
+                .ThenInclude(u => u.User)
+                .Include(f => f.Friend)
+                .ThenInclude(f => f.User_Friend)
+                .Where(p => p.IsPublic == true)
+                .OrderByDescending(p => p.CreatedOn)
+                .ToList();
+        } 
 
         // --- POST
         public void CreatePost(Post post)

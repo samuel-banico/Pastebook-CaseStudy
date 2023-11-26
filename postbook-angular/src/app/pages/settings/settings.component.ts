@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { User } from '@models/user';
 import { Obj } from '@popperjs/core';
-import { UserService } from '@services/user.service';
 import Swal from 'sweetalert2';
+
+import { User } from '@models/user';
+
+import { UserService } from '@services/user.service';
 import { SessionService } from '@services/session.service';
+
+
 
 @Component({
   selector: 'app-settings',

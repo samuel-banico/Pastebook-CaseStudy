@@ -37,9 +37,15 @@ namespace pastebook_db.Controllers
         {
             var token = Request.Headers["Authorization"];
             var user = _userRepository.GetUserByToken(token);
-            var postList = _postRepository.GetAllPostOfUserTimeline(user.Id);
 
-            if (postList.Count == 0)
+            List<Post>? postList = new();
+
+            if (user.viewPublicPost) 
+                postList = _postRepository.GetAllPublicPosts();
+            else
+                postList = _postRepository.GetAllPostOfUserTimeline(user.Id);
+
+            if (postList == null || postList.Count == 0)
                 return Ok(new { result = "no_post" });
 
             var userTimeline = new List<PostDTO>();

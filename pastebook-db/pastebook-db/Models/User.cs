@@ -14,9 +14,8 @@ namespace pastebook_db.Models
         public string? MobileNumber { get; set; }
         public string? ProfilePicture { get; set; }
         public string? UserBio { get; set; }
-        public bool IsActive { get; set; }
 
-        //public string? Token { get; set; }
+        public bool viewPublicPost { get; set; }
 
         public ICollection<Friend>? FriendList { get; set; }
     }
