@@ -10,7 +10,6 @@ namespace pastebook_db.Models
         public bool IsPublic { get; set; }
         public bool IsEdited { get; set; }
         public DateTime CreatedOn { get; set; }
-        public string? CoverAlbumImage { get; set; }
 
         // Foreign Key
         public Guid UserId { get; set; }
@@ -29,9 +28,10 @@ namespace pastebook_db.Models
         public string? CreatedOn { get; set; }
         public string? CoverAlbumImage { get; set; }
 
+        public int? ImageCount { get; set; }
         public Guid UserId { get; set; }
 
-        public ICollection<IFormFile>? ImageList { get; set; }
+        public ICollection<AlbumImage>? ImageList { get; set; }
     }
 
     public class ReceiveImageDTO 

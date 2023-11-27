@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { UserService } from '@services/user.service';
 import { SessionService } from '@services/session.service';
 import { EncryptService } from '@services/encrypt.service';
+import { TokenService } from '@services/token.service';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,8 @@ export class LoginComponent implements OnInit {
     private sessionService: SessionService,
     private userService: UserService,
     private encryptService: EncryptService,
+    private tokenService: TokenService,
+
     private router: Router
   ) {
     
@@ -28,14 +31,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.sessionService.getToken()) {
-      this.userService.validateToken().subscribe((r) => {
-        if(!r) { // not valid token
-          this.sessionService.clear();
-          this.router.navigate(['login']);
-        } else { // valid token
-          this.router.navigate(['']);
-        }
-      })
+      this.tokenService.validateToken();
+      this.router.navigate(['']);
     } else {
       if(this.sessionService.getLoginCredentials()) {
         const encryptedUserCredentials = this.sessionService.getLoginCredentials();
@@ -48,6 +45,7 @@ export class LoginComponent implements OnInit {
       else {
         this.email = '';
         this.password = '';
+        this.rememberMe = false;
       }
     }
   }

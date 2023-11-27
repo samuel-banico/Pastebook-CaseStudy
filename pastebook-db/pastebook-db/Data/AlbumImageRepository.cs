@@ -24,7 +24,7 @@ namespace pastebook_db.Data
             return post;
         }
 
-        public byte[]? GetFirstPhotoOfAlbum(Guid albumId) 
+        public string? GetFirstPhotoOfAlbum(Guid albumId) 
         {
             var photo = _context.AlbumImages
                         .FirstOrDefault(a => a.AlbumId == albumId);

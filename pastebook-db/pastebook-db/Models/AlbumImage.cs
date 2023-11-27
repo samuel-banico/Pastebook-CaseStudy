@@ -3,7 +3,7 @@
     public class AlbumImage
     {
         public Guid Id { get; set; }
-        public byte[] Image { get; set; } = null!;
+        public string Image { get; set; } = null!;
         public DateTime CreatedOn { get; set; }
         public bool IsEdited { get; set; }
 
@@ -18,7 +18,7 @@
     public class AlbumImageDTO
     {
         public Guid? Id { get; set; }
-        public byte[]? Image { get; set; } = null!;
+        public string? Image { get; set; } = null!;
         public string? CreatedOn { get; set; }
         public bool? IsEdited { get; set; }
 

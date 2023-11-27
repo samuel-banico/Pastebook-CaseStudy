@@ -21,23 +21,28 @@ namespace pastebook_db.Controllers
         }
 
         // --- GET
-        [HttpGet("{id}")]
+        [HttpGet]
         public ActionResult<Album> GetAlbumById(Guid albumId) 
         {
             var album = _albumRepository.GetAlbumById(albumId);
 
-            return Ok(new { result = "retreived successful", album });
+            if(album == null)
+                return NotFound(new { result = "no_album"});
+
+            return Ok(album);
         }
 
         [HttpGet("allAlbumByUser")]
-        public ActionResult<List<AlbumDTO>> GetAllAlbumsByOwner(Guid userId)
+        public ActionResult<List<AlbumDTO>> GetAllAlbumsByOwner()
         {
-            var albums = _albumRepository.GetAllAlbumByOwner(userId);
-
-            if (albums == null || albums.Count == 0)
-                return Ok(new { result = "no_album" });
-
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+            var albums = _albumRepository.GetAllAlbumByOwner(user.Id);
             var userAlbums = new List<AlbumDTO>();
+
+            if(albums == null)
+                return Ok(userAlbums);
+
             foreach (var album in albums)
             {
                 var albumDto = _albumRepository.ConvertAlbumToAlbumDTO(album);
@@ -86,11 +91,15 @@ namespace pastebook_db.Controllers
 
             var newAlbum  = new Album 
             {
-                AlbumName = album.AlbumName,
-                AlbumDescription = album.AlbumDescription,
                 IsPublic = true,
                 UserId = user.Id,
+                CreatedOn = DateTime.Now,
             };
+
+            if (string.IsNullOrEmpty(album.AlbumName))
+                newAlbum.AlbumName = "Untitled Album";
+            else if (string.IsNullOrEmpty(album.AlbumDescription))
+                newAlbum.AlbumDescription = "";
 
             _albumRepository.CreateAlbum(newAlbum);
 
@@ -112,7 +121,6 @@ namespace pastebook_db.Controllers
             albumToEdit.IsPublic = true;
             albumToEdit.IsEdited = true;
             albumToEdit.CreatedOn = DateTime.Now;
-            albumToEdit.CoverAlbumImage = newAlbum.CoverAlbumImage;
             //albumToEdit.AlbumImageList = newAlbum.AlbumImageList;
 
             _albumRepository.UpdateAlbum(albumToEdit);
@@ -127,8 +135,6 @@ namespace pastebook_db.Controllers
 
             if(album == null)
                 return BadRequest(new { result = "no_album"});
-
-            album.CoverAlbumImage = _userRepository.SaveImageToLocalStorage(image);
 
             _albumRepository.UpdateAlbum(album);
 

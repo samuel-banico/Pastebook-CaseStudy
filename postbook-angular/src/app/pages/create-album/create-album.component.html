@@ -1,7 +1,11 @@
 <app-navbar></app-navbar>
-<div class="d-flex justify-content-between align-items-center mt-5 pt-2">
+<app-profile></app-profile>
+
+<div class="pale-background  my-3 mx-3 mx-md-5">
     <div class="d-flex">
-        <h1 *ngIf="!isEditing" class="album-name ms-3">{{ albumName }}</h1>
+        <h1 *ngIf="!isEditing" class="album-name ms-3">{{ album.albumName }}</h1>
+        <p>{{album.albumDescription}}</p>
+        <p>{{album.createdOn}}</p>
         <input *ngIf="isEditing" [(ngModel)]="editedAlbumName" class="ms-3">
         <a *ngIf="isEditing" (click)="saveEdit()"><img src="../../../assets/images/save.png" style="width: 60px; height: 60px; margin-left: 5px"></a>
         <a *ngIf="!isEditing" (click)="toggleEdit()"><img src="assets/images/edit.png" style="width: 15px; height: 15px"></a>
@@ -9,6 +13,7 @@
     <div>
         <a class="me-3" (click)="confirmDelete()"><img src="assets/images/delete.png" style="width: 25px; height: 40px"></a>
     </div> 
+
 </div>
 
 <div class="pale-background ">

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
+import { Router } from '@angular/router';
 
 import { HomeService } from '@services/home.service';
 import { UserService } from '@services/user.service';
+import { DataTransferService } from '@services/data-transfer.service';
 
 import { User } from '@models/user';
 
@@ -17,18 +19,27 @@ export class SearchmodalComponent implements OnInit {
 
   constructor(
       public searchRef: MdbModalRef<SearchmodalComponent>,
+      private router: Router,
       private homeService: HomeService,
+      private dataTransferService: DataTransferService
     ) {}
 
+  
+  noMatchingUser: boolean = false;
   onType(event : any) {
     if(this.searchUser)
     {
       this.homeService.search(this.searchUser).subscribe((response: User[]) => {
         this.user = response;
-        console.log(response);
+
+        if(response.length === 0) {
+          this.noMatchingUser = true;
+        } else {
+          this.noMatchingUser = false;
+        }
       })
     }
-    else
+    else (!this.searchUser)
     {
       this.user = [];
     }
@@ -43,16 +54,15 @@ export class SearchmodalComponent implements OnInit {
     this.searchRef.close(closeMessage)
   }
 
-  // Assuming you have a function to handle user click events in your component class
-userClicked(clickedUser: any) {
-  // Do something with the clicked user, for example, log the user's information
-  console.log('User clicked:', clickedUser);
-}
+  userClicked(clickedUser: User) {
+    this.close();
+    this.dataTransferService.data = clickedUser.id;
+    this.router.navigate(['otherProfile']);
+  }
 
-// Assuming you have a function to show all results
-showAllResults() {
-  // Implement the logic to show all results
-  console.log('Show all results');
-}
+  showAllResults() {
+    console.log('Show all results');
+    this.router.navigate(['results']);
+  }
 
 }

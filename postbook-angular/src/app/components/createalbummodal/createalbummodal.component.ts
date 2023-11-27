@@ -33,9 +33,7 @@ export class CreatealbummodalComponent {
   }
 
   saveData() {
-    let token: string = this.sessionService.getToken();
-
-    this.albumService.createAlbum(this.album, token).subscribe((response: any) => {
+    this.albumService.createAlbum(this.album).subscribe((response: any) => {
       console.log(response);
       this.id = response.id;
 
@@ -56,6 +54,8 @@ export class CreatealbummodalComponent {
         text: `(${this.album.albumName}) has been added successfully`,
         icon: 'success'
       })
+
+      this.closeModal();
     })
   }
 

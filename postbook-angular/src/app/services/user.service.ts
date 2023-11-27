@@ -45,6 +45,10 @@ export class UserService {
     return this.http.get<any>(this.baseUrl + `/userIdFromToken`, {headers: this.headers});
   }
 
+  getUserById(id: string) : Observable<Object>{
+    return this.http.get<any>(this.baseUrl + `/${id}`);
+  }
+
   updateGeneral(user: User): Observable<Object> {
     return this.http.put<User>(this.baseUrl + `/editUserGeneral`, user, {headers: this.headers});
   }
