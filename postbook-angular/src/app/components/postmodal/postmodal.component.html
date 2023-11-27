@@ -1,28 +1,24 @@
-  <div class="modal-content" style="width: 37vw; height: 52vh;">
-    <!-- Your existing modal content goes here -->
+<div class="facebook-modal">
+  <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title" style="letter-spacing: 2px;">POST</h5>
-      <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+      <div class="user-info">
+        <!-- Include user profile picture and name here -->
+        <img [src]="user.profilePicture" alt="">
+        <span class="mt-2">{{ user.firstName }} {{ user.lastName }}</span>
+      </div>
+      <div class="privacy-dropdown">
+        <select class="form-select" [(ngModel)]="selectedPrivacy" (change)="onPrivacySelect()">
+          <option value="Public">Public</option>
+          <option value="Friends Only">Friends Only</option>
+        </select>
+      </div>
     </div>
-    <form (ngSubmit)="onPost()">
     <div class="modal-body">
-      <textarea placeholder="What's on your mind?" [(ngModel)]="post.content" name="content" style="width: 35vw; height: 30vh; resize: none;"></textarea>
-
+      <textarea class="post-textarea" [placeholder]="'What\'s on your mind, ' + user.firstName + '?'" [(ngModel)]="post.content" name="content"></textarea>
     </div>
-    <!-- (click)="$event.stopPropagation()" -->
-    <div class="modal-footer" >
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" name="isPublic">
-          {{ selectedOption }}
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a class="dropdown-item" (click)="onOptionSelect('Public')">Public</a></li>
-          <li><a class="dropdown-item" (click)="onOptionSelect('Friends Only')">Friends Only</a></li>
-        </ul>
-      </div>   
-      <button type="submit" class="red" (click)="close()"> 
-        Post
-      </button>
+    <div class="modal-footer">
+      <button type="button" class="post-button" (click)="onPost()">Post</button>
     </div>
-    </form>
   </div>
+</div>
+

@@ -33,13 +33,16 @@
 }
 
 .bg-buttons {
-    background-color: #68070f;
+    background-color: rgb(238, 238, 238)
 }
 
 /* Change background color when a button is hovered */
 .nav-item:hover {
-    background-color: #8c0d28; /* A slightly lighter shade, adjust as needed */
+    border-bottom: 2px solid #00aced; /* A slightly lighter shade, adjust as needed */
+    color: #000;
 }
+
+
 
 
 /* Optionally, add transition for smooth animation */
@@ -51,13 +54,9 @@
 /* Text color for the buttons */
 .nav-item {
     font-weight: 700;
-    color: white; /* Default text color */
+    color:#4b4b4b; /* Default text color */
 }
 
-/* Text color when a button is hovered */
-.nav-item:hover {
-    color: #fff;
-}
 
 .edit-icon {
     display: inline-block;
