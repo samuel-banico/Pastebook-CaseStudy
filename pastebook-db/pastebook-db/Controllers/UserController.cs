@@ -47,7 +47,7 @@ namespace pastebook_db.Controllers
 
             var userDTO = _userRepository.ConvertUserToUserSendDTO(user);
 
-            return Ok(new { user = userDTO });
+            return Ok(userDTO);
         }
 
         [HttpGet("userIdFromToken")]
@@ -79,6 +79,7 @@ namespace pastebook_db.Controllers
             return Ok(true);
         }
 
+        // To edit
         [HttpGet("getProfilePic")]
         public ActionResult<byte[]> GetUsersprofilePic() 
         {
@@ -133,6 +134,25 @@ namespace pastebook_db.Controllers
                 retreivedUser.Password = _passwordHasher.HashPassword(user.Password);
 
             if (!_userRepository.UpdateUser(retreivedUser, emailHasBeenEdited))
+                return BadRequest(new { result = "not_legitimate_email" });
+
+            var userDTO = _userRepository.ConvertUserToUserSendDTO(retreivedUser);
+
+            return Ok(userDTO);
+        }
+
+        [HttpPut("editUserProfile")]
+        public ActionResult<User> EditUserProfile([FromBody] EditUserReceiveProfileDTO user)
+        {
+            var token = Request.Headers["Authorization"];
+            var retreivedUser = _userRepository.GetUserByToken(token);
+            if (retreivedUser == null)
+                return BadRequest(new { result = "user_not_found" });
+
+            retreivedUser.UserBio = user.UserBio;
+            retreivedUser.ProfilePicture = _userRepository.SaveImageToLocalStorage(user.ProfilePic);
+
+            if (!_userRepository.UpdateUser(retreivedUser, false))
                 return BadRequest(new { result = "not_legitimate_email" });
 
             var userDTO = _userRepository.ConvertUserToUserSendDTO(retreivedUser);

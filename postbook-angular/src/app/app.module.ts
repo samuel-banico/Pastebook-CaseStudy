@@ -33,6 +33,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { ScrollDirective } from './directives/scroll.directive';
 import { FriendOptionsComponent } from './components/friend-options/friend-options.component';
+import { OtherprofileComponent } from '@pages/otherprofile/otherprofile.component';
 
 
 const appRoutes: Routes = [
@@ -42,6 +43,7 @@ const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'forgotpassword', component: ForgotpasswordComponent},
   {path: 'page-not-found', component: NotFoundComponent},
+
   // Needs token to access
   {path: '', component: HomeComponent},
   {path: 'settings', component: SettingsComponent},
@@ -51,10 +53,10 @@ const appRoutes: Routes = [
   {path: 'albums', component: AlbumsComponent},
   {path: 'create', component: CreateAlbumComponent},
   {path: 'results', component: ResultsComponent},
+  {path: 'otherProfile', component: OtherprofileComponent},
   {path: '**', component: NotFoundComponent}
 
 ];
-
 
 @NgModule({
   declarations: [

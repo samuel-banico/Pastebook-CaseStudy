@@ -7,7 +7,9 @@ export class Album {
     createdOn?: string;
     coverAlbumImage?: Uint8Array;
     userId?: string;
-    ImageList?: File[];
+
+    imageCount?: number;
+    ImageList?: AlbumImage[];
 }
 
 export class AlbumImage {

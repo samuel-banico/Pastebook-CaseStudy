@@ -11,10 +11,12 @@ namespace pastebook_db.Controllers
     public class AlbumImageController : ControllerBase
     {
         private readonly AlbumImageRepository _albumImageRepository;
+        private readonly UserRepository _userRepository;
 
-        public AlbumImageController(AlbumImageRepository albumImageRepository)
+        public AlbumImageController(AlbumImageRepository albumImageRepository, UserRepository userRepository)
         {
             _albumImageRepository = albumImageRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet("{id}")]
@@ -42,12 +44,9 @@ namespace pastebook_db.Controllers
         [HttpPost]
         public ActionResult<AlbumImage> CreateAlbumImage(Guid albumId, IFormFile image) 
         {
-            using var memoryStream = new MemoryStream();
-            image.CopyTo(memoryStream);
-
             var newAlbumImage = new AlbumImage
             {
-                Image = memoryStream.ToArray(),
+                Image = _userRepository.SaveImageToLocalStorage(image),
                 CreatedOn = DateTime.Now,
                 IsEdited = false,
                 AlbumId = albumId

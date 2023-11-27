@@ -36,9 +36,6 @@ namespace pastebook_db.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CoverAlbumImage")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -70,9 +67,9 @@ namespace pastebook_db.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<byte[]>("Image")
+                    b.Property<string>("Image")
                         .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsEdited")
                         .HasColumnType("bit");
@@ -331,6 +328,9 @@ namespace pastebook_db.Migrations
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsCurrentlyActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()

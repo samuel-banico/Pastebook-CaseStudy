@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 
 import { Album } from '@models/album';
 
+import { SessionService } from './session.service';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,18 +13,29 @@ export class AlbumService {
 
   private albumUrl: string = 'https://localhost:7185/api/albums';
   private albumImageUrl: string = 'https://localhost:7185/api/albumImage'
+  private headers: HttpHeaders = new HttpHeaders({
+    'Authorization': `${this.sessionService.getToken()}`
+  })
+
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+
+    private sessionService: SessionService,
   ) { }
+  
+  // GET
+  getAllUserAlbum(): Observable<object> {
+    return this.http.get(this.albumUrl + '/allAlbumByUser', {headers: this.headers})
+  }
 
-  createAlbum(album: Album, token: string): Observable<object> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': token,
-    });
+  getAlbumById(albumId: string): Observable<object> {
+    return this.http.get(this.albumUrl + `?albumId=${albumId}`);
+  }
 
-    return this.http.post(this.albumUrl, album, { headers });
+  // POST
+  createAlbum(album: Album): Observable<object> {
+    return this.http.post(this.albumUrl, album, { headers: this.headers });
   }
 
   createAlbumImage(albumId: number, image: File) : Observable<any> {

@@ -34,11 +34,14 @@ namespace pastebook_db.Controllers
         }
 
         [HttpPost("request")]
-        public ActionResult<FriendRequest> FriendRequest(Guid userId, Guid friendId)
+        public ActionResult<FriendRequest> FriendRequest(User friend)
         {
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+
             var friendRequest = new FriendRequest();
-            friendRequest.UserId = userId;
-            friendRequest.User_FriendId = friendId;
+            friendRequest.UserId = user.Id;
+            friendRequest.User_FriendId = friend.Id;
             friendRequest.CreatedOn = DateTime.Now;
             _friendRequestRepository.RequestFriend(friendRequest);
 

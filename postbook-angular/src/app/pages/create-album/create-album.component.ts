@@ -1,10 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+
 import { AddphotomodalComponent } from '@components/addphotomodal/addphotomodal.component';
 
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { SessionService } from '@services/session.service';
+import { AlbumService } from '@services/album.service';
+import { DataTransferService } from '@services/data-transfer.service';
+import { TokenService } from '@services/token.service';
+
+import { Album } from '@models/album';
 
 @Component({
     selector: 'CreateAlbumComponent',
@@ -15,23 +21,39 @@ export class CreateAlbumComponent implements OnInit {
     modalRef: MdbModalRef<AddphotomodalComponent> | null = null;
 
     constructor(
-        private sessionService: SessionService,
         private router: Router,
-        private modalService: MdbModalService
+
+        private sessionService: SessionService,
+        private modalService: MdbModalService,
+        private dataTransferService: DataTransferService,
+        private tokenService: TokenService,
+        private albumService: AlbumService
     ){
-        let token: string = this.sessionService.getToken();
-        if(!token) {
-            this.router.navigate(['page-not-found']);
+        this.tokenService.validateToken();
+        
+        this.albumId = this.dataTransferService.data;
+        if(!this.albumId) {
+            Swal.fire('Server Error', 'Something happened lets go back', 'info').then( a => {
+                this.router.navigate(['albums']);
+            })
         }
     }
 
     ngOnInit(): void {
         
+        console.log(this.albumId);
+        this.albumService.getAlbumById(this.albumId).subscribe(( a : any ) => {
+            this.album = a;
+            console.log(this.album);
+        });
+
     }
+
+    albumId: string = "";
+    album: Album = new Album;
     isEditing: boolean = false;
     albumName: string = 'Album Name Here';
     editedAlbumName: string = '';
-
     confirmDelete() {
         Swal.fire({
             title: 'Are you sure?',

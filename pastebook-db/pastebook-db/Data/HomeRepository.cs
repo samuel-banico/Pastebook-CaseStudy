@@ -17,16 +17,17 @@ namespace pastebook_db.Data
             return _context.Users.ToList();
         }
 
-        public List<User> GetSearchedUser(string toSearch)
+        public List<User> GetSearchedUser(string toSearch, Guid loggedUserId)
         {
             var users = getAllUser()
                     .Where( u =>
-                    ($"{u.FirstName} {u.LastName}").Contains(toSearch, StringComparison.OrdinalIgnoreCase))
-                    .Take(5)
+                    ($"{u.FirstName} {u.LastName}").Contains(toSearch, StringComparison.OrdinalIgnoreCase) && u.Id != loggedUserId)
                     .ToList();
 
             return users;
         }
+
+
     }
 
 }
