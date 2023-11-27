@@ -30,6 +30,9 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AddphotomodalComponent } from './components/addphotomodal/addphotomodal.component';
 import { ResultsComponent } from './pages/results/results.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
+import { ScrollDirective } from './directives/scroll.directive';
+import { FriendOptionsComponent } from './components/friend-options/friend-options.component';
 
 
 const appRoutes: Routes = [
@@ -78,7 +81,9 @@ const appRoutes: Routes = [
     PostlikelistComponent,
     AddphotomodalComponent,
     NotFoundComponent,
-    ResultsComponent
+    ResultsComponent,
+    ScrollDirective,
+    FriendOptionsComponent
 
   ],
   imports: [
@@ -89,6 +94,7 @@ const appRoutes: Routes = [
     CommonModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    MdbTooltipModule
   ],
   exports: [RouterModule, CreatealbummodalComponent, AddphotomodalComponent],
   providers: [MdbModalService],

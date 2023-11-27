@@ -3,105 +3,25 @@
 
 <!-- FRIENDS LIST HERE -->
 <!-- On repeat sa database keme (for) -->
-<div class="container-fluid my-3">
-  <div class="row" >
-    <!-- First User -->
-    <div class="col-md-2"></div>
-    <div class="col-md-4">
-      <div class="d-flex align-items-center justify-content-start pale-background">
-        <img src="https://images.pexels.com/photos/7871166/pexels-photo-7871166.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="User 1" class="rounded-circle" width="60px" height="60px">
-        <div class="ml-3">
-          <h4 class="profile-name" style="font-size: 20px;">Samuel Geo Banico</h4>
-        </div>
-      </div>
-    </div>
+<div class="container-fluidmy-3 pale-background" style="margin: 1% 13%;">
+  <!-- First User -->
+  <h1 *ngIf="friends.length === 0; else hasFriends" class="d-flex justify-content-center align-items-center my-5">Currently No Friends 😥</h1>
 
-    <!-- Second User -->
-    <div class="col-md-4">
-      <div class="d-flex align-items-center justify-content-start pale-background">
-        <img src="https://images.pexels.com/photos/7871166/pexels-photo-7871166.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="User 2" class="rounded-circle" width="60px" height="60px">
+  <ng-template #hasFriends>
+    <div class="d-flex justify-content-center row" *ngFor="let friend of friends">
+      <div class="col-12 col-md-5 d-flex justify-content-start align-items-center border rounded-2 m-2 p-3">
+        <img [src]="friend.user?.profilePicture" alt="User 1" class="rounded-circle" width="60px" height="60px">
         <div class="ml-3">
-          <h4 class="profile-name" style="font-size: 20px;">Christian De Guzman Day2</h4>
+          <h5 class="profile-name" style="font-size: 18px;">{{friend.user?.firstName}} {{friend.user?.lastName}}</h5>
         </div>
+        <div class="ms-auto dropdown">
+          <app-friend-options></app-friend-options>
+        </div>
+        
       </div>
     </div>
-    <div class="col-md-1"></div>
-  </div>
+  </ng-template>
 </div>
-  
-  <!-- Additional Users -->
-  <!-- Repeat the same structure for each pair of users -->
-  
-
-<!-- for demo lang, idedelete soon -->
-<div class="container-fluid my-3">
-  <div class="row" >
-    <!-- First User -->
-    <div class="col-md-2"></div>
-    <div class="col-md-4">
-      <div class="d-flex align-items-center justify-content-start pale-background">
-        <img src="https://images.pexels.com/photos/7871166/pexels-photo-7871166.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="User 1" class="rounded-circle" width="60px" height="60px">
-        <div class="ml-3">
-          <h4 class="profile-name" style="font-size: 20px;">Samuel Geo Banico</h4>
-        </div>
-      </div>
-    </div>
-
-    <!-- Second User -->
-    <div class="col-md-4">
-      <div class="d-flex align-items-center justify-content-start pale-background">
-        <img src="https://images.pexels.com/photos/7871166/pexels-photo-7871166.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="User 2" class="rounded-circle" width="60px" height="60px">
-        <div class="ml-3">
-          <h4 class="profile-name" style="font-size: 20px;">Christian De Guzman Day2</h4>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-1"></div>
-  </div>
-</div>
-  
-  <!-- Additional Users -->
-  <!-- Repeat the same structure for each pair of users -->
-  
-  <div class="container-fluid my-3">
-    <div class="row" >
-      <!-- First User -->
-      <div class="col-md-2"></div>
-      <div class="col-md-4">
-        <div class="d-flex align-items-center justify-content-start pale-background">
-          <img src="https://images.pexels.com/photos/7871166/pexels-photo-7871166.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="User 1" class="rounded-circle" width="60px" height="60px">
-          <div class="ml-3">
-            <h4 class="profile-name" style="font-size: 20px;">Samuel Geo Banico</h4>
-          </div>
-        </div>
-      </div>
-  
-      <!-- Second User -->
-      <div class="col-md-4">
-        <div class="d-flex align-items-center justify-content-start pale-background">
-          <img src="https://images.pexels.com/photos/7871166/pexels-photo-7871166.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="User 2" class="rounded-circle" width="60px" height="60px">
-          <div class="ml-3">
-            <h4 class="profile-name" style="font-size: 20px;">Christian De Guzman Day2</h4>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-1"></div>
-    </div>
-  </div>
-  
-  <!-- Additional Users -->
-  <!-- Repeat the same structure for each pair of users -->
-  
-
-<!-- END OF demo blah -->
-
-
-
-
-
-
-
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

@@ -24,13 +24,12 @@ export class NotifnavbarmodalComponent implements OnInit {
     }
 
     post(): void {
-      this.router.navigate(['/post']);
+      //this.router.navigate(['/post']);
     }
 
     ngOnInit(): void {
       //this.getAllNotifications();
       this.getUnseenNotifications();
-      this.goToSinglePage();
     }
 
     //Get All Notifications
@@ -53,7 +52,7 @@ export class NotifnavbarmodalComponent implements OnInit {
     {
       this.notifService.updateSeenNotification(this.notif).subscribe((response:Record<string,any>)=>{
         response['result'] === 'notification_seen';
-      })  
-      this.router.navigate(['/post']);
+        //this.router.navigate(['/post']);
+      })
     }
 }

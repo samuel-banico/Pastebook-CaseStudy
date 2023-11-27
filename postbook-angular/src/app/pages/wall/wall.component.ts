@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+
+import { PostmodalComponent } from '@components/postmodal/postmodal.component';
+
 import { PostService } from '@services/post.service';
+import { ScrollService } from '@services/scroll.service';
+
 import { Post } from '@models/post';
 
 @Component({
@@ -9,11 +15,13 @@ import { Post } from '@models/post';
 })
 
 export class WallComponent implements OnInit {
-
+  modalRef: MdbModalRef<PostmodalComponent> | null = null;
   posts:Post[] = [];
 
   constructor(
-    private postService:PostService,
+    private modalService: MdbModalService,
+    private postService: PostService,
+    private scrollService: ScrollService,
   ){
     //this.getOwnUserTimeline();
   }
@@ -25,11 +33,22 @@ export class WallComponent implements OnInit {
     this.getOwnUserTimeline();
   }
 
+  onScroll() {
+    this.scrollService.loadData();
+  }
+
+  openModal() {
+    this.modalRef = this.modalService.open(PostmodalComponent)
+  }
+
   //GetOwnUserTimeline
   getOwnUserTimeline() {
       this.postService.getUserTimeline().subscribe((response: any) => {
-        this.posts = response;
-        console.log(response);
+        this.scrollService.initializeData(response);
+
+        this.scrollService.getVisibleData().subscribe((data) => {
+          this.posts = data;
+        });
       })
     }
   

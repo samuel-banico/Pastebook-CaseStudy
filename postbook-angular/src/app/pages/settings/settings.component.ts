@@ -37,7 +37,6 @@ export class SettingsComponent implements OnInit{
         this.userDefault = {...response};
 
         console.log(this.user);
-        console.log(this.userDefault);
       })
     }
     
@@ -72,8 +71,6 @@ onUpdateSecurity() {
       this.user = {...response};
       this.userDefault = {...response};
 
-      console.log(this.user);
-      console.log(this.userDefault);
       this.resetChanges();
     }
   });
@@ -93,14 +90,13 @@ onUpdateSecurity() {
   ngOnInit(): void {}
   
   onUpdate(): void {
+    console.log(this.user);
     this.userService.updateGeneral(this.user).subscribe((response: User)=>{
       if(response) {
         Swal.fire('Update Successful','Profile updated successfully','success');
         this.user = {...response};
         this.userDefault = {...response};
-  
-        console.log(this.user);
-        console.log(this.userDefault);
+
         this.resetChanges();
       }
       });

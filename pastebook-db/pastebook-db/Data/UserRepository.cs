@@ -23,12 +23,16 @@ namespace pastebook_db.Data
 
         public User? GetUserById(Guid id)
         {
-            return _context.Users.Find(id);
+            return _context.Users
+                .Include(x => x.FriendList)
+                .FirstOrDefault(x => x.Id == id);
         }
 
         public User? GetUserByEmail(string email)
         {
-            return _context.Users.FirstOrDefault(f => f.Email == email);
+            return _context.Users
+                .Include(x => x.FriendList)
+                .FirstOrDefault(f => f.Email == email);
         }
 
         public User? GetUserByToken(string token) 
@@ -38,7 +42,9 @@ namespace pastebook_db.Data
             if (userId == null)
                 return null;
 
-            return _context.Users.FirstOrDefault(u => u.Id == userId.UserId);
+            return _context.Users
+                .Include(x => x.FriendList)
+                .FirstOrDefault(u => u.Id == userId.UserId);
         }
 
         public List<User> GetAllUsers() 
@@ -87,8 +93,23 @@ namespace pastebook_db.Data
                 Gender = (int)user.Gender,
                 UserBio = user.UserBio,
                 MobileNumber = user.MobileNumber,
-                ProfilePicture = SendImageToAngular(user.ProfilePicture)
+                ProfilePicture = SendImageToAngular(user.ProfilePicture),
+                ViewPublic = user.viewPublicPost,
+
+                
             };
+
+            if (user.FriendList != null)
+            {
+                userDTO.FriendCount = user.FriendList.Count;
+                userDTO.Friends = user.FriendList;
+            }
+            else 
+            {
+                userDTO.FriendCount = 0;
+                userDTO.Friends = new List<Friend>();
+            }
+                
 
             return userDTO;
         }

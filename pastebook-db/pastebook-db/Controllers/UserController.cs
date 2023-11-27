@@ -23,6 +23,7 @@ namespace pastebook_db.Controllers
         {
             var userList = _userRepository.GetAllUsers();
 
+
             if(userList == null || userList.Count == 0)
                 return BadRequest(new { result = "user_not_found" });
 
@@ -103,6 +104,7 @@ namespace pastebook_db.Controllers
             retreivedUser.LastName = user.LastName;
             retreivedUser.Birthday = DateTime.Parse(user.Birthday);
             retreivedUser.Gender = (Gender)user.Gender;
+            retreivedUser.viewPublicPost = user.ViewPublic;
 
             if (!_userRepository.UpdateUser(retreivedUser, false))
                 return BadRequest(new { result = "not_legitimate_email" });

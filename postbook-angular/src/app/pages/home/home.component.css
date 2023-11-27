@@ -19,6 +19,16 @@
     overflow-y: hidden; /* Prevent vertical scrolling in the left column */
     height: calc(100vh); /* Adjust the height based on your actual navbar height */
   }
+
+  .scroll-container {
+    max-height: 100%; /* Set a maximum height for the container */
+    overflow-y: scroll; /* or overflow-y: auto; */
+  }
+
+  /* Customize scrollbar appearance for WebKit browsers (Chrome, Safari) */
+  .scroll-container::-webkit-scrollbar {
+    display: none; /* Set the width of the scrollbar */
+  }
   
   .right-column {
     flex: 1;
