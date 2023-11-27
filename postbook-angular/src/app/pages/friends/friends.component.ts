@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { SessionService } from '@services/session.service';
@@ -11,6 +11,7 @@ import { Friend } from '@models/friend';
 })
 export class FriendsComponent implements OnInit{
   friends: Friend[] = [];
+
   constructor(
     private sessionService: SessionService,
     private friendService: FriendService,
@@ -20,10 +21,10 @@ export class FriendsComponent implements OnInit{
       if(!token) {
         this.router.navigate(['page-not-found']);
       }
-      this.getFriendList();
     }
 
  ngOnInit(): void {
+  this.getFriendList();
  }
 
  getFriendList(){

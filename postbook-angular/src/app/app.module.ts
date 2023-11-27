@@ -32,6 +32,7 @@ import { ResultsComponent } from './pages/results/results.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { ScrollDirective } from './directives/scroll.directive';
+import { FriendOptionsComponent } from './components/friend-options/friend-options.component';
 
 
 const appRoutes: Routes = [
@@ -81,7 +82,8 @@ const appRoutes: Routes = [
     AddphotomodalComponent,
     NotFoundComponent,
     ResultsComponent,
-    ScrollDirective
+    ScrollDirective,
+    FriendOptionsComponent
 
   ],
   imports: [

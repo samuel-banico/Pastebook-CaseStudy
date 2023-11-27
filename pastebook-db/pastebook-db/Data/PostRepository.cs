@@ -159,7 +159,7 @@ namespace pastebook_db.Data
             {
                 Id = post.Id,
                 Content = post.Content,
-                IsPublic = post.IsPublic,
+                IsPublic = post.IsPublic,          
                 IsEdited = post.IsEdited,
                 CreatedOn = post.CreatedOn.ToString("yyyy-MM-dd"),
 

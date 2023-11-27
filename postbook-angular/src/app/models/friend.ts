@@ -1,3 +1,5 @@
+import { User } from "./user";
+
 export class Friend {
     constructor(
         //PK
@@ -5,7 +7,8 @@ export class Friend {
         public isBlocked?: boolean,
 
         //FK
-        public userId?: string,
+        public userId?: string, 
+        public user?: User
     ){}
 }
 

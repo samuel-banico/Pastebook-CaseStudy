@@ -1,0 +1,17 @@
+<!-- custom-dropdown.component.html -->
+<div class="dropdown">
+    <button
+      type="button"
+      class="btn btn-transparent"
+      (click)="optionsDropdown()"
+    >
+    <img src="assets/images/options.png" alt="options" width="30px" height="30px">
+    </button>
+  
+    <div *ngIf="optionsAppear" class="dropdown-menu">
+      <button type="button" class="btn btn-light">Block</button>
+      <button type="button" class="btn btn-light">Remove</button>
+      <!-- Add more options as needed -->
+    </div>
+  </div>
+  
