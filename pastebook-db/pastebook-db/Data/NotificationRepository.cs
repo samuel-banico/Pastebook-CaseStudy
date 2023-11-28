@@ -68,7 +68,7 @@ namespace pastebook_db.Data
             var newNotif = new Notification();
             newNotif.HasSeen = false;
             newNotif.NotificationDate = DateTime.Now;
-            newNotif.UserId = friendRequest.UserId;
+            newNotif.UserId = friendRequest.User_FriendId;
 
             var requestedUser = getUserFromFriendRequest(friendRequest);
             newNotif.Content = $"{requestedUser.FirstName} {requestedUser.LastName} has sent you a friend request";
@@ -183,7 +183,7 @@ namespace pastebook_db.Data
         private User getUserFromFriendRequest(FriendRequest friendRequest)
         {
             var user = _context.Users
-                .FirstOrDefault(f => f.Id == friendRequest.User_FriendId);
+                .FirstOrDefault(f => f.Id == friendRequest.UserId);
 
             return user;
         }

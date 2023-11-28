@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { SessionService } from './session.service';
 
 //Import Post
-import {Post} from '@models/post'
+import {Post, PostComment} from '@models/post'
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +14,13 @@ export class PostService {
 
   //Based Url 
   private baseUrl: string = "https://localhost:7185/api/posts"
+  private commentUrl: string = "https://localhost:7185/api/postComment"
   private headers: HttpHeaders = new HttpHeaders({
     'Authorization': `${this.sessionService.getToken()}`
   })
 
-  post:Post[] = [];
+  post: Post[] = [];
+  comment: PostComment[] = [];
   constructor(
     //To pass data
     private http:HttpClient,
@@ -39,4 +41,8 @@ export class PostService {
     getUserFeed():Observable<Post[]>{
       return this.http.get<Post[]>(this.baseUrl + '/allPostsOfFriends', {headers: this.headers})
     };
+
+    addComment(comment:PostComment): Observable<Object>{
+      return this.http.post(this.commentUrl + '/commentPost', comment);
+    }
 }
