@@ -98,7 +98,8 @@ const appRoutes: Routes = [
     EditprofilepicmodalComponent,
     OtherfriendsComponent,
     OtheralbumComponent,
-    OtherwallComponent
+    OtherwallComponent,
+    OtherprofileComponent 
 
   ],
   imports: [
