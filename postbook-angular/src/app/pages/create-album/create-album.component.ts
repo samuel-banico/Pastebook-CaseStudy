@@ -96,6 +96,8 @@ export class CreateAlbumComponent implements OnInit {
     }
 
     openModalAddPhoto() {
+        this.dataTransferService.data = this.albumId;
+        console.log(this.albumId);
         this.modalRef = this.modalService.open(AddphotomodalComponent)
       }
 }

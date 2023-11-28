@@ -38,14 +38,14 @@ export class AlbumService {
     return this.http.post(this.albumUrl, album, { headers: this.headers });
   }
 
-  createAlbumImage(albumId: number, image: File) : Observable<any> {
+  createAlbumImage(albumId: string, image: File) : Observable<any> {
     const formData = new FormData();
     formData.append('image', image);
 
     return this.http.post(this.albumImageUrl+`?albumId=${albumId}`, formData);
   }
 
-  assignCoverImageToAlbum(albumId: number, image: File) : Observable<object> {
+  assignCoverImageToAlbum(albumId: string, image: File) : Observable<object> {
     const formData = new FormData();
     formData.append('image', image);
 
