@@ -1,23 +1,43 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 
+import { AlbumService } from '@services/album.service';
+import { SessionService } from '@services/session.service';
+import { TokenService } from '@services/token.service';
+import { DataTransferService } from '@services/data-transfer.service';
 
+import { Album } from '@models/album';
 
 @Component({
   selector: 'app-addphotomodal',
   templateUrl: './addphotomodal.component.html',
   styleUrls: ['./addphotomodal.component.css']
 })
-export class AddphotomodalComponent {
+export class AddphotomodalComponent implements OnInit {
   pictureList: string[] = [];
   pictureFileList: File[] = [];
- 
-  id: number = 0;
+
+  album: Album = new Album();
+  id: string = "";
 
   constructor(
-    public modalRef: MdbModalRef<AddphotomodalComponent>,
-    
-  ) {}
+    private modalRef: MdbModalRef<AddphotomodalComponent>,
+    private albumService: AlbumService,
+    private tokenService: TokenService,
+    private dataTransferService: DataTransferService
+  ) {
+    this.tokenService.validateToken();
+
+    this.id = this.dataTransferService.data;
+    console.log(this.id);
+  }
+
+  ngOnInit(): void {
+    this.albumService.getAlbumById(this.id).subscribe((a : any) => {
+      this.album = a;
+      console.log(this.album);
+    });
+  }
 
   @ViewChild('fileInput') fileInput: ElementRef | undefined;
   closeModal() {
@@ -25,10 +45,12 @@ export class AddphotomodalComponent {
   }
 
   saveData() {
+    this.pictureFileList.forEach(element => {
+      this.albumService.createAlbumImage(this.id, element).subscribe((a:any) => {
+        console.log(a);
+      });
+    });
     
-
-    console.log('Data saved:');
-    console.log(this.pictureFileList);
     this.closeModal();
   }
 
@@ -58,12 +80,7 @@ export class AddphotomodalComponent {
         // Perform any additional processing or validation if needed
         // For now, just add the file path to the pictureList
         this.pictureList.push(URL.createObjectURL(file));
-        console.log('Picture List');
-        console.log(this.pictureList);
-
         this.pictureFileList.push(file);
-        console.log('Picture File List');
-        console.log(this.pictureFileList);
       }
     }
   }

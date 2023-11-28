@@ -41,7 +41,6 @@
     border-bottom: 2px solid #00aced; /* A slightly lighter shade, adjust as needed */
     color: #000;
 }
-
 /* Optionally, add transition for smooth animation */
 .nav-item,
 .bg-buttons {
@@ -53,7 +52,6 @@
     font-weight: 700;
     color:#4b4b4b; /* Default text color */
 }
-
 
 .edit-icon {
     display: inline-block;

@@ -20,7 +20,6 @@ export class OtherprofileComponent implements OnInit {
   userId: string = "";
   friendRequestSent: boolean = false;
 
-
   constructor(
     private dataTransferService: DataTransferService,
     private userService: UserService,
@@ -49,7 +48,9 @@ export class OtherprofileComponent implements OnInit {
     console.log(this.user);
     this.friendService.sendFriendRequest(this.user).subscribe( (u : any) => {
       Swal.fire('Friend Request sent', `You have sent a friend request to ${this.user.firstName} ${this.user.lastName}`, 'success');
+      
       this.friendRequestSent = true;
+
     }/* , error => {
       console.log(error);
       Swal.fire('Internal Server Error', 'Something happened lets go back', 'info').then( a => {
