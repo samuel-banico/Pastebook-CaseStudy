@@ -24,7 +24,6 @@ export class PostLike {
 }
 
 export class PostComment {
-    constructor() {
-
-    }
+    public id?: string;
+    public comment?: string;
 }
