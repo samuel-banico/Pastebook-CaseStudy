@@ -9,9 +9,10 @@ namespace pastebook_db.Data
         private readonly PastebookContext _context;
         private readonly FriendRequestRepository _friendRequestRepository;
 
-        public FriendRepository(PastebookContext context)
+        public FriendRepository(PastebookContext context, FriendRequestRepository friendRequestRepository)
         {
             _context = context;
+            _friendRequestRepository = friendRequestRepository;
         }
 
         public Friend? GetFriendship(Guid userId, Guid friendId)

@@ -192,7 +192,7 @@ namespace pastebook_db.Data
         {
             var user = _context.Friends
                             .Include(f => f.User)
-                            .FirstOrDefault(f => f.Id == friend.UserId);
+                            .FirstOrDefault(f => f.Id == friend.UserId || f.Id == friend.User_FriendId);
 
             return user.User;
         }

@@ -42,7 +42,12 @@ export class PostService {
       return this.http.get<Post[]>(this.baseUrl + '/allPostsOfFriends', {headers: this.headers})
     };
 
+    // Comments
     addComment(comment:PostComment): Observable<Object>{
-      return this.http.post(this.commentUrl + '/commentPost', comment);
-    }
+      return this.http.post(this.commentUrl + '/commentPost', comment)
+    };
+
+    getComments(): Observable<PostComment[]>{
+      return this.http.get<PostComment[]>(this.commentUrl + 'allPostComments', {headers: this.headers})
+    };
 }

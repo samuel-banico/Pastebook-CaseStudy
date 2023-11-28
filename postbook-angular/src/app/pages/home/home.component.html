@@ -82,10 +82,10 @@
                                     <img src="../../../assets/images/heart.png" alt="img" width="25px" height="25px" class="mr-3">
                                 </a>
                             </div>
-                            <div class="col-6 custom-border text-center">
-                                <a href="">
-                                    <img src="../../../assets/images/comment.png" alt="img" width="25px" height="25px" class="mr-3">
-                                </a>
+                            <div class="bg-light p-2">
+                                <div class="d-flex flex-row align-items-start"><img class="rounded-circle" [src]="user.profilePicture" width="40">
+                                  <textarea class="form-control" style="resize: none;" name="comment" [(ngModel)]="comment.comment"></textarea></div>
+                                <div class="mt-2 text-right"><button class="btn btn-primary btn-sm" type="button" style="background-color: #68070f;" (click)="onComment()">Comment</button><button class="btn btn-primary btn-sm ml-1 shadow-none" type="button" style="background-color: #0B2154;">Cancel</button></div>
                             </div>
                         </div>
                     </div>

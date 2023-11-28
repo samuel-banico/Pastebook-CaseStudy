@@ -32,7 +32,7 @@ namespace pastebook_db.Data
 
         public void DeleteFriendRequest(Guid friendRequestId) 
         {
-            var rejectRequest = _context.FriendRequests.Find(friendRequestId);
+            var rejectRequest = _context.FriendRequests.FirstOrDefault(f => f.Id == friendRequestId);
 
             if (rejectRequest != null)
             {

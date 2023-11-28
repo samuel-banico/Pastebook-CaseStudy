@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 import { FriendService } from '@services/friend.service';
+import { User } from '@models/user';
 import { DataTransferService } from '@services/data-transfer.service';
 
 @Component({
@@ -43,21 +44,23 @@ export class FriendrequestmodalComponent implements OnInit {
     })
   }
   
-  Accept(): void {
-
-    Swal.fire({
+  accept(request: FriendRequest) {
+    this.friendService.acceptFriendRequest(request).subscribe((u:any)=>{
+      Swal.fire({
       title: 'New friend alert!',
       text: 'User.name is now your friend',
       icon: 'success',
       showCancelButton: true,
       confirmButtonText: 'Visit Profile',
       cancelButtonText: 'Close'
+      })
     })
+    
     // .then((result) => 
     //     this.router.navigate(['/login']); // Optionally navigate to the login page after logout
     //   }
     // })
-    ;
+    
   }
 
   Reject(): void {

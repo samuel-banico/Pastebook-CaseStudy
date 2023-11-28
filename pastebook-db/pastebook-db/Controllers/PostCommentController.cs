@@ -34,9 +34,9 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("allPostComments")]
-        public ActionResult<Post> GetAllPostComments(int id)
+        public ActionResult<Post> GetAllPostComments(Guid id)
         {
-            var postComment = _postCommentRepository.GetAllPostComments();
+            var postComment = _postCommentRepository.GetAllPostComments(id);
 
             if (postComment == null)
                 return NotFound(new { result = "no_post_comment" });
@@ -62,7 +62,7 @@ namespace pastebook_db.Controllers
 
             _notificationRepository.CreateNotifPostComment(postComment);
 
-            return Ok(new { result = "post_liked" });
+            return Ok(new { result = "post_comment" });
         }
 
         [HttpPut("edittedCommentPost")]
