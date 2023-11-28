@@ -37,6 +37,7 @@ export class UserService {
   }
 
   validateToken() : Observable<boolean> {
+    console.log('r');
     return this.http.get<boolean>(this.accessUrl + `/validateToken`, {headers: this.headers});
   }
 

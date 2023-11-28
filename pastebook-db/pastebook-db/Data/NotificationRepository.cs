@@ -16,7 +16,13 @@ namespace pastebook_db.Data
         // Get All Notifications
         public List<Notification> GetAllNotifications(Guid userId)
         {
-            var notif = _context.Notifications.Where(n => n.UserId == userId).OrderByDescending(p => p.NotificationDate).ToList();
+            var notif = _context.Notifications
+                .Include(n => n.User)
+                .Include(n => n.UserRequest)
+                .Include(n => n.Post)
+                .Include(n => n.Album)
+                .Where(n => n.UserId == userId)
+                .OrderByDescending(p => p.NotificationDate).ToList();
 
             return notif;
         }
@@ -25,8 +31,13 @@ namespace pastebook_db.Data
         public List<Notification> GetUnseenNotifications(Guid userId) 
         {
             var notif = _context.Notifications
-                                .Where(n => n.UserId == userId && n.HasSeen == false)
-                                .ToList();
+                    .Include(n => n.User)
+                    .Include(n => n.UserRequest)
+                    .Include(n => n.Post)
+                    .Include(n=>n.Album)
+                    .Where(n => n.UserId == userId && n.HasSeen == false)
+                    .OrderByDescending(p => p.NotificationDate)
+                    .ToList();
             return notif;
         }
 
@@ -69,9 +80,11 @@ namespace pastebook_db.Data
             newNotif.HasSeen = false;
             newNotif.NotificationDate = DateTime.Now;
             newNotif.UserId = friendRequest.User_FriendId;
+            newNotif.UserRequestId = friendRequest.UserId;
+
 
             var requestedUser = getUserFromFriendRequest(friendRequest);
-            newNotif.Content = $"{requestedUser.FirstName} {requestedUser.LastName} has sent you a friend request";
+            newNotif.Content = $"Has sent you a friend request";
 
             _context.Notifications.Add(newNotif);
             _context.SaveChanges();
@@ -83,10 +96,10 @@ namespace pastebook_db.Data
             var newNotif = new Notification();
             newNotif.HasSeen = false;
             newNotif.NotificationDate = DateTime.Now;
-            newNotif.UserId = friend.User_FriendId;
+            newNotif.UserId = friend.UserId;
 
             var requestedUser = getUserFromFriend(friend);
-            newNotif.Content = $"{requestedUser.FirstName} {requestedUser.LastName} accepted your friend request";
+            newNotif.Content = $"Accepted your friend request";
 
             _context.Notifications.Add(newNotif);
             _context.SaveChanges();
@@ -102,7 +115,7 @@ namespace pastebook_db.Data
             newNotif.UserId = post.UserId;
 
             var friend = getFriendFromPost(post);
-            newNotif.Content = $"{friend.FirstName} {friend.LastName} has posted on your timeline.";
+            newNotif.Content = $"Has posted on your timeline.";
 
             _context.Notifications.Add(newNotif);
             _context.SaveChanges();
@@ -120,7 +133,7 @@ namespace pastebook_db.Data
 
 
             var likedUser = getFriendFromPostLike(postLike);
-            newNotif.Content = $"{likedUser.FirstName} {likedUser.LastName} has reacted to your post";
+            newNotif.Content = $"Has reacted to your post";
 
             _context.Notifications.Add(newNotif);
             _context.SaveChanges();
@@ -137,7 +150,7 @@ namespace pastebook_db.Data
             newNotif.UserId = getPostFromPostId(postComment.PostId).UserId;
             
             var commentedUser = getFriendFromPostComment(postComment);
-            newNotif.Content = $"{commentedUser.FirstName} {commentedUser.LastName} has left a comment on your post";
+            newNotif.Content = $"Has left a comment on your post";
 
             _context.Notifications.Add(newNotif);
             _context.SaveChanges();
@@ -155,7 +168,7 @@ namespace pastebook_db.Data
             newNotif.UserId = album.UserId;
 
             var likedUser = getFriendFromAlbumImageLike(albumImageLike);
-            newNotif.Content = $"{likedUser.FirstName} {likedUser.LastName} has reacted on your album.";
+            newNotif.Content = $"Has reacted on your album.";
 
             _context.Notifications.Add(newNotif);
             _context.SaveChanges();
@@ -173,7 +186,7 @@ namespace pastebook_db.Data
             newNotif.UserId = album.UserId;
 
             var commentedUser = getFriendFromAlbumImageComment(albumImageComment);
-            newNotif.Content = $"{commentedUser.FirstName} {commentedUser.LastName} has left a comment on your album.";
+            newNotif.Content = $"Has left a comment on your album.";
 
             _context.Notifications.Add(newNotif);
             _context.SaveChanges();

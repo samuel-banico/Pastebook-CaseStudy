@@ -24,6 +24,7 @@ export class TokenService {
         this.router.navigate(['page-not-found']);
       } else {
         this.userService.validateToken().subscribe( (r : any) => {
+          console.log(r);
           if(!r) {
             Swal.fire("Token Expired", "Your access token has expired, you need to login again", "info").then( r => {
               this.router.navigate(['login']);

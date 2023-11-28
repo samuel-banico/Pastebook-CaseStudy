@@ -5,7 +5,7 @@
       <h5 class="likelist" id="box">Likes</h5>
       <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
     </div>
-    <div class="modal-body">
+    <div class="modal-body" *ngFor="let like as postLikes">
         <div class="likelist-item"> <img src="././assets/images/selfie.jpg" alt="img">
             <div class="text">
                 <h4><strong>Armored Clavio</strong></h4>

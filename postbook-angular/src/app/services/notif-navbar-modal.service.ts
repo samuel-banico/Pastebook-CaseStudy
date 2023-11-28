@@ -6,6 +6,7 @@ import { SessionService } from './session.service';
 //Import Notification
 import { Notification } from '@models/notification';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,7 +22,9 @@ notifs:Notification[] = [];
 constructor(
     private http:HttpClient,
     private sessionService:SessionService
-  ) { }
+
+  ) {  
+}
 
   //Get All Notification
   getAllNotif():Observable<Notification[]>{
@@ -36,6 +39,12 @@ constructor(
   //Update notification to hasSeen = true
   updateSeenNotification(notif:Notification):Observable<Object>{
     return this.http.put<Notification[]>(this.baseUrl,notif,{ headers: this.headers });
+  }
+
+  //Clear Notification
+  clearNotif():Observable<Notification[]>{
+    console.log(this.sessionService.getToken());
+    return this.http.put<Notification[]>(this.baseUrl + `/clearNotification`,{} ,{headers:this.headers})
   }
 
 }

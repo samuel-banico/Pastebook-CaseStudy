@@ -9,10 +9,10 @@
     <div class="modal-body">
         <h5 *ngIf="notifs.length === 0">No Unseen Notifications</h5>
         <div *ngFor="let notif of notifs">
-            <div class="notifications-item" (click)="goToSinglePage()">
+            <div class="notifications-item" (click)="goToSinglePage(notif)">
                 <img src="./assets/images/selfie.jpg" alt="img">
                 <div class="text">
-                    <h4><strong>Armored Clavio</strong></h4>
+                    <h4><strong>{{notif.userRequest?.firstName}} {{notif.userRequest?.lastName}}</strong></h4>
                     <p>{{notif.content}}</p>
                 </div>
             </div>
@@ -20,7 +20,7 @@
     </div>
     
     <div class="modal-footer">
-        <button class="button rounded-pill">Clear</button>
-        <button class="button rounded-pill" routerLink="/AllNotifications">Show All Notifications</button>
+        <button class="button rounded-pill" (click)="clearAllNotifications()">Clear</button>
+        <button class="button rounded-pill" (click)="getAllNotifications()">Show All Notifications</button>
     </div>
 </div>
