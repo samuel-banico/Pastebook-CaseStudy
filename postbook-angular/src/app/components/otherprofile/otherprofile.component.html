@@ -1,0 +1,32 @@
+<div class="banner mt-5 pt-5">
+    <div class="banner-title d-flex flex-column justify-content-center align-items-center">
+        <img [src]="user.profilePicture" alt="img" class="rounded-circle" width="150px" height="150px">
+        <h3 class="profile-name mt-4">
+            {{user.firstName}} {{user.lastName}}
+            <img
+                *ngIf="!friendRequestSent; else friendRequestSentTemplate"
+                src="assets/images/add-friend.png"
+                alt="Add Friend"
+                class="add-friend-icon"
+                (click)="addFriend()"
+            />
+            <ng-template #friendRequestSentTemplate>
+                <img
+                    src="assets/images/sentrequest-friend.png"
+                    alt="Friend Request Sent"
+                    class="add-friend-icon"
+                    (click)="addFriend()"
+                />
+            </ng-template>
+        </h3>
+        <p class="blurb">{{user.userBio}}</p>
+    </div>
+
+    <div class="d-flex justify-content-around bg-buttons">
+        <div class="nav">
+            <a routerLink="../otherwall" class="nav-item nav-link text-decoration-none mx-4">Timeline</a>
+            <a routerLink="../otherfriends" class="nav-item nav-link text-decoration-none mx-4">Friends</a>
+            <a routerLink="../otheralbum" class="nav-item nav-link text-decoration-none mx-4">Albums</a>
+        </div>
+    </div>
+</div>
