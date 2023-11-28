@@ -88,8 +88,7 @@ const appRoutes: Routes = [
     ResultsComponent,
     ScrollDirective,
     FriendOptionsComponent,
-    AllnotifsComponent,
-    OtherprofileComponent
+    AllnotifsComponent
 
   ],
   imports: [
