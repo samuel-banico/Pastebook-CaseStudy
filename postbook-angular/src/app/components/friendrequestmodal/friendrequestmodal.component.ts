@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FriendRequest } from '@models/friend';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 import { FriendService } from '@services/friend.service';
+import { DataTransferService } from '@services/data-transfer.service';
 
 @Component({
   selector: 'app-friendrequestmodal',
@@ -15,7 +17,9 @@ export class FriendrequestmodalComponent implements OnInit {
 
   constructor(
     public modalRef: MdbModalRef<FriendrequestmodalComponent>,
-    private friendService: FriendService
+    private friendService: FriendService,
+    private dataTransferService: DataTransferService,
+    private router: Router
   ) {}
   
     ngOnInit(): void {
@@ -27,6 +31,12 @@ export class FriendrequestmodalComponent implements OnInit {
     this.modalRef.close(closeMessage)
   }
 
+  toProfile(id:string): void {
+    this.dataTransferService.data = id;
+    console.log(id);
+    this.router.navigate(['otherProfile']) 
+  }
+
   getFriendRequest(){
     this.friendService.getFriendRequests().subscribe((response: FriendRequest[])=>{
       this.requests = response;
@@ -34,6 +44,7 @@ export class FriendrequestmodalComponent implements OnInit {
   }
   
   Accept(): void {
+
     Swal.fire({
       title: 'New friend alert!',
       text: 'User.name is now your friend',

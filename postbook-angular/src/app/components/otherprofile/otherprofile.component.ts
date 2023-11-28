@@ -20,6 +20,7 @@ export class OtherprofileComponent implements OnInit {
   userId: string = "";
   friendRequestSent: boolean = false;
 
+
   constructor(
     private dataTransferService: DataTransferService,
     private userService: UserService,
@@ -31,11 +32,11 @@ export class OtherprofileComponent implements OnInit {
     this.tokenService.validateToken();
     
     this.userId = this.dataTransferService.data;
-    // if(!this.userId) {
-    //   Swal.fire('Internal Server Error', 'Something happened lets go back', 'info').then( a => {
-    //     this.router.navigate(['']);
-    //   })
-    // }
+    if(!this.userId) {
+      Swal.fire('Internal Server Error', 'Something happened lets go back', 'info').then( a => {
+        this.router.navigate(['']);
+      })
+    }
   }
 
   ngOnInit(): void {
