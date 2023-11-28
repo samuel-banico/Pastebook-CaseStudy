@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using pastebook_db.Database;
 using pastebook_db.Models;
+using pastebook_db.Services.FunctionCollection;
 
 namespace pastebook_db.Data
 {
@@ -16,7 +17,10 @@ namespace pastebook_db.Data
 
         public List<FriendRequest> GetAllFriendRequest(Guid id)
         {
-            return _context.FriendRequests.Where(r => r.User_FriendId == id).ToList();    
+            return _context.FriendRequests
+                .Include(x => x.User_Friend)
+                .Where(r => r.User_FriendId == id)
+                .ToList();    
         }
          
         public void RequestFriend(FriendRequest req)
@@ -27,7 +31,8 @@ namespace pastebook_db.Data
 
         public FriendRequest? GetFriendRequest(Guid id)
         {
-            return _context.FriendRequests.FirstOrDefault(u => u.Id == id);
+            return _context.FriendRequests
+                .FirstOrDefault(u => u.Id == id);
         }
 
         public void DeleteFriendRequest(Guid friendRequestId) 
@@ -39,6 +44,14 @@ namespace pastebook_db.Data
                 _context.FriendRequests.Remove(rejectRequest);
                 _context.SaveChanges();
             }
+        }
+
+        public void AddedFriend(Friend addFriend, FriendRequest req)
+        {
+            _context.Friends.Add(addFriend);
+            _context.SaveChanges();
+
+            DeleteFriendRequest(req.Id);
         }
     }
 }

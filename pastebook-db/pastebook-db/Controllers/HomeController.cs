@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using pastebook_db.Data;
 using pastebook_db.Models;
+using pastebook_db.Services.FunctionCollection;
 using System.Diagnostics;
 
 namespace pastebook_db.Controllers
@@ -11,11 +12,13 @@ namespace pastebook_db.Controllers
     {
         private readonly HomeRepository _repo;
         private readonly UserRepository _userRepository;
+        private readonly FriendRepository _friendRepository;
 
-        public HomeController(HomeRepository repo, UserRepository userRepository)
+        public HomeController(HomeRepository repo, UserRepository userRepository, FriendRepository friendRepository)
         {
             _repo = repo;
             _userRepository = userRepository;
+            _friendRepository = friendRepository;
         }
 
         // Search Modal
@@ -28,17 +31,9 @@ namespace pastebook_db.Controllers
 
             var userList = new List<UserSendDTO>();
 
-            foreach (var item in users)
+            foreach (var u in users)
             {
-                var u = new UserSendDTO()
-                {
-                    Id = item.Id,
-                    FirstName = item.FirstName,
-                    LastName = item.LastName,
-                    ProfilePicture = _userRepository.SendImageToAngular(item.ProfilePicture)
-                };
-
-                userList.Add(u);
+                userList.Add(_friendRepository.ConvertUserToUserSendDTO(u));
             }
 
             return Ok(userList);

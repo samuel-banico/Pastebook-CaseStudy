@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using pastebook_db.Data;
 using pastebook_db.Models;
+using pastebook_db.Services.FunctionCollection;
 using pastebook_db.Services.PasswordHash;
 using pastebook_db.Services.Token.TokenData;
 using pastebook_db.Services.Token.TokenGenerator;
@@ -90,7 +91,7 @@ namespace pastebook_db.Controllers
                 Birthday = DateTime.Parse(userRegister.Birthday),
                 Gender = (Gender)userRegister.Gender,
                 MobileNumber = userRegister.MobileNumber,
-                ProfilePicture = _userRepository.SaveImageToLocalStorage(null),
+                ProfilePicture = HelperFunction.SaveImageToLocalStorage(null),
                 UserBio = "Hi, Everyone! I am new to Pastebook."
             };
 

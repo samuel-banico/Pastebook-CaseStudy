@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using pastebook_db.Database;
 using pastebook_db.Models;
+using pastebook_db.Services.FunctionCollection;
 
 namespace pastebook_db.Data
 {
@@ -8,13 +9,13 @@ namespace pastebook_db.Data
     {
         private readonly PastebookContext _context;
         private readonly FriendRepository _friendRepository;
-        private readonly UserRepository _userRepository;
+        private readonly AlbumImageRepository _albumImageRepository;
 
-        public AlbumRepository(PastebookContext context, UserRepository userRepository, FriendRepository friendRepository)
+        public AlbumRepository(PastebookContext context, FriendRepository friendRepository, AlbumImageRepository albumImageRepository)
         {
             _context = context;
-            _userRepository = userRepository;
             _friendRepository = friendRepository;
+            _albumImageRepository = albumImageRepository;
         }
 
         public Album? GetAlbumById(Guid id)
@@ -83,7 +84,7 @@ namespace pastebook_db.Data
             _context.SaveChanges();
         }
 
-        // HELPER METHODS
+        // Album DTO
         public AlbumDTO ConvertAlbumToAlbumDTO(Album album)
         {
             var albumDTO = new AlbumDTO()
@@ -98,16 +99,23 @@ namespace pastebook_db.Data
                 UserId = album.UserId,
             };
 
-            if (album.AlbumImageList != null && album.AlbumImageList.Count  > 0) 
+            if (album.AlbumImageList != null && album.AlbumImageList.Count > 0)
             {
-                albumDTO.CoverAlbumImage = _userRepository.SendImageToAngular(album.AlbumImageList.First().Image);
-                albumDTO.ImageList = album.AlbumImageList;
+                albumDTO.CoverAlbumImage = HelperFunction.SendImageToAngular(album.AlbumImageList.First().Image);
+
+                var imageList = new List<AlbumImageDTO>();
+                foreach (var image in album.AlbumImageList) 
+                {
+                    _albumImageRepository.ConvertAlbumImageToDTO(image);
+                }
+
+                albumDTO.ImageList = imageList;  
                 albumDTO.ImageCount = album.AlbumImageList.Count;
             }
-            else 
+            else
             {
-                albumDTO.CoverAlbumImage = _userRepository.SendImageToAngular(Path.Combine("wwwroot", "images","default_album.png"));
-                albumDTO.ImageList = new List<AlbumImage>();
+                albumDTO.CoverAlbumImage = HelperFunction.SendImageToAngular(Path.Combine("wwwroot", "images", "default_album.png"));
+                albumDTO.ImageList = new List<AlbumImageDTO>();
                 albumDTO.ImageCount = 0;
             }
 

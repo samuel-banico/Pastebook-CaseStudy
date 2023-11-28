@@ -25,14 +25,16 @@ import { Obj } from '@popperjs/core';
 })
 export class HomeComponent implements OnInit{
   modalRef: MdbModalRef<PostmodalComponent> | null = null;
-  // userName: string;
-  // firstName: string;
-  // lastName: string;
+
   user: User = new User();
+
   posts: Post[] = [];
+
   postLikes:PostLike[]=[];
+
   postId?:string = '';
   userId?:string = '';
+
   postLiked:PostLike = new PostLike();
   comment: PostComment = new PostComment();
 
@@ -51,6 +53,12 @@ export class HomeComponent implements OnInit{
       this.tokenService.validateToken();
       userService.getUserByToken().subscribe((response: Object) => {
         this.user = response;
+        console.log(this.user);
+    }, (err : any) => {
+      if(err['error']['result'] === 'no_user') {
+        Swal.fire('Internal Server Error', 'There was an issue in the server. Returning to Login', 'warning');
+          this.router.navigate(['login']);
+      }
     })
   } 
   
@@ -59,7 +67,6 @@ export class HomeComponent implements OnInit{
   }
 
   onScroll() {
-    console.log('Scroll event triggered!');
     this.scrollService.loadData();
   }
 

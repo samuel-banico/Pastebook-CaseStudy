@@ -3,7 +3,7 @@
   <app-navbar class="navbar"></app-navbar>
 
   <div class="container">
-    <div class="left-column">
+    <div class="left-column d-none d-md-block col-md-3">
       <a routerLink="/profile" class="text-decoration-none text-dark"><div class="rounded-3 shadow mb-3 border" style="border-color: #e0e0e0;" >
         <div class="text-center pt-4">
           <img [src]="user.profilePicture" alt="Profile" width="120px" height="120px" class="rounded-circle">
@@ -16,25 +16,32 @@
       </a>
     
       <!-- Friends number -->
-      <a routerLink="/friends" class="text-dark text-decoration-none">
+      <!-- <a routerLink="/friends" class="text-dark text-decoration-none">
         <div class="rounded-3 shadow container-fluid text-center p-2 border mb-3" style="border-color: #e0e0e0;">
           <ul class="list-unstyled nav justify-content-center">
               <li class="nav-item"><strong>Friends</strong></li>
           </ul>
           <p>user.FriendsNumber</p>
         </div>
-      </a>
+      </a> -->
       
       <!-- Online/Offline users -->
       <div class="rounded-3 shadow container-fluid text-center p-2 border" style="border-color: #e0e0e0;">
         <ul class="list-unstyled nav justify-content-center">
           <a class="text-dark text-decoration-none d-flex align-items-center">
-            <li class="nav-item"><strong>Online</strong>{{user.friendCount}}</li>
-            <img src="../../../assets/images/online.png" style="width: 10px; height: 10px; margin-left: 5px;">
+            <img src="../../../assets/images/online.png"  style="width: 10px; height: 10px; margin-left: 5px;">
+            <li class="nav-item px-2"><strong>Online</strong></li> {{user.friendCount}}
           </a>
         </ul>
+        <div *ngFor="let u of user.friends">
+          <a routerLink="/otherProfile" class="d-flex text-decoration-none text-dark">
+            <img [src]="u.profilePicture" alt="" class="rounded-circle me-2" style="width: 25px; height: 25px;">
+            <p>{{u.firstName}} {{u.lastName}}</p>
+          </a>
+        </div>
         <!-- ngFOR -->
-          <a routerLink="/otherProfile" class="d-flex text-decoration-none text-dark">
+          
+          <!-- <a routerLink="/otherProfile" class="d-flex text-decoration-none text-dark">
             <img src="../../../assets/images/jean.JPG" alt="" class="rounded-circle me-2" style="width: 25px; height: 25px;">
             <p>friend.user?.firstNamelastName</p>
           </a>
@@ -45,11 +52,7 @@
           <a routerLink="/otherProfile" class="d-flex text-decoration-none text-dark">
             <img src="../../../assets/images/jean.JPG" alt="" class="rounded-circle me-2" style="width: 25px; height: 25px;">
             <p>friend.user?.firstNamelastName</p>
-          </a>
-          <a routerLink="/otherProfile" class="d-flex text-decoration-none text-dark">
-            <img src="../../../assets/images/jean.JPG" alt="" class="rounded-circle me-2" style="width: 25px; height: 25px;">
-            <p>friend.user?.firstNamelastName</p>
-          </a>
+          </a> -->
       </div> 
     </div>
     <div class="col-12 col-lg-9 vh-100" >

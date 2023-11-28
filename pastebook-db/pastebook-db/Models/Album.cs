@@ -31,7 +31,7 @@ namespace pastebook_db.Models
         public int? ImageCount { get; set; }
         public Guid UserId { get; set; }
 
-        public ICollection<AlbumImage>? ImageList { get; set; }
+        public ICollection<AlbumImageDTO>? ImageList { get; set; }
     }
 
     public class ReceiveImageDTO 

@@ -11,4 +11,15 @@
         public Guid User_FriendId { get; set; }
         public virtual User User_Friend { get; set; } = null!;
     }
+
+    public class FriendRequestDTO 
+    {
+        public Guid? Id { get; set; }
+        public string? CreatedOn { get; set; }
+
+        //Foreign Key
+        public Guid? UserId { get; set; }
+        public Guid? User_FriendId { get; set; }
+        public UserSendDTO? User_Friend { get; set; }
+    }
 }

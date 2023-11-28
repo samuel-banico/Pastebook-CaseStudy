@@ -1,5 +1,6 @@
 ﻿using pastebook_db.Database;
 using pastebook_db.Models;
+using pastebook_db.Services.FunctionCollection;
 
 namespace pastebook_db.Data
 {
@@ -95,7 +96,7 @@ namespace pastebook_db.Data
             </body>
         </html>";
 
-            if (!_userRepository.SendEmail(user.Email, emailBody))
+            if (!HelperFunction.SendEmail(user.Email, emailBody))
                 return false;
 
             _context.Users.Add(user);

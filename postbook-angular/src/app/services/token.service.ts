@@ -24,12 +24,21 @@ export class TokenService {
         this.router.navigate(['page-not-found']);
       } else {
         this.userService.validateToken().subscribe( (r : any) => {
-          console.log(r);
           if(!r) {
             Swal.fire("Token Expired", "Your access token has expired, you need to login again", "info").then( r => {
+              this.sessionService.clear();
               this.router.navigate(['login']);
             });
           }
+        }, (err : Record<string, any>) => {
+          console.log(err);
+          if(err['status'] === 0 && err['statusText'] === 'Unknown Error') {
+            Swal.fire('Reminder', 'Start the back-end database, Thank you', 'error');
+          } else if (err['error']['result'] === 'no_user') {
+            Swal.fire('Internal Server Error', 'There was an issue in the server. Returning to Login', 'warning');
+              this.sessionService.clear();
+              this.router.navigate(['login']);
+            }
         })
       }
   }

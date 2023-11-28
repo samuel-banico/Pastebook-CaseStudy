@@ -67,7 +67,7 @@ namespace pastebook_db.Models
         public bool? ViewPublic { get; set; }
 
         public int FriendCount { get; set; }
-        public ICollection<Friend> Friends { get; set; }
+        public ICollection<UserSendDTO> Friends { get; set; }
     }
 
     //Login

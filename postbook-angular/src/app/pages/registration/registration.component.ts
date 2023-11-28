@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; 
 import Swal from 'sweetalert2';
+
 import { UserService } from '@services/user.service';
 import { SessionService } from '@services/session.service';
+import { TokenService } from '@services/token.service';
+
 import { User } from '@models/user';
 
 @Component({
@@ -19,11 +22,11 @@ export class RegistrationComponent implements OnInit {
   constructor(
     private router: Router,
     private userService: UserService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private tokenService: TokenService
   ) {
-    let token: string = this.sessionService.getToken();
-    if(token) {
-      this.router.navigate(['page-not-found']);
+    if(this.sessionService.getToken()) {
+      this.tokenService.validateToken();
     }
   }
 

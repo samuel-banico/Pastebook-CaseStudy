@@ -12,10 +12,10 @@
         <ng-template #request>
             <!-- Move ngFor to create a new set of elements for each friend request -->
             <div *ngFor="let request of requests" class="d-flex mb-2">
-                <a class="friendrequest-item" routerLink="/otherProfile">
-                    <img src="../../../assets/images/jean.JPG" alt="" class="rounded-circle" style="width: 50px; height: 50px;">
+                <a class="friendrequest-item" (click)="toProfile(request.id!)">
+                    <img [src]="request.user_Friend?.profilePicture" alt="" class="rounded-circle" style="width: 50px; height: 50px;">
                     <div class="text-left user-item" style="display: inline-block; margin-left: 10px; width: 100px;" >
-                        Jean DeVera
+                        {{request.user_Friend?.firstName}} {{request.user_Friend?.lastName}}
                     </div>
                 </a>
                 <div class="ml-auto">

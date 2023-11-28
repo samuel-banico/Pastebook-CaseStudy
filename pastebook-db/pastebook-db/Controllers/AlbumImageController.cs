@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
 using pastebook_db.Data;
 using pastebook_db.Models;
+using pastebook_db.Services.FunctionCollection;
 
 namespace pastebook_db.Controllers
 {
@@ -11,12 +12,10 @@ namespace pastebook_db.Controllers
     public class AlbumImageController : ControllerBase
     {
         private readonly AlbumImageRepository _albumImageRepository;
-        private readonly UserRepository _userRepository;
 
-        public AlbumImageController(AlbumImageRepository albumImageRepository, UserRepository userRepository)
+        public AlbumImageController(AlbumImageRepository albumImageRepository)
         {
             _albumImageRepository = albumImageRepository;
-            _userRepository = userRepository;
         }
 
         [HttpGet("{id}")]
@@ -46,7 +45,7 @@ namespace pastebook_db.Controllers
         {
             var newAlbumImage = new AlbumImage
             {
-                Image = _userRepository.SaveImageToLocalStorage(image),
+                Image = HelperFunction.SaveImageToLocalStorage(image),
                 CreatedOn = DateTime.Now,
                 IsEdited = false,
                 AlbumId = albumId

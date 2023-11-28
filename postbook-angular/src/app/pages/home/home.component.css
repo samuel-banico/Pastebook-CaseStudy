@@ -16,8 +16,12 @@
     z-index: 1;
     background-color: #f0f2f5;
     padding: 20px;
-    overflow-y: hidden; /* Prevent vertical scrolling in the left column */
+    overflow-y: scroll; /* Prevent vertical scrolling in the left column */
     height: calc(100vh); /* Adjust the height based on your actual navbar height */
+  }
+
+  .left-column::-webkit-scrollbar {
+    display:none;
   }
 
   .scroll-container {
