@@ -25,86 +25,83 @@
         </div>
       </a>
       
-
       <!-- Online/Offline users -->
       <div class="rounded-3 shadow container-fluid text-center p-2 border" style="border-color: #e0e0e0;">
         <ul class="list-unstyled nav justify-content-center">
-          <a routerLink="/friends" class="text-dark text-decoration-none d-flex align-items-center">
+          <a class="text-dark text-decoration-none d-flex align-items-center">
             <li class="nav-item"><strong>Online</strong></li>
             <img src="../../../assets/images/online.png" style="width: 10px; height: 10px; margin-left: 5px;">
           </a>
         </ul>
         <!-- ngFOR -->
-          <div class="d-flex">
+          <a routerLink="/otherProfile" class="d-flex text-decoration-none text-dark">
             <img src="../../../assets/images/jean.JPG" alt="" class="rounded-circle me-2" style="width: 25px; height: 25px;">
             <p>friend.user?.firstNamelastName</p>
-          </div>
-          <div class="d-flex">
+          </a>
+          <a routerLink="/otherProfile" class="d-flex text-decoration-none text-dark">
             <img src="../../../assets/images/jean.JPG" alt="" class="rounded-circle me-2" style="width: 25px; height: 25px;">
             <p>friend.user?.firstNamelastName</p>
-          </div>
-          <div class="d-flex">
+          </a>
+          <a routerLink="/otherProfile" class="d-flex text-decoration-none text-dark">
             <img src="../../../assets/images/jean.JPG" alt="" class="rounded-circle me-2" style="width: 25px; height: 25px;">
             <p>friend.user?.firstNamelastName</p>
-          </div>
-          <div class="d-flex">
+          </a>
+          <a routerLink="/otherProfile" class="d-flex text-decoration-none text-dark">
             <img src="../../../assets/images/jean.JPG" alt="" class="rounded-circle me-2" style="width: 25px; height: 25px;">
             <p>friend.user?.firstNamelastName</p>
-          </div>
+          </a>
       </div> 
     </div>
-
-
-        <div class="col-12 col-lg-9 vh-100" >
-                <div class="rounded-3 shadow container-fluid border mt-3 p-3" style="border-color: #e0e0e0;">
-                    <form class="form-inline">
-                      <div class="input-group w-100">
-                        <input type="text" name="message" id="message" placeholder="What's on your mind?" class="form-control form-control-md" (click)="openModal()">
-                        <div class="input-group-append">
-                          <!-- <button type="submit" class="btn btn-danger" style="background-color: #68070f;">Post</button> -->
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                <!-- Display Post -->
-                <h1 *ngIf="posts.length === 0; else thereIsPost">No Post</h1>
-                <ng-template #thereIsPost>
-                    <div class="mt-2 scroll-container" appInfiniteScroll (scrolled)="onScroll()">
-                        <div class="card mb-3" *ngFor="let post of posts">
-                            <div class="card-body">
-                                <div class="media">
-                                    <img [src]="post.user?.profilePicture" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
-                                    <div class="media-body mb-4">
-                                        <h5>{{post.user?.firstName}} {{post.user?.lastName}}</h5>
-                                        <p class="card-text">{{post.content}}</p>
-                                    </div>
-                                </div>
-            
-                                <div class="d-flex row justify-content-center">
-                                    <div class="col-6 custom-border text-center">
-                                        <a href="#">
-                                            <img src="../../../assets/images/heart.png" alt="img" width="25px" height="25px" class="mr-3">
-                                        </a>
-                                    </div>
-                                
-                                    <div class="col-6 custom-border text-center">
-                                        <a href="">
-                                            <img src="../../../assets/images/comment.png" alt="img" width="25px" height="25px" class="mr-3">
-                                        </a>
-                                    </div>
-                                </div>
+    <div class="col-12 col-lg-9 vh-100" >
+      <div class="rounded-3 shadow container-fluid border mt-3 p-3" style="border-color: #e0e0e0;">
+          <form class="form-inline">
+            <div class="input-group w-100">
+              <input type="text" name="message" id="message" placeholder="What's on your mind?" class="form-control form-control-md" (click)="openModal()">
+              <div class="input-group-append">
+                <!-- <button type="submit" class="btn btn-danger" style="background-color: #68070f;">Post</button> -->
+              </div>
+            </div>
+          </form>
+        </div>
+            <!-- Display Post -->
+        <h1 *ngIf="posts.length === 0; else thereIsPost">No Post</h1>
+        <ng-template #thereIsPost>
+            <div class="mt-2 scroll-container" appInfiniteScroll (scrolled)="onScroll()">
+                <div class="card mb-3" *ngFor="let post of posts">
+                    <div class="card-body">
+                        <div class="media">
+                            <img [src]="post.user?.profilePicture" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
+                            <div class="media-body mb-4">
+                                <h5>{{post.user?.firstName}} {{post.user?.lastName}}</h5>
+                                <p class="card-text">{{post.content}}</p>
                             </div>
-                            <div class="bg-light p-2">
-                                <div class="d-flex flex-row align-items-start"><img class="rounded-circle" [src]="user.profilePicture" width="40"><textarea class="form-control" style="resize: none;"></textarea></div>
-                                <div class="mt-2 text-right"><button class="btn btn-primary btn-sm" type="button" style="background-color: #68070f;">Comment</button></div>
+                        </div>
+                        <div class="d-flex row justify-content-center">
+                            <div class="col-6 custom-border text-center">
+                                <a href="#">
+                                    <img src="../../../assets/images/heart.png" alt="img" width="25px" height="25px" class="mr-3">
+                                </a>
+                            </div>
+                            <div class="col-6 custom-border text-center">
+                                <a href="">
+                                    <img src="../../../assets/images/comment.png" alt="img" width="25px" height="25px" class="mr-3">
+                                </a>
                             </div>
                         </div>
                     </div>
-                </ng-template>
-        </div>
-               
-
-            
-               
-    </div>
+                    <div class="bg-light p-2 d-flex align-items-center">
+                      <div class="d-flex align-items-center flex-grow-1">
+                        <img class="rounded-circle me-2" [src]="user.profilePicture" width="30">
+                        <textarea class="form-control flex-grow-1 me-2" style="resize: none;"></textarea>
+                      </div>
+                      <div class="mt-2 text-right">
+                        <button class="btn btn-primary btn-sm" type="button" style="background-color: #68070f;">Comment</button>
+                      </div>
+                    </div>
+                                       
+                </div>
+            </div>
+        </ng-template>
+      </div>     
   </div>
+</div>
