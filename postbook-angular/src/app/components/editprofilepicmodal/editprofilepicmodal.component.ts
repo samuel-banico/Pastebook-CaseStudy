@@ -1,41 +1,56 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
-
-
+import { UserService } from '@services/user.service';
 
 @Component({
-  selector: 'app-addphotomodal',
-  templateUrl: './addphotomodal.component.html',
-  styleUrls: ['./addphotomodal.component.css']
+  selector: 'app-editprofilepicmodal',
+  templateUrl: './editprofilepicmodal.component.html',
+  styleUrls: ['./editprofilepicmodal.component.css']
 })
-export class AddphotomodalComponent {
+export class EditprofilepicmodalComponent {
   pictureList: string[] = [];
   pictureFileList: File[] = [];
- 
   id: number = 0;
 
   constructor(
-    public modalRef: MdbModalRef<AddphotomodalComponent>,
-    
+    public modalRef: MdbModalRef<EditprofilepicmodalComponent>,
+    private userServive: UserService
   ) {}
 
   @ViewChild('fileInput') fileInput: ElementRef | undefined;
+
   closeModal() {
     this.modalRef.close();
   }
 
   saveData() {
-    
-
-    console.log('Data saved:');
-    console.log(this.pictureFileList);
+    this.userServive.editUserProfilePicture(this.pictureFileList[0]).subscribe(response => {
+      console.log('Profile picture changed');
+    });
+  
     this.closeModal();
   }
+  
 
   onFileSelected(event: any) {
-    // Handle file selection logic
-    const selectedFiles = event.target.files;
-    this.processFiles(selectedFiles);
+    const selectedFiles: FileList = event.target.files;
+    
+    // Clear previous selections
+    this.pictureList = [];
+    this.pictureFileList = [];
+
+    if (selectedFiles.length > 0) {
+      const file = selectedFiles[0];
+      
+      // Display the selected image
+      this.pictureList.push(URL.createObjectURL(file));
+      console.log('Picture List');
+      console.log(this.pictureList);
+
+      this.pictureFileList.push(file);
+      console.log('Picture File List');
+      console.log(this.pictureFileList);
+    }
   }
 
   onFileDragOver(event: any) {

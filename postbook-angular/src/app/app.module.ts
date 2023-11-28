@@ -34,6 +34,7 @@ import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { ScrollDirective } from './directives/scroll.directive';
 import { FriendOptionsComponent } from './components/friend-options/friend-options.component';
 import { OtherprofileComponent } from '@pages/otherprofile/otherprofile.component';
+import { EditprofilepicmodalComponent } from '@components/editprofilepicmodal/editprofilepicmodal.component';
 
 
 const appRoutes: Routes = [
@@ -85,7 +86,8 @@ const appRoutes: Routes = [
     NotFoundComponent,
     ResultsComponent,
     ScrollDirective,
-    FriendOptionsComponent
+    FriendOptionsComponent,
+    EditprofilepicmodalComponent
 
   ],
   imports: [
@@ -98,7 +100,7 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     MdbTooltipModule
   ],
-  exports: [RouterModule, CreatealbummodalComponent, AddphotomodalComponent],
+  exports: [RouterModule, CreatealbummodalComponent, AddphotomodalComponent, EditprofilepicmodalComponent],
   providers: [MdbModalService],
   bootstrap: [AppComponent]
 })
