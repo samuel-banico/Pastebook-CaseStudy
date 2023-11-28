@@ -33,7 +33,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { ScrollDirective } from './directives/scroll.directive';
 import { FriendOptionsComponent } from './components/friend-options/friend-options.component';
-import { OtherprofileComponent } from '@pages/otherprofile/otherprofile.component';
+import { OtherprofileComponent } from '@components/otherprofile/otherprofile.component';
+import { OtherfriendsComponent } from './pages/otherfriends/otherfriends.component';
+import { OtheralbumComponent } from './pages/otheralbum/otheralbum.component';
+import { OtherwallComponent } from './pages/otherwall/otherwall.component';
 
 
 const appRoutes: Routes = [
@@ -53,7 +56,10 @@ const appRoutes: Routes = [
   {path: 'albums', component: AlbumsComponent},
   {path: 'create', component: CreateAlbumComponent},
   {path: 'results', component: ResultsComponent},
-  {path: 'otherProfile', component: OtherprofileComponent},
+  {path: 'otherProfile', component: OtherwallComponent},
+  {path: 'otherwall', component: OtherwallComponent}, 
+  {path: 'otherfriends', component: OtherfriendsComponent},
+  {path: 'otheralbum', component: OtheralbumComponent},
   {path: '**', component: NotFoundComponent}
 
 ];
@@ -85,7 +91,11 @@ const appRoutes: Routes = [
     NotFoundComponent,
     ResultsComponent,
     ScrollDirective,
-    FriendOptionsComponent
+    FriendOptionsComponent,
+    OtherprofileComponent,
+    OtherfriendsComponent,
+    OtheralbumComponent,
+    OtherwallComponent
 
   ],
   imports: [

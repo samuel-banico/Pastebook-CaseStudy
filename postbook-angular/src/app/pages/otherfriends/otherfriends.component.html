@@ -1,0 +1,28 @@
+<app-navbar></app-navbar>
+<app-otherprofile></app-otherprofile>
+
+<!-- FRIENDS LIST HERE -->
+<!-- On repeat sa database keme (for) -->
+<div class="pale-background my-3 mx-3 mx-md-5">
+  <!-- First User -->
+  <h1 *ngIf="friends.length === 0; else hasFriends" class="d-flex justify-content-center align-items-center my-5">Currently No Friends 😥</h1>
+
+  <ng-template #hasFriends>
+    <div class="d-flex justify-content-center row" *ngFor="let friend of friends">
+      <div class="col-12 col-md-5 d-flex justify-content-start align-items-center border rounded-2 m-2 p-3">
+        <img [src]="friend.user?.profilePicture" alt="User 1" class="rounded-circle" width="60px" height="60px">
+        <div class="ml-3">
+          <h5 class="profile-name" style="font-size: 18px;">{{friend.user?.firstName}} {{friend.user?.lastName}}</h5>
+        </div>
+        <div class="ms-auto dropdown">
+          <app-friend-options></app-friend-options>
+        </div>
+        
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>

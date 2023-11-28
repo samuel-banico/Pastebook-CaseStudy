@@ -18,6 +18,7 @@ import { TokenService } from '@services/token.service';
 export class OtherprofileComponent implements OnInit {
   user: User = new User();
   userId: string = "";
+  friendRequestSent: boolean = false;
 
   constructor(
     private dataTransferService: DataTransferService,
@@ -30,11 +31,11 @@ export class OtherprofileComponent implements OnInit {
     this.tokenService.validateToken();
     
     this.userId = this.dataTransferService.data;
-    if(!this.userId) {
-      Swal.fire('Internal Server Error', 'Something happened lets go back', 'info').then( a => {
-        this.router.navigate(['']);
-      })
-    }
+    // if(!this.userId) {
+    //   Swal.fire('Internal Server Error', 'Something happened lets go back', 'info').then( a => {
+    //     this.router.navigate(['']);
+    //   })
+    // }
   }
 
   ngOnInit(): void {
@@ -47,6 +48,7 @@ export class OtherprofileComponent implements OnInit {
     console.log(this.user);
     this.friendService.sendFriendRequest(this.user).subscribe( (u : any) => {
       Swal.fire('Friend Request sent', `You have sent a friend request to ${this.user.firstName} ${this.user.lastName}`, 'success');
+      this.friendRequestSent = true;
     }/* , error => {
       console.log(error);
       Swal.fire('Internal Server Error', 'Something happened lets go back', 'info').then( a => {
