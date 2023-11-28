@@ -1,9 +1,8 @@
-
-
+<app-navbar></app-navbar>
 <div class="banner">
     <div class="banner-title d-flex flex-column justify-content-center align-items-center">
         <img [src]="user.profilePicture" alt="img" class="rounded-circle" width="150px" height="150px">
-        <h3 class="profile-name mt-4">{{user.firstName}} {{user.lastName}}<span class="designation">(CEO)</span>
+        <h3 class="profile-name mt-4">{{user.firstName}} {{user.lastName}}<span class="designation"></span>
             <img src="assets/images/add-friend.png" alt="Add Friend" class="add-friend-icon" (click)="addFriend()">
         </h3>
         <p class="blurb">{{user.userBio}}</p>
