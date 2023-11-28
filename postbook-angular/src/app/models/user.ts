@@ -13,6 +13,8 @@ export class User {
         public viewPublic?:boolean,
 
         // Other Details
-        public friendCount?: number
+        public friendCount?: number,
+
+        public friends?: User[]
     ){}
 }

@@ -29,6 +29,14 @@ namespace pastebook_db.Controllers
             if(album == null)
                 return NotFound(new { result = "no_album"});
 
+            if (album.AlbumImageList != null || album.AlbumImageList.Count > 0) 
+            {
+                foreach (var a in album.AlbumImageList)
+                {
+
+                }
+            }
+
             return Ok(album);
         }
 
@@ -45,9 +53,7 @@ namespace pastebook_db.Controllers
 
             foreach (var album in albums)
             {
-                var albumDto = _albumRepository.ConvertAlbumToAlbumDTO(album);
-
-                userAlbums.Add(albumDto);
+                userAlbums.Add(_albumRepository.ConvertAlbumToAlbumDTO(album));
             }
 
             return Ok(userAlbums);

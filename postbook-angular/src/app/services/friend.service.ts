@@ -24,8 +24,8 @@ export class FriendService {
   ) { }
 
   // Friend Request
-  getFriendRequests() : Observable<FriendRequest[]>{
-    return this.http.get<FriendRequest[]>(this.requestUrl + '/allRequest', {headers: this.headers});
+  getFriendRequests() : Observable<object>{
+    return this.http.get(this.requestUrl + '/allRequest', {headers: this.headers});
   };
 
   sendFriendRequest(friend: User) : Observable<any> {

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using NuGet.Packaging;
 using pastebook_db.Database;
 using pastebook_db.Models;
+using pastebook_db.Services.FunctionCollection;
 
 namespace pastebook_db.Data
 {
@@ -103,7 +104,9 @@ namespace pastebook_db.Data
 
         public List<Post>? GetAllPublicPosts() 
         {
-            return _context.Posts
+            try
+            {
+                return _context.Posts
                 .Include(p => p.PostCommentList)
                 .ThenInclude(u => u.User)
                 .Include(p => p.PostLikeList)
@@ -117,6 +120,13 @@ namespace pastebook_db.Data
                 .Where(p => p.IsPublic == true)
                 .OrderByDescending(p => p.CreatedOn)
                 .ToList();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+            
         } 
 
         // --- POST
@@ -141,7 +151,7 @@ namespace pastebook_db.Data
             _context.SaveChanges();
         }
 
-        // HELPER METHOD
+        // POST DTO
         public PostDTO ConvertPostToPostDTO(Post post)
         {
             var likeCount = 0;
@@ -159,7 +169,7 @@ namespace pastebook_db.Data
             {
                 Id = post.Id,
                 Content = post.Content,
-                IsPublic = post.IsPublic,          
+                IsPublic = post.IsPublic,
                 IsEdited = post.IsEdited,
                 CreatedOn = post.CreatedOn.ToString("yyyy-MM-dd"),
 
@@ -174,7 +184,7 @@ namespace pastebook_db.Data
                 PostCommentList = post.PostCommentList
             };
 
-            var UserPostDTO = _userRepository.ConvertUserToUserSendDTO(post.User);
+            var UserPostDTO = _friendRepository.ConvertUserToUserSendDTO(post.User);
 
             postDto.User = UserPostDTO;
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using pastebook_db.Data;
 using pastebook_db.Models;
+using pastebook_db.Services.FunctionCollection;
 using pastebook_db.Services.PasswordHash;
 
 namespace pastebook_db.Controllers
@@ -11,11 +12,13 @@ namespace pastebook_db.Controllers
     {
         private readonly UserRepository _userRepository;
         private readonly IPasswordHash _passwordHasher;
+        private readonly FriendRepository _friendRepository;
 
-        public UserController(UserRepository userRepository, IPasswordHash passwordHasher)
+        public UserController(UserRepository userRepository, IPasswordHash passwordHasher, FriendRepository friendRepository)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
+            _friendRepository = friendRepository;
         }
 
         [HttpGet]
@@ -30,7 +33,7 @@ namespace pastebook_db.Controllers
             var userSendDTOList = new List<UserSendDTO>();
             foreach (var user in userList) 
             {
-                var userDTO = _userRepository.ConvertUserToUserSendDTO(user);
+                var userDTO = _friendRepository.ConvertUserToUserSendDTO(user);
                 userSendDTOList.Add(userDTO);
             }
 
@@ -45,7 +48,7 @@ namespace pastebook_db.Controllers
             if (user == null)
                 return BadRequest(new { result = "user_not_found" });
 
-            var userDTO = _userRepository.ConvertUserToUserSendDTO(user);
+            var userDTO = _friendRepository.ConvertUserToUserSendDTO(user);
 
             return Ok(userDTO);
         }
@@ -59,7 +62,7 @@ namespace pastebook_db.Controllers
             if (user == null)
                 return BadRequest(new { result = "no_user" });
 
-            var userDTO = _userRepository.ConvertUserToUserSendDTO(user);
+            var userDTO = _friendRepository.ConvertUserToUserSendDTO(user);
 
             return Ok(userDTO);
         }
@@ -110,7 +113,7 @@ namespace pastebook_db.Controllers
             if (!_userRepository.UpdateUser(retreivedUser, false))
                 return BadRequest(new { result = "not_legitimate_email" });
 
-            var userDTO = _userRepository.ConvertUserToUserSendDTO(retreivedUser);
+            var userDTO = _friendRepository.ConvertUserToUserSendDTO(retreivedUser);
 
             return Ok(userDTO);
         }
@@ -136,7 +139,7 @@ namespace pastebook_db.Controllers
             if (!_userRepository.UpdateUser(retreivedUser, emailHasBeenEdited))
                 return BadRequest(new { result = "not_legitimate_email" });
 
-            var userDTO = _userRepository.ConvertUserToUserSendDTO(retreivedUser);
+            var userDTO = _friendRepository.ConvertUserToUserSendDTO(retreivedUser);
 
             return Ok(userDTO);
         }
@@ -149,12 +152,12 @@ namespace pastebook_db.Controllers
             if (retreivedUser == null)
                 return BadRequest(new { result = "user_not_found" });
 
-            retreivedUser.ProfilePicture = _userRepository.SaveImageToLocalStorage(image);
+            retreivedUser.ProfilePicture = HelperFunction.SaveImageToLocalStorage(image);
 
             if (!_userRepository.UpdateUser(retreivedUser, false))
                 return BadRequest(new { result = "not_legitimate_email" });
 
-            var userDTO = _userRepository.ConvertUserToUserSendDTO(retreivedUser);
+            var userDTO = _friendRepository.ConvertUserToUserSendDTO(retreivedUser);
 
             return Ok(userDTO);
         }
@@ -173,7 +176,7 @@ namespace pastebook_db.Controllers
             if (!_userRepository.UpdateUser(retreivedUser, false))
                 return BadRequest(new { result = "not_legitimate_email" });
 
-            var userDTO = _userRepository.ConvertUserToUserSendDTO(retreivedUser);
+            var userDTO = _friendRepository.ConvertUserToUserSendDTO(retreivedUser);
 
             return Ok(userDTO);
         }

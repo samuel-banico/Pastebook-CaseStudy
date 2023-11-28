@@ -13,12 +13,14 @@ namespace pastebook_db.Controllers
         private readonly FriendRequestRepository _friendRequestRepository;
         private readonly NotificationRepository _notificationRepository;
         private readonly UserRepository _userRepository;
+        private readonly FriendRepository _friendRepository;
 
-        public FriendRequestController(FriendRequestRepository friendRepository, NotificationRepository notificationRepository, UserRepository userRepository)
+        public FriendRequestController(FriendRequestRepository friendRequestRepository, NotificationRepository notificationRepository, UserRepository userRepository, FriendRepository friendRepository)
         {
-            _friendRequestRepository = friendRepository;
+            _friendRequestRepository = friendRequestRepository;
             _notificationRepository = notificationRepository;
             _userRepository = userRepository;
+            _friendRepository = friendRepository;
         }
 
         [HttpGet("allRequest")]
@@ -27,10 +29,18 @@ namespace pastebook_db.Controllers
             var token = Request.Headers["Authorization"];
             var user = _userRepository.GetUserByToken(token);
             var request = _friendRequestRepository.GetAllFriendRequest(user.Id);
-            if (request.Count == 0)
-                return NotFound(new { result = "no_requests" });
 
-            return Ok(request);
+            List<FriendRequestDTO> friendRequests = new List<FriendRequestDTO>();
+
+            if (request.Count == 0)
+                return Ok(friendRequests);
+
+            foreach (var r in request) 
+            {
+                friendRequests.Add(_friendRepository.ConvertFriendRequestToDTO(r));
+            }
+
+            return Ok(friendRequests);
         }
 
         [HttpPost("request")]

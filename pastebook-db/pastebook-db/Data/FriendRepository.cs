@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using pastebook_db.Database;
 using pastebook_db.Models;
+using pastebook_db.Services.FunctionCollection;
 
 namespace pastebook_db.Data
 {
@@ -15,6 +16,7 @@ namespace pastebook_db.Data
             _friendRequestRepository = friendRequestRepository;
         }
 
+        // Friend table
         public Friend? GetFriendship(Guid userId, Guid friendId)
         {
             var friend = _context.Friends.FirstOrDefault(x => (x.UserId == friendId && x.User_FriendId == userId) || (x.User_FriendId == friendId && x.UserId == userId));
@@ -58,14 +60,6 @@ namespace pastebook_db.Data
             return blockedFriends;
         }
 
-        public void AddedFriend(Friend addFriend, FriendRequest req)
-        {
-            _context.Friends.Add(addFriend);
-            _context.SaveChanges();
-
-            _friendRequestRepository.DeleteFriendRequest(req.Id);
-        }
-
         public void UpdateFriend(Friend friend)
         {
             _context.Entry(friend).State = EntityState.Modified;
@@ -77,6 +71,101 @@ namespace pastebook_db.Data
         {
             _context.Friends.Remove(friend);
             _context.SaveChanges();
+        }
+
+
+        public UserSendDTO ConvertUserToUserSendDTO(User user)
+        {
+            var userDTO = new UserSendDTO()
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Password = user.Password,
+                Birthday = user.Birthday.ToString("yyyy-MM-dd"),
+                Gender = (int)user.Gender,
+                UserBio = user.UserBio,
+                MobileNumber = user.MobileNumber,
+                ViewPublic = user.viewPublicPost,
+
+
+            };
+
+            if (File.Exists(user.ProfilePicture))
+            {
+                userDTO.ProfilePicture = HelperFunction.SendImageToAngular(user.ProfilePicture);
+            }
+            else
+            {
+                userDTO.ProfilePicture = HelperFunction.SendImageToAngular(Path.Combine("wwwroot", "images", "default.png"));
+            }
+
+            if (user.FriendList != null)
+            {
+                var allFriends = GetAllUserFriends(user.Id);
+                userDTO.FriendCount = allFriends.Count;
+
+                var allFriendDTO = new List<UserSendDTO>();
+                foreach (var friend in allFriends) 
+                {
+                    allFriendDTO.Add(ConvertFriendToUserSendDTO(friend));
+                }
+
+                userDTO.Friends = allFriendDTO;
+            }
+            else
+            {
+                userDTO.FriendCount = 0;
+                userDTO.Friends = new List<UserSendDTO>();
+            }
+
+
+            return userDTO;
+        }
+
+        public UserSendDTO ConvertFriendToUserSendDTO(User user)
+        {
+            var userDTO = new UserSendDTO()
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Password = user.Password,
+                Birthday = user.Birthday.ToString("yyyy-MM-dd"),
+                Gender = (int)user.Gender,
+                UserBio = user.UserBio,
+                MobileNumber = user.MobileNumber,
+                ViewPublic = user.viewPublicPost,
+
+
+            };
+
+            if (File.Exists(user.ProfilePicture))
+            {
+                userDTO.ProfilePicture = HelperFunction.SendImageToAngular(user.ProfilePicture);
+            }
+            else
+            {
+                userDTO.ProfilePicture = HelperFunction.SendImageToAngular(Path.Combine("wwwroot", "images", "default.png"));
+            }
+
+            return userDTO;
+        }
+
+        public FriendRequestDTO ConvertFriendRequestToDTO(FriendRequest friendRequest)
+        {
+            FriendRequestDTO newFriend = new();
+            newFriend.Id = friendRequest.Id;
+            newFriend.UserId = friendRequest.UserId;
+            newFriend.User_FriendId = friendRequest.User_FriendId;
+            newFriend.User_Friend = ConvertUserToUserSendDTO(friendRequest.User_Friend);
+
+            TimeSpan timeDiff = DateTime.Now - friendRequest.CreatedOn;
+            newFriend.CreatedOn = timeDiff.ToString();
+
+            return newFriend;
         }
     }
 }

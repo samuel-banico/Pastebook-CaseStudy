@@ -21,10 +21,13 @@ export class FriendrequestmodalComponent implements OnInit {
     private friendService: FriendService,
     private dataTransferService: DataTransferService,
     private router: Router
-  ) {}
+  ) {
+    this.getAllFriendRequest();
+
+
+  }
   
     ngOnInit(): void {
-      this.getFriendRequest();
     }
 
   close(): void {
@@ -38,9 +41,10 @@ export class FriendrequestmodalComponent implements OnInit {
     this.router.navigate(['otherProfile']) 
   }
 
-  getFriendRequest(){
-    this.friendService.getFriendRequests().subscribe((response: FriendRequest[])=>{
+  getAllFriendRequest(){
+    this.friendService.getFriendRequests().subscribe((response: any)=>{
       this.requests = response;
+      console.log(this.requests);
     })
   }
   

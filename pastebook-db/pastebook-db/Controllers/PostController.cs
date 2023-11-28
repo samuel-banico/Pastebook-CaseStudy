@@ -80,6 +80,9 @@ namespace pastebook_db.Controllers
         {
             var token = Request.Headers["Authorization"];
             var user = _userRepository.GetUserByToken(token);
+
+            if (user == null)
+                return NotFound(new { result = "no_user"});
             List<Post> friendsPosts = new();
 
             if (user.viewPublicPost)

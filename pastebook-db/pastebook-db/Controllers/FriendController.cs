@@ -47,7 +47,7 @@ namespace pastebook_db.Controllers
 
         // returns a list of user table
         [HttpGet("userFriendList")]
-        public ActionResult<List<User>> GetAllUserFriends()
+        public ActionResult<List<UserSendDTO>> GetAllUserFriends()
         {
             var token = Request.Headers["Authorization"];
             var user = _userRepository.GetUserByToken(token);
@@ -56,8 +56,13 @@ namespace pastebook_db.Controllers
             if(userFriend == null)
                 return NotFound(new { result = "no_friends" });
 
-            return Ok(userFriend);
+            List<UserSendDTO> friendList = new();
+            foreach (var friend in userFriend) 
+            {
+                friendList.Add(_friendRepository.ConvertUserToUserSendDTO(friend));
+            }
 
+            return Ok(userFriend);
         }
 
         [HttpGet("blocked")]
@@ -81,7 +86,7 @@ namespace pastebook_db.Controllers
             addFriend.IsBlocked = false;
             addFriend.CreatedOn = DateTime.Now;
 
-            _friendRepository.AddedFriend(addFriend, request);
+            _friendRequestRepository.AddedFriend(addFriend, request);
 
             _notificationRepository.CreateNotifAcceptedFriendRequest(addFriend);
 

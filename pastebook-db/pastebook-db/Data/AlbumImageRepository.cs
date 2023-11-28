@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using pastebook_db.Database;
 using pastebook_db.Models;
+using pastebook_db.Services.FunctionCollection;
 
 namespace pastebook_db.Data
 {
@@ -63,6 +64,47 @@ namespace pastebook_db.Data
         {
             _context.AlbumImages.Remove(albumImage);
             _context.SaveChanges();
+        }
+
+        public AlbumImageDTO ConvertAlbumImageToDTO(AlbumImage aI) 
+        {
+            AlbumImageDTO newAlbum = new();
+            newAlbum.Id = aI.Id;
+            newAlbum.IsEdited = aI.IsEdited;
+            newAlbum.AlbumId = aI.AlbumId;
+
+            TimeSpan timeDiff = DateTime.Now - aI.CreatedOn;
+            newAlbum.CreatedOn = HelperFunction.TimeDifference(timeDiff.TotalSeconds);
+
+            if (File.Exists(aI.Image))
+                newAlbum.Image = aI.Image;
+            else
+                newAlbum.Image = HelperFunction.SendImageToAngular(Path.Combine("wwwroot", "images", "default_albumImage.png"));
+
+            if (aI.AlbumImageLikesList == null || aI.AlbumImageLikesList.Count > 0)
+            {
+                newAlbum.LikeCount = 0;
+                newAlbum.AlbumImageLikesList = new List<AlbumImageLike>();
+            }
+            else 
+            {
+                newAlbum.LikeCount = aI.AlbumImageLikesList.Count;
+                newAlbum.AlbumImageLikesList = aI.AlbumImageLikesList;
+            }
+
+            if (aI.AlbumImageCommentsList == null || aI.AlbumImageCommentsList.Count > 0)
+            {
+                newAlbum.CommentCount = 0;
+                newAlbum.AlbumImageCommentsList = new List<AlbumImageComment>();
+            }
+            else
+            {
+                newAlbum.CommentCount = aI.AlbumImageCommentsList.Count;
+                newAlbum.AlbumImageCommentsList = aI.AlbumImageCommentsList;
+            }
+
+
+            return newAlbum;
         }
     }
 }

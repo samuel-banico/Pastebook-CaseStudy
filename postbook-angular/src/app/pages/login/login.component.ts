@@ -26,13 +26,13 @@ export class LoginComponent implements OnInit {
 
     private router: Router
   ) {
-    
+    if(this.sessionService.getToken()) {
+      this.tokenService.validateToken();
+      this.router.navigate(['login']);
+    }
   }
 
   ngOnInit(): void {
-    if(this.sessionService.getToken()) {
-    this.tokenService.validateToken();
-    }
     if(this.sessionService.getLoginCredentials()) {
       const encryptedUserCredentials = this.sessionService.getLoginCredentials();
       const userCredentials = this.encryptService.decrypt(encryptedUserCredentials);
@@ -49,7 +49,13 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    // sets the user credits whenever the user logs out
+    // login the user
+    this.userService.login(this.email, this.password).subscribe({next: this.successfullLogin.bind(this),
+      error: this.failedLogin.bind(this)
+    }) 
+  }
+
+  successfullLogin(response: Record<string, any>) {
     if(this.rememberMe) {
       const userCredentials = {email: this.email, password: this.password};
       this.sessionService.setLoginCredentials(this.encryptService.encrypt(userCredentials));
@@ -59,16 +65,7 @@ export class LoginComponent implements OnInit {
         this.sessionService.clearRememberMe();
       }
     }
-
-    // login the user
-    this.userService.login(this.email, this.password).subscribe({next: this.successfullLogin.bind(this),
-      error: this.failedLogin.bind(this)
-    }) 
-  }
-
-  successfullLogin(response: Record<string, any>) {
-    // sets the user's token
-    console.log('success');
+    
     this.sessionService.setToken(response['token']);
 
     this.router.navigate(['login']).then(()=>{
