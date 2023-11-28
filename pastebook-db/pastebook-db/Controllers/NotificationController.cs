@@ -60,6 +60,7 @@ namespace pastebook_db.Controllers
             var token = Request.Headers["Authorization"];
             var user = _userRepository.GetUserByToken(token);
 
+
             _repo.ClearNotification(user.Id);
 
             return Ok(new { result = "notification_seen" });

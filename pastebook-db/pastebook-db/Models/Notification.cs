@@ -13,6 +13,12 @@
         public virtual User? User { get; set; }
 
         // Notifications they will receive
+
+        // Foreign Key
+        // user to receive the notification
+        public Guid? UserRequestId { get; set; }
+        public virtual User? UserRequest { get; set; }
+
         public Guid? PostId { get; set; }
         public virtual Post? Post { get; set; }
         public Guid? AlbumId { get; set; }

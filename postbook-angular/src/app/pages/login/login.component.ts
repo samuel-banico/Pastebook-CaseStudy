@@ -31,22 +31,20 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.sessionService.getToken()) {
-      this.tokenService.validateToken();
-      this.router.navigate(['']);
-    } else {
-      if(this.sessionService.getLoginCredentials()) {
-        const encryptedUserCredentials = this.sessionService.getLoginCredentials();
-        const userCredentials = this.encryptService.decrypt(encryptedUserCredentials);
+    this.tokenService.validateToken();
+    }
+    if(this.sessionService.getLoginCredentials()) {
+      const encryptedUserCredentials = this.sessionService.getLoginCredentials();
+      const userCredentials = this.encryptService.decrypt(encryptedUserCredentials);
 
-        this.email = userCredentials.email;
-        this.password = userCredentials.password;
-        this.rememberMe = true;
-      }
-      else {
-        this.email = '';
-        this.password = '';
-        this.rememberMe = false;
-      }
+      this.email = userCredentials.email;
+      this.password = userCredentials.password;
+      this.rememberMe = true;
+    }
+    else {
+      this.email = '';
+      this.password = '';
+      this.rememberMe = false;
     }
   }
 

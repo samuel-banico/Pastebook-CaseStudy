@@ -10,9 +10,11 @@ import { PostService } from '@services/post.service';
 import { UserService } from '@services/user.service';
 import { SessionService } from '@services/session.service';
 import { ScrollService } from '@services/scroll.service';
+import { TokenService } from '@services/token.service';
+import { PostLikesService } from '@services/post-likes.service';
 
 import { User } from '@models/user';
-import { Post } from '@models/post';
+import { Post, PostLike } from '@models/post';
 import { Obj } from '@popperjs/core';
 
 
@@ -28,6 +30,10 @@ export class HomeComponent implements OnInit{
   // lastName: string;
   user: User = new User();
   posts: Post[] = [];
+  postLikes:PostLike[]=[];
+  postId?:string = '';
+  userId?:string = '';
+  postLiked:PostLike = new PostLike();
 
 
   constructor(
@@ -35,21 +41,18 @@ export class HomeComponent implements OnInit{
     private modalService: MdbModalService,
     private sessionService: SessionService,
     private scrollService: ScrollService,
+    private tokenService: TokenService,
+    private postLikeService:PostLikesService,
 
     private httpClient: HttpClient,
     private userService: UserService,
     private router: Router
     ){
-      let token: string = this.sessionService.getToken();
-      if(!token) {
-        this.router.navigate(['landing']);
-      }
-      else {
-        userService.getUserByToken().subscribe((response: Object) => {
-          this.user = response;
-      })
-      }
-    }
+      this.tokenService.validateToken();
+      userService.getUserByToken().subscribe((response: Object) => {
+        this.user = response;
+    })
+  } 
   
   ngOnInit(): void {
     this.getFeed();
@@ -76,5 +79,20 @@ export class HomeComponent implements OnInit{
       });
     }); 
   }
+
+  //Get all Post Likes
+  getAllPostLikes(){
+    this.postLikeService.getLikes().subscribe((response:any)=>{
+      this.postLikes = response;                                                                                                          
+    })
+  }
+
+  //PostLiked
+  // createLikedPost(){
+  //   this.postLikeService.likedPost(this.postId?,this.userId?).subscribe((response:any)=>{
+  //     this.postLikes = response;
+  //   })
+  // }
+
 }
 
