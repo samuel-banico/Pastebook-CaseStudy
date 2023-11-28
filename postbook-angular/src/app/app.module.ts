@@ -33,11 +33,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { ScrollDirective } from './directives/scroll.directive';
 import { FriendOptionsComponent } from './components/friend-options/friend-options.component';
+import { EditprofilepicmodalComponent } from '@components/editprofilepicmodal/editprofilepicmodal.component';
 import { OtherprofileComponent } from '@components/otherprofile/otherprofile.component';
 import { OtherfriendsComponent } from './pages/otherfriends/otherfriends.component';
 import { OtheralbumComponent } from './pages/otheralbum/otheralbum.component';
 import { OtherwallComponent } from './pages/otherwall/otherwall.component';
-
 
 const appRoutes: Routes = [
   // Does not need to login to access but should have no token to access
@@ -92,6 +92,7 @@ const appRoutes: Routes = [
     ResultsComponent,
     ScrollDirective,
     FriendOptionsComponent,
+    EditprofilepicmodalComponent,
     OtherprofileComponent,
     OtherfriendsComponent,
     OtheralbumComponent,
@@ -108,7 +109,7 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     MdbTooltipModule
   ],
-  exports: [RouterModule, CreatealbummodalComponent, AddphotomodalComponent],
+  exports: [RouterModule, CreatealbummodalComponent, AddphotomodalComponent, EditprofilepicmodalComponent],
   providers: [MdbModalService],
   bootstrap: [AppComponent]
 })
