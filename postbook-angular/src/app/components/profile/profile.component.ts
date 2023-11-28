@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { EditprofilepicmodalComponent } from '@components/editprofilepicmodal/editprofilepicmodal.component';
 import { User } from '@models/user';
-
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import Swal from 'sweetalert2';
 import { UserService } from '@services/user.service';
 import { SessionService } from '@services/session.service';
 
@@ -14,18 +15,22 @@ import { SessionService } from '@services/session.service';
 export class ProfileComponent implements OnInit {
   user: User = new User();
   profilePicture: string | null = null;
+  modalRef: MdbModalRef<EditprofilepicmodalComponent> | null = null;
+
+  // New properties for editable bio
+  isEditingBio = false;
+  editedBio: string = ''; // Initialize with an empty string
 
   constructor(
+    private modalService: MdbModalService,
     private userService: UserService,
     private sessionService: SessionService,
     private router: Router
   ) {
     let token: string = this.sessionService.getToken();
-    if(!token)
-    {
+    if (!token) {
       this.router.navigate(['page-not-found']);
-    }
-    else {
+    } else {
       this.userService.getUserByToken().subscribe((response: any) => {
         this.user = response;
         console.log(response);
@@ -51,5 +56,23 @@ export class ProfileComponent implements OnInit {
 
   changeImage() {
     // Your existing code for changing the image
+    this.modalRef = this.modalService.open(EditprofilepicmodalComponent);
+  }
+
+  // New methods for editable bio
+  startEditingBio() {
+    this.isEditingBio = true;
+    this.editedBio = this.user.userBio || ''; // Initialize with the current user bio or an empty string
+  }
+
+  saveEditedBio() {
+    // Save the edited bio to the user object or perform any necessary actions
+
+    console.log(this.editedBio);
+    this.isEditingBio = false;
+
+    this.userService.editBio(this.editedBio).subscribe(response => {
+      console.log('bio changed');
+    });
   }
 }
