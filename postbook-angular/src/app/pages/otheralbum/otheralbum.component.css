@@ -1,0 +1,28 @@
+.grid-template {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+}
+
+.grid-template .item {
+    flex: 0 0 calc(25% - 10px); /* 25% width for each item with a 10px margin between them */
+    margin: 5px;
+}
+
+.grid-template .item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.pale-background {
+    background-color: #f2f2f2; /* Adjust the color as needed */
+    padding: 20px; /* Adjust the padding as needed */
+    border-radius: 10px;
+}
+
+.album-name {
+    font-weight: 700;
+    color: #0b2154;
+}
+

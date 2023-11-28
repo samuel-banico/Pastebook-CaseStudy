@@ -13,11 +13,13 @@ namespace pastebook_db.Controllers
     {
         private readonly PostCommentRepository _postCommentRepository;
         private readonly NotificationRepository _notificationRepository;
+        private readonly UserRepository _userRepository;
 
-        public PostCommentController(PostCommentRepository postCommentRepository, NotificationRepository notificationRepository)
+        public PostCommentController(PostCommentRepository postCommentRepository, NotificationRepository notificationRepository, UserRepository userRepository)
         {
             _postCommentRepository = postCommentRepository;
             _notificationRepository = notificationRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet]
@@ -32,9 +34,9 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("allPostComments")]
-        public ActionResult<Post> GetAllPostComments(int id)
+        public ActionResult<Post> GetAllPostComments(Guid id)
         {
-            var postComment = _postCommentRepository.GetAllPostComments();
+            var postComment = _postCommentRepository.GetAllPostComments(id);
 
             if (postComment == null)
                 return NotFound(new { result = "no_post_comment" });
@@ -43,13 +45,15 @@ namespace pastebook_db.Controllers
         }
 
         [HttpPut("commentPost")]
-        public ActionResult<Post> CommentPost(Guid postId, Guid loggedUserId, string comment)
+        public ActionResult<Post> CommentPost(PostCommentDTO postCommentDTO)
         {
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
             var postComment = new PostComment
             {
-                PostId = postId,
-                UserId = loggedUserId,
-                Comment = comment,
+                PostId = postCommentDTO.PostId,
+                UserId = user.Id,
+                Comment = postCommentDTO.Comment,
                 CreatedOn = DateTime.Now,
                 IsEdited = false
             };
@@ -58,7 +62,7 @@ namespace pastebook_db.Controllers
 
             _notificationRepository.CreateNotifPostComment(postComment);
 
-            return Ok(new { result = "post_liked" });
+            return Ok(new { result = "post_comment" });
         }
 
         [HttpPut("edittedCommentPost")]

@@ -17,7 +17,7 @@ import { Album } from '@models/album';
     templateUrl: './create-album.component.html',
     styleUrls: ['./create-album.component.css']
 })
-export class CreateAlbumComponent implements OnInit {
+    export class CreateAlbumComponent implements OnInit {
     modalRef: MdbModalRef<AddphotomodalComponent> | null = null;
 
     constructor(
@@ -96,6 +96,8 @@ export class CreateAlbumComponent implements OnInit {
     }
 
     openModalAddPhoto() {
+        this.dataTransferService.data = this.albumId;
+        console.log(this.albumId);
         this.modalRef = this.modalService.open(AddphotomodalComponent)
       }
 }

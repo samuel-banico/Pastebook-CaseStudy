@@ -93,23 +93,31 @@ namespace pastebook_db.Data
                 Gender = (int)user.Gender,
                 UserBio = user.UserBio,
                 MobileNumber = user.MobileNumber,
-                ProfilePicture = SendImageToAngular(user.ProfilePicture),
                 ViewPublic = user.viewPublicPost,
 
                 
             };
+
+            if (File.Exists(user.ProfilePicture))
+            {
+                userDTO.ProfilePicture = SendImageToAngular(user.ProfilePicture);
+            }
+            else 
+            {
+                userDTO.ProfilePicture = SendImageToAngular(Path.Combine("wwwroot", "images", "default.png"));
+            }
 
             if (user.FriendList != null)
             {
                 userDTO.FriendCount = user.FriendList.Count;
                 userDTO.Friends = user.FriendList;
             }
-            else 
+            else
             {
                 userDTO.FriendCount = 0;
                 userDTO.Friends = new List<Friend>();
             }
-                
+
 
             return userDTO;
         }
@@ -122,7 +130,7 @@ namespace pastebook_db.Data
             byte[] imageData = System.IO.File.ReadAllBytes(filePath);
 
             return $"data:image/png;base64,{Convert.ToBase64String(imageData)}";
-        }
+        } 
 
         public string SaveImageToLocalStorage(IFormFile? file) 
         {

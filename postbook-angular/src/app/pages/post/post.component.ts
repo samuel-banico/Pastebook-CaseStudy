@@ -5,7 +5,8 @@ import { SessionService } from '@services/session.service';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 
 import { PostlikelistComponent } from '@components/postlikelist/postlikelist.component';
-
+import { PostService } from '@services/post.service';
+import { PostComment } from '@models/post';
 
 @Component({
   selector: 'app-post',
@@ -13,13 +14,13 @@ import { PostlikelistComponent } from '@components/postlikelist/postlikelist.com
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit {
-
   modalRef: MdbModalRef<PostlikelistComponent> | null = null
 
   constructor(
     private router: Router,
     private modalService: MdbModalService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private postService: PostService
   ){
     let token: string = this.sessionService.getToken();
     if(!token)
@@ -32,7 +33,8 @@ export class PostComponent implements OnInit {
     
   }
 
-    openLikeList() {
-      this.modalRef = this.modalService.open(PostlikelistComponent)
-    }
+  openLikeList() {
+    this.modalRef = this.modalService.open(PostlikelistComponent)
   }
+
+}

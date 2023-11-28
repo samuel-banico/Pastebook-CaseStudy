@@ -82,6 +82,7 @@ namespace pastebook_db.Data
             newNotif.UserId = friendRequest.User_FriendId;
             newNotif.UserRequestId = friendRequest.UserId;
 
+
             var requestedUser = getUserFromFriendRequest(friendRequest);
             newNotif.Content = $"Has sent you a friend request";
 
@@ -204,7 +205,7 @@ namespace pastebook_db.Data
         {
             var user = _context.Friends
                             .Include(f => f.User)
-                            .FirstOrDefault(f => f.Id == friend.UserId);
+                            .FirstOrDefault(f => f.Id == friend.UserId || f.Id == friend.User_FriendId);
 
             return user.User;
         }

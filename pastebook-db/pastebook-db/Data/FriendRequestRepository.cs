@@ -16,9 +16,9 @@ namespace pastebook_db.Data
 
         public List<FriendRequest> GetAllFriendRequest(Guid id)
         {
-            return _context.FriendRequests.Where(r => r.UserId == id || r.User_FriendId == id).ToList();    
+            return _context.FriendRequests.Where(r => r.User_FriendId == id).ToList();    
         }
-
+         
         public void RequestFriend(FriendRequest req)
         {
             _context.FriendRequests.Add(req);
@@ -32,7 +32,7 @@ namespace pastebook_db.Data
 
         public void DeleteFriendRequest(Guid friendRequestId) 
         {
-            var rejectRequest = _context.FriendRequests.Find(friendRequestId);
+            var rejectRequest = _context.FriendRequests.FirstOrDefault(f => f.Id == friendRequestId);
 
             if (rejectRequest != null)
             {
