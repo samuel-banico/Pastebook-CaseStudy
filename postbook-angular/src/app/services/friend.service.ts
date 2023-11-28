@@ -3,15 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SessionService } from './session.service';
 
-import { FriendRequest } from '@models/friend';
-import { Friend } from '@models/friend';
+import { Friend, FriendRequest } from '@models/friend';
 import { User } from '@models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FriendService {
-  request: FriendRequest[] = [];
 
   private baseUrl: string = 'https://localhost:7185/api/friend';
   private requestUrl: string = 'https://localhost:7185/api/friendRequest';
@@ -32,6 +30,10 @@ export class FriendService {
 
   sendFriendRequest(friend: User) : Observable<any> {
     return this.http.post<any>(this.requestUrl + `/request`, friend , {headers: this.headers} )
+  }
+
+  acceptFriendRequest(request : FriendRequest) : Observable<any> {
+    return this.http.post<any>(this.baseUrl + `/accepted?friendRequestId=${request.id}`,{}, {headers: this.headers})
   }
 
   // Friend

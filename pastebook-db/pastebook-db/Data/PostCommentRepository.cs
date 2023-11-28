@@ -18,9 +18,9 @@ namespace pastebook_db.Data
             return _context.PostComments.FirstOrDefault(pC => pC.Id == postCommentId);
         }
 
-        public List<PostComment> GetAllPostComments() 
+        public List<PostComment> GetAllPostComments(Guid id) 
         {
-            return _context.PostComments.ToList();
+            return _context.PostComments.Where(p => p.PostId == id).ToList();
         }
 
         public void CreatePostComment(PostComment postComment)
