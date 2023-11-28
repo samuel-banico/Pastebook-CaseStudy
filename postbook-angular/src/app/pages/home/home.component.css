@@ -42,3 +42,8 @@
     background-color: #3b5998;
   }
   
+
+  .custom-border {
+    border: 2px solid #0b2154;
+    border-radius: 10px;
+}

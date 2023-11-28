@@ -16,6 +16,7 @@ import { Album } from '@models/album';
 export class AddphotomodalComponent implements OnInit {
   pictureList: string[] = [];
   pictureFileList: File[] = [];
+
   album: Album = new Album();
   id: string = "";
 

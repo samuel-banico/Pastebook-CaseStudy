@@ -52,12 +52,6 @@ namespace pastebook_db.Models
         public string? MobileNumber { get; set; }
     }
 
-    public class EditUserReceiveProfileDTO
-    {
-        public string? UserBio { get; set; }
-        public IFormFile? ProfilePic { get; set; }
-    }
-
     public class UserSendDTO
     {
         public Guid? Id { get; set; }

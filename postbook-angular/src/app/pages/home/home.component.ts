@@ -12,7 +12,7 @@ import { SessionService } from '@services/session.service';
 import { ScrollService } from '@services/scroll.service';
 
 import { User } from '@models/user';
-import { Post } from '@models/post';
+import { Post, PostComment } from '@models/post';
 import { Obj } from '@popperjs/core';
 
 
@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit{
   // lastName: string;
   user: User = new User();
   posts: Post[] = [];
-
+  comment: PostComment = new PostComment();
 
   constructor(
     private postService:PostService,
@@ -60,9 +60,11 @@ export class HomeComponent implements OnInit{
     this.scrollService.loadData();
   }
 
-  // onSubmit(){
-  //   this.postService.createPost()
-  // }
+  onComment(){
+    this.postService.addComment(this.comment).subscribe((response: Record<string, any>)=>{
+      Swal.fire('Comment', 'Test', 'success');
+    });
+  }
   openModal() {
     this.modalRef = this.modalService.open(PostmodalComponent)
   }

@@ -141,16 +141,15 @@ namespace pastebook_db.Controllers
             return Ok(userDTO);
         }
 
-        [HttpPut("editUserProfile")]
-        public ActionResult<User> EditUserProfile([FromBody] EditUserReceiveProfileDTO user)
+        [HttpPut("editUserProfilePicture")]
+        public ActionResult<User> EditUserProfile(IFormFile image)
         {
             var token = Request.Headers["Authorization"];
             var retreivedUser = _userRepository.GetUserByToken(token);
             if (retreivedUser == null)
                 return BadRequest(new { result = "user_not_found" });
 
-            retreivedUser.UserBio = user.UserBio;
-            retreivedUser.ProfilePicture = _userRepository.SaveImageToLocalStorage(user.ProfilePic);
+            retreivedUser.ProfilePicture = _userRepository.SaveImageToLocalStorage(image);
 
             if (!_userRepository.UpdateUser(retreivedUser, false))
                 return BadRequest(new { result = "not_legitimate_email" });
@@ -159,5 +158,26 @@ namespace pastebook_db.Controllers
 
             return Ok(userDTO);
         }
+
+        [HttpPut("editUserProfileBio")]
+        public ActionResult<User> EditUserProfileBio([FromBody] string userBio)
+        {
+            var token = Request.Headers["Authorization"];
+            var retreivedUser = _userRepository.GetUserByToken(token);
+
+            if (retreivedUser == null)
+                return BadRequest(new { result = "user_not_found" });
+
+            retreivedUser.UserBio = userBio;
+
+            if (!_userRepository.UpdateUser(retreivedUser, false))
+                return BadRequest(new { result = "not_legitimate_email" });
+
+            var userDTO = _userRepository.ConvertUserToUserSendDTO(retreivedUser);
+
+            return Ok(userDTO);
+        }
+
+
     }
 }

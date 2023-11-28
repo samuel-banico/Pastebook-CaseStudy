@@ -14,4 +14,10 @@
         public Guid UserId { get; set; }
         public virtual User User { get; set; } = null!;
     }
+
+    public class PostCommentDTO
+    {
+        public Guid PostId { get; set; }
+        public string Comment { get; set; } = null!;
+    }
 }

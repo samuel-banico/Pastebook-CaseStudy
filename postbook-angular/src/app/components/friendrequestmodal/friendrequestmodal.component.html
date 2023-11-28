@@ -7,23 +7,24 @@
         <h5>Friend Requests</h5>
     </div>
 
-    <div class="modal-body d-flex align-items-center">
+    <div class="modal-body">
         <h3 *ngIf="requests.length === 0; else request">No Pending Requests</h3>
         <ng-template #request>
-            <div *ngFor="let request of requests">
-                <a class="friendrequest-item" routerLink="/otherprofile">
+            <!-- Move ngFor to create a new set of elements for each friend request -->
+            <div *ngFor="let request of requests" class="d-flex mb-2">
+                <a class="friendrequest-item" routerLink="/otherProfile">
                     <img src="../../../assets/images/jean.JPG" alt="" class="rounded-circle" style="width: 50px; height: 50px;">
-                    <div class="text-left user-item" style="display: inline-block; margin-left: 10px; width: 100px;" routerLink="/otherprofile">
+                    <div class="text-left user-item" style="display: inline-block; margin-left: 10px; width: 100px;" >
                         Jean DeVera
                     </div>
                 </a>
                 <div class="ml-auto">
-                    <input type="button" class="btn btn-danger btn-sm mx-2" style="background-color: #68070f;" value="Accept" (click)="Accept()">
+                    <input type="button" class="btn btn-danger btn-sm mx-2" style="background-color: #68070f;" value="Accept" (click)="accept(request)">
                     <input type="button" class="btn btn-secondary btn-sm mx-2" value="Reject" style="background-color: #0B2154;" (click)="Reject()">
                 </div>
                 <hr>
             </div>
         </ng-template>
     </div>
-    
 </div>
+
