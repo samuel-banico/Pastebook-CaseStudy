@@ -24,23 +24,7 @@
                     </div>
                 </div>
 
-                <div class="d-flex row justify-content-center">
-                    <div class="col-6 custom-border text-center">
-                        <a href="#">
-                            <img src="../../../assets/images/heart.png" alt="img" width="25px" height="25px" class="mr-3">
-                        </a>
-                    </div>
-                
-                    <div class="col-6 custom-border text-center">
-                        <a href="">
-                            <img src="../../../assets/images/comment.png" alt="img" width="25px" height="25px" class="mr-3">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-light p-2">
-                <div class="d-flex flex-row align-items-start"><img class="rounded-circle" [src]="post.user?.profilePicture" width="40"><textarea class="form-control" style="resize: none;"></textarea></div>
-                <div class="mt-2 text-right"><button class="btn btn-primary btn-sm" type="button" style="background-color: #68070f;">Comment</button></div>
+                <app-likecomment></app-likecomment>
             </div>
         </div>
     </div>
