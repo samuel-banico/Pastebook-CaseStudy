@@ -1,5 +1,5 @@
 <div class="d-flex row justify-content-center">
-    <div class="col-6 text-center"  style="background-color: #ECECEC; padding: 5px; border-radius: 5px;">
+    <div class="col-6 text-center">
         <a (click)="toggleLike()">
             <img [src]="isLiked ? '../../../assets/images/liked.png' : '../../../assets/images/like.png'" alt="img" width="30px" height="30px" class="mr-3">
         </a>
@@ -23,9 +23,9 @@
         <textarea class="form-control ml-1 shadow-none textarea"></textarea>
     </div>
     <div class="mt-2 text-right">
-        <button class="btn btn-danger btn-sm" type="button" style="background-color: #F875AA;">Comment</button>
-        &nbsp;
-        <button class="btn btn-primary btn-sm ml-1 shadow-none" type="button" style="background-color: #AEDEFC;">Cancel</button>
+        <button class="btn btn-primary btn-sm" type="button" style="background-color: #AEDEFC;">
+            <span class="comment-button-text">Comment</span>
+        </button>
     </div>
     <div *ngFor="" class="media mb-3">
         <img src="assets/images/work.jpg" alt="img" width="45px" height="45px" class="rounded-circle mr-2">
