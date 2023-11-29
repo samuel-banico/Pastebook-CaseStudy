@@ -51,7 +51,7 @@ const appRoutes: Routes = [
   // Needs token to access
   {path: '', component: HomeComponent},
   {path: 'settings', component: SettingsComponent},
-  {path: 'profile', component: WallComponent}, 
+  {path: 'profile', component: ProfileComponent}, 
   {path: 'friends', component: FriendsComponent},
   {path: 'post', component: PostComponent},
   {path: 'albums', component: AlbumsComponent},

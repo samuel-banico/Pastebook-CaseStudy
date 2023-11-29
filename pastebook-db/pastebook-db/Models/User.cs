@@ -52,6 +52,11 @@ namespace pastebook_db.Models
         public string? MobileNumber { get; set; }
     }
 
+    public class EditUserBioDTO 
+    {
+        public string? UserBio { get; set; }
+    }
+
     public class UserSendDTO
     {
         public Guid? Id { get; set; }
