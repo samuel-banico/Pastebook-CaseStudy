@@ -1,7 +1,7 @@
 <div class="d-flex row justify-content-center">
     <div class="col-6 text-center">
         <a (click)="toggleLike()">
-            <img [src]="isLiked ? '../../../assets/images/liked.png' : '../../../assets/images/like.png'" alt="img" width="30px" height="30px" class="mr-3">
+            <img [src]="isLiked ? '../../../assets/images/liked.png' : '../../../assets/images/like.png'" alt="img" width="30px" height="30px" class="mr-3 cursor">
         </a>
         &nbsp;
         <span *ngIf="likeCount > 0" (click)="toggleLikesDropdown()">{{ likeCount }}</span>
@@ -12,7 +12,7 @@
     
     <div class="col-6 text-center">
         <a (click)="toggleCommentsVisibility()">
-            <img src="../../../assets/images/comment.png" alt="img" width="25px" height="25px" class="mr-3">
+            <img src="../../../assets/images/comment.png" alt="img" width="25px" height="25px" class="mr-3 cursor">
         </a>
     </div>
     

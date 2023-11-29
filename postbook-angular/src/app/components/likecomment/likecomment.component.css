@@ -9,6 +9,10 @@
     --dark: #111111;
   }
 
+.cursor {
+    cursor: pointer;
+}
+
   /*** Button ***/
 .btn {
     font-weight: 500;
