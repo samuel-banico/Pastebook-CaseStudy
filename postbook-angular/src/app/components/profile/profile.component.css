@@ -36,25 +36,20 @@
     background-color: rgb(238, 238, 238)
 }
 
-/* Change background color when a button is hovered */
 .nav-item:hover {
-    border-bottom: 2px solid #AEDEFC; /* A slightly lighter shade, adjust as needed */
+    border-bottom: 2px solid #AEDEFC; 
     color: #000;
 }
 
-
-
-
-/* Optionally, add transition for smooth animation */
 .nav-item,
 .bg-buttons {
     transition: background-color 0.3s;
+    cursor:pointer;
 }
 
-/* Text color for the buttons */
 .nav-item {
     font-weight: 700;
-    color:#4b4b4b; /* Default text color */
+    color:#4b4b4b;
 }
 
 
@@ -85,11 +80,11 @@
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
-    transition: filter 0.3s ease; /* Add transition for smooth effect */
+    transition: filter 0.3s ease;
   }
   
   .profile-picture:hover {
-    filter: brightness(70%); /* Adjust the percentage for the desired dimming effect */
+    filter: brightness(70%);
   }
   
   .overlay {
@@ -101,23 +96,23 @@
     display: none;
     color: #fff;
     border-radius: 50%;
-    overflow: hidden; /* Ensure the overlay stays inside the rounded circle */
-    transition: background-color 0.3s ease; /* Add transition for smooth effect */
+    overflow: hidden;
+    transition: background-color 0.3s ease;
     text-align: center;
   }
 
   .overlay img {
-    width: 50px; /* Adjust the width to make the icon smaller */
-    height: auto; /* Maintain the aspect ratio */
-    display: block; /* Remove any default inline spacing */
-    margin: 0 auto; /* Center the image within the div */
+    width: 50px; 
+    height: auto;
+    display: block; 
+    margin: 0 auto;
   }
   
   
   .profile-picture-container:hover .overlay {
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
-    flex-direction: column; /* Display text below the image */
+    flex-direction: column; 
     justify-content: center;
     align-items: center;
 }
