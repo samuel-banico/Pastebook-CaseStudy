@@ -42,6 +42,7 @@ export class OtherprofileComponent implements OnInit {
     this.userService.getUserById(this.userId).subscribe((u : any) => {
       this.user = u;
     })
+    console.log(this.user);
   }
 
   addFriend(): void {

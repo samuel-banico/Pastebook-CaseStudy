@@ -3,10 +3,10 @@
 <div class="card mx-auto my-5" style="width: 50rem;">
     <div class="card-body">
         <div class="media">
-            <img src="assets/images/De Guzman, Christian.JPG" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
+            <img [src]="post.user?.profilePicture" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
             <div class="media-body">
-                <h5>Christian De Guzman</h5>
-                <p class="text-justify">Hays, ayaw q na. 🥺</p>
+                <h5>{{post.user?.firstName}} {{post.user?.lastName}}</h5>
+                <p class="text-justify">{{post.content}}</p>
                 <div class="bg-white">
                     <div class="d-flex flex-row fs-12">
                         <div class="like p-2 cursor" onclick="toggleLike()">
