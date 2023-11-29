@@ -20,7 +20,7 @@ export class AlbumService {
 
   constructor(
     private http: HttpClient,
-
+    private albumService:AlbumService,
     private sessionService: SessionService,
   ) { }
   
@@ -50,5 +50,10 @@ export class AlbumService {
     formData.append('image', image);
 
     return this.http.put(this.albumUrl+`/addCoverPhoto?albumId=${albumId}`, formData);
+  }
+
+  //PUT Edit Album Image
+  editAlbum(album:Album){
+    return this.http.put(this.albumImageUrl,album)
   }
 }
