@@ -103,7 +103,7 @@ const appRoutes: Routes = [
     OtherwallComponent,
     OtherprofileComponent,
     SinglephotomodalComponent,
-    EditAlbumModalComponent 
+    EditAlbumModalComponent
 
 
   ],

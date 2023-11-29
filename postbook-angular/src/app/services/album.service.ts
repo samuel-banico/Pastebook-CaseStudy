@@ -20,7 +20,6 @@ export class AlbumService {
 
   constructor(
     private http: HttpClient,
-    private albumService:AlbumService,
     private sessionService: SessionService,
   ) { }
   
