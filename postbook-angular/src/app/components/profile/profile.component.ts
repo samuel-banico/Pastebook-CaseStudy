@@ -40,6 +40,28 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  showTimeLine: boolean = true;
+  showFriends: boolean = false;
+  showAlbums: boolean = false;
+
+  displayTimeline(): void {
+    this.showTimeLine = true;
+    this.showFriends = false;
+    this.showAlbums = false;
+  }
+
+  displayFriends(): void {
+    this.showTimeLine = false;
+    this.showFriends = true;
+    this.showAlbums = false;
+  }
+
+  displayAlbums(): void {
+    this.showTimeLine = false;
+    this.showFriends = false;
+    this.showAlbums = true;
+  }
+
   showOverlay() {
     const overlay = document.querySelector('.overlay') as HTMLElement | null;
     if (overlay) {

@@ -14,18 +14,7 @@
         </div>
       </div>
       </a>
-    
-      <!-- Friends number -->
-      <!-- <a routerLink="/friends" class="text-dark text-decoration-none">
-        <div class="rounded-3 shadow container-fluid text-center p-2 border mb-3" style="border-color: #e0e0e0;">
-          <ul class="list-unstyled nav justify-content-center">
-              <li class="nav-item"><strong>Friends</strong></li>
-          </ul>
-          <p>user.FriendsNumber</p>
-        </div>
-      </a> -->
       
-      <!-- Online/Offline users -->
       <div class="rounded-3 shadow container-fluid text-center p-2 border" style="border-color: #e0e0e0;">
         <ul class="list-unstyled nav justify-content-center">
           <a class="text-dark text-decoration-none d-flex align-items-center">
@@ -39,20 +28,6 @@
             <p>{{u.firstName}} {{u.lastName}}</p>
           </a>
         </div>
-        <!-- ngFOR -->
-          
-          <!-- <a routerLink="/otherProfile" class="d-flex text-decoration-none text-dark">
-            <img src="../../../assets/images/jean.JPG" alt="" class="rounded-circle me-2" style="width: 25px; height: 25px;">
-            <p>friend.user?.firstNamelastName</p>
-          </a>
-          <a routerLink="/otherProfile" class="d-flex text-decoration-none text-dark">
-            <img src="../../../assets/images/jean.JPG" alt="" class="rounded-circle me-2" style="width: 25px; height: 25px;">
-            <p>friend.user?.firstNamelastName</p>
-          </a>
-          <a routerLink="/otherProfile" class="d-flex text-decoration-none text-dark">
-            <img src="../../../assets/images/jean.JPG" alt="" class="rounded-circle me-2" style="width: 25px; height: 25px;">
-            <p>friend.user?.firstNamelastName</p>
-          </a> -->
       </div> 
     </div>
     <div class="col-12 col-lg-9 vh-100" >
@@ -61,12 +36,10 @@
             <div class="input-group w-100">
               <input type="text" name="message" id="message" placeholder="What's on your mind?" class="form-control form-control-md" (click)="openModal()">
               <div class="input-group-append">
-                <!-- <button type="submit" class="btn btn-danger" style="background-color: #68070f;">Post</button> -->
               </div>
             </div>
           </form>
         </div>
-            <!-- Display Post -->
         <h1 *ngIf="posts.length === 0; else thereIsPost">No Post</h1>
         <ng-template #thereIsPost>
             <div class="mt-2 scroll-container" appInfiniteScroll (scrolled)="onScroll()">
@@ -84,11 +57,6 @@
                                 <a href="#">
                                     <img src="../../../assets/images/heart.png" alt="img" width="25px" height="25px" class="mr-3">
                                 </a>
-                            </div>
-                            <div class="bg-light p-2">
-                                <div class="d-flex flex-row align-items-start"><img class="rounded-circle" [src]="user.profilePicture" width="40">
-                                  <textarea class="form-control" style="resize: none;" name="comment" [(ngModel)]="comment.comment"></textarea></div>
-                                <div class="mt-2 text-right"><button class="btn btn-primary btn-sm" type="button" style="background-color: #68070f;" (click)="onComment()">Comment</button><button class="btn btn-primary btn-sm ml-1 shadow-none" type="button" style="background-color: #0B2154;">Cancel</button></div>
                             </div>
                         </div>
                     </div>
