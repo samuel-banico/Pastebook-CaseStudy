@@ -1,36 +1,35 @@
 <app-navbar></app-navbar>
 <app-profile></app-profile>
 
-<div class="pale-background  my-3 mx-3 mx-md-5">
-    <div class="grid-template container text-center mb-5">
+<div class="pale-background my-3 mx-3 mx-md-5">
         <div class="item">
-            <a href="javascript:void(0);" class="btn" (click)="openModal()"><img src="../../../assets/images/addPhoto.png" alt="Create Album" class="img-fluid"></a>
+            <a href="javascript:void(0);" class="btn" (click)="openModal()">
+                <img src="../../../assets/images/addPhoto.png" alt="Create Album" class="img-fluid">
+            </a>
             <h5 class="album-name">Create Album</h5>
         </div>
     
         <div class="d-flex align-items-center">
-            <h1  *ngIf="albumList.length === 0; else albums">No Albums</h1>
+            <h1 *ngIf="albumList.length === 0; else albums">No Albums</h1>
         </div>
         <ng-template #albums>
-            <div *ngFor="let album of albumList" class="item" style="width: 250px;">
-                <button class="bg-transparent" href="" class="btn p-0 m-0" (click)="toAlbum(album.id!)">
-                    <div class="card bg-transparent border-0" style="width: 18rem;" >
-                        <img [src]="album.coverAlbumImage" alt="" class="img-fluid rounded-2" style="width: 250px; height: 250px;">
-                        <div class="card-body p-0 d-flex flex-column align-items-start pl-1">
-                            <h5 class="card-title p-0 m-0">{{album.albumName}}</h5>
-                            <p class="card-text p-0 m-0">{{album.imageCount}} items</p>
+            <div class="row">
+                <div *ngFor="let album of albumList" class="col-md-4 mb-4">
+                    <button class="bg-transparent" href="" class="btn p-0 m-0" (click)="toAlbum(album.id!)">
+                        <div class="card bg-transparent border-0">
+                            <img [src]="album.coverAlbumImage" alt="" class="img-fluid rounded-2">
+                            <div class="card-body p-0 d-flex flex-column align-items-start pl-1">
+                                <h5 class="card-title p-0 m-0">{{album.albumName}}</h5>
+                                <p class="card-text p-0 m-0">{{album.imageCount}} items</p>
+                            </div>
                         </div>
-                    </div>
-                </button>
+                    </button>
+                </div>
             </div>
         </ng-template>
     </div>
 </div>
 
-
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-

@@ -51,7 +51,6 @@ export class AlbumService {
 
     return this.http.put(this.albumUrl+`/addCoverPhoto?albumId=${albumId}`, formData);
   }
-
   //PUT Edit Album Image
   editAlbum(album:Album){
     return this.http.put(this.albumImageUrl,album)

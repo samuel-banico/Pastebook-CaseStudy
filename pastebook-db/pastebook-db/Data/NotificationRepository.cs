@@ -91,14 +91,14 @@ namespace pastebook_db.Data
         }
 
         // Added
-        public void CreateNotifAcceptedFriendRequest(Friend friend)
+        public void CreateNotifAcceptedFriendRequest(Guid userId, Guid friendId)
         {
             var newNotif = new Notification();
             newNotif.HasSeen = false;
             newNotif.NotificationDate = DateTime.Now;
-            newNotif.UserId = friend.UserId;
+            newNotif.UserId = userId;
+            newNotif.UserRequestId= friendId;
 
-            var requestedUser = getUserFromFriend(friend);
             newNotif.Content = $"Accepted your friend request";
 
             _context.Notifications.Add(newNotif);

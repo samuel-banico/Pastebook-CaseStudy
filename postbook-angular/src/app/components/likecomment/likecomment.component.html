@@ -1,0 +1,35 @@
+<div class="d-flex row justify-content-center">
+    <div class="col-6 text-center">
+        <a (click)="toggleLike()">
+            <img [src]="isLiked ? '../../../assets/images/uvu.jpg' : '../../../assets/images/heart.png'" alt="img" width="25px" height="25px" class="mr-3">
+        </a> &nbsp;
+        <span *ngIf="likeCount > 0" (click)="toggleLikesDropdown()">{{ likeCount }}</span>
+        <div *ngIf="showLikesDropdown" class="likes-dropdown">
+            <p *ngFor="let likedUser of likedUsers">{{ likedUser }}</p>
+        </div>
+    </div>
+
+    <div class="col-6 text-center">
+        <a (click)="toggleCommentsVisibility()">
+            <img src="../../../assets/images/comment.png" alt="img" width="25px" height="25px" class="mr-3">
+        </a>
+    </div>
+</div>
+
+<!-- Comments section -->
+<div *ngIf="showComments" class="bg-light p-2">
+    <div class="d-flex flex-row align-items-start">
+        <img class="rounded-circle" src="assets/images/De Guzman, Christian.JPG" width="40">
+        <textarea class="form-control ml-1 shadow-none textarea"></textarea>
+    </div>
+    <div class="mt-2 text-right">
+        <button class="btn btn-primary btn-sm" type="button" style="background-color: #68070f;">Comment</button>
+        <button class="btn btn-primary btn-sm ml-1 shadow-none" type="button" style="background-color: #0B2154;">Cancel</button>
+    </div>
+    <div *ngFor="" class="media mb-3">
+        <img src="assets/images/work.jpg" alt="img" width="45px" height="45px" class="rounded-circle mr-2">
+        <div class="media-body">
+            <p class="card-text text-justify"><strong>Hehe</strong> Test</p>
+        </div>
+    </div>
+</div>

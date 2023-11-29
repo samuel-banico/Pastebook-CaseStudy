@@ -95,7 +95,7 @@ namespace pastebook_db.Controllers
             if (user == null)
                 return BadRequest(new { result = "no_user"});
 
-            var newAlbum  = new Album 
+            var newAlbum = new Album
             {
                 IsPublic = true,
                 UserId = user.Id,
