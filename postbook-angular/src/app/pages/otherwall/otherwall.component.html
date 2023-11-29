@@ -49,7 +49,7 @@
                         <div class="card-body">
                             <div class="media">
                                 <img src="assets/images/De Guzman, Christian.JPG" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
-                                <div class="media-body mb-4">
+                                <div class="media-body mb-4 post">
                                     <h5>{{item.user?.firstName}}</h5>
                                     <p class="card-text">{{item.content}}</p>
                                 </div>
@@ -58,20 +58,7 @@
                            <app-likecomment></app-likecomment>
                         </div>
                     </div>
-
-                    <div class="col-12 col-lg-9 vh-100">
                         <!-- <div class="middle-column"> -->
-                        <!-- <div class="middle-column"> -->
-                        <div class="rounded-3 shadow container-fluid border p-3" style="border-color: #e0e0e0;">
-                            <form class="form-inline">
-                                <div class="input-group w-100">
-                                    <input type="text" name="message" id="message" placeholder="What's on your mind?" class="form-control form-control-md" (click)="openModal()">
-                                    <div class="input-group-append">
-                                        <!-- <button type="submit" class="btn btn-danger" style="background-color: #68070f;">Post</button> -->
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
                         <!-- Display Post -->
                         <h1 *ngIf="posts.length === 0; else thereIsPost">No Post</h1>
                         <ng-template #thereIsPost>
@@ -80,7 +67,7 @@
                                     <div class="card-body">
                                         <div class="media">
                                             <img [src]="post.user?.profilePicture" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
-                                            <div class="media-body mb-4">
+                                            <div class="media-body mb-4 post">
                                                 <h5>{{post.user?.firstName}} {{post.user?.lastName}}</h5>
                                                 <p class="card-text">{{post.content}}</p>
                                             </div>
@@ -90,14 +77,6 @@
                                 </div>
                     <hr class="custom-hr">
                 </div>
-            </div>
-
-<script>
-    lightbox.option({
-        'resizeDuration': 200,
-        'wrapAround': true
-    })
-</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
