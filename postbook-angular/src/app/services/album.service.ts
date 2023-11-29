@@ -51,4 +51,8 @@ export class AlbumService {
 
     return this.http.put(this.albumUrl+`/addCoverPhoto?albumId=${albumId}`, formData);
   }
+
+  // deleteAlbum(albumId: string){
+
+  // }
 }

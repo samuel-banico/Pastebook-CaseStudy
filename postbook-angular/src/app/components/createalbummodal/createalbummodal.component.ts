@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 
 import { AlbumService } from '@services/album.service';
 import { SessionService } from '@services/session.service';
+import { Router } from '@angular/router';
 
 import { Album } from '@models/album';
 
@@ -24,6 +25,7 @@ export class CreatealbummodalComponent {
   constructor(
       public modalRef: MdbModalRef<CreatealbummodalComponent>,
       private albumService: AlbumService,
+      private router: Router,
       private sessionService: SessionService
     ) {}
 
@@ -54,6 +56,10 @@ export class CreatealbummodalComponent {
         text: `(${this.album.albumName}) has been added successfully`,
         icon: 'success'
       })
+
+      this.router.navigate(['albums']).then( a => {
+        window.location.href = '/albums';
+      });
 
       this.closeModal();
     })

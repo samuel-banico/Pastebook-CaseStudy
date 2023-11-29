@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
+import { Router } from '@angular/router';
 
 import { AlbumService } from '@services/album.service';
 import { SessionService } from '@services/session.service';
@@ -24,7 +25,9 @@ export class AddphotomodalComponent implements OnInit {
     private modalRef: MdbModalRef<AddphotomodalComponent>,
     private albumService: AlbumService,
     private tokenService: TokenService,
-    private dataTransferService: DataTransferService
+    private dataTransferService: DataTransferService,
+
+    private router: Router
   ) {
     this.tokenService.validateToken();
 
@@ -50,7 +53,7 @@ export class AddphotomodalComponent implements OnInit {
         console.log(a);
       });
     });
-    
+
     this.closeModal();
   }
 

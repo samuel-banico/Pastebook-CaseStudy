@@ -41,13 +41,14 @@ import { Album } from '@models/album';
     }
 
     ngOnInit(): void {
-        
-        console.log(this.albumId);
+        this.loadData();
+    }
+
+    loadData() {
         this.albumService.getAlbumById(this.albumId).subscribe(( a : any ) => {
             this.album = a;
             console.log(this.album);
         });
-
     }
 
     albumId: string = "";
@@ -55,6 +56,8 @@ import { Album } from '@models/album';
     isEditing: boolean = false;
     albumName: string = 'Album Name Here';
     editedAlbumName: string = '';
+
+
     confirmDelete() {
         Swal.fire({
             title: 'Are you sure?',
@@ -65,17 +68,28 @@ import { Album } from '@models/album';
             cancelButtonColor: '#3085d6',
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
-            if (result.isConfirmed) {
-                // Perform the actual deletion here
-                // You can call a service method to delete data or perform any other necessary action
-                Swal.fire(
-                    'Deleted!',
-                    'Your album has been deleted.',
-                    'success'
-                );
-            }
+            // if (result.isConfirmed) {
+            //     this.albumService.deleteAlbum(this.albumId).subscribe(
+            //         () => {
+            //             Swal.fire(
+            //                 'Deleted!',
+            //                 'Your album has been deleted.',
+            //                 'success'
+            //             );
+            //         },
+            //         (error) => {
+            //             console.error('Error deleting album:', error);
+            //             Swal.fire(
+            //                 'Error!',
+            //                 'There was an error deleting the album.',
+            //                 'error'
+            //             );
+            //         }
+            //     );
+            // }
         });
     }
+    
 
     toggleEdit() {
         this.isEditing = !this.isEditing;
@@ -86,23 +100,23 @@ import { Album } from '@models/album';
     }
 
     saveEdit() {
-    this.albumName = this.editedAlbumName;
-    this.isEditing = false;
+        this.albumName = this.editedAlbumName;
+        this.isEditing = false;
 
-    Swal.fire(
-        'Edited!',
-        'Your album name has been updated.',
-        'success'
-    );
+        Swal.fire(
+            'Edited!',
+            'Your album name has been updated.',
+            'success'
+        );
     }
 
     openModalAddPhoto() {
-    this.dataTransferService.data = this.albumId;
-    console.log(this.albumId);
-    this.modalRef = this.modalService.open(AddphotomodalComponent)
+        this.dataTransferService.data = this.albumId;
+        console.log(this.albumId);
+        this.modalRef = this.modalService.open(AddphotomodalComponent)
     }
 
     openModal() {
-    this.modalRef = this.modalService.open(EditAlbumModalComponent)
+        this.modalRef = this.modalService.open(EditAlbumModalComponent)
     }
 }
