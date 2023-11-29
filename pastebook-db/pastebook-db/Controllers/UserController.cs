@@ -160,7 +160,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpPut("editUserProfileBio")]
-        public ActionResult<User> EditUserProfileBio([FromBody] string userBio)
+        public ActionResult<User> EditUserProfileBio(string userBio)
         {
             var token = Request.Headers["Authorization"];
             var retreivedUser = _userRepository.GetUserByToken(token);
