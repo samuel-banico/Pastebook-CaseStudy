@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { HttpClient } from '@angular/common/http';
-
+import { AlbumService } from '@services/album.service';
+import { Album } from '@models/album';
 @Component({
   selector: 'app-edit-album-modal',
   templateUrl: './edit-album-modal.component.html',
@@ -11,9 +12,11 @@ export class EditAlbumModalComponent {
   editedAlbumName: string = '';
   editedAlbumDescription: string = '';
 
+  album:Album = new Album();
   constructor(
     public modalRef: MdbModalRef<EditAlbumModalComponent>,
-    private http: HttpClient
+    private http: HttpClient,
+    private albumService:AlbumService
   ) {}
 
   closeModal() {
@@ -38,4 +41,12 @@ export class EditAlbumModalComponent {
     //   });
       this.closeModal();
   }
+
+  //Edit the Album Image
+  updateAlbumImage():void{
+    this.albumService.editAlbum(this.album).subscribe((response: Record<string,any>) => {
+      this.album = response;
+    })
+  }
+
 }
