@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -50,8 +50,15 @@ export class AlbumService {
 
     return this.http.put(this.albumUrl+`/addCoverPhoto?albumId=${albumId}`, formData);
   }
+
   //PUT Edit Album Image
-  editAlbum(album:Album): Observable<Album>{
-    return this.http.put<Album>(this.albumUrl,album, {headers:this.headers})
+  editAlbum(album: Album): Observable<Album>{
+    return this.http.put<Album>(this.albumUrl, album)
+  }
+
+  deleteAlbum(albumId: string): Observable<object> {
+    const params = new HttpParams()
+        .set('albumId', albumId);
+    return this.http.delete(this.albumUrl, {params});
   }
 }

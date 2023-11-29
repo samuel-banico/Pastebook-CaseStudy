@@ -45,6 +45,10 @@ export class UserService {
     return this.http.get<any>(this.baseUrl + `/userIdFromToken`, {headers: this.headers});
   }
 
+  getUserByTokenHome() : Observable<Object>{
+    return this.http.get<any>(this.baseUrl + `/userIdFromTokenHome`, {headers: this.headers});
+  }
+
   getUserById(id: string) : Observable<Object>{
     return this.http.get<any>(this.baseUrl + `/${id}`);
   }

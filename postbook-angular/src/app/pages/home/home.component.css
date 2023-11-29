@@ -31,7 +31,8 @@
 
   /* Customize scrollbar appearance for WebKit browsers (Chrome, Safari) */
   .scroll-container::-webkit-scrollbar {
-    display: none; /* Set the width of the scrollbar */
+    display: none; 
+    /* Set the width of the scrollbar */
   }
   
   .right-column {

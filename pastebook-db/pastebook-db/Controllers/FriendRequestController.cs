@@ -23,6 +23,24 @@ namespace pastebook_db.Controllers
             _friendRepository = friendRepository;
         }
 
+        [HttpGet("sentRequest")]
+        public ActionResult<Friend> HasSendFriendRequest()
+        {
+            var userReq = Request.Query["userToken"];
+            var user = _userRepository.GetUserByToken(userReq);
+
+            var friendReq = Request.Query["friendId"];
+            var friendId = Guid.Parse(friendReq);
+
+            bool friends = false;
+            var friendship = _friendRequestRepository.HasSentRequest(user.Id, friendId);
+
+            if (friendship != null)
+                friends = true;
+
+            return Ok(friends);
+        }
+
         [HttpGet("allRequest")]
         public ActionResult<FriendRequest> GetAllFriendRequestsByUserId()
         {

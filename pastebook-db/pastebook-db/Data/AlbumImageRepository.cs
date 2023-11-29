@@ -77,7 +77,7 @@ namespace pastebook_db.Data
             newAlbum.CreatedOn = HelperFunction.TimeDifference(timeDiff.TotalSeconds);
 
             if (File.Exists(aI.Image))
-                newAlbum.Image = aI.Image;
+                newAlbum.Image = HelperFunction.SendImageToAngular(aI.Image);
             else
                 newAlbum.Image = HelperFunction.SendImageToAngular(Path.Combine("wwwroot", "images", "default_albumImage.png"));
 

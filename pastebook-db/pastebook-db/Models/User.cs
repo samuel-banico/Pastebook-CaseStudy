@@ -15,8 +15,9 @@ namespace pastebook_db.Models
         public string? ProfilePicture { get; set; }
         public string? UserBio { get; set; }
 
-        public bool viewPublicPost { get; set; }
+        public bool ViewPublicPost { get; set; }
         public bool IsCurrentlyActive { get; set; }
+        public string Salt { get; set; }
 
         public ICollection<Friend>? FriendList { get; set; }
     }

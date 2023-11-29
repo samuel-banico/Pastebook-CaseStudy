@@ -4,13 +4,14 @@ import { Router } from '@angular/router';
 import { SessionService } from '@services/session.service';
 import { FriendService } from '@services/friend.service';
 import { Friend } from '@models/friend';
+import { User } from '@models/user';
 @Component({
   selector: 'app-friends',
   templateUrl: './friends.component.html',
   styleUrls: ['./friends.component.css']
 })
 export class FriendsComponent implements OnInit{
-  friends: Friend[] = [];
+  friends: User[] = [];
 
   constructor(
     private sessionService: SessionService,
@@ -28,7 +29,7 @@ export class FriendsComponent implements OnInit{
  }
 
  getFriendList(){
-  this.friendService.getAllFriends(this.sessionService.getToken()).subscribe((response: Friend[])=>{
+  this.friendService.getAllFriends(this.sessionService.getToken(), 'token').subscribe((response: Friend[])=>{
     this.friends = response;
     console.log(response);
   });

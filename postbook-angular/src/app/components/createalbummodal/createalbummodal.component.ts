@@ -31,6 +31,7 @@ export class CreatealbummodalComponent {
 
   @ViewChild('fileInput') fileInput: ElementRef | undefined;
   closeModal() {
+    
     this.modalRef.close();
   }
 
@@ -56,10 +57,6 @@ export class CreatealbummodalComponent {
         text: `(${this.album.albumName}) has been added successfully`,
         icon: 'success'
       })
-
-      this.router.navigate(['albums']).then( a => {
-        window.location.href = '/albums';
-      });
 
       this.closeModal();
     })

@@ -89,7 +89,7 @@ namespace pastebook_db.Controllers
                 return NotFound(new { result = "no_user"});
             List<Post> friendsPosts = new();
 
-            if (user.viewPublicPost)
+            if (user.ViewPublicPost)
                 friendsPosts = _postRepository.GetAllPublicPosts();
             else
                 friendsPosts = _postRepository.GetAllPostOfFriends(user.Id);

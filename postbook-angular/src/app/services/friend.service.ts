@@ -36,12 +36,30 @@ export class FriendService {
     return this.http.post<any>(this.baseUrl + `/accepted?friendRequestId=${request.id}`,{}, {headers: this.headers})
   }
 
-  // Friend
-  getAllFriends(userId : string) : Observable<Friend[]>{
+  hasSentFriendRequest(friendId : string) : Observable<any> {
     const params = new HttpParams()
-        .set('userId', userId);
+        .set('userToken', this.sessionService.getToken())
+        .set('friendId', friendId);
 
+    return this.http.get(this.requestUrl + '/sentRequest', {params})
+  }
+
+  // Friend
+  getAllFriends(userId : string, use : string) : Observable<Friend[]>{
+    const params = new HttpParams()
+        .set('userId', userId)
+        .set('use', use);
+
+    console.log(userId);
     return this.http.get<Friend[]>(this.baseUrl + '/userFriendList', {params});
   };
+
+  isFriends(friendId : string) : Observable<any> {
+    const params = new HttpParams()
+        .set('userToken', this.sessionService.getToken())
+        .set('friendId', friendId);
+
+    return this.http.get(this.baseUrl + '/friend', {params})
+  }
   
 }

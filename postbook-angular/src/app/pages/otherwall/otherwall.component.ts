@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 
 import { PostmodalComponent } from '@components/postmodal/postmodal.component';
@@ -22,6 +22,7 @@ export class OtherwallComponent {
   modalRef: MdbModalRef<PostmodalComponent> | null = null;
   posts:Post[] = [];
   id: string = "";
+  @Input() isFriend: boolean = false;
 
   constructor(
     private modalService: MdbModalService,

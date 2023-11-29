@@ -21,40 +21,38 @@ export class CreateAlbumComponent implements OnInit {
     modalRefSinglePhoto: MdbModalRef<SinglephotomodalComponent> | null = null;
     modalRefEditPhoto: MdbModalRef<AddphotomodalComponent | EditAlbumModalComponent> | null = null;
 
-    constructor(
-        private router: Router,
-        private sessionService: SessionService,
-        private modalService: MdbModalService,
-        private dataTransferService: DataTransferService,
-        private tokenService: TokenService,
-        private albumService: AlbumService
-    ){
-        this.tokenService.validateToken();
-        
-        this.albumId = this.dataTransferService.data;
-        /*if(!this.albumId) {
-            Swal.fire('Server Error', 'Something happened lets go back', 'info').then( a => {
-                this.router.navigate(['albums']);
-            })
-        }*/
-    }
-
-    ngOnInit(): void {
-        this.loadData();
-    }
-
-    loadData() {
-        this.albumService.getAlbumById(this.albumId).subscribe(( a : any ) => {
-            this.album = a;
-            console.log(this.album);
-        });
-    }
-
     albumId: string = "";
     album: Album = new Album;
     isEditing: boolean = false;
     albumName: string = 'Album Name Here';
     editedAlbumName: string = '';
+
+    constructor(
+        private router: Router,
+        private sessionService: SessionService,
+        private modalService: MdbModalService,
+        private tokenService: TokenService,
+        private albumService: AlbumService
+    ){
+        this.tokenService.validateToken();
+        
+        this.albumId = this.sessionService.getAlbum();
+
+        this.loadData();
+    }
+
+    ngOnInit(): void {
+    }
+
+    loadData() {
+        console.log('start');
+        this.albumService.getAlbumById(this.albumId).subscribe(( a : any ) => {
+            this.album = a;
+            console.log(this.album.imageList);
+            console.log(a);
+
+        });
+    }
 
     confirmDelete() {
         Swal.fire({
@@ -66,25 +64,28 @@ export class CreateAlbumComponent implements OnInit {
             cancelButtonColor: '#3085d6',
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
-            // if (result.isConfirmed) {
-            //     this.albumService.deleteAlbum(this.albumId).subscribe(
-            //         () => {
-            //             Swal.fire(
-            //                 'Deleted!',
-            //                 'Your album has been deleted.',
-            //                 'success'
-            //             );
-            //         },
-            //         (error) => {
-            //             console.error('Error deleting album:', error);
-            //             Swal.fire(
-            //                 'Error!',
-            //                 'There was an error deleting the album.',
-            //                 'error'
-            //             );
-            //         }
-            //     );
-            // }
+            if (result.isConfirmed) {
+                this.albumService.deleteAlbum(this.albumId).subscribe(
+                    () => {
+                        Swal.fire(
+                            'Deleted!',
+                            'Your album has been deleted.',
+                            'success'
+                        ).then( a => {
+                            this.router.navigate(['profile']);
+                        });
+
+                    },
+                    (error) => {
+                        console.error('Error deleting album:', error);
+                        Swal.fire(
+                            'Error!',
+                            'There was an error deleting the album.',
+                            'error'
+                        );
+                    }
+                );
+            }
         });
     }
     
@@ -109,16 +110,15 @@ export class CreateAlbumComponent implements OnInit {
     }
 
     openModalAddPhoto(){
-        this.dataTransferService.data = this.albumId;
         console.log(this.albumId);
         this.modalRefAddPhoto = this.modalService.open(AddphotomodalComponent)
     }
 
     openSinglePhotoModal(){
-    this.modalRefSinglePhoto = this.modalService.open(SinglephotomodalComponent)
+        this.modalRefSinglePhoto = this.modalService.open(SinglephotomodalComponent)
     }
     
     openModal() {
-    this.modalRefEditPhoto = this.modalService.open(EditAlbumModalComponent)
+        this.modalRefEditPhoto = this.modalService.open(EditAlbumModalComponent)
     }
 }

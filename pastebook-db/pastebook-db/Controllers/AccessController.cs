@@ -54,7 +54,7 @@ namespace pastebook_db.Controllers
                 if (user == null)
                     return Unauthorized(new { result = "incorrect_credentials" });
 
-                if (!_hashPassword.VerifyPassword(userLogin.Password, user.Password))
+                if (!_hashPassword.VerifyPassword($"{userLogin.Password}_{user.Salt}", user.Password))
                     return Unauthorized(new { result = "incorrect_credentials" });
 
                 var createdtoken = _tokenController.Authenticate(user);
@@ -65,6 +65,9 @@ namespace pastebook_db.Controllers
                     id = user.Id,
                     token = createdtoken
                 };
+
+                user.IsCurrentlyActive = true;
+                _userRepository.UpdateUser(user, false);
 
                 return Ok(userLoginResponse);
             }
@@ -82,23 +85,51 @@ namespace pastebook_db.Controllers
             if (existingUser != null)
                 return BadRequest(new { result = "user_already_exist" });
 
+            var generatedSalt = HelperFunction.GenerateRandomString();
             var newUser = new User
             {
                 FirstName = userRegister.FirstName,
                 LastName = userRegister.LastName,
                 Email = userRegister.Email,
-                Password = _hashPassword.HashPassword(userRegister.Password),
+                Password = _hashPassword.HashPassword($"{userRegister.Password}_{generatedSalt}"),
                 Birthday = DateTime.Parse(userRegister.Birthday),
                 Gender = (Gender)userRegister.Gender,
                 MobileNumber = userRegister.MobileNumber,
                 ProfilePicture = HelperFunction.SaveImageToLocalStorage(null),
-                UserBio = "Hi, Everyone! I am new to Pastebook."
+                UserBio = "Hi, Everyone! I am new to Pastebook.",
+
+                ViewPublicPost = false,
+                IsCurrentlyActive = false,
+                Salt = generatedSalt
             };
 
             if (!_accessRepository.RegisterUser(newUser))
                 return BadRequest(new { result = "not_legitimate_email" });
 
             return Ok(new { result = "registered" });
+        }
+
+        [HttpPut("watch")]
+        public IActionResult Watch() 
+        {
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
+
+            var watch = Request.Query["watch"].ToString();
+
+            if (watch == "idle")
+                user.IsCurrentlyActive = false;
+            else if (watch == "active")
+                user.IsCurrentlyActive = true;
+            else
+                return BadRequest();
+
+            _userRepository.UpdateUser(user, false);
+
+            return Ok();
         }
 
         [HttpDelete("logout")]
@@ -111,6 +142,10 @@ namespace pastebook_db.Controllers
                 return BadRequest(new { result = "no_user" });
 
             _tokenController.DeleteAll(user.Id);
+
+            user.IsCurrentlyActive = false;
+            _userRepository.UpdateUser(user, false);
+
             return NoContent();
         }
     }

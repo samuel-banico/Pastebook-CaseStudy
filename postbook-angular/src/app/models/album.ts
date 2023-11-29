@@ -5,16 +5,16 @@ export class Album {
     isPublic?: boolean;
     isEdited?: boolean;
     createdOn?: string;
-    coverAlbumImage?: Uint8Array;
+    coverAlbumImage?: string;
     userId?: string;
 
     imageCount?: number;
-    ImageList?: AlbumImage[];
+    imageList?: AlbumImage[];
 }
 
 export class AlbumImage {
     id?: number;
-    image?: Uint8Array;
+    image?: string;
     createdOn?: string;
     isEdited?: boolean;
     likeCount?: number;

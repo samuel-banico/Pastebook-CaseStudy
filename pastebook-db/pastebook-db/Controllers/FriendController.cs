@@ -22,14 +22,21 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("friend")]
-        public ActionResult<Friend> GetFriendship(Guid userId, Guid friendId) 
+        public ActionResult<Friend> IsFriends() 
         {
-            var friendship = _friendRepository.GetFriendship(userId, friendId);
+            var userReq = Request.Query["userToken"];
+            var user = _userRepository.GetUserByToken(userReq);
 
-            if (friendship == null)
-                return NotFound(new { result = "not_friends" });
+            var friendReq = Request.Query["friendId"];
+            var friendId = Guid.Parse(friendReq);
 
-            return Ok(friendship);
+            bool friends = false;
+            var friendship = _friendRepository.GetFriendship(user.Id, friendId);
+
+            if (friendship != null)
+                friends = true;
+
+            return Ok(friends);
         }
 
         // returns a list of friends table
@@ -49,9 +56,25 @@ namespace pastebook_db.Controllers
         [HttpGet("userFriendList")]
         public ActionResult<List<UserSendDTO>> GetAllUserFriends()
         {
-            var id = Request.Query["userId"];
-            Guid userId = Guid.Parse(id);
-            var userFriend = _friendRepository.GetAllUserFriends(userId);
+            List<User>? userFriend = new();
+
+            var use = Request.Query["use"].ToString();
+
+            if (use == "id")
+            {
+                var id = Request.Query["userId"];
+                Guid userId = Guid.Parse(id);
+                userFriend = _friendRepository.GetAllUserFriends(userId);
+            }
+            else if (use == "token")
+            {
+                var token = Request.Query["userId"];
+                var user = _userRepository.GetUserByToken(token);
+                userFriend = _friendRepository.GetAllUserFriends(user.Id);
+            }
+            else
+                return BadRequest();
+            
 
             if(userFriend == null)
                 return NotFound(new { result = "no_friends" });
@@ -62,7 +85,7 @@ namespace pastebook_db.Controllers
                 friendList.Add(_friendRepository.ConvertUserToUserSendDTO(friend));
             }
 
-            return Ok(userFriend);
+            return Ok(friendList);
         }
 
         [HttpGet("blocked")]

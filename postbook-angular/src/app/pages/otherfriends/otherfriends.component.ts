@@ -29,7 +29,7 @@ export class OtherfriendsComponent {
  }
 
  getFriendList(){
-  this.friendService.getAllFriends(this.sessionService.getUser()).subscribe((response: Friend[])=>{
+  this.friendService.getAllFriends(this.sessionService.getUser(), 'id').subscribe((response: Friend[])=>{
     this.friends = response;
     console.log(response);
   });
