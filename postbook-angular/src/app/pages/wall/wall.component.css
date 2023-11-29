@@ -128,3 +128,9 @@
   .scroll-container::-webkit-scrollbar {
     display: none; /* Set the width of the scrollbar */
   }
+
+  .post h5 {
+    color: #33007C;
+    font-weight: bold;
+  }
+  

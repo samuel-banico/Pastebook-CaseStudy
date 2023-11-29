@@ -18,7 +18,7 @@
             <div class="card-body">
                 <div class="media">
                     <img [src]="post.user?.profilePicture" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
-                    <div class="media-body mb-4">
+                    <div class="media-body mb-4 post">
                         <h5>{{post.user?.firstName}} {{post.user?.lastName}}</h5>
                         <p class="card-text">{{post.content}}</p>
                     </div>
@@ -29,23 +29,6 @@
         </div>
     </div>
 </ng-template>  
-
-<script>
-        let liked = false;
-
-        function toggleLike() {
-            liked = !liked;
-            const likeButton = document.querySelector('.like i');
-            likeButton.className = liked ? 'fa fa-thumbs-up' : 'fa fa-thumbs-o-up';
-        }
-    </script>
-
-    <script>
-        lightbox.option({
-            'resizeDuration': 200,
-            'wrapAround': true
-        })
-    </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

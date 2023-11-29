@@ -24,12 +24,12 @@
 .profile-name,
 .album-name {
     font-weight: 700;
-    color: #0b2154;
+    color: #33007C;
 }
 
 .blurb {
     font-weight: 400;
-    color: #0b2154;
+    color: #33007C;
 }
 
 .bg-buttons {
@@ -38,7 +38,7 @@
 
 /* Change background color when a button is hovered */
 .nav-item:hover {
-    border-bottom: 2px solid #00aced; /* A slightly lighter shade, adjust as needed */
+    border-bottom: 2px solid #AEDEFC; /* A slightly lighter shade, adjust as needed */
     color: #000;
 }
 
