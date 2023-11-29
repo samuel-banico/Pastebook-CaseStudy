@@ -18,7 +18,8 @@ import { TokenService } from '@services/token.service';
 export class OtherprofileComponent implements OnInit {
   user: User = new User();
   userId: string = "";
-  friendRequestSent: boolean = false;
+  isFriend: boolean = false;
+  hasSentFriendRequest: boolean = false;
 
   constructor(
     private sessionService: SessionService,
@@ -31,6 +32,20 @@ export class OtherprofileComponent implements OnInit {
     this.tokenService.validateToken();
     
     this.userId = this.sessionService.getUser();
+    if(!this.userId) {
+      Swal.fire('Server Error', 'Something unexpected happened. Returning Home...', 'info');
+      this.router.navigate(['']);
+    }
+
+    this.friendService.isFriends(this.userId).subscribe( f => {
+      this.isFriend = f;
+      if(!f) {
+        this.friendService.hasSentFriendRequest(this.userId).subscribe( f => {
+          this.hasSentFriendRequest = f;
+          console.log(f);
+        })
+      }
+    })
   }
 
   ngOnInit(): void {
@@ -67,7 +82,7 @@ export class OtherprofileComponent implements OnInit {
     this.friendService.sendFriendRequest(this.user).subscribe( (u : any) => {
       Swal.fire('Friend Request sent', `You have sent a friend request to ${this.user.firstName} ${this.user.lastName}`, 'success');
       
-      this.friendRequestSent = true;
+      this.hasSentFriendRequest = true;
 
     }/* , error => {
       console.log(error);

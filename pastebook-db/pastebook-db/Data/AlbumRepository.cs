@@ -18,11 +18,12 @@ namespace pastebook_db.Data
             _albumImageRepository = albumImageRepository;
         }
 
-        public Album? GetAlbumById(Guid id)
+        public Album? GetAlbumById(Guid? id)
         {
             try
             {
                 return _context.Albums
+                .Include(a => a.AlbumImageList)
                 .Include(a => a.AlbumImageList)
                 .ThenInclude(aL => aL.AlbumImageLikesList)
                 .Include(a => a.AlbumImageList)
@@ -80,6 +81,26 @@ namespace pastebook_db.Data
         // To be edit
         public void DeleteAlbum(Album album)
         {
+            if (album.AlbumImageList != null)
+            {
+                foreach (var a in album.AlbumImageList)
+                {
+                    if (a.AlbumImageCommentsList != null) 
+                    {
+                        _context.AlbumImageComments.RemoveRange(a.AlbumImageCommentsList);
+                        _context.SaveChanges();
+                    }
+
+                    if (a.AlbumImageLikesList != null) 
+                    {
+                        _context.AlbumImageLikes.RemoveRange(a.AlbumImageLikesList);
+                        _context.SaveChanges();
+                    }
+                }
+
+                _context.AlbumImages.RemoveRange(album.AlbumImageList);
+            }
+
             _context.Albums.Remove(album);
             _context.SaveChanges();
         }
@@ -106,7 +127,7 @@ namespace pastebook_db.Data
                 var imageList = new List<AlbumImageDTO>();
                 foreach (var image in album.AlbumImageList) 
                 {
-                    _albumImageRepository.ConvertAlbumImageToDTO(image);
+                    imageList.Add(_albumImageRepository.ConvertAlbumImageToDTO(image));
                 }
 
                 albumDTO.ImageList = imageList;  

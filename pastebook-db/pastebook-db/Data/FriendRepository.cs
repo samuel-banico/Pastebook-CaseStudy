@@ -73,8 +73,7 @@ namespace pastebook_db.Data
             _context.SaveChanges();
         }
 
-
-        public UserSendDTO ConvertUserToUserSendDTO(User user)
+        public UserSendDTO ConvertUserToUserSendDTOHome(User user)
         {
             var userDTO = new UserSendDTO()
             {
@@ -87,9 +86,7 @@ namespace pastebook_db.Data
                 Gender = (int)user.Gender,
                 UserBio = user.UserBio,
                 MobileNumber = user.MobileNumber,
-                ViewPublic = user.viewPublicPost,
-
-
+                ViewPublic = user.ViewPublicPost,
             };
 
             if (File.Exists(user.ProfilePicture))
@@ -107,6 +104,59 @@ namespace pastebook_db.Data
                 userDTO.FriendCount = allFriends.Count;
 
                 var allFriendDTO = new List<UserSendDTO>();
+                foreach (var friend in allFriends)
+                {
+                    if (friend.IsCurrentlyActive) 
+                    {
+                        allFriendDTO.Add(ConvertFriendToUserSendDTO(friend));
+                    }
+                }
+
+                userDTO.Friends = allFriendDTO;
+            }
+            else
+            {
+                userDTO.FriendCount = 0;
+                userDTO.Friends = new List<UserSendDTO>();
+            }
+
+
+            return userDTO;
+        }
+
+        public UserSendDTO ConvertUserToUserSendDTO(User user)
+        {
+            var userDTO = new UserSendDTO()
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Password = user.Password,
+                Birthday = user.Birthday.ToString("yyyy-MM-dd"),
+                Gender = (int)user.Gender,
+                UserBio = user.UserBio,
+                MobileNumber = user.MobileNumber,
+                ViewPublic = user.ViewPublicPost,
+
+
+            };
+
+            if (File.Exists(user.ProfilePicture))
+            {
+                userDTO.ProfilePicture = HelperFunction.SendImageToAngular(user.ProfilePicture);
+            }
+            else
+            {
+                userDTO.ProfilePicture = HelperFunction.SendImageToAngular(Path.Combine("wwwroot", "images", "default.png"));
+            }
+
+            /*if (user.FriendList != null)
+            {
+                var allFriends = GetAllUserFriends(user.Id);
+                userDTO.FriendCount = allFriends.Count;
+
+                var allFriendDTO = new List<UserSendDTO>();
                 foreach (var friend in allFriends) 
                 {
                     allFriendDTO.Add(ConvertFriendToUserSendDTO(friend));
@@ -118,7 +168,7 @@ namespace pastebook_db.Data
             {
                 userDTO.FriendCount = 0;
                 userDTO.Friends = new List<UserSendDTO>();
-            }
+            }*/
 
 
             return userDTO;
@@ -137,7 +187,7 @@ namespace pastebook_db.Data
                 Gender = (int)user.Gender,
                 UserBio = user.UserBio,
                 MobileNumber = user.MobileNumber,
-                ViewPublic = user.viewPublicPost,
+                ViewPublic = user.ViewPublicPost,
 
 
             };

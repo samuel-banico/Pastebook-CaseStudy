@@ -4,8 +4,9 @@
         <img [src]="user.profilePicture" alt="img" class="rounded-circle" width="150px" height="150px">
         <h3 class="profile-name mt-4">
             {{user.firstName}} {{user.lastName}}
-            <img
-                *ngIf="!friendRequestSent; else friendRequestSentTemplate"
+            <div *ngIf="!isFriend">
+                <img
+                *ngIf="!hasSentFriendRequest; else friendRequestSentTemplate"
                 src="assets/images/add-friend.png"
                 alt="Add Friend"
                 class="add-friend-icon"
@@ -18,6 +19,7 @@
                     class="add-friend-icon"
                 />
             </ng-template>
+            </div>
         </h3>
         <p class="blurb">{{user.userBio}}</p>
     </div>
@@ -58,7 +60,7 @@
             </div>
     
             <div class="col-12 col-lg-9 mx-auto mt-4">
-              <app-otherwall *ngIf="showTimeLine"></app-otherwall>
+              <app-otherwall *ngIf="showTimeLine" [isFriend]="isFriend"></app-otherwall>
               <app-otherfriends *ngIf="showFriends"></app-otherfriends>
               <app-otheralbum *ngIf="showAlbums"></app-otheralbum>
             </div>

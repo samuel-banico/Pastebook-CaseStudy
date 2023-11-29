@@ -5,13 +5,6 @@ namespace pastebook_db.Services.FunctionCollection
 {
     public class HelperFunction
     {
-        /*private readonly IWebHostEnvironment _environment;
-
-        public HelperFunction(IWebHostEnvironment environment)
-        {
-            _environment = environment;
-        }*/
-
         public static string? SendImageToAngular(string? filePath)
         {
             if (filePath == null)
@@ -132,6 +125,40 @@ namespace pastebook_db.Services.FunctionCollection
                 return $"{(int)(seconds)} seconds";
 
             return $"{(int)(seconds)} second";
+        }
+
+        public static string GenerateRandomString()
+        {
+            string lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
+            string uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string numericChars = "0123456789";
+
+            string allChars = lowercaseChars + uppercaseChars + numericChars;
+
+            Random random = new Random();
+            char[] randomArray = new char[6];
+
+            // Ensure at least one character from each character set
+            randomArray[0] = lowercaseChars[random.Next(lowercaseChars.Length)];
+            randomArray[1] = uppercaseChars[random.Next(uppercaseChars.Length)];
+            randomArray[2] = numericChars[random.Next(numericChars.Length)];
+
+            // Fill the remaining characters randomly
+            for (int i = 3; i < 6; i++)
+            {
+                randomArray[i] = allChars[random.Next(allChars.Length)];
+            }
+
+            // Shuffle the array to randomize the order of characters
+            for (int i = 0; i < randomArray.Length - 1; i++)
+            {
+                int j = random.Next(i, randomArray.Length);
+                char temp = randomArray[i];
+                randomArray[i] = randomArray[j];
+                randomArray[j] = temp;
+            }
+
+            return new string(randomArray);
         }
     }
 }

@@ -351,10 +351,14 @@ namespace pastebook_db.Migrations
                     b.Property<string>("ProfilePicture")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Salt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserBio")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("viewPublicPost")
+                    b.Property<bool>("ViewPublicPost")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");

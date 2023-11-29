@@ -54,7 +54,6 @@ export class HomeComponent implements OnInit{
       this.tokenService.validateToken();
       userService.getUserByToken().subscribe((response: Object) => {
         this.user = response;
-        console.log(this.user);
     }, (err : any) => {
       if(err['error']['result'] === 'no_user') {
         Swal.fire('Internal Server Error', 'There was an issue in the server. Returning to Login', 'warning');

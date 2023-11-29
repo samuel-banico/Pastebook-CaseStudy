@@ -67,6 +67,20 @@ namespace pastebook_db.Controllers
             return Ok(userDTO);
         }
 
+        [HttpGet("userIdFromTokenHome")]
+        public ActionResult<UserSendDTO> GetUserByTokenHome()
+        {
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
+
+            var userDTO = _friendRepository.ConvertUserToUserSendDTOHome(user);
+
+            return Ok(userDTO);
+        }
+
         [HttpGet("getPassword")]
         public ActionResult<bool> GetUserPasswordById(string password)
         {
@@ -108,7 +122,7 @@ namespace pastebook_db.Controllers
             retreivedUser.LastName = user.LastName;
             retreivedUser.Birthday = DateTime.Parse(user.Birthday);
             retreivedUser.Gender = (Gender)user.Gender;
-            retreivedUser.viewPublicPost = user.ViewPublic;
+            retreivedUser.ViewPublicPost = user.ViewPublic;
 
             if (!_userRepository.UpdateUser(retreivedUser, false))
                 return BadRequest(new { result = "not_legitimate_email" });

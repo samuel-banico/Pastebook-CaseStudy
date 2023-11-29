@@ -63,7 +63,7 @@ const appRoutes: Routes = [
   {path: 'create', component: CreateAlbumComponent},
   {path: 'results', component: ResultsComponent},
   {path: 'AllNotifications', component: AllnotifsComponent},
-  {path: 'Profile/:fname:lname', component: OtherwallComponent},
+  {path: 'Profile/:fname:lname', component: OtherprofileComponent},
 
   {path: '**', component: NotFoundComponent}
 

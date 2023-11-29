@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using pastebook_db.Data;
 using pastebook_db.Models;
+using pastebook_db.Services.FunctionCollection;
 
 namespace pastebook_db.Controllers
 {
@@ -29,15 +30,9 @@ namespace pastebook_db.Controllers
             if(album == null)
                 return NotFound(new { result = "no_album"});
 
-            if (album.AlbumImageList != null || album.AlbumImageList.Count > 0) 
-            {
-                foreach (var a in album.AlbumImageList)
-                {
+            var albumDTO = _albumRepository.ConvertAlbumToAlbumDTO(album);
 
-                }
-            }
-
-            return Ok(album);
+            return Ok(albumDTO);
         }
 
         [HttpGet("allAlbumByUser")]
@@ -119,8 +114,7 @@ namespace pastebook_db.Controllers
         [HttpPut]
         public ActionResult<Album> UpdateAlbum(AlbumDTO newAlbum)
         {
-            Album album = new Album();
-            var albumToEdit = _albumRepository.GetAlbumById(album.Id);
+            var albumToEdit = _albumRepository.GetAlbumById(newAlbum.Id);
 
             if (albumToEdit == null)
                 return BadRequest(new { result = "no_album" });
@@ -152,13 +146,25 @@ namespace pastebook_db.Controllers
 
         // --- DELETE
         [HttpDelete]
-        public ActionResult<Album> DeleteAlbum(Guid albumImageId)
+        public ActionResult<Album> DeleteAlbum()
         {
-            var albumToDelete = _albumRepository.GetAlbumById(albumImageId);
+            var album = Request.Query["albumId"];
+            var albumId = Guid.Parse(album);
+            var albumToDelete = _albumRepository.GetAlbumById(albumId);
 
             if(albumToDelete == null)
                 return NotFound(new { result = "album_does_not_exist" });
 
+            // Delete Image from local storage
+            if (albumToDelete.AlbumImageList != null ) 
+            {
+                foreach (var image in albumToDelete.AlbumImageList)
+                {
+                    HelperFunction.RemoveImageFromLocalStorage(image.Image);
+                }
+            }
+
+            // Delete from database
             _albumRepository.DeleteAlbum(albumToDelete);
 
             return Ok(new { result = "album_deleted" });

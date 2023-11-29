@@ -7,10 +7,6 @@
                 
                 <h1 class="album-name">{{ album.albumName }}</h1>
                 <a (click)="openModal()"><img src="assets/images/edit.png" style="width: 15px; height: 15px; margin-left: 5px;"></a>
-                <!-- <h1 *ngIf="!isEditing" class="album-name">{{ album.albumName }}</h1> -->
-                <!-- <a *ngIf="!isEditing" (click)="toggleEdit()"><img src="assets/images/edit.png" style="width: 15px; height: 15px; margin-left: 5px;"></a> -->
-                <!-- <input *ngIf="isEditing" [(ngModel)]="editedAlbumName" class="ms-3">
-                <a *ngIf="isEditing" (click)="saveEdit()"><img src="../../../assets/images/save.png" style="width: 60px; height: 60px; margin-left: 5px;"></a> -->
             </div>
             <div>
                 <a class="me-3" (click)="confirmDelete()"><img src="assets/images/delete.png" style="width: 25px; height: 40px;"></a>
@@ -30,10 +26,10 @@
             </div>
           
             <!-- code ng FOR LOOP each image na meron kada album na nakastore sa database -->
-            <div *ngIf="album.ImageList?.length === 0">
+            <div *ngIf="album.imageList?.length === 0">
                 <h1>No Image</h1>
             </div>
-            <div *ngFor="let photos of album.ImageList">
+            <div *ngFor="let photos of album.imageList">
                 <div class="item with-background">
                     <a href="javascript:void(0);" class="btn" (click)="openSinglePhotoModal()">
                         <img [src]="photos.image" alt="" class="img-fluid">

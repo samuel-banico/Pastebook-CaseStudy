@@ -8,6 +8,7 @@ import { TokenService } from '@services/token.service';
 import { DataTransferService } from '@services/data-transfer.service';
 
 import { Album } from '@models/album';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-addphotomodal',
@@ -25,20 +26,18 @@ export class AddphotomodalComponent implements OnInit {
     private modalRef: MdbModalRef<AddphotomodalComponent>,
     private albumService: AlbumService,
     private tokenService: TokenService,
-    private dataTransferService: DataTransferService,
+    private sessionService: SessionService,
 
     private router: Router
   ) {
     this.tokenService.validateToken();
 
-    this.id = this.dataTransferService.data;
-    console.log(this.id);
+    this.id = this.sessionService.getAlbum();
   }
 
   ngOnInit(): void {
     this.albumService.getAlbumById(this.id).subscribe((a : any) => {
       this.album = a;
-      console.log(this.album);
     });
   }
 
@@ -50,7 +49,7 @@ export class AddphotomodalComponent implements OnInit {
   saveData() {
     this.pictureFileList.forEach(element => {
       this.albumService.createAlbumImage(this.id, element).subscribe((a:any) => {
-        console.log(a);
+        Swal.fire('New Photo/s Create', 'Your photo/s has been added to the album', 'success');
       });
     });
 

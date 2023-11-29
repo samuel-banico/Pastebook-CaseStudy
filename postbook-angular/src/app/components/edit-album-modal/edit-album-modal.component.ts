@@ -1,9 +1,12 @@
 import { Component} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
-import { HttpClient } from '@angular/common/http';
+
 import { AlbumService } from '@services/album.service';
+import { SessionService } from '@services/session.service';
+
 import { Album } from '@models/album';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-album-modal',
@@ -11,53 +14,33 @@ import { Album } from '@models/album';
   styleUrls: ['./edit-album-modal.component.css']
 })
 export class EditAlbumModalComponent{
-  editedAlbumName: string = '';
-  editedAlbumDescription: string = '';
-
-  albumId:string = '';
-  albumDefault:Album = new Album();
   album:Album = new Album();
+
   constructor(
-    public modalRef: MdbModalRef<EditAlbumModalComponent>,
-    private http: HttpClient,
-    private route: ActivatedRoute,
-    private albumService:AlbumService
+    public modalRef : MdbModalRef<EditAlbumModalComponent>,
+    private route : ActivatedRoute,
+
+    private albumService : AlbumService,
+    private sessionService: SessionService
   ) {
-    //This will get which album through id
-    // albumService.getAlbumById(this.albumId).subscribe((response:Object) => {
-    //   this.album = response;
-    // })
+    albumService.getAlbumById(this.sessionService.getAlbum()).subscribe((response:Object) => {
+      this.album = response;
+      console.log(this.album);
+    })
    }
 
   closeModal() {
     this.modalRef.close();
   }
 
-  saveData() {
-    // const albumId; 
-    // const apiUrl = `your_api_base_url/UpdateAlbum/${albumId}`;
-
-    // const updatedAlbum = {
-    //   AlbumName: this.editedAlbumName,
-    //   AlbumDescription: this.editedAlbumDescription
-    // };
-
-    // this.http.put(apiUrl, updatedAlbum)
-    //   .subscribe((response: any) => {
-    //     console.log('Album updated successfully:', response);
-    //     this.closeModal();
-    //   }, error => {
-    //     console.error('Error updating album:', error);
-    //   });
-      this.closeModal();
-  }
-
   //Edit the Album Image
   updateAlbum(){
     this.albumService.editAlbum(this.album).subscribe((response: Album) => {
      this.album = response;
-     console.log(response);
+     Swal.fire('Edit Album', 'Successfully edited your album', 'success');
     })
+
+    this.closeModal();
   }
 
 }

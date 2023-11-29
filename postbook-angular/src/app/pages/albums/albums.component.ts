@@ -7,7 +7,6 @@ import { CreatealbummodalComponent } from '@components/createalbummodal/createal
 import { SessionService } from '@services/session.service';
 import { TokenService } from '@services/token.service';
 import { AlbumService } from '@services/album.service';
-import { DataTransferService } from '@services/data-transfer.service';
 
 import { Album } from '@models/album';
 
@@ -27,7 +26,6 @@ export class AlbumsComponent implements OnInit {
       private sessionService: SessionService,
       private tokenService: TokenService,
       private albumService: AlbumService,
-      private dataTransferService: DataTransferService
     ) {
       this.tokenService.validateToken();
   }
@@ -44,8 +42,7 @@ export class AlbumsComponent implements OnInit {
   }
 
   toAlbum(albumId: string) {
-    this.dataTransferService.data = albumId;
+    this.sessionService.setAlbum(albumId);
     this.router.navigate(['create']);
-    console.log(albumId);
   }
 }

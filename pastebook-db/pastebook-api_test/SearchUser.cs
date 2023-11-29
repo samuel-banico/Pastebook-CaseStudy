@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestPlatform.Utilities;
 using pastebook_db.Data;
 using pastebook_db.Database;
 using pastebook_db.Models;
+using pastebook_db.Services.FunctionCollection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,17 @@ namespace pastebook_api_test
         public SearchUser(ITestOutputHelper output)
         {
             this.output = output;
+        }
+
+        [Fact]
+        public void Test_RandomNumber() 
+        {
+            // Arrange
+            var randomNumber = HelperFunction.GenerateRandomString();
+
+            output.WriteLine(randomNumber);
+
+            Assert.NotNull(randomNumber);
         }
 
         /*[Theory]

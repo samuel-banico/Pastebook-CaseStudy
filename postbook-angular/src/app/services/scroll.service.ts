@@ -12,7 +12,6 @@ export class ScrollService {
   constructor() { }
 
   initializeData(receivedData: Post[]) {
-    console.log(1);
     this.data = receivedData;
     this.loadVisibleData();
   }
