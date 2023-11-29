@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-
 import { AddphotomodalComponent } from '@components/addphotomodal/addphotomodal.component';
-
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { SessionService } from '@services/session.service';
 import { AlbumService } from '@services/album.service';
 import { DataTransferService } from '@services/data-transfer.service';
 import { TokenService } from '@services/token.service';
-
 import { Album } from '@models/album';
+import { SinglephotomodalComponent } from '@components/singlephotomodal/singlephotomodal.component';
 
 @Component({
     selector: 'CreateAlbumComponent',
@@ -18,7 +16,9 @@ import { Album } from '@models/album';
     styleUrls: ['./create-album.component.css']
 })
     export class CreateAlbumComponent implements OnInit {
-    modalRef: MdbModalRef<AddphotomodalComponent> | null = null;
+        modalRefAddPhoto: MdbModalRef<AddphotomodalComponent> | null = null;
+        modalRefSinglePhoto: MdbModalRef<SinglephotomodalComponent> | null = null;
+      
 
     constructor(
         private router: Router,
@@ -32,11 +32,11 @@ import { Album } from '@models/album';
         this.tokenService.validateToken();
         
         this.albumId = this.dataTransferService.data;
-        if(!this.albumId) {
+        /*if(!this.albumId) {
             Swal.fire('Server Error', 'Something happened lets go back', 'info').then( a => {
                 this.router.navigate(['albums']);
             })
-        }
+        }*/
     }
 
     ngOnInit(): void {
@@ -98,6 +98,10 @@ import { Album } from '@models/album';
     openModalAddPhoto() {
         this.dataTransferService.data = this.albumId;
         console.log(this.albumId);
-        this.modalRef = this.modalService.open(AddphotomodalComponent)
+        this.modalRefAddPhoto = this.modalService.open(AddphotomodalComponent)
+      }
+
+      openSinglePhotoModal(){
+        this.modalRefSinglePhoto = this.modalService.open(SinglephotomodalComponent)
       }
 }
