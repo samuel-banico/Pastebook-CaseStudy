@@ -59,13 +59,13 @@ export class SearchmodalComponent implements OnInit {
   userClicked(clickedUser: User) {
     this.close();
     this.dataTransferService.data = clickedUser.id;
-    this.router.navigate(['otherProfile']);
+    this.router.navigate(["Profile/"+clickedUser.firstName + "_" + clickedUser.lastName]);
   }
 
   showAllResults() {
     this.sessionService.setSearchUser(this.searchUser);
     this.close();
-    this.router.navigate(['results']).then(()=>{
+    this.router.navigate(['/results']).then(()=>{
       window.location.href = "/results";
     });
   }

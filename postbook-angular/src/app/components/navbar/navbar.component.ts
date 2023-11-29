@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { SessionService } from '@services/session.service';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { UserService } from '@services/user.service';
+import { User } from '@models/user';
 
 @Component({
   selector: 'app-navbar',
@@ -19,6 +20,7 @@ export class NavbarComponent implements OnInit {
 
   searchRef: MdbModalRef<SearchmodalComponent> | null = null;
   modalRef: MdbModalRef<NotifnavbarmodalComponent> | MdbModalRef<FriendrequestmodalComponent> | null = null;
+  user: User = new User;
 
   constructor(
     private router: Router,
@@ -34,6 +36,16 @@ export class NavbarComponent implements OnInit {
         }
       }
     });
+
+    let token: string = this.sessionService.getToken();
+    if (!token) {
+      this.router.navigate(['page-not-found']);
+    } else {
+      this.userService.getUserByToken().subscribe((response: any) => {
+        this.user = response;
+        
+      });
+    }
     }
 
   ngOnInit(): void {
@@ -75,6 +87,9 @@ export class NavbarComponent implements OnInit {
     this.searchRef = this.modalService.open(SearchmodalComponent)
   }
 
+  toProfile(){
+    this.router.navigate(['profile/'+this.user.firstName+'_'+this.user.lastName])
+  }
  
 }
 
