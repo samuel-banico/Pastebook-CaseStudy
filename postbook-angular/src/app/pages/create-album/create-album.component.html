@@ -1,43 +1,48 @@
 <app-navbar></app-navbar>
-<div class="mt-t pt-5"></div>
 
-<div class="pale-background my-3 mx-3 mx-md-5">
-    <div class="d-flex justify-content-between align-items-center">
-        <div class="d-flex">
-            
-            <h1 class="album-name">{{ album.albumName }}</h1>
-            <a (click)="openModal()"><img src="assets/images/edit.png" style="width: 15px; height: 15px; margin-left: 5px;"></a>
-            <!-- <h1 *ngIf="!isEditing" class="album-name">{{ album.albumName }}</h1> -->
-            <!-- <a *ngIf="!isEditing" (click)="toggleEdit()"><img src="assets/images/edit.png" style="width: 15px; height: 15px; margin-left: 5px;"></a> -->
-            <!-- <input *ngIf="isEditing" [(ngModel)]="editedAlbumName" class="ms-3">
-            <a *ngIf="isEditing" (click)="saveEdit()"><img src="../../../assets/images/save.png" style="width: 60px; height: 60px; margin-left: 5px;"></a> -->
+<div class="my-3 mx-3 mx-md-5" style="margin-top: 5rem !important;">
+    <div class="pale-background ">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex">
+                
+                <h1 class="album-name">{{ album.albumName }}</h1>
+                <a (click)="openModal()"><img src="assets/images/edit.png" style="width: 15px; height: 15px; margin-left: 5px;"></a>
+                <!-- <h1 *ngIf="!isEditing" class="album-name">{{ album.albumName }}</h1> -->
+                <!-- <a *ngIf="!isEditing" (click)="toggleEdit()"><img src="assets/images/edit.png" style="width: 15px; height: 15px; margin-left: 5px;"></a> -->
+                <!-- <input *ngIf="isEditing" [(ngModel)]="editedAlbumName" class="ms-3">
+                <a *ngIf="isEditing" (click)="saveEdit()"><img src="../../../assets/images/save.png" style="width: 60px; height: 60px; margin-left: 5px;"></a> -->
+            </div>
+            <div>
+                <a class="me-3" (click)="confirmDelete()"><img src="assets/images/delete.png" style="width: 25px; height: 40px;"></a>
+            </div>
         </div>
         <div>
-            <a class="me-3" (click)="confirmDelete()"><img src="assets/images/delete.png" style="width: 25px; height: 40px;"></a>
+            <p>{{album.albumDescription}}</p>
+            <p>{{album.createdOn}}</p>
+        </div> 
+    </div>
+
+    <div class="pale-background mt-3">
+        <div class="grid-template container text-center">
+            <div class="item">    
+                <h5 class="album-name">Add Photo</h5>
+                <a (click)="openModalAddPhoto()"><img src="../../../assets/images/addPhoto.png" alt="Add Photo" class="img-fluid"></a>     
+            </div>
+          
+            <!-- code ng FOR LOOP each image na meron kada album na nakastore sa database -->
+            <div *ngIf="album.ImageList?.length === 0">
+                <h1>No Image</h1>
+            </div>
+            <div *ngFor="let photos of album.ImageList">
+                <div class="item with-background">
+                    <a href="javascript:void(0);" class="btn" (click)="openSinglePhotoModal()">
+                        <img [src]="photos.image" alt="" class="img-fluid">
+                    </a>   
+                </div>
+            </div>
         </div>
     </div>
-    <div>
-        <p>{{album.albumDescription}}</p>
-        <p>{{album.createdOn}}</p>
-    </div> 
 </div>
-
-<div class="pale-background ">
-    <div class="grid-template container text-center">
-        <div class="item">    
-            <h5 class="album-name">Add Photo</h5>
-            <a (click)="openModalAddPhoto()"><img src="../../../assets/images/addPhoto.png" alt="Add Photo" class="img-fluid"></a>     
-        </div>
-      
-        <!-- code ng FOR LOOP each image na meron kada album na nakastore sa database -->
-        <div class="item with-background">
-            <h5 class="album-name">@item.Photo hehe</h5>
-            <a href="javascript:void(0);" class="btn" (click)="openSinglePhotoModal()"><img src="../../../assets/images/cat.jpeg" alt="" class="img-fluid"></a>   
-        </div>
-    </div>
-    
-</div>
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

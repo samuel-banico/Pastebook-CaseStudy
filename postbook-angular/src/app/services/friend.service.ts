@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SessionService } from './session.service';
 
@@ -37,9 +37,11 @@ export class FriendService {
   }
 
   // Friend
-  getAllFriends() : Observable<Friend[]>{
-    return this.http.get<Friend[]>(this.baseUrl + '/userFriendList', {headers: this.headers});
-  };
+  getAllFriends(userId : string) : Observable<Friend[]>{
+    const params = new HttpParams()
+        .set('userId', userId);
 
+    return this.http.get<Friend[]>(this.baseUrl + '/userFriendList', {params});
+  };
   
 }

@@ -16,18 +16,13 @@ import { SinglephotomodalComponent } from '@components/singlephotomodal/singleph
     templateUrl: './create-album.component.html',
     styleUrls: ['./create-album.component.css']
 })
-    export class CreateAlbumComponent implements OnInit {
-
-        modalRefAddPhoto: MdbModalRef<AddphotomodalComponent> | null = null;
-        modalRefSinglePhoto: MdbModalRef<SinglephotomodalComponent> | null = null;
-      
-
+export class CreateAlbumComponent implements OnInit {
+    modalRefAddPhoto: MdbModalRef<AddphotomodalComponent> | null = null;
+    modalRefSinglePhoto: MdbModalRef<SinglephotomodalComponent> | null = null;
     modalRefEditPhoto: MdbModalRef<AddphotomodalComponent | EditAlbumModalComponent> | null = null;
-
 
     constructor(
         private router: Router,
-
         private sessionService: SessionService,
         private modalService: MdbModalService,
         private dataTransferService: DataTransferService,
@@ -60,7 +55,6 @@ import { SinglephotomodalComponent } from '@components/singlephotomodal/singleph
     isEditing: boolean = false;
     albumName: string = 'Album Name Here';
     editedAlbumName: string = '';
-
 
     confirmDelete() {
         Swal.fire({
@@ -114,7 +108,6 @@ import { SinglephotomodalComponent } from '@components/singlephotomodal/singleph
         );
     }
 
-
     openModalAddPhoto(){
         this.dataTransferService.data = this.albumId;
         console.log(this.albumId);
@@ -128,5 +121,4 @@ import { SinglephotomodalComponent } from '@components/singlephotomodal/singleph
     openModal() {
     this.modalRefEditPhoto = this.modalService.open(EditAlbumModalComponent)
     }
-
 }

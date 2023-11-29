@@ -3,7 +3,9 @@ import { Router } from '@angular/router';
 
 import { SessionService } from '@services/session.service';
 import { FriendService } from '@services/friend.service';
+import { TokenService } from '@services/token.service';
 import { Friend } from '@models/friend';
+import { User } from '@models/user';
 
 @Component({
   selector: 'app-otherfriends',
@@ -11,17 +13,15 @@ import { Friend } from '@models/friend';
   styleUrls: ['./otherfriends.component.css']
 })
 export class OtherfriendsComponent {
-  friends: Friend[] = [];
+  friends: User[] = [];
 
   constructor(
     private sessionService: SessionService,
     private friendService: FriendService,
+    private tokenService: TokenService,
     private router: Router
   ) {
-      let token: string = this.sessionService.getToken();
-      if(!token) {
-        this.router.navigate(['page-not-found']);
-      }
+      this.tokenService.validateToken();
     }
 
  ngOnInit(): void {
@@ -29,7 +29,7 @@ export class OtherfriendsComponent {
  }
 
  getFriendList(){
-  this.friendService.getAllFriends().subscribe((response: Friend[])=>{
+  this.friendService.getAllFriends(this.sessionService.getUser()).subscribe((response: Friend[])=>{
     this.friends = response;
     console.log(response);
   });

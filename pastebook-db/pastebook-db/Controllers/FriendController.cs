@@ -49,9 +49,9 @@ namespace pastebook_db.Controllers
         [HttpGet("userFriendList")]
         public ActionResult<List<UserSendDTO>> GetAllUserFriends()
         {
-            var token = Request.Headers["Authorization"];
-            var user = _userRepository.GetUserByToken(token);
-            var userFriend = _friendRepository.GetAllUserFriends(user.Id);
+            var id = Request.Query["userId"];
+            Guid userId = Guid.Parse(id);
+            var userFriend = _friendRepository.GetAllUserFriends(userId);
 
             if(userFriend == null)
                 return NotFound(new { result = "no_friends" });
