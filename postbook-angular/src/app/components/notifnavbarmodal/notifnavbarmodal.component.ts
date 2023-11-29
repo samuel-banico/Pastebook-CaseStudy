@@ -6,6 +6,7 @@ import { Notification } from '@models/notification'; // Import the Model
 import { Album } from '@models/album';
 import { DataTransferService } from '@services/data-transfer.service';
 import { User } from '@models/user';
+import { AllNotifsService } from '@services/all-notifs.service';
 
 @Component({
   selector: 'app-notifnavbarmodal',
@@ -15,12 +16,12 @@ import { User } from '@models/user';
 export class NotifnavbarmodalComponent implements OnInit {
   notifs:Notification[] = [];
   user:User = new User();
-  //notif:Notification = new Notification();
     constructor(
       public modalRef: MdbModalRef<NotifnavbarmodalComponent>,
       private router: Router, 
       private notifService:NotifNavbarModalService,
-      private dataTransferService:DataTransferService
+      private dataTransferService:DataTransferService,
+      private allNotifService:AllNotifsService
     ) {}
     close(): void {
       const closeMessage = 'Modal closed';
@@ -32,17 +33,12 @@ export class NotifnavbarmodalComponent implements OnInit {
     }
 
     ngOnInit(): void {
-      this.getAllNotifications();
       this.getUnseenNotifications();
       this.clearAllNotifications();
     }
 
-    //Get All Notifications
-    getAllNotifications(){
-      this.notifService.getAllNotif().subscribe((response:any)=>{
-        this.notifs = response;
-        console.log(response);                                                                                                           
-      })
+    clickedGetAllNotifications():void{
+      this.router.navigate(['/AllNotifications']);
     }
 
     //Get Unseen Notifications

@@ -38,4 +38,37 @@ export class SessionService {
   clearRememberMe() : void {
     localStorage.removeItem('rememberMe');
   }
+
+  // Temp Storage
+  setSearchUser(value: string): void {
+    sessionStorage.setItem('search',value);
+  }
+
+  setUser(value: string): void {
+    sessionStorage.setItem('user',value);
+  }
+
+  setPost(value: string): void {
+    sessionStorage.setItem('post',value);
+  }
+
+  setAlbum(value: string): void {
+    sessionStorage.setItem('album',value);
+  }
+
+  getSearchUser(): string {
+    return sessionStorage.getItem('search')!;
+  }
+
+  getUser(): string {
+    return sessionStorage.getItem('user')!;
+  }
+
+  getPost(): string {
+    return sessionStorage.getItem('post')!;
+  }
+
+  getAlbum(): string {
+    return sessionStorage.getItem('album')!;
+  }
 }

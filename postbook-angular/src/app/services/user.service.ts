@@ -69,9 +69,8 @@ export class UserService {
     return this.http.put<User>(this.baseUrl + `/editUserProfilePicture`, formData, {headers: this.headers});
   }
 
-  editBio(bio: string) : Observable<Object> {
-    console.log('ethan pogi');
-    return this.http.put<User>(this.baseUrl + `/editUserProfileBio?userBio${bio}`, {} , {headers: this.headers});
+  editBio(userBio: string) : Observable<Object> {
+    return this.http.put<User>(this.baseUrl + `/editUserProfileBio`, { userBio } , {headers: this.headers});
   } 
   
 } 

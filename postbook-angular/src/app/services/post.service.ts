@@ -32,6 +32,11 @@ export class PostService {
       return this.http.post(this.baseUrl, post);
     }
 
+    //Get Single Post
+    getPost(id: string):Observable<Object>{
+      return this.http.get<any>(this.baseUrl + `?postId=${id}`, {headers: this.headers});
+    }
+    
     // -- 
     getUserTimeline():Observable<Post[]>{
       return this.http.get<Post[]>(this.baseUrl + '/ownUserTimeline',{ headers: this.headers });

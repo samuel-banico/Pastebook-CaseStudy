@@ -88,7 +88,7 @@ namespace pastebook_db.Controllers
 
             _friendRequestRepository.AddedFriend(addFriend, request);
 
-            _notificationRepository.CreateNotifAcceptedFriendRequest(addFriend);
+            _notificationRepository.CreateNotifAcceptedFriendRequest(addFriend.UserId, addFriend.User_FriendId);
 
             return Ok(new { result = "request_accepted", request});
         }
