@@ -57,6 +57,7 @@ export class ProfileComponent implements OnInit {
   }
 
   displayAlbums(): void {
+    console.log('albums');
     this.showTimeLine = false;
     this.showFriends = false;
     this.showAlbums = true;

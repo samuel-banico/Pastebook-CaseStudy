@@ -107,8 +107,6 @@ const appRoutes: Routes = [
     SinglephotomodalComponent,
     EditAlbumModalComponent ,
     LikecommentComponent
-
-
   ],
   imports: [
     BrowserModule,
