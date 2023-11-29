@@ -115,18 +115,16 @@ import { SinglephotomodalComponent } from '@components/singlephotomodal/singleph
     }
 
 
-
+    openModalAddPhoto(){
         this.dataTransferService.data = this.albumId;
         console.log(this.albumId);
         this.modalRefAddPhoto = this.modalService.open(AddphotomodalComponent)
-      }
+    }
 
-      openSinglePhotoModal(){
-        this.modalRefSinglePhoto = this.modalService.open(SinglephotomodalComponent)
-      }
-
-  
-
+    openSinglePhotoModal(){
+    this.modalRefSinglePhoto = this.modalService.open(SinglephotomodalComponent)
+    }
+    
     openModal() {
     this.modalRefEditPhoto = this.modalService.open(EditAlbumModalComponent)
     }
