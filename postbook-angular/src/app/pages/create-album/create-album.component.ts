@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 import { AddphotomodalComponent } from '@components/addphotomodal/addphotomodal.component';
+import { EditAlbumModalComponent } from '@components/edit-album-modal/edit-album-modal.component';
 
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { SessionService } from '@services/session.service';
@@ -18,7 +19,7 @@ import { Album } from '@models/album';
     styleUrls: ['./create-album.component.css']
 })
     export class CreateAlbumComponent implements OnInit {
-    modalRef: MdbModalRef<AddphotomodalComponent> | null = null;
+    modalRef: MdbModalRef<AddphotomodalComponent | EditAlbumModalComponent> | null = null;
 
     constructor(
         private router: Router,
@@ -85,19 +86,23 @@ import { Album } from '@models/album';
     }
 
     saveEdit() {
-        this.albumName = this.editedAlbumName;
-        this.isEditing = false;
+    this.albumName = this.editedAlbumName;
+    this.isEditing = false;
 
-        Swal.fire(
-            'Edited!',
-            'Your album name has been updated.',
-            'success'
-        );
+    Swal.fire(
+        'Edited!',
+        'Your album name has been updated.',
+        'success'
+    );
     }
 
     openModalAddPhoto() {
-        this.dataTransferService.data = this.albumId;
-        console.log(this.albumId);
-        this.modalRef = this.modalService.open(AddphotomodalComponent)
-      }
+    this.dataTransferService.data = this.albumId;
+    console.log(this.albumId);
+    this.modalRef = this.modalService.open(AddphotomodalComponent)
+    }
+
+    openModal() {
+    this.modalRef = this.modalService.open(EditAlbumModalComponent)
+    }
 }

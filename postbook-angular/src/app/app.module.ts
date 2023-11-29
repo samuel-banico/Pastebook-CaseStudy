@@ -39,6 +39,7 @@ import { OtherprofileComponent } from '@components/otherprofile/otherprofile.com
 import { OtherfriendsComponent } from './pages/otherfriends/otherfriends.component';
 import { OtheralbumComponent } from './pages/otheralbum/otheralbum.component';
 import { OtherwallComponent } from './pages/otherwall/otherwall.component';
+import { EditAlbumModalComponent } from './components/edit-album-modal/edit-album-modal.component';
 
 const appRoutes: Routes = [
   // Does not need to login to access but should have no token to access
@@ -99,7 +100,8 @@ const appRoutes: Routes = [
     OtherfriendsComponent,
     OtheralbumComponent,
     OtherwallComponent,
-    OtherprofileComponent 
+    OtherprofileComponent,
+    EditAlbumModalComponent 
 
   ],
   imports: [
