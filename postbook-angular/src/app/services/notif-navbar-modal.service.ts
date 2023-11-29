@@ -25,12 +25,6 @@ constructor(
 
   ) {  
 }
-
-  //Get All Notification
-  getAllNotif():Observable<Notification[]>{
-    return this.http.get<Notification[]>(this.baseUrl + '/allNotification',{ headers: this.headers })
-  };
-
   //Get Unseen Notification
   getUnseenNotif():Observable<Notification[]>{
     return this.http.get<Notification[]>(this.baseUrl + '/unseenNotification', {headers: this.headers })

@@ -86,22 +86,25 @@ getFeed(){
     this.scrollService.getVisibleData().subscribe((data) => {
       this.posts = data;
     });
-  }); 
+  }
+  openModal() {
+    this.modalRef = this.modalService.open(PostmodalComponent)
+  }
+ 
+  getFeed(){
+    this.postService.getUserFeed().subscribe((response: Post[]) =>{
+      this.scrollService.initializeData(response);
+
+      this.scrollService.getVisibleData().subscribe((data) => {
+        this.posts = data;
+      });
+    }); 
+  }
+
+  //Get all Post Likes
+  getAllPostLikes(){
+    this.postLikeService.getLikes().subscribe((response:any)=>{
+      this.postLikes = response;                                                                                                          
+    })
+  }
 }
-
-//Get all Post Likes
-getAllPostLikes(){
-  this.postLikeService.getLikes().subscribe((response:any)=>{
-    this.postLikes = response;                                                                                                          
-  })
-}
-
-//PostLiked
-// createLikedPost(){
-//   this.postLikeService.likedPost(this.postId?,this.userId?).subscribe((response:any)=>{
-//     this.postLikes = response;
-//   })
-// }
-
-}
-
