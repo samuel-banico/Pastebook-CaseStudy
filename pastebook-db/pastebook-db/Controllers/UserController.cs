@@ -163,7 +163,7 @@ namespace pastebook_db.Controllers
         }
 
         [HttpPut("editUserProfileBio")]
-        public ActionResult<User> EditUserProfileBio(string userBio)
+        public ActionResult<User> EditUserProfileBio(EditUserBioDTO userBio)
         {
             var token = Request.Headers["Authorization"];
             var retreivedUser = _userRepository.GetUserByToken(token);
@@ -171,7 +171,7 @@ namespace pastebook_db.Controllers
             if (retreivedUser == null)
                 return BadRequest(new { result = "user_not_found" });
 
-            retreivedUser.UserBio = userBio;
+            retreivedUser.UserBio = userBio.UserBio;
 
             if (!_userRepository.UpdateUser(retreivedUser, false))
                 return BadRequest(new { result = "not_legitimate_email" });

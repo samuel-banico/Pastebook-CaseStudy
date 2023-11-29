@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AddphotomodalComponent } from '@components/addphotomodal/addphotomodal.component';
+import { EditAlbumModalComponent } from '@components/edit-album-modal/edit-album-modal.component';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { SessionService } from '@services/session.service';
 import { AlbumService } from '@services/album.service';
@@ -16,9 +17,13 @@ import { SinglephotomodalComponent } from '@components/singlephotomodal/singleph
     styleUrls: ['./create-album.component.css']
 })
     export class CreateAlbumComponent implements OnInit {
+
         modalRefAddPhoto: MdbModalRef<AddphotomodalComponent> | null = null;
         modalRefSinglePhoto: MdbModalRef<SinglephotomodalComponent> | null = null;
       
+
+    modalRefEditPhoto: MdbModalRef<AddphotomodalComponent | EditAlbumModalComponent> | null = null;
+
 
     constructor(
         private router: Router,
@@ -85,17 +90,18 @@ import { SinglephotomodalComponent } from '@components/singlephotomodal/singleph
     }
 
     saveEdit() {
-        this.albumName = this.editedAlbumName;
-        this.isEditing = false;
+    this.albumName = this.editedAlbumName;
+    this.isEditing = false;
 
-        Swal.fire(
-            'Edited!',
-            'Your album name has been updated.',
-            'success'
-        );
+    Swal.fire(
+        'Edited!',
+        'Your album name has been updated.',
+        'success'
+    );
     }
 
     openModalAddPhoto() {
+
         this.dataTransferService.data = this.albumId;
         console.log(this.albumId);
         this.modalRefAddPhoto = this.modalService.open(AddphotomodalComponent)
@@ -104,4 +110,11 @@ import { SinglephotomodalComponent } from '@components/singlephotomodal/singleph
       openSinglePhotoModal(){
         this.modalRefSinglePhoto = this.modalService.open(SinglephotomodalComponent)
       }
+
+  
+
+    openModal() {
+    this.modalRefEditPhoto = this.modalService.open(EditAlbumModalComponent)
+    }
+
 }

@@ -40,7 +40,7 @@ import { OtherfriendsComponent } from './pages/otherfriends/otherfriends.compone
 import { OtheralbumComponent } from './pages/otheralbum/otheralbum.component';
 import { OtherwallComponent } from './pages/otherwall/otherwall.component';
 import { SinglephotomodalComponent } from './components/singlephotomodal/singlephotomodal.component';
-
+import { EditAlbumModalComponent } from './components/edit-album-modal/edit-album-modal.component';
 
 const appRoutes: Routes = [
   // Does not need to login to access but should have no token to access
@@ -53,7 +53,7 @@ const appRoutes: Routes = [
   // Needs token to access
   {path: '', component: HomeComponent},
   {path: 'settings', component: SettingsComponent},
-  {path: 'profile', component: WallComponent}, 
+  {path: 'profile', component: ProfileComponent}, 
   {path: 'friends', component: FriendsComponent},
   {path: 'post', component: PostComponent},
   {path: 'albums', component: AlbumsComponent},
@@ -102,7 +102,9 @@ const appRoutes: Routes = [
     OtheralbumComponent,
     OtherwallComponent,
     OtherprofileComponent,
-    SinglephotomodalComponent 
+    SinglephotomodalComponent,
+    EditAlbumModalComponent 
+
 
   ],
   imports: [
