@@ -50,7 +50,7 @@ const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'forgotpassword', component: ForgotpasswordComponent},
   {path: 'page-not-found', component: NotFoundComponent},
-  {path: 'likecomment', component: LikecommentComponent},
+  // {path: 'likecomment', component: LikecommentComponent},
 
   // Needs token to access
   {path: '', component: HomeComponent},
