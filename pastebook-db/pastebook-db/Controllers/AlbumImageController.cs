@@ -62,7 +62,7 @@ namespace pastebook_db.Controllers
             var aImage = _albumImageRepository.GetAlbumImageById(albumImageId);
 
             if (albumImage == null)
-                return BadRequest(new { result = "no_album_iamge" });
+                return BadRequest(new { result = "no_album_image" });
 
             aImage.Image = albumImage.Image;
             aImage.IsEdited = true;

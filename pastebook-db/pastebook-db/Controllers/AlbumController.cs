@@ -117,9 +117,10 @@ namespace pastebook_db.Controllers
         // --- PUT
         // To be edit
         [HttpPut]
-        public ActionResult<Album> UpdateAlbum(Guid albumId, AlbumDTO newAlbum)
+        public ActionResult<Album> UpdateAlbum(AlbumDTO newAlbum)
         {
-            var albumToEdit = _albumRepository.GetAlbumById(albumId);
+            Album album = new Album();
+            var albumToEdit = _albumRepository.GetAlbumById(album.Id);
 
             if (albumToEdit == null)
                 return BadRequest(new { result = "no_album" });
