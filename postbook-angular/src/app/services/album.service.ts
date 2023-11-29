@@ -51,7 +51,7 @@ export class AlbumService {
     return this.http.put(this.albumUrl+`/addCoverPhoto?albumId=${albumId}`, formData);
   }
   //PUT Edit Album Image
-  editAlbum(album:Album){
-    return this.http.put(this.albumImageUrl,album)
+  editAlbum(album:Album): Observable<Album>{
+    return this.http.put<Album>(this.albumUrl,album, {headers:this.headers})
   }
 }
