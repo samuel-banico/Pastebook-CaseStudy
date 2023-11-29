@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SessionService } from './session.service';
@@ -41,6 +41,14 @@ export class PostService {
     getUserTimeline():Observable<Post[]>{
       return this.http.get<Post[]>(this.baseUrl + '/ownUserTimeline',{ headers: this.headers });
     };
+
+    getOtherUserTimeline(retreiveId: string): Observable<object> {
+      console.log(retreiveId);
+      const params = new HttpParams()
+        .set('retrievedUserId', retreiveId);
+
+      return this.http.get<Post[]>(this.baseUrl + `/otherUserTimeline`, { headers: this.headers, params});
+    }
 
     // --
     getUserFeed():Observable<Post[]>{

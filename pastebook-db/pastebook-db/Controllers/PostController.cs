@@ -56,9 +56,13 @@ namespace pastebook_db.Controllers
         }
 
         [HttpGet("otherUserTimeline")]
-        public ActionResult<List<Post>> GetOtherUserTimeline(Guid retrievedUserId, Guid loggedUserId)
+        public ActionResult<List<Post>> GetOtherUserTimeline()
         {
-            var postList = _postRepository.GetAllPostOfOtherTimeline(retrievedUserId, loggedUserId);
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+            var retrievedUser = Request.Query["retrievedUserId"];
+            Guid retrievedUserId = Guid.Parse(retrievedUser);
+            var postList = _postRepository.GetAllPostOfOtherTimeline(retrievedUserId, user.Id);
 
             if (postList.Count == 0)
                 return Ok(new { result = "no_post" });

@@ -20,8 +20,8 @@ import { Router } from '@angular/router';
 })
 export class OtherwallComponent {
   modalRef: MdbModalRef<PostmodalComponent> | null = null;
-  user: User = new User();
   posts:Post[] = [];
+  id: string = "";
 
   constructor(
     private modalService: MdbModalService,
@@ -31,14 +31,11 @@ export class OtherwallComponent {
     private sessionService: SessionService,
     private router: Router
   ){
-    //this.getOwnUserTimeline();
+    this.id = this.sessionService.getUser();
+    this.getOtherUserTimeline();
   }
 
-
-  //posts:Post = new Post();
-
   ngOnInit(): void {
-    this.getOwnUserTimeline();
   }
 
   onScroll() {
@@ -50,8 +47,9 @@ export class OtherwallComponent {
   }
 
   //GetOwnUserTimeline
-  getOwnUserTimeline() {
-      this.postService.getUserTimeline().subscribe((response: any) => {
+  getOtherUserTimeline() {
+      this.postService.getOtherUserTimeline(this.id).subscribe((response: any) => {
+        console.log(response);
         this.scrollService.initializeData(response);
 
         this.scrollService.getVisibleData().subscribe((data) => {

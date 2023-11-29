@@ -28,7 +28,7 @@ export class FriendsComponent implements OnInit{
  }
 
  getFriendList(){
-  this.friendService.getAllFriends().subscribe((response: Friend[])=>{
+  this.friendService.getAllFriends(this.sessionService.getToken()).subscribe((response: Friend[])=>{
     this.friends = response;
     console.log(response);
   });

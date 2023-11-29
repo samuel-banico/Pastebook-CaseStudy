@@ -57,15 +57,10 @@ const appRoutes: Routes = [
   {path: 'settings', component: SettingsComponent},
   {path: 'profile', component: ProfileComponent}, 
   {path: 'friends', component: FriendsComponent},
-  {path: 'post', component: PostComponent},
-  {path: 'albums', component: AlbumsComponent},
   {path: 'create', component: CreateAlbumComponent},
   {path: 'results', component: ResultsComponent},
   {path: 'AllNotifications', component: AllnotifsComponent},
-  {path: 'otherProfile', component: OtherwallComponent},
-  {path: 'otherwall', component: OtherwallComponent}, 
-  {path: 'otherfriends', component: OtherfriendsComponent},
-  {path: 'otheralbum', component: OtheralbumComponent},
+  {path: 'otherProfile', component: OtherprofileComponent},
   {path: '**', component: NotFoundComponent}
 
 ];
