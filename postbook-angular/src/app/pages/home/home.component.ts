@@ -100,8 +100,11 @@ openModal() {
 
   onPostClick(clickedPost: Post){
     this.sessionService.setPost(clickedPost.id!);
-    this.router.navigate(['post']);
-    
+    this.router.navigate(['post/'+clickedPost.id]); 
+  }
+
+  onFriendClick(clickedFriend:User){
+    this.router.navigate(["Profile/"+clickedFriend.firstName + "_" + clickedFriend.lastName]);
   }
   //PostLiked
   // createLikedPost(){

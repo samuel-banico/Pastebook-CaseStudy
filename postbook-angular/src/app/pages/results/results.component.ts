@@ -54,6 +54,6 @@ export class ResultsComponent implements OnInit{
 
   userClicked(clickedUser: User) {
     this.dataTransfer.data = clickedUser.id;
-    this.router.navigate(['otherProfile']);
+    this.router.navigate(["Profile/"+clickedUser.firstName + "_" + clickedUser.lastName]);
   }
 }

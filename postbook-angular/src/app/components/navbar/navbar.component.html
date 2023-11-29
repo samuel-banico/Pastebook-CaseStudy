@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
 <link rel="stylesheet" href="navbar.component.css">
 
-<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:#3b5998">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:#F875AA">
     <a routerLink="/" class="navbar-brand"><img src="assets/images/logo.png" alt="logo" class="img-fluid" width="30px" height="50px"></a>
 
     <button class="navbar-toggler" data-toggle="collapse" data-target="#responsive"><span class="navbar-toggler-icon"></span></button>
@@ -10,7 +10,7 @@
     <div class="collapse navbar-collapse" id="responsive">
         <ul class="navbar-nav mr-auto text-capitalize">
             <li class="nav-item"><a routerLink="/" class="nav-link">home</a></li>
-            <li class="nav-item"><a routerLink="/profile" class="nav-link">profile</a></li>
+            <li class="nav-item"><a (click)="toProfile()" class="nav-link">profile</a></li>
         </ul>
         <a href="javascript:void(0);" class="btn btn-primary" (click)="openSearchModal()" class="text-decoration-none" style="color:#fff;font-size:22px;">
             <img width="30px" height="30px" src="assets/images/search-icon.png" alt="" class="mx-2">
@@ -24,7 +24,7 @@
         </a> 
         <div class="wrapper">
             <input id="toggler" type="checkbox">
-            <label for="toggler">
+            <label for="toggler" id="cursor">
                 <img width="30px" height="30px" src="assets/images/settings-icon.png" alt="">
             </label>
             <div class="dropdown text-start" style="z-index: 2;">

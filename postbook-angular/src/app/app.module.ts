@@ -50,17 +50,21 @@ const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'forgotpassword', component: ForgotpasswordComponent},
   {path: 'page-not-found', component: NotFoundComponent},
-  {path: 'likecomment', component: LikecommentComponent},
+  // {path: 'likecomment', component: LikecommentComponent},
 
   // Needs token to access
   {path: '', component: HomeComponent},
   {path: 'settings', component: SettingsComponent},
-  {path: 'profile', component: ProfileComponent}, 
+  {path: 'profile/:fname:lname', component: ProfileComponent}, 
   {path: 'friends', component: FriendsComponent},
+  {path: 'otherProfile', component: OtherprofileComponent},
+  {path: 'post/:id', component: PostComponent},
+  {path: 'albums', component: AlbumsComponent},
   {path: 'create', component: CreateAlbumComponent},
   {path: 'results', component: ResultsComponent},
   {path: 'AllNotifications', component: AllnotifsComponent},
-  {path: 'otherProfile', component: OtherprofileComponent},
+  {path: 'Profile/:fname:lname', component: OtherwallComponent},
+
   {path: '**', component: NotFoundComponent}
 
 ];
