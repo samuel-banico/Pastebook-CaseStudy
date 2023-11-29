@@ -100,6 +100,8 @@ namespace pastebook_db.Controllers
                 IsPublic = true,
                 UserId = user.Id,
                 CreatedOn = DateTime.Now,
+                AlbumName = album.AlbumName,
+                AlbumDescription = album.AlbumDescription
             };
 
             if (string.IsNullOrEmpty(album.AlbumName))
