@@ -98,7 +98,7 @@ export class HomeComponent implements OnInit{
 
   //PostLiked
   // createLikedPost(){
-  //   this.postLikeService.likedPost(this.postId?,this.userId?).subscribe((response:any)=>{
+  //   this.postLikeService.likedPost().subscribe((response:any)=>{
   //     this.postLikes = response;
   //   })
   // }
