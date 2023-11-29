@@ -7,7 +7,7 @@
   <div class="modal-body" style="overflow-y: auto;">
     <div class="d-flex align-items-center">
       <input placeholder="Search Pastebook" style="width: 70%;" name="searchUser" (input)="onType($event)" [(ngModel)]="searchUser">
-      <button type="button" class="red" style="width: 30%;" (click)="showAllResults()" routerLink="/results">Show All Results</button>
+      <button type="button" class="red" style="width: 30%;" (click)="showAllResults()">Show All Results</button>
     </div>
     <h1 *ngIf="noMatchingUser; else userExist">No User Found</h1>
     <ng-template #userExist>

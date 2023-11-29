@@ -19,7 +19,7 @@ namespace pastebook_db.Controllers
             _userRepository = userRepository;
         }
 
-        [HttpGet("postById")]
+        [HttpGet]
         public ActionResult<PostDTO> GetPostById(Guid postId)
         {
             var post = _postRepository.GetPostById(postId);

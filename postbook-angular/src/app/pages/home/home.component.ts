@@ -11,6 +11,7 @@ import { SessionService } from '@services/session.service';
 import { ScrollService } from '@services/scroll.service';
 import { TokenService } from '@services/token.service';
 import { PostLikesService } from '@services/post-likes.service';
+import { DataTransferService } from '@services/data-transfer.service';
 
 import { User } from '@models/user';
 import { Post, PostLike, PostComment } from '@models/post';
@@ -43,6 +44,7 @@ export class HomeComponent implements OnInit{
     private sessionService: SessionService,
     private scrollService: ScrollService,
     private tokenService: TokenService,
+    private dataTransfer: DataTransferService,
     private postLikeService:PostLikesService,
 
     private httpClient: HttpClient,
@@ -95,4 +97,16 @@ openModal() {
       this.postLikes = response;                                                                                                          
     })
   }
+
+  onPostClick(clickedPost: Post){
+    this.sessionService.setPost(clickedPost.id!);
+    this.router.navigate(['post']);
+    
+  }
+  //PostLiked
+  // createLikedPost(){
+  //   this.postLikeService.likedPost(this.postId?,this.userId?).subscribe((response:any)=>{
+  //     this.postLikes = response;
+  //   })
+  // }
 }
