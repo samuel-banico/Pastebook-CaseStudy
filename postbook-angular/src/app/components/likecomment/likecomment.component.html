@@ -4,7 +4,7 @@
             <img [src]="isLiked ? '../../../assets/images/liked.png' : '../../../assets/images/like.png'" alt="img" width="30px" height="30px" class="mr-3 cursor">
         </a>
         &nbsp;
-        <span *ngIf="likeCount > 0" (click)="toggleLikesDropdown()">{{ likeCount }}</span>
+        <span *ngIf="post.likeCount! > 0" (click)="toggleLikesDropdown()">{{ post.likeCount }}</span>
         <div *ngIf="showLikesDropdown" class="likes-dropdown">
             <p *ngFor="let likedUser of likedUsers">{{ likedUser }}</p>
         </div>
@@ -19,15 +19,18 @@
 <!-- Comments section -->
 <div *ngIf="showComments" class="bg-light p-2">
     <div class="d-flex flex-row align-items-start">
-        <img class="rounded-circle" src="assets/images/De Guzman, Christian.JPG" width="40">
-        <textarea class="form-control ml-1 shadow-none textarea"></textarea>
+        <img class="rounded-circle" [src]="user.profilePicture" width="40">
+        <textarea class="form-control ml-1 shadow-none textarea" [(ngModel)]="comment"></textarea>
     </div>
+
     <div class="mt-2 text-right">
         <button class="btn btn-primary btn-sm" type="button" style="background-color: #AEDEFC;">
-            <span class="comment-button-text">Comment</span>
+            <span class="comment-button-text" (click)="sendComment()">Comment</span>
         </button>
     </div>
-    <div *ngFor="" class="media mb-3">
+
+    <!-- show comments -->
+    <div class="media mb-3">
         <img src="assets/images/work.jpg" alt="img" width="45px" height="45px" class="rounded-circle mr-2">
         <div class="media-body">
             <p class="card-text text-justify"><strong>Hehe</strong> Test</p>

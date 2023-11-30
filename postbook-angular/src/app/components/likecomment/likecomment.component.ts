@@ -1,4 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+import { PostService } from '@services/post.service'; 
+
+import { Post, PostComment, PostLike } from '@models/post';
+import { User } from '@models/user';
+import Swal from 'sweetalert2';
+import { Album } from '@models/album';
+
 
 @Component({
   selector: 'app-likecomment',
@@ -10,10 +18,27 @@ export class LikecommentComponent {
   likeCount: number = 0;
   likedUsers: string[] = [];
   showLikesDropdown: boolean = false;
-  userImage: string = '../../../assets/images/user-default-image.png'; // Replace with the actual path to the default user image
   showComments!: boolean;
 
+  @Input() user: User = new User();
+  @Input() post: Post = new Post();
+  @Input() album: Album = new Album();
+
+  constructor(
+    private postService: PostService,
+  ) {
+
+  }
+
   toggleLike() {
+    if(this.post) {
+      let postLike: PostLike = new PostLike();
+      postLike.postId = this.post.id;
+      
+      this.postService.addLike(postLike).subscribe();
+    } else if (this.album) {
+
+    }
     this.isLiked = !this.isLiked;
     if (this.isLiked) {
       this.likeCount++;
@@ -24,8 +49,17 @@ export class LikecommentComponent {
     }
   }
 
-  openComment() {
-    // Add your logic to handle opening comments here
+  comment : string = "";
+  sendComment() {
+    if(this.post) {
+      let postComment: PostComment = new PostComment();
+      postComment.postId = this.post.id;
+      postComment.comment = this.comment;
+
+      this.postService.addComment(postComment).subscribe();
+    } else if(this.album) {
+
+    }
   }
 
   toggleLikesDropdown() {

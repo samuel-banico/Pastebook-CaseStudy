@@ -13,7 +13,7 @@ export class ScrollDirective {
     const element = event.target;
 
     // Detect if the user has reached the bottom of the container
-    if (element.scrollHeight - element.scrollTop <= element.clientHeight + 1) {
+    if (element.scrollHeight - element.scrollTop <= element.clientHeight + 2) {
       this.scrolled.emit();
     }
   }

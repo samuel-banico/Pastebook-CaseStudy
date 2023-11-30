@@ -29,8 +29,6 @@ export class HomeComponent implements OnInit, OnDestroy{
 
   posts: Post[] = [];
 
-  postLikes:PostLike[]=[];
-
   postId?:string = '';
   userId?:string = '';
 
@@ -82,12 +80,6 @@ onScroll() {
   this.scrollService.loadData();
 }
 
-onComment(){
-  this.postService.addComment(this.comment).subscribe((response: Record<string, any>)=>{
-    Swal.fire('Comment', 'Test', 'success');
-  });
-}
-
 openModal() {
   this.modalRef = this.modalService.open(PostmodalComponent)
 }
@@ -100,13 +92,6 @@ openModal() {
         this.posts = data;
       });
     }); 
-  }
-
-  //Get all Post Likes
-  getAllPostLikes(){
-    this.postLikeService.getLikes().subscribe((response:any)=>{
-      this.postLikes = response;                                                                                                          
-    })
   }
 
   onPostClick(clickedPost: Post){

@@ -11,11 +11,13 @@ namespace pastebook_db.Controllers
     {
         private readonly PostLikeRepository _postLikeRepository;
         private readonly NotificationRepository _notificationRepository;
+        private readonly UserRepository _userRepository;
 
-        public PostLikeController(PostLikeRepository postLikeRepository, NotificationRepository notificationRepository)
+        public PostLikeController(PostLikeRepository postLikeRepository, NotificationRepository notificationRepository, UserRepository userRepository)
         {
             _postLikeRepository = postLikeRepository;
             _notificationRepository = notificationRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet]
@@ -33,13 +35,16 @@ namespace pastebook_db.Controllers
         }
 
         // A friend has liked a user's post
-        [HttpPut("likePost")]
-        public ActionResult<Post> LikedPost(Guid postId, Guid loggedUserId)
+        [HttpPost("likePost")]
+        public ActionResult<Post> LikedPost(PostLikeToReceiveDTO like)
         {
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+
             var postLike = new PostLike
             {
-                PostId = postId,
-                UserId = loggedUserId,
+                PostId = like.PostId,
+                UserId = user.Id,
                 CreatedOn = DateTime.Now,
             };
             _postLikeRepository.CreatePostLike(postLike);

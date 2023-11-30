@@ -148,8 +148,8 @@ namespace pastebook_db.Data
             newNotif.PostId = postComment.PostId;
 
             newNotif.UserId = getPostFromPostId(postComment.PostId).UserId;
-            
-            var commentedUser = getFriendFromPostComment(postComment);
+
+            newNotif.UserRequestId = postComment.UserId;
             newNotif.Content = $"Has left a comment on your post";
 
             _context.Notifications.Add(newNotif);

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { SessionService } from './session.service';
 
 //Import Post
-import {Post, PostComment} from '@models/post'
+import {Post, PostComment, PostLike} from '@models/post'
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,9 @@ import {Post, PostComment} from '@models/post'
 export class PostService {
 
   //Based Url 
-  private baseUrl: string = "https://localhost:7185/api/posts"
-  private commentUrl: string = "https://localhost:7185/api/postComment"
+  private baseUrl: string = "https://localhost:7185/api/posts";
+  private commentUrl: string = "https://localhost:7185/api/postComment";
+  private likeUrl: string = "https://localhost:7185/api/postLike"
   private headers: HttpHeaders = new HttpHeaders({
     'Authorization': `${this.sessionService.getToken()}`
   })
@@ -56,11 +57,17 @@ export class PostService {
     };
 
     // Comments
-    addComment(comment:PostComment): Observable<Object>{
-      return this.http.post(this.commentUrl + '/commentPost', comment)
+    addComment(postComment: PostComment): Observable<Object>{      
+      return this.http.post(this.commentUrl + '/commentPost', postComment, { headers: this.headers});
     };
 
     getComments(): Observable<PostComment[]>{
       return this.http.get<PostComment[]>(this.commentUrl + 'allPostComments', {headers: this.headers})
+    };
+
+    //Likes
+    addLike(postLike: PostLike): Observable<Object>{  
+      console.log("a");    
+      return this.http.post(this.likeUrl + '/likePost', postLike, { headers: this.headers});
     };
 }

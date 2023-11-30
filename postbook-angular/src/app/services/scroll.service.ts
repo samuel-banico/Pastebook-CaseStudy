@@ -24,7 +24,7 @@ export class ScrollService {
   }
 
   loadData() {
-    const nextData = this.data.slice(this.visibleDataSubject.value.length, this.visibleDataSubject.value.length + 7);
+    const nextData = this.data.slice(this.visibleDataSubject.value.length, this.visibleDataSubject.value.length + 10);
     
     if (nextData.length > 0) {
       this.visibleDataSubject.next([...this.visibleDataSubject.value, ...nextData]);
@@ -32,7 +32,7 @@ export class ScrollService {
   }
 
   private loadVisibleData() {
-    const initialData = this.data.slice(0, 4);
+    const initialData = this.data.slice(0, 10);
     this.visibleDataSubject.next(initialData);
   }
 }
