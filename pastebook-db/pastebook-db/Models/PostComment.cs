@@ -17,7 +17,13 @@
 
     public class PostCommentDTO
     {
+        public Guid? Id { get; set; }
+        public string Comment { get; set; }
+        public string? CreatedOn { get; set;}
         public Guid PostId { get; set; }
-        public string Comment { get; set; } = null!;
+        public Post? Post { get; set; }
+
+        public Guid? UserId { get; set; }
+        public UserSendDTO? User { get; set; }
     }
 }

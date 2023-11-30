@@ -97,7 +97,7 @@ namespace pastebook_db.Services.FunctionCollection
 
         public static string TimeDifference(DateTime past, DateTime now) 
         {
-            TimeSpan diff = (past - now);
+            TimeSpan diff = (now - past);
             var seconds = diff.TotalSeconds;
 
             if (seconds / 31536000 >= 2)

@@ -5,8 +5,11 @@
         </a>
         &nbsp;
         <span *ngIf="post.likeCount! > 0" (click)="toggleLikesDropdown()">{{ post.likeCount }}</span>
-        <div *ngIf="showLikesDropdown" class="likes-dropdown">
-            <p *ngFor="let likedUser of likedUsers">{{ likedUser }}</p>
+        <div *ngIf="showLikesDropdown" class="likes-dropdown" style="z-index: 10;">
+            <p *ngFor="let like of post.postLikeList">
+                <img class="rounded-circle" [src]="like.user?.profilePicture" width="30">
+                {{ like.user?.firstName }} {{ like.user?.lastName }}
+            </p>
         </div>
     </div>
     
@@ -30,10 +33,12 @@
     </div>
 
     <!-- show comments -->
-    <div class="media mb-3">
-        <img src="assets/images/work.jpg" alt="img" width="45px" height="45px" class="rounded-circle mr-2">
+    <div *ngFor="let comment of post.postCommentList" class="media mb-3">
+        <img [src]="comment.user?.profilePicture" alt="img" width="30px" height="30px" class="rounded-circle mr-2">
         <div class="media-body">
-            <p class="card-text text-justify"><strong>Hehe</strong> Test</p>
+            <p class="card-title"><strong>{{comment.user?.firstName}} {{comment.user?.lastName}}</strong></p>
+            <small><span>{{comment.createdOn}}</span></small>
+            <p class="card-text text-justify">{{comment.comment}}</p>
         </div>
     </div>
 </div>

@@ -70,4 +70,11 @@ export class PostService {
       console.log("a");    
       return this.http.post(this.likeUrl + '/likePost', postLike, { headers: this.headers});
     };
+
+    removeLike(postId: string): Observable<Object>{  
+      const params = new HttpParams()
+        .set('postId', postId);
+
+      return this.http.delete(this.likeUrl + '/unlikePost', { params: params});
+    };
 }

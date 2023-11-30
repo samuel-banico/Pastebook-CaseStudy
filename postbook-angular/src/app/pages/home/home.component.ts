@@ -90,6 +90,8 @@ openModal() {
 
       this.scrollService.getVisibleData().subscribe((data) => {
         this.posts = data;
+        console.log(data);
+        console.log(this.posts);
       });
     }); 
   }

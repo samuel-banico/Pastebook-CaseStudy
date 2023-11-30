@@ -38,6 +38,7 @@ namespace pastebook_db.Models
 
         public int? LikeCount { get; set; }
         public int? CommentCount { get; set; }
+        public bool? HasLiked { get; set; }
 
         public Guid UserId { get; set; }
         public UserSendDTO User { get; set; }
@@ -46,7 +47,7 @@ namespace pastebook_db.Models
         public Guid? FriendId { get; set; }
         public Friend? Friend { get; set; }
 
-        public ICollection<PostLike>? PostLikeList { get; set; }
-        public ICollection<PostComment>? PostCommentList { get; set; }
+        public ICollection<PostLikeDTO>? PostLikeList { get; set; }
+        public ICollection<PostCommentDTO>? PostCommentList { get; set; }
     }
 }
