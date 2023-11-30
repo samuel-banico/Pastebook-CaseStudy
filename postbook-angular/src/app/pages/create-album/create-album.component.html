@@ -19,8 +19,8 @@
     </div>
 
     <div class="pale-background mt-3">
-        <div class="grid-template container text-center">
-            <div class="item">    
+        <div class="grid-template container text-center row">
+            <div class="item col-3">    
                 <h5 class="album-name">Add Photo</h5>
                 <a (click)="openModalAddPhoto()"><img src="../../../assets/images/addPhoto.png" alt="Add Photo" class="img-fluid"></a>     
             </div>
@@ -29,8 +29,8 @@
             <div *ngIf="album.imageList?.length === 0">
                 <h1>No Image</h1>
             </div>
-            <div *ngFor="let photos of album.imageList">
-                <div class="item with-background">
+            <div>
+                <div *ngFor="let photos of album.imageList" class="item with-background col-3">
                     <a href="javascript:void(0);" class="btn" (click)="openSinglePhotoModal()">
                         <img [src]="photos.image" alt="" class="img-fluid">
                     </a>   

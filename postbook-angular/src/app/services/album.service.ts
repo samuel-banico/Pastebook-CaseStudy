@@ -25,7 +25,7 @@ export class AlbumService {
   
   // GET
   getAllUserAlbum(): Observable<object> {
-    return this.http.get(this.albumUrl + '/allAlbumByUser', {headers: this.headers})
+    return this.http.get(this.albumUrl + '/allAlbumByUser', {headers: this.headers});
   }
 
   getAlbumById(albumId: string): Observable<object> {
@@ -35,6 +35,10 @@ export class AlbumService {
   // POST
   createAlbum(album: Album): Observable<object> {
     return this.http.post(this.albumUrl, album, { headers: this.headers });
+  }
+  
+  getAllFriendAlbum(albumId: string): Observable<object>{
+    return this.http.get(this.albumUrl + `/allAlbumByOther?retrievedUserId=${albumId}`, {headers: this.headers});
   }
 
   createAlbumImage(albumId: string, image: File) : Observable<any> {

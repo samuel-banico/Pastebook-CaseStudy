@@ -55,7 +55,7 @@ const appRoutes: Routes = [
   // Needs token to access
   {path: '', component: HomeComponent},
   {path: 'settings', component: SettingsComponent},
-  {path: 'profile/:fname:lname', component: ProfileComponent}, 
+  {path: 'profile/:firstName:lastName', component: ProfileComponent}, 
   {path: 'friends', component: FriendsComponent},
   {path: 'otherProfile', component: OtherprofileComponent},
   {path: 'post/:id', component: PostComponent},
@@ -63,7 +63,7 @@ const appRoutes: Routes = [
   {path: 'create', component: CreateAlbumComponent},
   {path: 'results', component: ResultsComponent},
   {path: 'AllNotifications', component: AllnotifsComponent},
-  {path: 'Profile/:fname:lname', component: OtherprofileComponent},
+  {path: 'Profile/:firstName:lastName', component: OtherprofileComponent},
 
   {path: '**', component: NotFoundComponent}
 
