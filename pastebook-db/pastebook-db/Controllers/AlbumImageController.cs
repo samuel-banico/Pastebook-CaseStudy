@@ -18,7 +18,7 @@ namespace pastebook_db.Controllers
             _albumImageRepository = albumImageRepository;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         public ActionResult<AlbumImage> GetAlbumImageById(Guid id)
         {
             var album = _albumImageRepository.GetAlbumImageById(id);
@@ -26,7 +26,9 @@ namespace pastebook_db.Controllers
             if(album == null)
                 return NotFound(new { result = "album_does_not_exist"});
 
-            return Ok(album);
+            var newAlbum = _albumImageRepository.ConvertAlbumImageToDTO(album);
+
+            return Ok(newAlbum);
         }
 
         [HttpGet("getAllAlbumImage")]

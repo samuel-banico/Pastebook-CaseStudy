@@ -8,7 +8,7 @@ import { SessionService } from '@services/session.service';
 import { AlbumService } from '@services/album.service';
 import { DataTransferService } from '@services/data-transfer.service';
 import { TokenService } from '@services/token.service';
-import { Album } from '@models/album';
+import { Album, AlbumImage } from '@models/album';
 import { SinglephotomodalComponent } from '@components/singlephotomodal/singlephotomodal.component';
 
 @Component({
@@ -115,7 +115,8 @@ export class OthersinglealbumComponent implements OnInit {
         this.modalRefAddPhoto = this.modalService.open(AddphotomodalComponent)
     }
 
-    openSinglePhotoModal(){
+    openSinglePhotoModal(clickedPhoto: AlbumImage){
+        this.sessionService.setAlbumImage(clickedPhoto.id!);
         this.modalRefSinglePhoto = this.modalService.open(SinglephotomodalComponent)
     }
     

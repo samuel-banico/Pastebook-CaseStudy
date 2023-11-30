@@ -23,7 +23,7 @@
 
             <!-- Album Images -->
             <div *ngFor="let photo of album.imageList" class="item col-6 col-md-4 col-lg-3">
-                <a href="javascript:void(0);" class="btn" (click)="openSinglePhotoModal()">
+                <a href="javascript:void(0);" class="btn" (click)="openSinglePhotoModal(photo)">
                     <img [src]="photo.image" alt="" class="img-fluid album-photo">
                 </a>
             </div>
