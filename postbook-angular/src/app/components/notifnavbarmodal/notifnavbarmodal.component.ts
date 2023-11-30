@@ -36,7 +36,6 @@ export class NotifnavbarmodalComponent implements OnInit {
 
     ngOnInit(): void {
       this.getUnseenNotifications();
-      this.clearAllNotifications();
     }
 
     clickedGetAllNotifications():void{
