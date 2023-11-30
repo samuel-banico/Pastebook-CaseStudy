@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="modal-body">
-        <textarea class="post-textarea" [placeholder]="'What\'s on your mind, ' + user.firstName + '?'"name="content"></textarea>
+        <textarea class="post-textarea" [placeholder]="'What\'s on your mind, ' + user.firstName + '?'"name="content" [(ngModel)]="post.content"></textarea>
       </div>
       <div class="modal-footer">
         <button type="button" class="post-button" (click)="onPost()">Post</button>

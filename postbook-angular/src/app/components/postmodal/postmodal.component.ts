@@ -47,13 +47,9 @@ export class PostmodalComponent {
     // Add your logic to post the content with the selected privacy
     // Example: Update the 'isPublic' property based on the selected privacy
     this.post.isPublic = this.selectedPrivacy === 'Public';
-    let friend = this.sessionService.getUser();
-    if(friend){
-      this.post.userId = friend;
-      this.post.friendId = this.user.id;
-    }else{
-      this.post.userId = this.user.id;
-    }
+  
+    this.post.userId = this.user.id;
+    
     this.postService.createPost(this.post).subscribe((response: Record<string, any>) => {
       if (response['result'] === 'new_post') {
         Swal.fire('Posted', 'Your status was posted', 'success');
