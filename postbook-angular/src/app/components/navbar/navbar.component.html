@@ -15,12 +15,13 @@
         <a href="javascript:void(0);" class="btn btn-primary" (click)="openSearchModal()" class="text-decoration-none" style="color:#fff;font-size:22px;">
             <img width="30px" height="30px" src="assets/images/search-icon.png" alt="" class="mx-2">
         </a> 
-        <!-- &nbsp; -->
         <a href="javascript:void(0);" class="btn btn-primary" (click)="openFriendModal()" class="text-decoration-none" style="color:#fff;font-size:22px;">
             <img width="30px" height="30px" src="assets/images/friends-icon.png" alt="">
+            <span class="friend-request-count" *ngIf="friendRequestCount > 0">{{ friendRequestCount }}</span>
         </a> 
         <a href="javascript:void(0);" class="btn btn-primary" (click)="openNotifModal()" class="text-decoration-none" style="color:#fff;font-size:22px;">
             <i class="far fa-bell ml-3 d-none d-md-block"></i>
+            <span class="notification-count" *ngIf="notificationCount > 0">{{ notificationCount }}</span>
         </a> 
         <div class="wrapper">
             <input id="toggler" type="checkbox">
@@ -31,7 +32,7 @@
                 <a routerLink="/settings">Settings</a>
                 <a (click)="logout()">Logout</a>
             </div>
-      </div>
+        </div>
     </div>
 </nav>
 
