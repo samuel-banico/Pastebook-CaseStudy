@@ -13,7 +13,10 @@ export class ScrollService {
 
   initializeData(receivedData: Post[]) {
     this.data = receivedData;
-    this.loadVisibleData();
+
+    if(receivedData.length > 0) {
+      this.loadVisibleData();
+    }
   }
 
   getVisibleData() {

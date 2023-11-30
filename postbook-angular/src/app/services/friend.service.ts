@@ -5,6 +5,7 @@ import { SessionService } from './session.service';
 
 import { Friend, FriendRequest } from '@models/friend';
 import { User } from '@models/user';
+import { Album } from '@models/album';
 
 @Injectable({
   providedIn: 'root'
@@ -28,8 +29,10 @@ export class FriendService {
     return this.http.get(this.requestUrl + '/allRequest', {headers: this.headers});
   };
 
-  sendFriendRequest(friend: User) : Observable<any> {
-    return this.http.post<any>(this.requestUrl + `/request`, friend , {headers: this.headers} )
+  sendFriendRequest() : Observable<any> {
+    let id = this.sessionService.getUser();
+
+    return this.http.post<any>(this.requestUrl + `/request?Id=${id}`, {} , {headers: this.headers} )
   }
 
   acceptFriendRequest(request : FriendRequest) : Observable<any> {
