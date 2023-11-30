@@ -6,6 +6,7 @@ import { PostService } from '@services/post.service';
 import { UserService } from '@services/user.service';
 import { Post } from '@models/post';
 import { User } from '@models/user';
+import { SessionService } from '@services/session.service';
 
 // ... Existing imports ...
 
@@ -22,7 +23,8 @@ export class PostmodalComponent {
   constructor(
     public modalRef: MdbModalRef<PostmodalComponent>,
     private postService: PostService,
-    private userService: UserService
+    private userService: UserService,
+    private sessionService:SessionService
   ) {
     userService.getUserByToken().subscribe((response: Object) => {
       this.user = response as User;
@@ -45,8 +47,13 @@ export class PostmodalComponent {
     // Add your logic to post the content with the selected privacy
     // Example: Update the 'isPublic' property based on the selected privacy
     this.post.isPublic = this.selectedPrivacy === 'Public';
-
-    this.post.userId = this.user.id;
+    let friend = this.sessionService.getUser();
+    if(friend){
+      this.post.userId = friend;
+      this.post.friendId = this.user.id;
+    }else{
+      this.post.userId = this.user.id;
+    }
     this.postService.createPost(this.post).subscribe((response: Record<string, any>) => {
       if (response['result'] === 'new_post') {
         Swal.fire('Posted', 'Your status was posted', 'success');

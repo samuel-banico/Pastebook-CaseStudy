@@ -16,6 +16,13 @@ namespace pastebook_db.Data
             _friendRequestRepository = friendRequestRepository;
         }
 
+        // To get friend by user id
+        public Friend? GetFriendById(Guid? id)
+        {
+            return _context.Friends
+                .FirstOrDefault(x => x.User_FriendId == id || x.UserId == id);
+        }
+
         // Friend table
         public Friend? GetFriendship(Guid userId, Guid friendId)
         {
