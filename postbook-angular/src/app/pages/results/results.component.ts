@@ -22,10 +22,11 @@ export class ResultsComponent implements OnInit{
     public homeService: HomeService,
     public sessionService: SessionService,
     public dataTransfer: DataTransferService
-  ){}
+  ){
+    this.getResults();
+  }
 
   ngOnInit(): void {
-    this.getResults();
   }
 
   getResults(){
@@ -33,8 +34,9 @@ export class ResultsComponent implements OnInit{
     
     if(this.searchUser)
     {
-      this.homeService.search(this.searchUser).subscribe((response: User[]) => {
+      this.homeService.searchAllUser(this.searchUser).subscribe((response: User[]) => {
         this.users = response;
+        console.log(this.users);
 
         if(response.length === 0) {
           this.noMatchingUser = true;

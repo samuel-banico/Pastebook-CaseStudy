@@ -51,15 +51,7 @@ namespace pastebook_db.Controllers
 
             foreach (var item in users)
             {
-                var u = new UserSendDTO()
-                {
-                    Id = item.Id,
-                    FirstName = item.FirstName,
-                    LastName = item.LastName,
-                    ProfilePicture = item.ProfilePicture
-                };
-
-                userList.Add(u);
+                userList.Add(_friendRepository.ConvertUserToUserSendDTO(item));
             }
 
             return Ok(userList);

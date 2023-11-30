@@ -25,29 +25,21 @@
         public virtual Album? Album { get; set; }
     }
 
-    public class Notification_FriendRequestDTO
+    public class NotifDTO
     {
-        public bool HasSeen { get; set; }
-        public DateTime NotificationDate { get; set; }
-        public string Content { get; set; } = null!;
-        public Guid FriendRequestId { get; set; }
-    }
+        public Guid? Id { get; set; }
+        public bool? HasSeen {get; set;}
+        public string? NotificationDate { get; set; }
+        public string? Content { get; set; }
 
-    public class Notification_PostDTO
-    {
-        public bool HasSeen { get; set; }
-        public DateTime NotificationDate { get; set; }
-        public string Content { get; set; } = null!;
-        public Guid PostId { get; set; }
-        public Guid FriendId { get; set; }
-    }
-
-    public class Notification_AlbumDTO
-    {
-        public bool HasSeen { get; set; }
-        public DateTime NotificationDate { get; set; }
-        public string Content { get; set; } = null!;
-        public Guid AlbumId { get; set; }
-        public Guid FriendId { get; set; }
+        //FKs
+        public Guid? UserId { get; set; }
+        public UserSendDTO? User { get; set; }
+        public Guid? PostId { get; set; }
+        public Post? Post { get; set; }
+        public Guid? AlbumId { get; set; }
+        public Post? Album { get; set; }
+        public Guid? UserRequestId {  get; set; }
+        public UserSendDTO? UserRequest { get; set; }
     }
 }

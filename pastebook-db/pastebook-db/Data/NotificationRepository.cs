@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using pastebook_db.Database;
 using pastebook_db.Models;
+using pastebook_db.Services.FunctionCollection;
 
 namespace pastebook_db.Data
 {
@@ -119,6 +120,23 @@ namespace pastebook_db.Data
 
             _context.Notifications.Add(newNotif);
             _context.SaveChanges();
+        }
+
+        public NotifDTO NotifToNotifDTO(Notification notif) 
+        {
+            var newNotif = new NotifDTO 
+            {
+                Id = notif.Id,
+                HasSeen = notif.HasSeen,
+                NotificationDate = HelperFunction.TimeDifference(notif.NotificationDate, DateTime.Now),
+                Content = notif.Content,
+                UserId = notif.UserId,
+                PostId = notif.PostId,
+                AlbumId = notif.PostId,
+                UserRequestId = notif.UserRequestId
+            };
+
+            return newNotif;
         }
 
         // Added

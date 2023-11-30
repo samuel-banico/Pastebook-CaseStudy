@@ -95,36 +95,39 @@ namespace pastebook_db.Services.FunctionCollection
             return isEmailSent;
         }
 
-        public static string TimeDifference(double seconds) 
+        public static string TimeDifference(DateTime past, DateTime now) 
         {
-            if (seconds / 31536000 >= 2)
-                return $"{(int)(seconds / 31536000)} years";
-            else if (seconds / 31536000 >= 1)
-                return $"{(int)(seconds / 31536000)} year";
-            else if (seconds / 2629746 >= 2)
-                return $"{(int)(seconds / 2629746)} monhts";
-            else if (seconds / 2629746 >= 1)
-                return $"{(int)(seconds / 2629746)} month";
-            else if (seconds / 604800 >= 2)
-                return $"{(int)(seconds / 604800)} weeks";
-            else if (seconds / 604800 >= 1)
-                return $"{(int)(seconds / 604800)} week";
-            else if (seconds / 86400 >= 2)
-                return $"{(int)(seconds / 86400)} days";
-            else if (seconds / 86400 >= 1)
-                return $"{(int)(seconds / 86400)} day";
-            else if (seconds / 3600 >= 2)
-                return $"{(int)(seconds / 3600)} hours";
-            else if (seconds / 3600 >= 1)
-                return $"{(int)(seconds / 3600)} hour";
-            else if (seconds / 60 >= 2)
-                return $"{(int)(seconds / 3600)} minutes";
-            else if (seconds / 60 >= 1)
-                return $"{(int)(seconds / 3600)} minute";
-            else if (seconds >= 2)
-                return $"{(int)(seconds)} seconds";
+            TimeSpan diff = (past - now);
+            var seconds = diff.TotalSeconds;
 
-            return $"{(int)(seconds)} second";
+            if (seconds / 31536000 >= 2)
+                return $"{(int)(seconds / 31536000)} years ago";
+            else if (seconds / 31536000 >= 1)
+                return $"{(int)(seconds / 31536000)} year ago";
+            else if (seconds / 2629746 >= 2)
+                return $"{(int)(seconds / 2629746)} monhts ago";
+            else if (seconds / 2629746 >= 1)
+                return $"{(int)(seconds / 2629746)} month ago";
+            else if (seconds / 604800 >= 2)
+                return $"{(int)(seconds / 604800)} weeks ago";
+            else if (seconds / 604800 >= 1)
+                return $"{(int)(seconds / 604800)} week ago";
+            else if (seconds / 86400 >= 2)
+                return $"{(int)(seconds / 86400)} days ago";
+            else if (seconds / 86400 >= 1)
+                return $"{(int)(seconds / 86400)} day ago";
+            else if (seconds / 3600 >= 2)
+                return $"{(int)(seconds / 3600)} hours ago";
+            else if (seconds / 3600 >= 1)
+                return $"{(int)(seconds / 3600)} hour ago";
+            else if (seconds / 60 >= 2)
+                return $"{(int)(seconds / 3600)} minutes ago";
+            else if (seconds / 60 >= 1)
+                return $"{(int)(seconds / 3600)} minute ago";
+            else if (seconds >= 2)
+                return $"{(int)(seconds)} seconds ago";
+
+            return $"{(int)(seconds)} second ago";
         }
 
         public static string GenerateRandomString()
