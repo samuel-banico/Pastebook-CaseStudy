@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-
+import { Component, Input } from '@angular/core';
+import { UserService } from '@services/user.service';
+import { User } from '@models/user';
 @Component({
   selector: 'app-likecomment',
   templateUrl: './likecomment.component.html',
@@ -12,6 +13,11 @@ export class LikecommentComponent {
   showLikesDropdown: boolean = false;
   userImage: string = '../../../assets/images/user-default-image.png'; // Replace with the actual path to the default user image
   showComments!: boolean;
+  @Input() user: User = new User();
+
+  constructor(
+    private userService: UserService,
+  ){}
 
   toggleLike() {
     this.isLiked = !this.isLiked;

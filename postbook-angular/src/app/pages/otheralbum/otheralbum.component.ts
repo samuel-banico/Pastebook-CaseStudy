@@ -46,8 +46,8 @@ export class OtheralbumComponent {
   }
 
   toAlbum(albumId: string) {
-    this.dataTransferService.data = albumId;
-    this.router.navigate(['create']);
+    this.sessionService.setAlbum(albumId);
+    this.router.navigate(['othersinglealbum']);
     console.log(albumId);
   }
 }

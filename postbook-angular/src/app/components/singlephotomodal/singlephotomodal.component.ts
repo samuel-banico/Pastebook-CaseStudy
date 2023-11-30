@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { NgModule } from '@angular/core';
+
 
 @Component({
   selector: 'app-singlephotomodal',

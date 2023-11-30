@@ -42,6 +42,7 @@ import { OtherwallComponent } from './pages/otherwall/otherwall.component';
 import { SinglephotomodalComponent } from './components/singlephotomodal/singlephotomodal.component';
 import { EditAlbumModalComponent } from './components/edit-album-modal/edit-album-modal.component';
 import { LikecommentComponent } from '@components/likecomment/likecomment.component';
+import { OthersinglealbumComponent } from './pages/othersinglealbum/othersinglealbum.component';
 
 const appRoutes: Routes = [
   // Does not need to login to access but should have no token to access
@@ -64,6 +65,7 @@ const appRoutes: Routes = [
   {path: 'results', component: ResultsComponent},
   {path: 'AllNotifications', component: AllnotifsComponent},
   {path: 'Profile/:firstName:lastName', component: OtherprofileComponent},
+  {path : 'othersinglealbum', component:OthersinglealbumComponent},
 
   {path: '**', component: NotFoundComponent}
 
@@ -105,7 +107,8 @@ const appRoutes: Routes = [
     OtherprofileComponent,
     SinglephotomodalComponent,
     EditAlbumModalComponent ,
-    LikecommentComponent
+    LikecommentComponent,
+    OthersinglealbumComponent
   ],
   imports: [
     BrowserModule,
