@@ -19,7 +19,10 @@
                 <div class="media">
                     <img [src]="post.user?.profilePicture" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
                     <div class="media-body mb-4 post">
-                        <h5>{{post.user?.firstName}} {{post.user?.lastName}}</h5>
+                        <h5 class="datetime">{{post.user?.firstName}} {{post.user?.lastName}}</h5>
+                        <small><span>1 hour ago</span></small>
+                        <img src="assets/images/public.png" alt="" style="height: 15px; margin-left: 5px;">
+                        <!-- <img src="assets/images/friends.png" alt="" style="height: 15px; margin-left: 5px;"> -->
                         <p class="card-text">{{post.content}}</p>
                     </div>
                 </div>
