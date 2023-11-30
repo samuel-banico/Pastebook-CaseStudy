@@ -44,6 +44,10 @@ import { EditAlbumModalComponent } from './components/edit-album-modal/edit-albu
 import { LikecommentComponent } from '@components/likecomment/likecomment.component';
 import { OthersinglealbumComponent } from './pages/othersinglealbum/othersinglealbum.component';
 import { OtherpostmodalComponent } from '@components/otherpostmodal/otherpostmodal.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { NgIdleModule } from '@ng-idle/core';
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
+
 
 
 const appRoutes: Routes = [
@@ -124,7 +128,10 @@ const appRoutes: Routes = [
     CommonModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MdbTooltipModule
+    MdbTooltipModule,
+    SweetAlert2Module.forRoot(),
+    NgIdleKeepaliveModule.forRoot(),
+    NgIdleModule.forRoot(),
    
   ],
   exports: [RouterModule, CreatealbummodalComponent, AddphotomodalComponent, EditprofilepicmodalComponent],
