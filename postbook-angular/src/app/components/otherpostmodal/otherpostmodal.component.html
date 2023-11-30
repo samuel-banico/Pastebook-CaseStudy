@@ -1,0 +1,23 @@
+<div class="facebook-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="user-info">
+          <!-- Include user profile picture and name here -->
+          <img [src]="user.profilePicture" alt="">
+          <span class="mt-2">{{ user.firstName }} {{ user.lastName }}</span>
+        </div>
+        <div class="privacy-dropdown">
+          <select class="form-select">
+            <option value="Public">Public</option>
+            <option value="Friends Only">Friends Only</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-body">
+        <textarea class="post-textarea" [placeholder]="'What\'s on your mind, ' + user.firstName + '?'"name="content"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="post-button" (click)="onPost()">Post</button>
+      </div>
+    </div>
+  </div>

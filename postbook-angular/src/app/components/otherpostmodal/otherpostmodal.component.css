@@ -1,0 +1,80 @@
+.facebook-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+     border-radius: 10px;
+  }
+  
+  .modal-content {
+    background-color: #ffffffff;
+    padding: 20px;
+    max-width: 1000px; /* Adjust the max-width as needed */
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin: auto; /* Center the modal horizontally */
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-info img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .user-info span {
+    font-weight: 600;
+    font-size: 14px;
+  }
+  
+  .privacy-dropdown {
+    position: relative;
+  }
+  
+  .modal-body textarea {
+    width: 100%;
+    resize: none;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 10px; /* Add margin for spacing */
+  }
+  
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+  
+  .post-button {
+    color: pink;
+    background-color: #fff;
+    border: 1px solid pink;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border 0.3s;
+  }
+  
+  .post-button:hover {
+    background-color: pink;
+    color: #fff;
+    border: 1px solid #fff;
+  }
+  
+  /* Additional style for the textarea based on user feedback */
+  .post-textarea {
+    height: 150px; /* Adjust the height as needed */
+  }
+  

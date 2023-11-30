@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 
-import { PostmodalComponent } from '@components/postmodal/postmodal.component';
+import { OtherpostmodalComponent } from '@components/otherpostmodal/otherpostmodal.component';
 
 import { PostService } from '@services/post.service';
 import { ScrollService } from '@services/scroll.service';
@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./otherwall.component.css']
 })
 export class OtherwallComponent {
-  modalRef: MdbModalRef<PostmodalComponent> | null = null;
+  modalRef: MdbModalRef<OtherpostmodalComponent> | null = null;
   posts:Post[] = [];
   id: string = "";
   @Input() isFriend: boolean = false;
@@ -44,7 +44,7 @@ export class OtherwallComponent {
   }
 
   openModal() {
-    this.modalRef = this.modalService.open(PostmodalComponent)
+    this.modalRef = this.modalService.open(OtherpostmodalComponent)
   }
 
   //GetOwnUserTimeline
