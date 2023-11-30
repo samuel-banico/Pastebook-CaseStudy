@@ -1,13 +1,12 @@
 import { Component, Input } from '@angular/core';
 
 import { PostService } from '@services/post.service'; 
-
 import { Post, PostComment, PostLike } from '@models/post';
 import { User } from '@models/user';
 import Swal from 'sweetalert2';
 import { Album } from '@models/album';
 
-
+import { UserService } from '@services/user.service';
 @Component({
   selector: 'app-likecomment',
   templateUrl: './likecomment.component.html',
@@ -19,6 +18,11 @@ export class LikecommentComponent {
   likedUsers: string[] = [];
   showLikesDropdown: boolean = false;
   showComments!: boolean;
+  @Input() user: User = new User();
+
+  constructor(
+    private userService: UserService,
+  ){}
 
   @Input() user: User = new User();
   @Input() post: Post = new Post();

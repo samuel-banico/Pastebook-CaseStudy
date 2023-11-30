@@ -53,7 +53,9 @@ export class ResultsComponent implements OnInit{
   }
 
   userClicked(clickedUser: User) {
-    this.dataTransfer.data = clickedUser.id;
-    this.router.navigate(["Profile/"+clickedUser.firstName + "_" + clickedUser.lastName]);
+    this.sessionService.setUser(clickedUser.id!);
+    this.router.navigate(["Profile/"+clickedUser.firstName + "_" + clickedUser.lastName]).then(()=>{
+      window.location.href = "Profile/"+clickedUser.firstName + "_" + clickedUser.lastName;
+    });
   }
 }
