@@ -14,33 +14,21 @@
 <div class="container-fluid">
     <h1 *ngIf="noMatchingUser; else userExist" class="text-center">No Results Found</h1>
     <ng-template #userExist>
-    <div class="row" *ngFor="let user of users">
-        <!-- First User -->
-        
-        <div class="col-md-2"></div>
-        <div class="col-md-4">
-        <div class="d-flex align-items-center justify-content-start pale-background" (click)="userClicked(user)">
+    <div class="row mb-2" *ngFor="let user of users">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+        <div class="d-flex align-items-center justify-content-start pale-background" (click)="userClicked(user)" style="cursor:pointer">
             <img [src]="user.profilePicture" alt="User 1" class="rounded-circle" width="60px" height="60px">
             <div class="ml-3">
             <h4 class="profile-name" style="font-size: 20px;">{{user.firstName}} {{user.lastName}}</h4>
             </div>
         </div>
+        <div class="col-md-3"></div>
         </div>
     </div>
     </ng-template>
-    <!-- <div> -->
-        <!-- Second User -->
-        <!-- <div class="col-md-4">
-        <div class="d-flex align-items-center justify-content-start pale-background" routerLink="/otherProfile">
-            <img src="https://images.pexels.com/photos/7871166/pexels-photo-7871166.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="User 2" class="rounded-circle" width="60px" height="60px">
-            <div class="ml-3">
-            <h4 class="profile-name" style="font-size: 20px;">Christian De Guzman Day2</h4>
-            </div>
-        </div>
-        </div>
-        <div class="col-md-1"></div>
-    </div>
-</div> -->
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
