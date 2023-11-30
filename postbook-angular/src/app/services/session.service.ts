@@ -55,6 +55,10 @@ export class SessionService {
     localStorage.removeItem('album');
   }
 
+  clearAlbumImage():void{
+    localStorage.removeItem('image');
+  }
+
   // Temp Storage
   setSearchUser(value: string): void {
     sessionStorage.setItem('search',value);
@@ -72,6 +76,10 @@ export class SessionService {
     sessionStorage.setItem('album',value);
   }
 
+  setAlbumImage(value: string): void {
+    sessionStorage.setItem('image', value);
+  }
+
   getSearchUser(): string {
     return sessionStorage.getItem('search')!;
   }
@@ -86,5 +94,9 @@ export class SessionService {
 
   getAlbum(): string {
     return sessionStorage.getItem('album')!;
+  }
+
+  getAlbumImage(): string {
+    return sessionStorage.getItem('image')!;
   }
 }

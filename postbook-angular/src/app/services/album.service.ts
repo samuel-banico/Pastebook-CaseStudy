@@ -47,6 +47,10 @@ export class AlbumService {
 
     return this.http.post(this.albumImageUrl+`?albumId=${albumId}`, formData);
   }
+  
+  getAlbumImageById(imageId: string): Observable<object> {
+    return this.http.get(this.albumImageUrl+`?id=${imageId}`, {headers:this.headers});
+  }
 
   assignCoverImageToAlbum(albumId: string, image: File) : Observable<object> {
     const formData = new FormData();

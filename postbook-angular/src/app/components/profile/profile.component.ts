@@ -93,9 +93,9 @@ export class ProfileComponent implements OnInit {
 
     console.log(this.editedBio);
     this.isEditingBio = false;
-
     this.userService.editBio(this.editedBio).subscribe(response => {
       console.log('bio changed');
+      window.location.reload();
     });
   }
 }

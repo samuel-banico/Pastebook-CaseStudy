@@ -13,7 +13,7 @@ export class Album {
 }
 
 export class AlbumImage {
-    id?: number;
+    id?: string;
     image?: string;
     createdOn?: string;
     isEdited?: boolean;
@@ -25,13 +25,13 @@ export class AlbumImage {
   }
 
   export class AlbumImageLike {
-    id?: number;
+    id?: string;
     albumImageId?: number;
     userId?: number;
   }
 
   export class AlbumImageComment {
-    id?: number;
+    id?: string;
     comment?: string;
     createdOn?: string;
     isEdited?: boolean;
