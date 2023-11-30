@@ -102,7 +102,7 @@ namespace pastebook_db.Data
             return posts;
         }
 
-        public List<Post>? GetAllPublicPosts(Guid Id) 
+        public List<Post>? GetAllPublicPosts() 
         {
             try
             {
@@ -117,7 +117,7 @@ namespace pastebook_db.Data
                 .ThenInclude(u => u.User)
                 .Include(f => f.Friend)
                 .ThenInclude(f => f.User_Friend)
-                .Where(p => p.IsPublic == true && p.UserId != Id)
+                .Where(p => p.IsPublic == true)
                 .OrderByDescending(p => p.CreatedOn)
                 .ToList();
             }

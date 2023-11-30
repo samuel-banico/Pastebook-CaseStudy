@@ -29,6 +29,12 @@ namespace pastebook_db.Controllers
             if (notifs == null)
                 return NotFound(new { result = "no_notification" });
 
+            List<NotifDTO> newNotifs = new();
+            foreach (var notif in notifs)
+            {
+                newNotifs.Add(_repo.NotifToNotifDTO(notif));
+            }
+
             return Ok(notifs);
         }
 

@@ -25,4 +25,8 @@ export class HomeService {
   search(searchUser: string): Observable<User[]> {
     return this.http.get<User[]>(this.baseUrl + '/searchUser' + `?user=${searchUser}`, {headers: this.headers});
   }
+
+  searchAllUser(searchUser: string): Observable<User[]> {
+    return this.http.get<User[]>(this.baseUrl + '/searchAllUsers' + `?user=${searchUser}`, {headers: this.headers});
+  }
 }

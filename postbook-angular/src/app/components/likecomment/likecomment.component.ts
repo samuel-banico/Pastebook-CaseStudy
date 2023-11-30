@@ -6,6 +6,8 @@ import { User } from '@models/user';
 import Swal from 'sweetalert2';
 import { Album } from '@models/album';
 
+import { SessionService } from '@services/session.service';
+
 import { UserService } from '@services/user.service';
 @Component({
   selector: 'app-likecomment',
@@ -22,6 +24,7 @@ export class LikecommentComponent {
   constructor(
     private userService: UserService,
     private postService:PostService,
+    private sessionService: SessionService
 
   ){}
 
@@ -31,9 +34,14 @@ export class LikecommentComponent {
 
 
   toggleLike() {
-    if(this.post) {
+    let postId = this.sessionService.getPost();
+    if(this.post || postId) {
       let postLike: PostLike = new PostLike();
       postLike.postId = this.post.id;
+
+      if(!postLike.postId) {
+        postLike.postId = postId;
+      }
       
       this.postService.addLike(postLike).subscribe();
     } else if (this.album) {

@@ -73,8 +73,7 @@ namespace pastebook_db.Data
             newAlbum.IsEdited = aI.IsEdited;
             newAlbum.AlbumId = aI.AlbumId;
 
-            TimeSpan timeDiff = DateTime.Now - aI.CreatedOn;
-            newAlbum.CreatedOn = HelperFunction.TimeDifference(timeDiff.TotalSeconds);
+            newAlbum.CreatedOn = HelperFunction.TimeDifference(aI.CreatedOn, DateTime.Now);
 
             if (File.Exists(aI.Image))
                 newAlbum.Image = HelperFunction.SendImageToAngular(aI.Image);
