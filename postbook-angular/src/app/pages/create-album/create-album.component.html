@@ -1,40 +1,39 @@
 <app-navbar></app-navbar>
 
 <div class="my-3 mx-3 mx-md-5" style="margin-top: 5rem !important;">
-    <div class="pale-background ">
+    <div class="pale-background">
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex">
-                
                 <h1 class="album-name">{{ album.albumName }}</h1>
-                <a (click)="openModal()"><img src="assets/images/edit.png" style="width: 15px; height: 15px; margin-left: 5px;"></a>
+                <a (click)="openModal()"><img src="assets/images/edit.png" class="icon" alt="Edit"></a>
             </div>
             <div>
-                <a class="me-3" (click)="confirmDelete()"><img src="assets/images/delete.png" style="width: 25px; height: 40px;"></a>
+                <a class="me-3" (click)="confirmDelete()"><img src="assets/images/delete.png" class="icon" alt="Delete"></a>
             </div>
         </div>
         <div>
             <p>{{album.albumDescription}}</p>
             <p>{{album.createdOn}}</p>
-        </div> 
+        </div>
     </div>
 
     <div class="pale-background mt-3">
-        <div class="grid-template container text-center row">
-            <div class="item col-3">    
-                <h5 class="album-name">Add Photo</h5>
-                <a (click)="openModalAddPhoto()"><img src="../../../assets/images/addPhoto.png" alt="Add Photo" class="img-fluid"></a>     
+        <div class="grid-template container row">
+            <div class="item col-6 col-md-4 col-lg-3">
+                <a (click)="openModalAddPhoto()" class="add-photo">
+                    <img src="../../../assets/images/addPhoto.png" alt="Add Photo" class="img-fluid">
+                    <h5 class="album-name">Add Photo</h5>
+                </a>
             </div>
-          
-            <!-- code ng FOR LOOP each image na meron kada album na nakastore sa database -->
-            <div *ngIf="album.imageList?.length === 0">
+
+            <!-- ngFor loop for each image stored in the database -->
+            <div *ngIf="album.imageList?.length === 0" class="col-12 text-center">
                 <h1>No Image</h1>
             </div>
-            <div>
-                <div *ngFor="let photos of album.imageList" class="item with-background col-3">
-                    <a href="javascript:void(0);" class="btn" (click)="openSinglePhotoModal()">
-                        <img [src]="photos.image" alt="" class="img-fluid">
-                    </a>   
-                </div>
+            <div *ngFor="let photo of album.imageList" class="item col-6 col-md-4 col-lg-3">
+                <a href="javascript:void(0);" class="photo-link" (click)="openSinglePhotoModal()">
+                    <img [src]="photo.image" alt="" class="img-fluid album-photo">
+                </a>
             </div>
         </div>
     </div>
