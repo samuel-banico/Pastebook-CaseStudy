@@ -121,3 +121,7 @@
 .edit-icon {
     cursor: pointer;
 }
+
+.datetime {
+    margin-bottom: 1px;
+}
