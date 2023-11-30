@@ -19,6 +19,7 @@ import { Album } from '@models/album';
 export class OtheralbumComponent {
   modalRef: MdbModalRef<CreatealbummodalComponent> | null = null;
   albumList: Album[] = [];
+  user: string = "";
 
   constructor(
       private router: Router,
@@ -33,7 +34,8 @@ export class OtheralbumComponent {
   }
 
   ngOnInit(): void {
-    this.albumService.getAllUserAlbum().subscribe((a: any) => {
+    this.user = this.sessionService.getUser();
+    this.albumService.getAllFriendAlbum(this.user).subscribe((a: any) => {
       this.albumList = a;
       console.log(this.albumList);
     });

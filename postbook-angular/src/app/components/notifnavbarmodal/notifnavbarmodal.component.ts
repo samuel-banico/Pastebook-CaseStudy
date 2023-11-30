@@ -7,6 +7,7 @@ import { Album } from '@models/album';
 import { DataTransferService } from '@services/data-transfer.service';
 import { User } from '@models/user';
 import { AllNotifsService } from '@services/all-notifs.service';
+import { UserService } from '@services/user.service';
 
 @Component({
   selector: 'app-notifnavbarmodal',
@@ -21,6 +22,7 @@ export class NotifnavbarmodalComponent implements OnInit {
       private router: Router, 
       private notifService:NotifNavbarModalService,
       private dataTransferService:DataTransferService,
+      private userService: UserService,
       private allNotifService:AllNotifsService
     ) {}
     close(): void {
@@ -61,7 +63,7 @@ export class NotifnavbarmodalComponent implements OnInit {
           this.router.navigate(['/post']);
         }else{
           this.dataTransferService.data=notif.userId;
-          this.router.navigate(['/otherProfile']);
+          this.router.navigate(["Profile/"+this.user.firstName + "_" + this.user.lastName]);
         }
       })
     }
