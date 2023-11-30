@@ -78,8 +78,7 @@ export class OtherprofileComponent implements OnInit {
   }
 
   addFriend(): void {
-    console.log(this.user);
-    this.friendService.sendFriendRequest(this.user).subscribe( (u : any) => {
+    this.friendService.sendFriendRequest().subscribe( (u : any) => {
       Swal.fire('Friend Request sent', `You have sent a friend request to ${this.user.firstName} ${this.user.lastName}`, 'success');
       
       this.hasSentFriendRequest = true;

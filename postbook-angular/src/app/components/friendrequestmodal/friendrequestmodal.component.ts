@@ -58,6 +58,7 @@ export class FriendrequestmodalComponent implements OnInit {
       confirmButtonText: 'Visit Profile',
       cancelButtonText: 'Close'
       })
+      this.close();
     })
     
     // .then((result) => 
