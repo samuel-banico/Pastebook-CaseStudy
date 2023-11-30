@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { PostService } from '@services/post.service'; 
 import { Post, PostComment, PostLike } from '@models/post';
@@ -14,7 +14,7 @@ import { UserService } from '@services/user.service';
   templateUrl: './likecomment.component.html',
   styleUrls: ['./likecomment.component.css']
 })
-export class LikecommentComponent {
+export class LikecommentComponent implements OnInit {
   isLiked: boolean = false;
   likeCount: number = 0;
   likedUsers: string[] = [];
@@ -26,14 +26,20 @@ export class LikecommentComponent {
     private postService:PostService,
     private sessionService: SessionService
 
-  ){}
+  ){ }
 
   @Input() user: User = new User();
   @Input() post: Post = new Post();
   @Input() album: Album = new Album();
 
+  ngOnInit(): void {
+    this.isLiked = this.post.hasLiked!;
+    console.log(this.isLiked);
+  }
 
   toggleLike() {
+    this.isLiked = !this.isLiked;
+
     let postId = this.sessionService.getPost();
     if(this.post || postId) {
       let postLike: PostLike = new PostLike();
@@ -43,17 +49,14 @@ export class LikecommentComponent {
         postLike.postId = postId;
       }
       
-      this.postService.addLike(postLike).subscribe();
+      if(this.isLiked) 
+      {
+        this.postService.addLike(postLike).subscribe();
+      } else {
+        this.postService.removeLike(this.post.id!).subscribe();
+      }
     } else if (this.album) {
 
-    }
-    this.isLiked = !this.isLiked;
-    if (this.isLiked) {
-      this.likeCount++;
-      this.likedUsers.push('User Name'); // Add the name of the user who liked the post
-    } else {
-      this.likeCount--;
-      this.likedUsers.pop(); // Remove the last user from the list
     }
   }
 
@@ -68,13 +71,19 @@ export class LikecommentComponent {
     } else if(this.album) {
 
     }
+
+    this.comment = "";
   }
 
   toggleLikesDropdown() {
+    console.log(this.showLikesDropdown);
     this.showLikesDropdown = !this.showLikesDropdown;
+    this.showComments = false;
   }
 
   toggleCommentsVisibility() {
     this.showComments = !this.showComments;
+    this.showLikesDropdown = false;
+
   } 
 }

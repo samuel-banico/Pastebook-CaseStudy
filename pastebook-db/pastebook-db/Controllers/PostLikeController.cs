@@ -36,7 +36,7 @@ namespace pastebook_db.Controllers
 
         // A friend has liked a user's post
         [HttpPost("likePost")]
-        public ActionResult<Post> LikedPost(PostLikeToReceiveDTO like)
+        public ActionResult<Post> LikedPost(PostLikeDTO like)
         {
             var token = Request.Headers["Authorization"];
             var user = _userRepository.GetUserByToken(token);
@@ -55,10 +55,11 @@ namespace pastebook_db.Controllers
         }
 
         // A friend has unliked a user's post
-        [HttpPut("unlikePost")]
-        public ActionResult<Post> UnlikedPost(Guid postLikeId)
+        [HttpDelete("unlikePost")]
+        public ActionResult<Post> UnlikedPost()
         {
-            var postLike = _postLikeRepository.GetPostLikeById(postLikeId);
+            var postId = Guid.Parse(Request.Query["postId"].ToString());
+            var postLike = _postLikeRepository.GetPostLikeById(postId);
 
             if (postLike == null)
                 return NotFound(new { result = "post_like_not_found" });

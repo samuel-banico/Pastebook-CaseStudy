@@ -24,12 +24,15 @@ namespace pastebook_db.Controllers
         [HttpGet]
         public ActionResult<PostDTO> GetPostById(Guid postId)
         {
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+
             var post = _postRepository.GetPostById(postId);
             
             if(post == null)
                 return NotFound(new { result = "no_post" });
 
-            var postDto = _postRepository.ConvertPostToPostDTO(post);
+            var postDto = _postRepository.ConvertPostToPostDTO(post, user.Id);
 
             return Ok(postDto);
         }
@@ -49,7 +52,7 @@ namespace pastebook_db.Controllers
             var userTimeline = new List<PostDTO>();
             foreach (var post in postList) 
             {
-                var postDto = _postRepository.ConvertPostToPostDTO(post);
+                var postDto = _postRepository.ConvertPostToPostDTO(post, user.Id);
 
                 userTimeline.Add(postDto);
             }
@@ -64,6 +67,7 @@ namespace pastebook_db.Controllers
             var user = _userRepository.GetUserByToken(token);
             var retrievedUser = Request.Query["retrievedUserId"];
             Guid retrievedUserId = Guid.Parse(retrievedUser);
+
             var postList = _postRepository.GetAllPostOfOtherTimeline(retrievedUserId, user.Id);
 
             if (postList.Count == 0)
@@ -72,7 +76,7 @@ namespace pastebook_db.Controllers
             var otherTimeline = new List<PostDTO>();
             foreach (var post in postList)
             {
-                var postDto = _postRepository.ConvertPostToPostDTO(post);
+                var postDto = _postRepository.ConvertPostToPostDTO(post, user.Id);
 
                 otherTimeline.Add(postDto);
             }
@@ -89,12 +93,14 @@ namespace pastebook_db.Controllers
 
             if (user == null)
                 return NotFound(new { result = "no_user"});
-            List<Post> friendsPosts = new();
 
+            List<Post> friendsPosts = new();
             if (user.ViewPublicPost)
                 friendsPosts = _postRepository.GetAllPublicPosts();
             else
                 friendsPosts = _postRepository.GetAllPostOfFriends(user.Id);
+
+            friendsPosts.AddRange(_postRepository.GetAllPrivatePostOfUser(user.Id));
 
             if (friendsPosts == null)
                 return NotFound(new { result = "no_post" });
@@ -103,7 +109,7 @@ namespace pastebook_db.Controllers
 
             foreach (var post in friendsPosts) 
             {
-                var postDto = _postRepository.ConvertPostToPostDTO(post);
+                var postDto = _postRepository.ConvertPostToPostDTO(post, user.Id);
 
                 feed.Add(postDto);
             }

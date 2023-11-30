@@ -10,14 +10,19 @@ namespace pastebook_db.Data
     public class PostRepository
     {
         private readonly PastebookContext _context;
+
         private readonly UserRepository _userRepository;
         private readonly FriendRepository _friendRepository;
+        private readonly PostLikeRepository _postLikeRepository;
+        private readonly PostCommentRepository _postCommentRepository;
 
-        public PostRepository(PastebookContext context, FriendRepository friendRepository, UserRepository userRepository)
+        public PostRepository(PastebookContext context, FriendRepository friendRepository, UserRepository userRepository, PostCommentRepository postCommentRepository, PostLikeRepository postLikeRepository)
         {
             _context = context;
             _friendRepository = friendRepository;
             _userRepository = userRepository;
+            _postCommentRepository = postCommentRepository;
+            _postLikeRepository = postLikeRepository;
         }
 
         public Post? GetPostById(Guid id)
@@ -52,6 +57,42 @@ namespace pastebook_db.Data
                 .Include(f => f.Friend)
                 .ThenInclude(f => f.User_Friend)
                 .Where(p => p.UserId == userId)
+                .OrderByDescending(p => p.CreatedOn)
+                .ToList();
+        }
+
+        public List<Post> GetAllPrivatePostOfUser(Guid userId)
+        {
+            return _context.Posts
+                .Include(p => p.PostCommentList)
+                .ThenInclude(u => u.User)
+                .Include(p => p.PostLikeList)
+                .ThenInclude(u => u.User)
+                .Include(u => u.User)
+                // Friends Credentials
+                .Include(f => f.Friend)
+                .ThenInclude(u => u.User)
+                .Include(f => f.Friend)
+                .ThenInclude(f => f.User_Friend)
+                .Where(p => p.UserId == userId && p.IsPublic == false)
+                .OrderByDescending(p => p.CreatedOn)
+                .ToList();
+        }
+
+        public List<Post> GetAllPublicPostOfUser(Guid userId)
+        {
+            return _context.Posts
+                .Include(p => p.PostCommentList)
+                .ThenInclude(u => u.User)
+                .Include(p => p.PostLikeList)
+                .ThenInclude(u => u.User)
+                .Include(u => u.User)
+                // Friends Credentials
+                .Include(f => f.Friend)
+                .ThenInclude(u => u.User)
+                .Include(f => f.Friend)
+                .ThenInclude(f => f.User_Friend)
+                .Where(p => p.UserId == userId && p.IsPublic == true)
                 .OrderByDescending(p => p.CreatedOn)
                 .ToList();
         }
@@ -96,7 +137,7 @@ namespace pastebook_db.Data
 
             foreach (var friend in friendList)
             {
-                posts.AddRange(GetAllPostOfUserTimeline(friend.Id));
+                posts.AddRange(GetAllPublicPostOfUser(friend.Id));
             }
 
             return posts;
@@ -151,41 +192,47 @@ namespace pastebook_db.Data
         }
 
         // POST DTO
-        public PostDTO ConvertPostToPostDTO(Post post)
+        public PostDTO ConvertPostToPostDTO(Post post, Guid loggedUserId)
         {
-            var likeCount = 0;
-
-            var commentCount = 0;
-
-            if (post.PostLikeList != null)
-                likeCount = post.PostLikeList.Count();
-            if (post.PostCommentList != null)
-                commentCount = post.PostCommentList.Count();
-
-            var user = _userRepository.GetUserById(post.UserId);
-
             var postDto = new PostDTO()
             {
                 Id = post.Id,
                 Content = post.Content,
                 IsPublic = post.IsPublic,
                 IsEdited = post.IsEdited,
-                CreatedOn = post.CreatedOn.ToString("yyyy-MM-dd"),
-
-                LikeCount = likeCount,
-                CommentCount = commentCount,
+                CreatedOn = HelperFunction.TimeDifference(post.CreatedOn, DateTime.Now),
 
                 UserId = post.UserId,
                 FriendId = post.FriendId,
                 Friend = post.Friend,
-
-                PostLikeList = post.PostLikeList,
-                PostCommentList = post.PostCommentList
             };
 
             var UserPostDTO = _friendRepository.ConvertUserToUserSendDTO(post.User);
-
             postDto.User = UserPostDTO;
+
+            List<PostCommentDTO> postComments = new();
+            if (post.PostCommentList != null || post.PostCommentList.Count > 0)
+            {
+                foreach (var postComment in post.PostCommentList)
+                    postComments.Add(_postCommentRepository.ConvertPostCommentToDTO(postComment));
+            }
+
+            postDto.PostCommentList = postComments;
+            postDto.CommentCount = postComments.Count;
+
+            List<PostLikeDTO> postLikes = new();
+            if (post.PostLikeList != null || post.PostLikeList.Count > 0)
+            {
+                foreach (var postLike in post.PostLikeList)
+                    postLikes.Add(_postLikeRepository.ConvertPostLikeToDTO(postLike));
+            }
+            postDto.PostLikeList = postLikes;
+            postDto.LikeCount = postLikes.Count;
+
+            if ((postDto.PostLikeList != null || postDto.PostLikeList.Count > 0) && post.PostLikeList.Any(x => x.UserId == loggedUserId))
+                postDto.HasLiked = true;
+            else
+                postDto.HasLiked = false;
 
             return postDto;
         }

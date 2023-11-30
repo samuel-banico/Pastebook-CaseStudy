@@ -13,11 +13,14 @@
         public virtual User User { get; set; } = null!;
     }
 
-    public class PostLikeToReceiveDTO 
+    public class PostLikeDTO 
     {
         public Guid? Id { get; set; }
         public string? CreatedOn { get; set; }
+
         public Guid PostId { get; set;}
+        public Post? Post { get; set; }
         public Guid UserId { get; set; }
+        public UserSendDTO? User { get; set; }
     }
 }
