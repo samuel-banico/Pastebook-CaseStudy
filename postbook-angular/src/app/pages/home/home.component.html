@@ -45,13 +45,16 @@
             <div class="mt-2 scroll-container" appInfiniteScroll (scrolled)="onScroll()">
                 <div class="card mb-3 post" *ngFor="let post of posts">
                     <div class="card-body">
-                        <div class="media">
-                            <img [src]="post.user?.profilePicture" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
-                            <div class="media-body mb-4">
-                                <h5>{{post.user?.firstName}} {{post.user?.lastName}}</h5>
-                                <p class="card-text" (click)="onPostClick(post)">{{post.content}}</p>
-                            </div>
+                      <div class="media">
+                        <img [src]="post.user?.profilePicture" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
+                        <div class="media-body mb-4 post">
+                            <h5 class="datetime">{{post.user?.firstName}} {{post.user?.lastName}}</h5>
+                            <small><span>1 hour ago</span></small>
+                            <img src="assets/images/public.png" alt="" style="height: 15px; margin-left: 5px;">
+                            <!-- <img src="assets/images/friends.png" alt="" style="height: 15px; margin-left: 5px;"> -->
+                            <p class="card-text">{{post.content}}</p>
                         </div>
+                    </div>
                         <app-likecomment [user]="user" [post]="post"></app-likecomment>                                       
                 </div>
             </div>
