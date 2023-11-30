@@ -12,4 +12,12 @@
         public Guid UserId { get; set; }
         public virtual User User { get; set; } = null!;
     }
+
+    public class PostLikeToReceiveDTO 
+    {
+        public Guid? Id { get; set; }
+        public string? CreatedOn { get; set; }
+        public Guid PostId { get; set;}
+        public Guid UserId { get; set; }
+    }
 }

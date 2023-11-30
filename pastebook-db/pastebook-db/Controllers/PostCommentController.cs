@@ -44,16 +44,20 @@ namespace pastebook_db.Controllers
             return Ok(postComment);
         }
 
-        [HttpPut("commentPost")]
-        public ActionResult<Post> CommentPost(PostCommentDTO postCommentDTO)
+        [HttpPost("commentPost")]
+        public ActionResult<Post> CommentPost(PostCommentDTO post)
         {
             var token = Request.Headers["Authorization"];
             var user = _userRepository.GetUserByToken(token);
+
+            /*var postId = Guid.Parse(Request.Query["postId"].ToString());
+            var comment = Request.Query["comment"].ToString();*/
+
             var postComment = new PostComment
             {
-                PostId = postCommentDTO.PostId,
+                PostId = post.PostId,
                 UserId = user.Id,
-                Comment = postCommentDTO.Comment,
+                Comment = post.Comment,
                 CreatedOn = DateTime.Now,
                 IsEdited = false
             };

@@ -17,18 +17,15 @@ export class Post {
 }
 
 export class PostLike {
-    constructor(
-        public id?: string,
-        public createdOn?: Date,
-        public postId?:string,
-        public post?:Post,
-        public userId?:string,
-        public user?:string
+    public id?: string;
+    public createdOn?: string;
 
-    ) {}
+    public postId?:string;
+    public userId?:string;
 }
 
 export class PostComment {
     public id?: string;
+    public postId?: string;
     public comment?: string;
 }
