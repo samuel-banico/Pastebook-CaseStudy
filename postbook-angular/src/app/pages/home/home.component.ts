@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy  } from '@angular/core';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { PostmodalComponent } from '@components/postmodal/postmodal.component';
-
 import { PostService } from '@services/post.service';
 import { UserService } from '@services/user.service';
 import { SessionService } from '@services/session.service';
@@ -12,18 +11,18 @@ import { ScrollService } from '@services/scroll.service';
 import { TokenService } from '@services/token.service';
 import { PostLikesService } from '@services/post-likes.service';
 import { DataTransferService } from '@services/data-transfer.service';
-
 import { User } from '@models/user';
 import { Post, PostLike, PostComment } from '@models/post';
 import { Obj } from '@popperjs/core';
-
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit, OnDestroy{
+  private refreshInterval!: Subscription;
   modalRef: MdbModalRef<PostmodalComponent> | null = null;
 
   user: User = new User();
@@ -46,7 +45,6 @@ export class HomeComponent implements OnInit{
     private tokenService: TokenService,
     private dataTransfer: DataTransferService,
     private postLikeService:PostLikesService,
-
     private httpClient: HttpClient,
     private userService: UserService,
     private router: Router
@@ -62,9 +60,23 @@ export class HomeComponent implements OnInit{
     })
   } 
   
-ngOnInit(): void {
-  this.getFeed();
-}
+  ngOnInit(): void {
+    this.getFeed(); // Initial data fetch
+    this.setupAutoRefresh();
+    
+  }
+
+  ngOnDestroy(): void {
+    this.refreshInterval.unsubscribe(); // Unsubscribe to avoid memory leaks
+  }
+
+  private setupAutoRefresh(): void {
+    const refreshTimeInSeconds = 60; // Adjust the refresh interval as needed (e.g., every 60 seconds)
+    
+    this.refreshInterval = interval(refreshTimeInSeconds * 1000).subscribe(() => {
+      this.getFeed(); // Fetch data at regular intervals
+    });
+  }
 
 onScroll() {
   this.scrollService.loadData();
