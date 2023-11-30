@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { SessionService } from '@services/session.service';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { UserService } from '@services/user.service';
+import { NavbarcountService } from '@services/navbarcount.service'; // Import the service
 import { User } from '@models/user';
 
 @Component({
@@ -21,12 +22,15 @@ export class NavbarComponent implements OnInit {
   searchRef: MdbModalRef<SearchmodalComponent> | null = null;
   modalRef: MdbModalRef<NotifnavbarmodalComponent> | MdbModalRef<FriendrequestmodalComponent> | null = null;
   user: User = new User;
+  notificationCount: number = 0;
+  friendRequestCount: number = 0;
 
   constructor(
     private router: Router,
     private modalService: MdbModalService,
     private sessionService: SessionService,
-    private userService: UserService
+    private userService: UserService,
+    private navbarcountService: NavbarcountService // Inject the service
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -46,19 +50,26 @@ export class NavbarComponent implements OnInit {
         
       });
     }
-    }
+  }
 
   ngOnInit(): void {
-    
+    // Subscribe to notification count
+    this.navbarcountService.notificationCount$.subscribe(count => {
+      this.notificationCount = count;
+    });
+
+    // Subscribe to friend request count
+    this.navbarcountService.friendRequestCount$.subscribe(count => {
+      this.friendRequestCount = count;
+    });
   }
 
   openNotifModal() {
-
-    this.modalRef = this.modalService.open(NotifnavbarmodalComponent)
+    this.modalRef = this.modalService.open(NotifnavbarmodalComponent);
   }
 
   openFriendModal() {
-    this.modalRef = this.modalService.open(FriendrequestmodalComponent)
+    this.modalRef = this.modalService.open(FriendrequestmodalComponent);
   }
   
   logout(): void {
