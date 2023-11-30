@@ -18,21 +18,17 @@ export class LikecommentComponent {
   likedUsers: string[] = [];
   showLikesDropdown: boolean = false;
   showComments!: boolean;
-  @Input() user: User = new User();
 
   constructor(
     private userService: UserService,
+    private postService:PostService,
+
   ){}
 
   @Input() user: User = new User();
   @Input() post: Post = new Post();
   @Input() album: Album = new Album();
 
-  constructor(
-    private postService: PostService,
-  ) {
-
-  }
 
   toggleLike() {
     if(this.post) {
