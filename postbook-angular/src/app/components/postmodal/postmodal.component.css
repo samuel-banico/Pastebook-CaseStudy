@@ -58,9 +58,9 @@
 }
 
 .post-button {
-  color: #ff4500;
+  color: #F875AA;
   background-color: #fff;
-  border: 1px solid #ff4500;
+  border: 1px solid #F875AA;
   border-radius: 5px;
   padding: 10px 20px;
   cursor: pointer;
@@ -68,9 +68,10 @@
 }
 
 .post-button:hover {
-  background-color: #ff4500;
+  background-color: #F875AA;
   color: #fff;
   border: 1px solid #fff;
+  transform: scale(1.05);
 }
 
 /* Additional style for the textarea based on user feedback */
