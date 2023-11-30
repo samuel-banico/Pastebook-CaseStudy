@@ -12,11 +12,11 @@ import { Album } from '@models/album';
 import { SinglephotomodalComponent } from '@components/singlephotomodal/singlephotomodal.component';
 
 @Component({
-    selector: 'CreateAlbumComponent',
-    templateUrl: './create-album.component.html',
-    styleUrls: ['./create-album.component.css']
+    selector: 'app-othersinglealbum',
+    templateUrl: './othersinglealbum.component.html',
+    styleUrls: ['./othersinglealbum.component.css']
 })
-export class CreateAlbumComponent implements OnInit {
+export class OthersinglealbumComponent implements OnInit {
     modalRefAddPhoto: MdbModalRef<AddphotomodalComponent> | null = null;
     modalRefSinglePhoto: MdbModalRef<SinglephotomodalComponent> | null = null;
     modalRefEditPhoto: MdbModalRef<AddphotomodalComponent | EditAlbumModalComponent> | null = null;

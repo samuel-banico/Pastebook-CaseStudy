@@ -122,7 +122,12 @@ namespace pastebook_db.Data
 
             if (album.AlbumImageList != null && album.AlbumImageList.Count > 0)
             {
-                albumDTO.CoverAlbumImage = HelperFunction.SendImageToAngular(album.AlbumImageList.First().Image);
+                var otherImage = album.AlbumImageList.First().Image;
+                if (File.Exists(otherImage))
+                    albumDTO.CoverAlbumImage = HelperFunction.SendImageToAngular(otherImage);
+                else
+                    albumDTO.CoverAlbumImage = HelperFunction.SendImageToAngular(Path.Combine("wwwroot", "images", "default_album.png"));
+
 
                 var imageList = new List<AlbumImageDTO>();
                 foreach (var image in album.AlbumImageList) 
