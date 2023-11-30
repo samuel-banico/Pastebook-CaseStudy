@@ -39,6 +39,22 @@ export class SessionService {
     localStorage.removeItem('rememberMe');
   }
 
+  clearSearchUser():void{
+    localStorage.removeItem('search');
+  }
+
+  clearUser():void{
+    localStorage.removeItem('user');
+  }
+
+  clearPost():void{
+    localStorage.removeItem('post');
+  }
+
+  clearAlbum():void{
+    localStorage.removeItem('album');
+  }
+
   // Temp Storage
   setSearchUser(value: string): void {
     sessionStorage.setItem('search',value);

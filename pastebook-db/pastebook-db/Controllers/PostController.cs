@@ -11,12 +11,14 @@ namespace pastebook_db.Controllers
         private readonly PostRepository _postRepository;
         private readonly NotificationRepository _notificationRepository;
         private readonly UserRepository _userRepository;
+        private readonly FriendRepository _friendRepository;
 
-        public PostController(PostRepository postRepository, NotificationRepository notificationRepository, UserRepository userRepository)
+        public PostController(PostRepository postRepository, NotificationRepository notificationRepository, UserRepository userRepository, FriendRepository friendRepository)
         {
             _postRepository = postRepository;
             _notificationRepository = notificationRepository;
             _userRepository = userRepository;
+            _friendRepository = friendRepository;
         }
 
         [HttpGet]
@@ -120,13 +122,20 @@ namespace pastebook_db.Controllers
                 CreatedOn = DateTime.Now,
 
                 UserId = addPost.UserId,
-                FriendId = addPost.FriendId
             };
+
+            // Set FriendId based on the logic you need
+            if (addPost.FriendId != null)
+            {
+                var friend = _friendRepository.GetFriendById(addPost.FriendId);
+                newPost.FriendId = friend.Id;
+
+            }
 
             _postRepository.CreatePost(newPost);
 
             if (addPost.FriendId != null)
-                _notificationRepository.CreateNotifFromFriendPostInTimeline(newPost);
+            _notificationRepository.CreateNotifFromFriendPostInTimeline(newPost);
 
             return Ok(new { result = "new_post"});
         }
