@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit, OnDestroy{
     private router: Router
     ){
       this.tokenService.validateToken();
-      userService.getUserByToken().subscribe((response: Object) => {
+      userService.getUserByTokenHome().subscribe((response: Object) => {
         this.user = response;
     }, (err : any) => {
       if(err['error']['result'] === 'no_user') {

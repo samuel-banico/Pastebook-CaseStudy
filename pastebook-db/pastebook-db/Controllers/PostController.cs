@@ -90,7 +90,7 @@ namespace pastebook_db.Controllers
             List<Post> friendsPosts = new();
 
             if (user.ViewPublicPost)
-                friendsPosts = _postRepository.GetAllPublicPosts();
+                friendsPosts = _postRepository.GetAllPublicPosts(user.Id);
             else
                 friendsPosts = _postRepository.GetAllPostOfFriends(user.Id);
 
