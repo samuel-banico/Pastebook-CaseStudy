@@ -5,8 +5,10 @@ import { NgModule } from '@angular/core';
 import { SessionService } from '@services/session.service';
 import { AlbumService } from '@services/album.service';
 import { AlbumImage } from '@models/album';
+import { UserService } from '@services/user.service';
 
-
+import { User } from '@models/user';
+import { TokenService } from '@services/token.service';
 
 @Component({
   selector: 'app-singlephotomodal',
@@ -24,11 +26,15 @@ export class SinglephotomodalComponent implements OnInit{
 
   constructor(
     private sessionService: SessionService,
-    private albumService: AlbumService
+    private albumService: AlbumService,
+    private userService: UserService,
+    private tokenService: TokenService
   ){
+    this.tokenService.validateToken();
+
     this.imageId = this.sessionService.getAlbumImage();
     
-    this.getImage();    
+    this.getImage();
   }
 
   ngOnInit(): void {
@@ -47,7 +53,7 @@ export class SinglephotomodalComponent implements OnInit{
   getImage(){
     this.albumService.getAlbumImageById(this.imageId).subscribe((i : any)=>{
       this.albumImage = i;
-      console.log(this.albumImage.id);
+      console.log(this.albumImage);
     });
   }
 }

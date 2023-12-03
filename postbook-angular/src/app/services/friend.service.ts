@@ -39,6 +39,13 @@ export class FriendService {
     return this.http.post<any>(this.baseUrl + `/accepted?friendRequestId=${request.id}`,{}, {headers: this.headers})
   }
 
+  rejectFriendRequest(request : FriendRequest) : Observable<any> {
+    const params = new HttpParams()
+        .set('friendRequestId', request.id!);
+
+    return this.http.delete<any>(this.requestUrl + `/reject`, {params: params})
+  }
+
   hasSentFriendRequest(friendId : string) : Observable<any> {
     const params = new HttpParams()
         .set('userToken', this.sessionService.getToken())

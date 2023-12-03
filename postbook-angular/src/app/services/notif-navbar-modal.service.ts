@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient,HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { HttpClient,HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SessionService } from './session.service';
 
@@ -31,8 +31,11 @@ constructor(
   }
 
   //Update notification to hasSeen = true
-  updateSeenNotification(notif:Notification):Observable<Object>{
-    return this.http.put<Notification[]>(this.baseUrl,notif,{ headers: this.headers });
+  updateSeenNotification(notifId: string):Observable<Object>{
+    const params = new HttpParams()
+      .set('notifId', notifId);
+
+    return this.http.put<Notification[]>(this.baseUrl, {}, { headers: this.headers, params: params });
   }
 
   //Clear Notification

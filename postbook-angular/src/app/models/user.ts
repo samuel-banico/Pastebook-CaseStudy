@@ -14,6 +14,7 @@ export class User {
 
         // Other Details
         public friendCount?: number,
+        public salt?: string,
 
         public friends?: User[]
     ){}

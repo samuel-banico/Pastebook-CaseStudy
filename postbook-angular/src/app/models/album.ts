@@ -1,3 +1,5 @@
+import { User } from "./user";
+
 export class Album {
     id?: string;
     albumName?: string;
@@ -20,21 +22,26 @@ export class AlbumImage {
     likeCount?: number;
     commentCount?: number;
     albumId?: number;
+    hasLiked?: boolean;
+
     albumImageLikesList?: AlbumImageLike[];
     albumImageCommentsList?: AlbumImageComment[];
   }
 
   export class AlbumImageLike {
     id?: string;
-    albumImageId?: number;
-    userId?: number;
+
+    albumImageId?: string;
+    userId?: string;
+    user?: User;
   }
 
   export class AlbumImageComment {
     id?: string;
     comment?: string;
     createdOn?: string;
-    isEdited?: boolean;
-    albumImageId?: number;
-    userId?: number;
+
+    albumImageId?: string;
+    userId?: string;
+    user?: User;
   }

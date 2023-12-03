@@ -28,12 +28,13 @@ export class AlbumsComponent implements OnInit {
       private albumService: AlbumService,
     ) {
       this.tokenService.validateToken();
+
+      this.sessionService.clearPost();
   }
 
   ngOnInit(): void {
     this.albumService.getAllUserAlbum().subscribe((a: any) => {
       this.albumList = a;
-      console.log(this.albumList);
     });
   }
 
@@ -43,6 +44,6 @@ export class AlbumsComponent implements OnInit {
 
   toAlbum(albumId: string) {
     this.sessionService.setAlbum(albumId);
-    this.router.navigate(['create']);
+    this.router.navigate(['YourAlbum/'+albumId]);
   }
 }

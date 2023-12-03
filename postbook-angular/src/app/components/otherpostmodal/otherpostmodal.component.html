@@ -14,7 +14,8 @@
         </div>
       </div>
       <div class="modal-body">
-        <textarea class="post-textarea" [placeholder]="'What\'s on your mind, ' + user.firstName + '?'"name="content" [(ngModel)]="post.content"></textarea>
+        <textarea class="post-textarea" [placeholder]="'What\'s on your mind, ' + user.firstName + '?'"name="content" [(ngModel)]="post.content" [appInputLength]="10000" (remainingCharacters)="showPostRemainingCharacters($event)"></textarea>
+        <span *ngIf="postRemainChars <= 0" class="text-danger">Post too long</span>
       </div>
       <div class="modal-footer">
         <button type="button" class="post-button" (click)="onPost()">Post</button>

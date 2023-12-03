@@ -33,12 +33,17 @@ export class TokenService {
         }, (err : Record<string, any>) => {
           console.log(err);
           if(err['status'] === 0 && err['statusText'] === 'Unknown Error') {
-            Swal.fire('Reminder', 'Start the back-end database, Thank you', 'error');
+            Swal.fire('Reminder', 'Start the back-end database, Thank you', 'error').then((a) => {
+              window.location.reload();
+            });
           } else if (err['error']['result'] === 'no_user') {
-            Swal.fire('Internal Server Error', 'There was an issue in the server. Returning to Login', 'warning');
-              this.sessionService.clear();
-              this.router.navigate(['login']);
-            }
+            Swal.fire('Server Error', 'There was an issue in the server. Returning to Back', 'warning');
+            this.sessionService.clear();
+            this.router.navigate(['landing']);
+          } else {
+            this.sessionService.clear();
+            this.router.navigate(['landing']);
+          }
         })
       }
   }

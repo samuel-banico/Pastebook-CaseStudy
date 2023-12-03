@@ -11,11 +11,13 @@ namespace pastebook_db.Controllers
     {
         private readonly AlbumImageCommentRepository _albumImageCommentRepository;
         private readonly NotificationRepository _notificationRepository;
+        private readonly UserRepository _userRepository;
 
-        public AlbumImageCommentController(AlbumImageCommentRepository albumImageCommentRepository, NotificationRepository notificationRepository)
+        public AlbumImageCommentController(AlbumImageCommentRepository albumImageCommentRepository, NotificationRepository notificationRepository, UserRepository userRepository)
         {
             _albumImageCommentRepository = albumImageCommentRepository;
             _notificationRepository = notificationRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet]
@@ -40,21 +42,27 @@ namespace pastebook_db.Controllers
             return Ok(albumImageComment);
         }
 
-        [HttpPut("commentAlbumImage")]
-        public ActionResult<AlbumImageComment> CommentAlbumImage(Guid albumImageId, Guid loggedUserId, string comment)
+        [HttpPost("commentAlbumImage")]
+        public ActionResult<AlbumImageComment> CommentAlbumImage(AlbumImageCommentDTO albumImageComment)
         {
-            var albumImageComment = new AlbumImageComment
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
+
+            var newAlbumImageComment = new AlbumImageComment
             {
-                AlbumImageId = albumImageId,
-                UserId = loggedUserId,
-                Comment = comment,
+                AlbumImageId = albumImageComment.AlbumImageId,
+                UserId = user.Id,
+                Comment = albumImageComment.Comment,
                 CreatedOn = DateTime.Now,
                 IsEdited = false
             };
 
-            _albumImageCommentRepository.CreateAlbumImageComment(albumImageComment);
+            _albumImageCommentRepository.CreateAlbumImageComment(newAlbumImageComment);
 
-            _notificationRepository.CreateNotifAlbumImageComment(albumImageComment);
+            _notificationRepository.CreateNotifAlbumImageComment(newAlbumImageComment);
 
             return Ok(new { result = "albumImage_liked" });
         }

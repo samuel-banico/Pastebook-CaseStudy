@@ -1,16 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using pastebook_db.Database;
 using pastebook_db.Models;
+using pastebook_db.Services.FunctionCollection;
 
 namespace pastebook_db.Data
 {
     public class AlbumImageCommentRepository
     {
         private readonly PastebookContext _context;
+        private readonly FriendRepository _friendRepository;
 
-        public AlbumImageCommentRepository(PastebookContext context)
+        public AlbumImageCommentRepository(PastebookContext context, FriendRepository friendRepository)
         {
             _context = context;
+            _friendRepository = friendRepository;
         }
 
         public AlbumImageComment? GetAlbumImageCommmentById(Guid albumImageCommentId)
@@ -39,6 +42,21 @@ namespace pastebook_db.Data
         {
             _context.AlbumImageComments.Remove(albumImageComment);
             _context.SaveChanges();
+        }
+
+        public AlbumImageCommentDTO ConvertAlbumImageCommentToDTO(AlbumImageComment albumImageComment) 
+        {
+            AlbumImageCommentDTO newAlbumImageComment = new()
+            {
+                Id = albumImageComment.Id,
+                Comment = albumImageComment.Comment,
+                CreatedOn = HelperFunction.TimeDifference(albumImageComment.CreatedOn, DateTime.Now),
+                AlbumImageId = albumImageComment.AlbumImageId,
+                UserId = albumImageComment.UserId,
+                User = _friendRepository.ConvertUserToUserSendDTO(albumImageComment.User),
+            };
+
+            return newAlbumImageComment;
         }
     }
 }

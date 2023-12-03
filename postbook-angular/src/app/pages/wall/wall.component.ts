@@ -5,8 +5,11 @@ import { PostmodalComponent } from '@components/postmodal/postmodal.component';
 
 import { PostService } from '@services/post.service';
 import { ScrollService } from '@services/scroll.service';
+import { UserService } from '@services/user.service';
 
 import { Post } from '@models/post';
+import { User } from '@models/user';
+import { TokenService } from '@services/token.service';
 
 @Component({
   selector: 'app-wall',
@@ -17,13 +20,20 @@ import { Post } from '@models/post';
 export class WallComponent implements OnInit {
   modalRef: MdbModalRef<PostmodalComponent> | null = null;
   posts:Post[] = [];
+  user: User = new User();
 
   constructor(
     private modalService: MdbModalService,
     private postService: PostService,
     private scrollService: ScrollService,
+    private userService: UserService,
+    private tokenService: TokenService
   ){
-    //this.getOwnUserTimeline();
+    this.tokenService.validateToken();
+    
+    this.userService.getUserByToken().subscribe((r: any) => {
+      this.user = r;
+    });
   }
 
 

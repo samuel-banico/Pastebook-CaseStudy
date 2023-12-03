@@ -29,4 +29,12 @@ export class HomeService {
   searchAllUser(searchUser: string): Observable<User[]> {
     return this.http.get<User[]>(this.baseUrl + '/searchAllUsers' + `?user=${searchUser}`, {headers: this.headers});
   }
+
+  getFriendRequestCount(): Observable<object> {
+    return this.http.get(this.baseUrl + '/getFriendReqCount', {headers: this.headers});
+  }
+
+  getNotificationCount(): Observable<object> {
+    return this.http.get(this.baseUrl + '/getNotifCount', {headers: this.headers});
+  }
 }

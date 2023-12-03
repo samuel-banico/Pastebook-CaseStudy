@@ -47,6 +47,7 @@ import { OtherpostmodalComponent } from '@components/otherpostmodal/otherpostmod
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { NgIdleModule } from '@ng-idle/core';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
+import { InputLengthDirective } from './directives/input-length.directive';
 
 
 
@@ -62,16 +63,16 @@ const appRoutes: Routes = [
   // Needs token to access
   {path: '', component: HomeComponent},
   {path: 'settings', component: SettingsComponent},
-  {path: 'profile/:firstName:lastName', component: ProfileComponent}, 
+  {path: 'YourProfile/:uniqueId', component: ProfileComponent}, 
   {path: 'friends', component: FriendsComponent},
   {path: 'otherProfile', component: OtherprofileComponent},
   {path: 'post/:id', component: PostComponent},
   {path: 'albums', component: AlbumsComponent},
-  {path: 'create', component: CreateAlbumComponent},
+  {path: 'YourAlbum/:id', component: CreateAlbumComponent},
   {path: 'results', component: ResultsComponent},
   {path: 'AllNotifications', component: AllnotifsComponent},
-  {path: 'Profile/:firstName:lastName', component: OtherprofileComponent},
-  {path : 'othersinglealbum', component:OthersinglealbumComponent},
+  {path: 'Profile/:uniqueId', component: OtherprofileComponent},
+  {path : 'Album/:id', component:OthersinglealbumComponent},
  
 
   {path: '**', component: NotFoundComponent}
@@ -116,7 +117,8 @@ const appRoutes: Routes = [
     EditAlbumModalComponent ,
     LikecommentComponent,
     OthersinglealbumComponent,
-    OtherpostmodalComponent
+    OtherpostmodalComponent,
+    InputLengthDirective,
  
 
   ],

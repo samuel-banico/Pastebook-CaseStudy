@@ -27,6 +27,9 @@ namespace pastebook_db.Controllers
             var token = Request.Headers["Authorization"];
             var user = _userRepository.GetUserByToken(token);
 
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
+
             var post = _postRepository.GetPostById(postId);
             
             if(post == null)
@@ -42,6 +45,9 @@ namespace pastebook_db.Controllers
         {
             var token = Request.Headers["Authorization"];
             var user = _userRepository.GetUserByToken(token);
+
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
 
             List<Post>? postList = _postRepository
                 .GetAllPostOfUserTimeline(user.Id);
@@ -65,6 +71,10 @@ namespace pastebook_db.Controllers
         {
             var token = Request.Headers["Authorization"];
             var user = _userRepository.GetUserByToken(token);
+
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
+
             var retrievedUser = Request.Query["retrievedUserId"];
             Guid retrievedUserId = Guid.Parse(retrievedUser);
 
@@ -141,7 +151,7 @@ namespace pastebook_db.Controllers
             _postRepository.CreatePost(newPost);
 
             if (addPost.FriendId != null)
-            _notificationRepository.CreateNotifFromFriendPostInTimeline(newPost);
+                _notificationRepository.CreateNotifFromFriendPostInTimeline(newPost, addPost.FriendId);
 
             return Ok(new { result = "new_post"});
         }

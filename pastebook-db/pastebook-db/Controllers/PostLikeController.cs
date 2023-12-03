@@ -23,7 +23,13 @@ namespace pastebook_db.Controllers
         [HttpGet]
         public ActionResult<Post> GetPostLikeById(Guid id) 
         {
-            var postLike = _postLikeRepository.GetPostLikeById(id);
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
+
+            var postLike = _postLikeRepository.GetPostLikeById(id, user.Id);
             return Ok(postLike);
         }
 
@@ -40,6 +46,9 @@ namespace pastebook_db.Controllers
         {
             var token = Request.Headers["Authorization"];
             var user = _userRepository.GetUserByToken(token);
+
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
 
             var postLike = new PostLike
             {
@@ -58,8 +67,15 @@ namespace pastebook_db.Controllers
         [HttpDelete("unlikePost")]
         public ActionResult<Post> UnlikedPost()
         {
-            var postId = Guid.Parse(Request.Query["postId"].ToString());
-            var postLike = _postLikeRepository.GetPostLikeById(postId);
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
+
+            var pId = Request.Query["postId"];
+            var postId = Guid.Parse(pId.ToString());
+            var postLike = _postLikeRepository.GetPostLikeById(postId, user.Id);
 
             if (postLike == null)
                 return NotFound(new { result = "post_like_not_found" });

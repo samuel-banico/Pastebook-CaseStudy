@@ -26,12 +26,9 @@ export class HomeComponent implements OnInit, OnDestroy{
   modalRef: MdbModalRef<PostmodalComponent> | null = null;
 
   user: User = new User();
-
   posts: Post[] = [];
-
   postId?:string = '';
   userId?:string = '';
-
   postLiked:PostLike = new PostLike();
   comment: PostComment = new PostComment();
 
@@ -48,7 +45,7 @@ export class HomeComponent implements OnInit, OnDestroy{
     private router: Router
     ){
       this.tokenService.validateToken();
-      userService.getUserByTokenHome().subscribe((response: Object) => {
+      this.userService.getUserByTokenHome().subscribe((response: Object) => {
         this.user = response;
     }, (err : any) => {
       if(err['error']['result'] === 'no_user') {
@@ -103,12 +100,7 @@ openModal() {
 
   onFriendClick(clickedFriend:User){
     this.sessionService.setUser(clickedFriend.id!);
-    this.router.navigate(["Profile/"+clickedFriend.firstName + "_" + clickedFriend.lastName]);
+    let uniqueId = (clickedFriend.firstName!+clickedFriend.lastName!+clickedFriend.salt!).replace(/\s/g, '');
+    this.router.navigate(["Profile/"+uniqueId]);
   }
-  //PostLiked
-  // createLikedPost(){
-  //   this.postLikeService.likedPost(this.postId?,this.userId?).subscribe((response:any)=>{
-  //     this.postLikes = response;
-  //   })
-  // }
 }

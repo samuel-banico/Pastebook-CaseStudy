@@ -78,5 +78,10 @@ namespace pastebook_db.Data
 
             return hasSent;
         }
+
+        public List<UserSendDTO> SortUserDTOByFullName(List<UserSendDTO> users) 
+        {
+            return users.OrderBy(u => ($"{u.FirstName} {u.LastName}")).ToList();
+        }
     }
 }

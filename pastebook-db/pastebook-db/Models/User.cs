@@ -72,6 +72,8 @@ namespace pastebook_db.Models
         public string? ProfilePicture { get; set; }
         public bool? ViewPublic { get; set; }
 
+        public string Salt { get; set; }
+
         public int FriendCount { get; set; }
         public ICollection<UserSendDTO> Friends { get; set; }
     }

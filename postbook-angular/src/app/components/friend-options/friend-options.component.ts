@@ -1,4 +1,5 @@
 import { Component, ElementRef, HostListener } from '@angular/core';
+import { TokenService } from '@services/token.service';
 
 
 @Component({
@@ -10,8 +11,12 @@ export class FriendOptionsComponent {
   optionsAppear = false;
 
   constructor(
-    private elemRef: ElementRef
-  ) {}
+    private elemRef: ElementRef,
+    private tokenService: TokenService
+  ) {
+    this.tokenService.validateToken();
+  }
+
   optionsDropdown()
   {
   console.log(this.optionsAppear);

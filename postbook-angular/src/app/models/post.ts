@@ -36,7 +36,6 @@ export class PostComment {
     public createdOn?: string;
 
     public postId?: string;
-
     public userId?: string;
     public user?: User;
 

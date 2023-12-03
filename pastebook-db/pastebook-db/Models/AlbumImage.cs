@@ -24,10 +24,11 @@
 
         public int? LikeCount { get; set; }
         public int? CommentCount { get; set; }
+        public bool HasLiked { get; set; }
 
         public Guid? AlbumId { get; set; }
 
-        public ICollection<AlbumImageLike>? AlbumImageLikesList { get; set; }
-        public ICollection<AlbumImageComment>? AlbumImageCommentsList { get; set; }
+        public ICollection<AlbumImageLikeDTO>? AlbumImageLikesList { get; set; }
+        public ICollection<AlbumImageCommentDTO>? AlbumImageCommentsList { get; set; }
     }
 }

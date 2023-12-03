@@ -7,8 +7,8 @@
         <div class="col-md-8" style="color: #33007C">
             <h2>ALL NOTIFICATIONS</h2>
     <!-- ngFOR -->
-            <div class="pale-background media mb-2" *ngFor="let notif of notifs">
-                <img src="assets/images/De Guzman, Christian.JPG" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
+            <div class="pale-background media mb-2" *ngFor="let notif of notifs" (click)="goToSinglePage(notif)" >
+                <img [src]="notif.userRequest?.profilePicture" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
                 <div class="media-body mb-4">
                     <h5>{{notif.userRequest?.firstName}} {{notif.userRequest?.lastName}}</h5>
                     <!-- if posted, commented, liked -->

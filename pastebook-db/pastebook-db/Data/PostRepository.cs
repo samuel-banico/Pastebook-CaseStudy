@@ -213,6 +213,7 @@ namespace pastebook_db.Data
             List<PostCommentDTO> postComments = new();
             if (post.PostCommentList != null || post.PostCommentList.Count > 0)
             {
+                post.PostCommentList = post.PostCommentList.OrderByDescending(x => x.CreatedOn).ToList();
                 foreach (var postComment in post.PostCommentList)
                     postComments.Add(_postCommentRepository.ConvertPostCommentToDTO(postComment));
             }

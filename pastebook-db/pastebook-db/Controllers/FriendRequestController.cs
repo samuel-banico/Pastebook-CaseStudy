@@ -46,6 +46,10 @@ namespace pastebook_db.Controllers
         {
             var token = Request.Headers["Authorization"];
             var user = _userRepository.GetUserByToken(token);
+
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
+
             var request = _friendRequestRepository.GetAllFriendRequest(user.Id);
 
             List<FriendRequestDTO> friendRequests = new List<FriendRequestDTO>();
@@ -67,6 +71,9 @@ namespace pastebook_db.Controllers
             var token = Request.Headers["Authorization"];
             var user = _userRepository.GetUserByToken(token);
 
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
+
             var friendRequest = new FriendRequest();
             friendRequest.UserId = user.Id;
             friendRequest.User_FriendId = Id;
@@ -78,10 +85,11 @@ namespace pastebook_db.Controllers
             return Ok(new { result = "request_sent", friendRequest });
         }
 
-        [HttpDelete("rejectRequest")]
-        public ActionResult<FriendRequest> RejectFriendReq(Guid friendReq)
+        [HttpDelete("reject")]
+        public ActionResult<FriendRequest> RejectFriendReq()
         {
-            _friendRequestRepository.DeleteFriendRequest(friendReq);
+            var friendReqId = Guid.Parse(Request.Query["friendRequestId"]);
+            _friendRequestRepository.DeleteFriendRequest(friendReqId);
             return Ok(new { result = "friend_request_rejected" });
         }
     }

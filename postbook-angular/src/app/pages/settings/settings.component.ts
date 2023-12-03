@@ -7,6 +7,7 @@ import { User } from '@models/user';
 
 import { UserService } from '@services/user.service';
 import { SessionService } from '@services/session.service';
+import { TokenService } from '@services/token.service';
 
 
 
@@ -23,23 +24,17 @@ export class SettingsComponent implements OnInit{
     private userService: UserService,
     private router: Router,
     private route: ActivatedRoute,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private tokenService: TokenService
   ){
-    let token: string = this.sessionService.getToken();
-    if(!token)
-    {
-      this.router.navigate(['page-not-found']);
-    }
-    else {
-      userService.getUserByToken().subscribe((response: User)=> 
-      {
-        this.user = {...response};
-        this.userDefault = {...response};
+    this.tokenService.validateToken();
 
-        console.log(this.user);
-      })
-    }
-    
+    userService.getUserByToken().subscribe((response: User) => {
+      this.user = {...response};
+      this.userDefault = {...response};
+
+      console.log(this.user);
+    })
   }
   
   div1:boolean=true;
@@ -52,6 +47,7 @@ securityPassword: string = '';
 isPasswordCorrect: boolean = false;
 
 passwordVerify(event: any) {
+  console.log(this.securityPassword);
   this.userService.editUserSecurityVerifyPassword(this.securityPassword).subscribe((response: Record<string, any>)=>{
     this.isPasswordCorrect = true
     }, (error) => {

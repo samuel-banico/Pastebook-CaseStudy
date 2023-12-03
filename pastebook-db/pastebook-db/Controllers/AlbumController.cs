@@ -25,12 +25,18 @@ namespace pastebook_db.Controllers
         [HttpGet]
         public ActionResult<Album> GetAlbumById(Guid albumId) 
         {
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
+
             var album = _albumRepository.GetAlbumById(albumId);
 
             if(album == null)
                 return NotFound(new { result = "no_album"});
 
-            var albumDTO = _albumRepository.ConvertAlbumToAlbumDTO(album);
+            var albumDTO = _albumRepository.ConvertAlbumToAlbumDTO(album, user.Id);
 
             return Ok(albumDTO);
         }
@@ -40,6 +46,10 @@ namespace pastebook_db.Controllers
         {
             var token = Request.Headers["Authorization"];
             var user = _userRepository.GetUserByToken(token);
+
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
+
             var albums = _albumRepository.GetAllAlbumByOwner(user.Id);
             var userAlbums = new List<AlbumDTO>();
 
@@ -48,7 +58,7 @@ namespace pastebook_db.Controllers
 
             foreach (var album in albums)
             {
-                userAlbums.Add(_albumRepository.ConvertAlbumToAlbumDTO(album));
+                userAlbums.Add(_albumRepository.ConvertAlbumToAlbumDTO(album, user.Id));
             }
 
             return Ok(userAlbums);
@@ -72,7 +82,7 @@ namespace pastebook_db.Controllers
             var otherAlbums = new List<AlbumDTO>();
             foreach (var album in albums)
             {
-                var albumDto = _albumRepository.ConvertAlbumToAlbumDTO(album);
+                var albumDto = _albumRepository.ConvertAlbumToAlbumDTO(album, loggedUserId.Id);
 
                 otherAlbums.Add(albumDto);
             }
@@ -101,8 +111,9 @@ namespace pastebook_db.Controllers
 
             if (string.IsNullOrEmpty(album.AlbumName))
                 newAlbum.AlbumName = "Untitled Album";
-            else if (string.IsNullOrEmpty(album.AlbumDescription))
-                newAlbum.AlbumDescription = "";
+            
+            if (string.IsNullOrEmpty(album.AlbumDescription))
+                newAlbum.AlbumDescription = "No Description";
 
             _albumRepository.CreateAlbum(newAlbum);
 

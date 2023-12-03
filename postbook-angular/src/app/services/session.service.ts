@@ -39,24 +39,25 @@ export class SessionService {
     localStorage.removeItem('rememberMe');
   }
 
+  // Session Storage
   clearSearchUser():void{
-    localStorage.removeItem('search');
+    sessionStorage.removeItem('search');
   }
 
   clearUser():void{
-    localStorage.removeItem('user');
+    sessionStorage.removeItem('user');
   }
 
   clearPost():void{
-    localStorage.removeItem('post');
+    sessionStorage.removeItem('post');
   }
 
   clearAlbum():void{
-    localStorage.removeItem('album');
+    sessionStorage.removeItem('album');
   }
 
   clearAlbumImage():void{
-    localStorage.removeItem('image');
+    sessionStorage.removeItem('image');
   }
 
   // Temp Storage

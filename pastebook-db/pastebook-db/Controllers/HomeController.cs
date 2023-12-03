@@ -27,6 +27,10 @@ namespace pastebook_db.Controllers
         {
             var token = Request.Headers["Authorization"];
             var loggedUser = _userRepository.GetUserByToken(token);
+
+            if (loggedUser == null)
+                return BadRequest(new { result = "no_user" });
+
             var users = _repo.GetSearchedUser(user, loggedUser.Id).Take(5);
 
             var userList = new List<UserSendDTO>();
@@ -35,6 +39,8 @@ namespace pastebook_db.Controllers
             {
                 userList.Add(_friendRepository.ConvertUserToUserSendDTO(u));
             }
+
+            userList = _userRepository.SortUserDTOByFullName(userList);
 
             return Ok(userList);
         }
@@ -45,6 +51,10 @@ namespace pastebook_db.Controllers
         {
             var token = Request.Headers["Authorization"];
             var loggedUser = _userRepository.GetUserByToken(token);
+
+            if (loggedUser == null)
+                return BadRequest(new { result = "no_user" });
+
             var users = _repo.GetSearchedUser(user, loggedUser.Id);
 
             var userList = new List<UserSendDTO>();
@@ -54,7 +64,37 @@ namespace pastebook_db.Controllers
                 userList.Add(_friendRepository.ConvertUserToUserSendDTO(item));
             }
 
+            userList = _userRepository.SortUserDTOByFullName(userList);
+
             return Ok(userList);
+        }
+
+        [HttpGet("getFriendReqCount")]
+        public ActionResult<int> GetFriendRequestCount() 
+        {
+            var token = Request.Headers["Authorization"];
+            var loggedUser = _userRepository.GetUserByToken(token);
+
+            if (loggedUser == null)
+                return BadRequest(new { result = "no_user"});
+
+            var friendRequestCount = _repo.GetFriendRequestCount(loggedUser.Id);
+
+            return Ok(friendRequestCount);
+        }
+
+        [HttpGet("getNotifCount")]
+        public ActionResult<int> GetNotificationCount()
+        {
+            var token = Request.Headers["Authorization"];
+            var loggedUser = _userRepository.GetUserByToken(token);
+
+            if (loggedUser == null)
+                return BadRequest(new { result = "no_user"});
+
+            var unseenNotifCount = _repo.GetUnseenNotificationCount(loggedUser.Id);
+
+            return Ok(unseenNotifCount);
         }
     }
 }

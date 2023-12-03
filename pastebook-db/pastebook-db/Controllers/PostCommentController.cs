@@ -50,8 +50,8 @@ namespace pastebook_db.Controllers
             var token = Request.Headers["Authorization"];
             var user = _userRepository.GetUserByToken(token);
 
-            /*var postId = Guid.Parse(Request.Query["postId"].ToString());
-            var comment = Request.Query["comment"].ToString();*/
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
 
             var postComment = new PostComment
             {

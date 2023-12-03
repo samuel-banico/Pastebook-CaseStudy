@@ -1,44 +1,74 @@
-<div class="d-flex row justify-content-center">
-    <div class="col-6 text-center">
+<div *ngIf="post" class="d-flex row justify-content-center">
+    <div class="col-6 d-flex justify-content-center text-center">
         <a (click)="toggleLike()">
             <img [src]="isLiked ? '../../../assets/images/liked.png' : '../../../assets/images/like.png'" alt="img" width="30px" height="30px" class="mr-3 cursor">
         </a>
         &nbsp;
-        <span *ngIf="post.likeCount! > 0" (click)="toggleLikesDropdown()">{{ post.likeCount }}</span>
-        <div *ngIf="showLikesDropdown" class="likes-dropdown" style="z-index: 10;">
-            <p *ngFor="let like of post.postLikeList">
-                <img class="rounded-circle" [src]="like.user?.profilePicture" width="30">
-                {{ like.user?.firstName }} {{ like.user?.lastName }}
-            </p>
+        <div *ngIf="post.id; else hasLikeAlbum">
+            <span *ngIf="post.likeCount! > 0" (click)="toggleLikesDropdown()" >{{ post.likeCount }}</span>
+            <div *ngIf="showLikesDropdown" class="likes-dropdown" style="z-index: 10;">
+                <p *ngFor="let like of post.postLikeList">
+                    <img class="rounded-circle" [src]="like.user?.profilePicture" width="30">
+                    {{ like.user?.firstName }} {{ like.user?.lastName }}
+                </p>
+            </div>
         </div>
+        <ng-template #hasLikeAlbum>
+            <span *ngIf="albumImage.likeCount! > 0" (click)="toggleLikesDropdown()">{{ albumImage.likeCount }}</span>
+            <div *ngIf="showLikesDropdown" class="likes-dropdown" style="z-index: 10;">
+                <p *ngFor="let like of albumImage.albumImageLikesList">
+                    <img class="rounded-circle" [src]="like.user?.profilePicture" width="30">
+                    {{ like.user?.firstName }} {{ like.user?.lastName }}
+                </p>
+            </div>
+        </ng-template>
     </div>
     
     <div class="col-6 text-center">
-        <a (click)="toggleCommentsVisibility()">
+        <a (click)="toggleCommentsVisibility()" class="d-flex justify-content-center">
             <img src="../../../assets/images/comment.png" alt="img" width="25px" height="25px" class="mr-3 cursor">
+            <div *ngIf="post.id; else hasCommentAlbum">
+                <span *ngIf="post.commentCount! > 0">{{post.commentCount}}</span>
+            </div>
+            <ng-template #hasCommentAlbum>
+                <span *ngIf="albumImage.commentCount! > 0">{{albumImage.commentCount}}</span>
+            </ng-template>
         </a>
     </div>
     
 <!-- Comments section -->
-<div *ngIf="showComments" class="bg-light p-2">
-    <div class="d-flex flex-row align-items-start">
-        <img class="rounded-circle" [src]="user.profilePicture" width="40">
-        <textarea class="form-control ml-1 shadow-none textarea" [(ngModel)]="comment"></textarea>
-    </div>
-
-    <div class="mt-2 text-right">
-        <button class="btn btn-primary btn-sm" type="button" style="background-color: #AEDEFC;">
-            <span class="comment-button-text" (click)="sendComment()">Comment</span>
-        </button>
-    </div>
-
-    <!-- show comments -->
-    <div *ngFor="let comment of post.postCommentList" class="media mb-3">
-        <img [src]="comment.user?.profilePicture" alt="img" width="30px" height="30px" class="rounded-circle mr-2">
-        <div class="media-body">
-            <p class="card-title"><strong>{{comment.user?.firstName}} {{comment.user?.lastName}}</strong></p>
-            <small><span>{{comment.createdOn}}</span></small>
-            <p class="card-text text-justify">{{comment.comment}}</p>
+    <div *ngIf="showComments" class="bg-light p-2">
+        <div class="d-flex flex-row align-items-start">
+            <img class="rounded-circle" [src]="user.profilePicture" width="40">
+            <textarea class="form-control ml-1 shadow-none textarea" [(ngModel)]="comment"></textarea>
         </div>
+
+        <div class="mt-2 text-right">
+            <button class="btn btn-primary btn-sm" type="button" style="background-color: #AEDEFC;">
+                <span class="comment-button-text" (click)="sendComment()">Comment</span>
+            </button>
+        </div>
+
+        <!-- show comments -->
+        <div *ngIf="post.id; else hasAlbum">
+            <div *ngFor="let comment of post.postCommentList" class="media mb-3">
+                <img [src]="comment.user?.profilePicture" alt="img" width="30px" height="30px" class="rounded-circle mr-2">
+                <div class="media-body">
+                    <p class="card-title"><strong>{{comment.user?.firstName}} {{comment.user?.lastName}}</strong></p>
+                    <small><span>{{comment.createdOn}}</span></small>
+                    <p class="card-text text-justify">{{comment.comment}}</p>
+                </div>
+            </div>
+        </div>
+        <ng-template #hasAlbum>
+            <div *ngFor="let comment of albumImage.albumImageCommentsList" class="media mb-3">
+                <img [src]="comment.user?.profilePicture" alt="img" width="30px" height="30px" class="rounded-circle mr-2">
+                <div class="media-body">
+                    <p class="card-title"><strong>{{comment.user?.firstName}} {{comment.user?.lastName}}</strong></p>
+                    <small><span>{{comment.createdOn}}</span></small>
+                    <p class="card-text text-justify">{{comment.comment}}</p>
+                </div>
+            </div>
+        </ng-template>
     </div>
 </div>

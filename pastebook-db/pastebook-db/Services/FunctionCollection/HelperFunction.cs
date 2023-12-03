@@ -102,32 +102,44 @@ namespace pastebook_db.Services.FunctionCollection
 
             if (seconds / 31536000 >= 2)
                 return $"{(int)(seconds / 31536000)} years ago";
+
             else if (seconds / 31536000 >= 1)
-                return $"{(int)(seconds / 31536000)} year ago";
+                return $"a year ago";
+
             else if (seconds / 2629746 >= 2)
-                return $"{(int)(seconds / 2629746)} monhts ago";
+                return $"{(int)(seconds / 2629746)} months ago";
+
             else if (seconds / 2629746 >= 1)
-                return $"{(int)(seconds / 2629746)} month ago";
+                return $"a month ago";
+
             else if (seconds / 604800 >= 2)
                 return $"{(int)(seconds / 604800)} weeks ago";
+
             else if (seconds / 604800 >= 1)
-                return $"{(int)(seconds / 604800)} week ago";
+                return $"a week ago";
+
             else if (seconds / 86400 >= 2)
                 return $"{(int)(seconds / 86400)} days ago";
+
             else if (seconds / 86400 >= 1)
-                return $"{(int)(seconds / 86400)} day ago";
+                return $"a day ago";
+
             else if (seconds / 3600 >= 2)
                 return $"{(int)(seconds / 3600)} hours ago";
+
             else if (seconds / 3600 >= 1)
-                return $"{(int)(seconds / 3600)} hour ago";
+                return $"an hour ago";
+
             else if (seconds / 60 >= 2)
-                return $"{(int)(seconds / 3600)} minutes ago";
+                return $"{(int)(seconds / 60)} minutes ago";
+
             else if (seconds / 60 >= 1)
-                return $"{(int)(seconds / 3600)} minute ago";
+                return $"a minute ago";
+
             else if (seconds >= 2)
                 return $"{(int)(seconds)} seconds ago";
 
-            return $"{(int)(seconds)} second ago";
+            return $"a second ago";
         }
 
         public static string GenerateRandomString()
