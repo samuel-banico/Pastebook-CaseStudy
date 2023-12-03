@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using pastebook_db.Database;
 using pastebook_db.Models;
 using pastebook_db.Services.FunctionCollection;
@@ -8,10 +9,12 @@ namespace pastebook_db.Data
     public class NotificationRepository
     {
         private readonly PastebookContext _context;
+        private readonly FriendRepository _friendRepository;
 
-        public NotificationRepository(PastebookContext context)
+        public NotificationRepository(PastebookContext context, FriendRepository friendRepository)
         {
             _context = context;
+            _friendRepository = friendRepository;
         }
 
         // Get All Notifications
@@ -45,7 +48,7 @@ namespace pastebook_db.Data
 
         // Get Seen Notification
 
-        public void SeenNotification(Guid notifId)
+        public void SeenNotification(Guid? notifId)
         {
             var notif = _context.Notifications.FirstOrDefault(n => n.Id == notifId);
 
@@ -83,8 +86,6 @@ namespace pastebook_db.Data
             newNotif.UserId = friendRequest.User_FriendId;
             newNotif.UserRequestId = friendRequest.UserId;
 
-
-            var requestedUser = getUserFromFriendRequest(friendRequest);
             newNotif.Content = $"Has sent you a friend request";
 
             _context.Notifications.Add(newNotif);
@@ -107,15 +108,14 @@ namespace pastebook_db.Data
         }
 
         // Added
-        public void CreateNotifFromFriendPostInTimeline(Post post) 
+        public void CreateNotifFromFriendPostInTimeline(Post post, Guid? friendId) 
         {
             var newNotif = new Notification();
             newNotif.HasSeen = false;
             newNotif.NotificationDate = DateTime.Now;
             newNotif.PostId = post.Id;
             newNotif.UserId = post.UserId;
-
-            var friend = getFriendFromPost(post);
+            newNotif.UserRequestId = friendId;
             newNotif.Content = $"Has posted on your timeline.";
 
             _context.Notifications.Add(newNotif);
@@ -124,7 +124,7 @@ namespace pastebook_db.Data
 
         public NotifDTO NotifToNotifDTO(Notification notif) 
         {
-            var newNotif = new NotifDTO 
+            var newNotif = new NotifDTO
             {
                 Id = notif.Id,
                 HasSeen = notif.HasSeen,
@@ -132,8 +132,9 @@ namespace pastebook_db.Data
                 Content = notif.Content,
                 UserId = notif.UserId,
                 PostId = notif.PostId,
-                AlbumId = notif.PostId,
-                UserRequestId = notif.UserRequestId
+                AlbumId = notif.AlbumId,
+                UserRequestId = notif.UserRequestId,
+                UserRequest = _friendRepository.ConvertUserToUserSendDTO(notif.User)
             };
 
             return newNotif;
@@ -146,11 +147,9 @@ namespace pastebook_db.Data
             newNotif.HasSeen = false;
             newNotif.NotificationDate = DateTime.Now;
             newNotif.PostId = postLike.PostId;
-
             newNotif.UserId = getPostFromPostId(postLike.PostId).UserId;
+            newNotif.UserRequestId = postLike.UserId;
 
-
-            var likedUser = getFriendFromPostLike(postLike);
             newNotif.Content = $"Has reacted to your post";
 
             _context.Notifications.Add(newNotif);
@@ -164,9 +163,7 @@ namespace pastebook_db.Data
             newNotif.HasSeen = false;
             newNotif.NotificationDate = DateTime.Now;
             newNotif.PostId = postComment.PostId;
-
             newNotif.UserId = getPostFromPostId(postComment.PostId).UserId;
-
             newNotif.UserRequestId = postComment.UserId;
             newNotif.Content = $"Has left a comment on your post";
 
@@ -185,7 +182,7 @@ namespace pastebook_db.Data
             newNotif.AlbumId = album.Id;
             newNotif.UserId = album.UserId;
 
-            var likedUser = getFriendFromAlbumImageLike(albumImageLike);
+            newNotif.UserRequestId = albumImageLike.UserId;
             newNotif.Content = $"Has reacted on your album.";
 
             _context.Notifications.Add(newNotif);
@@ -203,7 +200,7 @@ namespace pastebook_db.Data
             newNotif.AlbumId = album.Id;
             newNotif.UserId = album.UserId;
 
-            var commentedUser = getFriendFromAlbumImageComment(albumImageComment);
+            newNotif.UserRequestId = albumImageComment.UserId;
             newNotif.Content = $"Has left a comment on your album.";
 
             _context.Notifications.Add(newNotif);
@@ -211,61 +208,6 @@ namespace pastebook_db.Data
         }
 
         // Helper methods
-        private User getUserFromFriendRequest(FriendRequest friendRequest)
-        {
-            var user = _context.Users
-                .FirstOrDefault(f => f.Id == friendRequest.UserId);
-
-            return user;
-        }
-
-        private User getUserFromFriend(Friend friend)
-        {
-            var user = _context.Friends
-                            .Include(f => f.User)
-                            .FirstOrDefault(f => f.Id == friend.UserId || f.Id == friend.User_FriendId);
-
-            return user.User;
-        }
-
-        private User getFriendFromPost(Post post) 
-        {
-            var friend = _context.Friends
-                                .Include(f => f.User_Friend)
-                                .FirstOrDefault(f => f.Id == post.FriendId);
-
-            return friend.User_Friend;
-        }
-
-        private User getFriendFromPostLike(PostLike postLike) 
-        {
-            var user = _context.Users
-                            .FirstOrDefault(f => f.Id == postLike.UserId);
-
-            return user;
-        }
-
-        private User getFriendFromPostComment(PostComment postComment)
-        {
-            var user = _context.Users
-                            .FirstOrDefault(f => f.Id == postComment.UserId);
-            return user;
-        }
-
-        private User getFriendFromAlbumImageLike(AlbumImageLike albumImageLike)
-        {
-            var user = _context.Users
-                            .FirstOrDefault(f => f.Id == albumImageLike.UserId);
-            return user;
-        }
-
-        private User getFriendFromAlbumImageComment(AlbumImageComment albumImageComment)
-        {
-            var user = _context.Users
-                            .FirstOrDefault(f => f.Id == albumImageComment.UserId);
-            return user;
-        }
-
         private Post getPostFromPostId(Guid postId) 
         {
             var post = _context.Posts.FirstOrDefault(p => p.Id == postId);

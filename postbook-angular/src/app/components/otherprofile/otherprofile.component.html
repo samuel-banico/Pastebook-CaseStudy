@@ -45,7 +45,8 @@
                         </div>
                         <div class="d-flex">
                             <img src="../../../assets/images/phone.png" style="width: 30px; height: 30px; margin-right: 8px;">
-                            <p>{{user.mobileNumber}}</p>
+                            <p *ngIf="user.mobileNumber">{{user.mobileNumber}}</p>
+                            <p *ngIf="!user.mobileNumber">-</p>
                         </div>
                         <div class="d-flex">
                             <img src="../../../assets/images/cake.png" style="width: 30px; height: 30px; margin-right: 8px;">
@@ -53,7 +54,7 @@
                         </div>
                         <div class="d-flex">
                             <img src="../../../assets/images/gender.png" style="width: 30px; height: 30px; margin-right: 8px;">
-                            <p>{{user.gender}}</p>
+                            <p>{{ user.gender === 0 ? 'Male' : (user.gender === 1 ? 'Female' : 'Other') }}</p>
                         </div>
                     </div>
                 </div>

@@ -7,6 +7,7 @@ import { SessionService } from '@services/session.service';
 import { Router } from '@angular/router';
 
 import { Album } from '@models/album';
+import { TokenService } from '@services/token.service';
 
 
 @Component({
@@ -25,14 +26,27 @@ export class CreatealbummodalComponent {
   constructor(
       public modalRef: MdbModalRef<CreatealbummodalComponent>,
       private albumService: AlbumService,
+      private tokenService: TokenService,
       private router: Router,
       private sessionService: SessionService
-    ) {}
+    ) {
+      this.tokenService.validateToken();
+    }
 
   @ViewChild('fileInput') fileInput: ElementRef | undefined;
   closeModal() {
     
     this.modalRef.close();
+  }
+
+  albumNameRemainChars: number = 50;
+  showAlbumNameRemainingCharacters(remainChars: number):void {
+    this.albumNameRemainChars = remainChars;
+  }
+
+  albumDescRemainChars: number = 500;
+  showAlbumDescRemainingCharacters(remainChars: number):void {
+    this.albumDescRemainChars = remainChars;
   }
 
   saveData() {

@@ -19,6 +19,7 @@
 
         //Foreign Key
         public Guid? UserId { get; set; }
+        public UserSendDTO? User { get; set; }
         public Guid? User_FriendId { get; set; }
         public UserSendDTO? User_Friend { get; set; }
     }

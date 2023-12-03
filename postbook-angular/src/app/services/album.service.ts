@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Album } from '@models/album';
+import { Album, AlbumImageComment, AlbumImageLike } from '@models/album';
 
 import { SessionService } from './session.service';
 
@@ -13,6 +13,9 @@ export class AlbumService {
 
   private albumUrl: string = 'https://localhost:7185/api/albums';
   private albumImageUrl: string = 'https://localhost:7185/api/albumImage'
+  private albumImageLikeUrl: string = 'https://localhost:7185/api/albumImageLike'
+  private albumImageCommentUrl: string = 'https://localhost:7185/api/albumImageComment'
+
   private headers: HttpHeaders = new HttpHeaders({
     'Authorization': `${this.sessionService.getToken()}`
   })
@@ -29,7 +32,7 @@ export class AlbumService {
   }
 
   getAlbumById(albumId: string): Observable<object> {
-    return this.http.get(this.albumUrl + `?albumId=${albumId}`);
+    return this.http.get(this.albumUrl + `?albumId=${albumId}`, {headers: this.headers});
   }
 
   // POST
@@ -69,4 +72,29 @@ export class AlbumService {
         .set('albumId', albumId);
     return this.http.delete(this.albumUrl, {params});
   }
+
+  // Like
+  addLike(albumImageLike: AlbumImageLike): Observable<any> {
+    console.log(albumImageLike);
+
+    return this.http.post(this.albumImageLikeUrl + '/likeAlbumImage', albumImageLike, {headers: this.headers})
+  }
+
+  removeLike(albumImageId: string): Observable<any> {
+    console.log(albumImageId);
+    const params = new HttpParams()
+        .set('albumImageId', albumImageId)
+
+    return this.http.delete(this.albumImageLikeUrl + '/unlikeAlbumImage', {headers: this.headers, params})
+  }
+
+  // Comments
+  addComment(albumImageComment: AlbumImageComment): Observable<Object>{      
+    return this.http.post(this.albumImageCommentUrl + '/commentAlbumImage', albumImageComment, { headers: this.headers});
+  };
+
+  getComments(): Observable<AlbumImageComment[]>{
+    return this.http.get<AlbumImageComment[]>(this.albumImageCommentUrl + '/allAlbumImageComments', {headers: this.headers})
+  };
+
 }

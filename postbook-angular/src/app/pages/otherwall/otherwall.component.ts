@@ -22,6 +22,7 @@ export class OtherwallComponent {
   modalRef: MdbModalRef<OtherpostmodalComponent> | null = null;
   posts:Post[] = [];
   id: string = "";
+  
   @Input() isFriend: boolean = false;
 
   constructor(

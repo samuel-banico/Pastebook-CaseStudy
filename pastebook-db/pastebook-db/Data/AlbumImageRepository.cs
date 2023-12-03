@@ -9,10 +9,16 @@ namespace pastebook_db.Data
     public class AlbumImageRepository
     {
         private readonly PastebookContext _context;
+        private readonly FriendRepository _friendRepository;
+        private readonly AlbumImageLikeRepository _albumImageLikeRepository;
+        private readonly AlbumImageCommentRepository _albumImageCommentRepository;
 
-        public AlbumImageRepository(PastebookContext context)
+        public AlbumImageRepository(PastebookContext context, FriendRepository friendRepository, AlbumImageLikeRepository albumImageLikeRepository, AlbumImageCommentRepository albumImageCommentRepository)
         {
             _context = context;
+            _friendRepository = friendRepository;
+            _albumImageLikeRepository = albumImageLikeRepository;
+            _albumImageCommentRepository = albumImageCommentRepository;
         }
 
         // --- GET
@@ -20,7 +26,9 @@ namespace pastebook_db.Data
         {
             var post = _context.AlbumImages
                         .Include(a => a.AlbumImageLikesList)
+                        .ThenInclude(u => u.User)
                         .Include(a => a.AlbumImageCommentsList)
+                        .ThenInclude(u => u.User)
                         .FirstOrDefault(a => a.Id == id);
             return post;
         }
@@ -66,42 +74,45 @@ namespace pastebook_db.Data
             _context.SaveChanges();
         }
 
-        public AlbumImageDTO ConvertAlbumImageToDTO(AlbumImage aI) 
+        public AlbumImageDTO ConvertAlbumImageToDTO(AlbumImage aI, Guid loggedUserId) 
         {
-            AlbumImageDTO newAlbum = new();
-            newAlbum.Id = aI.Id;
-            newAlbum.IsEdited = aI.IsEdited;
-            newAlbum.AlbumId = aI.AlbumId;
-
-            newAlbum.CreatedOn = HelperFunction.TimeDifference(aI.CreatedOn, DateTime.Now);
-
+            AlbumImageDTO newAlbum = new() 
+            {
+                Id = aI.Id,
+                IsEdited = aI.IsEdited,
+                AlbumId = aI.AlbumId,
+                CreatedOn = HelperFunction.TimeDifference(aI.CreatedOn, DateTime.Now),
+            };
+            
             if (File.Exists(aI.Image))
                 newAlbum.Image = HelperFunction.SendImageToAngular(aI.Image);
             else
                 newAlbum.Image = HelperFunction.SendImageToAngular(Path.Combine("wwwroot", "images", "default_albumImage.png"));
 
-            if (aI.AlbumImageLikesList == null || aI.AlbumImageLikesList.Count > 0)
+            List<AlbumImageCommentDTO> albumImageComments = new();
+            if (aI.AlbumImageCommentsList != null && aI.AlbumImageCommentsList.Count > 0)
             {
-                newAlbum.LikeCount = 0;
-                newAlbum.AlbumImageLikesList = new List<AlbumImageLike>();
-            }
-            else 
-            {
-                newAlbum.LikeCount = aI.AlbumImageLikesList.Count;
-                newAlbum.AlbumImageLikesList = aI.AlbumImageLikesList;
-            }
+                aI.AlbumImageCommentsList = aI.AlbumImageCommentsList.OrderByDescending(x => x.CreatedOn).ToList();
 
-            if (aI.AlbumImageCommentsList == null || aI.AlbumImageCommentsList.Count > 0)
-            {
-                newAlbum.CommentCount = 0;
-                newAlbum.AlbumImageCommentsList = new List<AlbumImageComment>();
+                foreach (var comments in aI.AlbumImageCommentsList)
+                    albumImageComments.Add(_albumImageCommentRepository.ConvertAlbumImageCommentToDTO(comments));
             }
+            newAlbum.CommentCount = albumImageComments.Count;
+            newAlbum.AlbumImageCommentsList = albumImageComments;
+
+            List<AlbumImageLikeDTO> albumImageLikes = new();
+            if (aI.AlbumImageLikesList != null && aI.AlbumImageLikesList.Count > 0)
+            {   
+                foreach (var like in aI.AlbumImageLikesList)
+                    albumImageLikes.Add(_albumImageLikeRepository.ConvertAlbumImageLikeToDTO(like));
+            }
+            newAlbum.AlbumImageLikesList = albumImageLikes;
+            newAlbum.LikeCount = albumImageLikes.Count;
+
+            if ((newAlbum.AlbumImageLikesList != null || newAlbum.AlbumImageLikesList.Count > 0) && newAlbum.AlbumImageLikesList.Any(x => x.UserId == loggedUserId))
+                newAlbum.HasLiked = true;
             else
-            {
-                newAlbum.CommentCount = aI.AlbumImageCommentsList.Count;
-                newAlbum.AlbumImageCommentsList = aI.AlbumImageCommentsList;
-            }
-
+                newAlbum.HasLiked = false;
 
             return newAlbum;
         }

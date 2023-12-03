@@ -94,6 +94,7 @@ namespace pastebook_db.Data
                 UserBio = user.UserBio,
                 MobileNumber = user.MobileNumber,
                 ViewPublic = user.ViewPublicPost,
+                Salt = user.Salt
             };
 
             if (File.Exists(user.ProfilePicture))
@@ -113,7 +114,7 @@ namespace pastebook_db.Data
                 var allFriendDTO = new List<UserSendDTO>();
                 foreach (var friend in allFriends)
                 {
-                    if (friend.IsCurrentlyActive) 
+                    if (friend.IsCurrentlyActive)
                     {
                         allFriendDTO.Add(ConvertFriendToUserSendDTO(friend));
                     }
@@ -145,8 +146,7 @@ namespace pastebook_db.Data
                 UserBio = user.UserBio,
                 MobileNumber = user.MobileNumber,
                 ViewPublic = user.ViewPublicPost,
-
-
+                Salt = user.Salt,
             };
 
             if (File.Exists(user.ProfilePicture))
@@ -157,26 +157,6 @@ namespace pastebook_db.Data
             {
                 userDTO.ProfilePicture = HelperFunction.SendImageToAngular(Path.Combine("wwwroot", "images", "default.png"));
             }
-
-            /*if (user.FriendList != null)
-            {
-                var allFriends = GetAllUserFriends(user.Id);
-                userDTO.FriendCount = allFriends.Count;
-
-                var allFriendDTO = new List<UserSendDTO>();
-                foreach (var friend in allFriends) 
-                {
-                    allFriendDTO.Add(ConvertFriendToUserSendDTO(friend));
-                }
-
-                userDTO.Friends = allFriendDTO;
-            }
-            else
-            {
-                userDTO.FriendCount = 0;
-                userDTO.Friends = new List<UserSendDTO>();
-            }*/
-
 
             return userDTO;
         }
@@ -195,7 +175,7 @@ namespace pastebook_db.Data
                 UserBio = user.UserBio,
                 MobileNumber = user.MobileNumber,
                 ViewPublic = user.ViewPublicPost,
-
+                Salt = user.Salt
 
             };
 
@@ -216,11 +196,10 @@ namespace pastebook_db.Data
             FriendRequestDTO newFriend = new();
             newFriend.Id = friendRequest.Id;
             newFriend.UserId = friendRequest.UserId;
+            newFriend.User = ConvertUserToUserSendDTO(friendRequest.User);
             newFriend.User_FriendId = friendRequest.User_FriendId;
             newFriend.User_Friend = ConvertUserToUserSendDTO(friendRequest.User_Friend);
-
-            TimeSpan timeDiff = DateTime.Now - friendRequest.CreatedOn;
-            newFriend.CreatedOn = timeDiff.ToString();
+            newFriend.CreatedOn = HelperFunction.TimeDifference(friendRequest.CreatedOn, DateTime.Now);
 
             return newFriend;
         }

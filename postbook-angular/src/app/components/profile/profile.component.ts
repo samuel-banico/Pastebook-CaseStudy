@@ -6,6 +6,7 @@ import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import Swal from 'sweetalert2';
 import { UserService } from '@services/user.service';
 import { SessionService } from '@services/session.service';
+import { TokenService } from '@services/token.service';
 
 @Component({
   selector: 'app-profile',
@@ -25,17 +26,15 @@ export class ProfileComponent implements OnInit {
     private modalService: MdbModalService,
     private userService: UserService,
     private sessionService: SessionService,
-    private router: Router
+    private router: Router,
+    private tokenService : TokenService,
   ) {
-    let token: string = this.sessionService.getToken();
-    if (!token) {
-      this.router.navigate(['page-not-found']);
-    } else {
-      this.userService.getUserByToken().subscribe((response: any) => {
-        this.user = response;
-        console.log(response);
-      });
-    }
+    this.tokenService.validateToken();
+
+    this.userService.getUserByToken().subscribe((response: any) => {
+      this.user = response;
+      console.log(response);
+    });
   }
 
   ngOnInit(): void {}
@@ -57,7 +56,6 @@ export class ProfileComponent implements OnInit {
   }
 
   displayAlbums(): void {
-    console.log('albums');
     this.showTimeLine = false;
     this.showFriends = false;
     this.showAlbums = true;
@@ -75,6 +73,11 @@ export class ProfileComponent implements OnInit {
     if (overlay) {
       overlay.style.display = 'none';
     }
+  }
+
+  bioRemainChars: number = 2000;
+  showBioRemainingCharacters(remainChars: number):void {
+    this.bioRemainChars = remainChars;
   }
 
   changeImage() {

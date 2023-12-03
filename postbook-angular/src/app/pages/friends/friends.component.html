@@ -6,15 +6,15 @@
   <h1 *ngIf="friends.length === 0; else hasFriends" class="d-flex justify-content-center align-items-center my-5">Currently No Friends 😥</h1>
 
   <ng-template #hasFriends>
-    <div class="d-flex justify-content-center row" *ngFor="let friend of friends">
+    <div class="d-flex justify-content-center row" *ngFor="let friend of friends" (click)="userClicked(friend)">
       <div class="col-12 col-md-5 d-flex justify-content-start align-items-center border rounded-2 m-2 p-3">
         <img [src]="friend.profilePicture" alt="User 1" class="rounded-circle" width="60px" height="60px">
         <div class="ml-3">
           <h5 class="profile-name" style="font-size: 18px;">{{friend.firstName}} {{friend.lastName}}</h5>
         </div>
-        <div class="ms-auto dropdown">
+        <!-- <div class="ms-auto dropdown">
           <app-friend-options></app-friend-options>
-        </div>
+        </div> -->
         
       </div>
     </div>

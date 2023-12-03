@@ -16,9 +16,9 @@ namespace pastebook_db.Data
             _friendRepository = friendRepository;
         }
 
-        public PostLike? GetPostLikeById(Guid postId)
+        public PostLike? GetPostLikeById(Guid postId,Guid userId)
         {
-            return _context.PostLikes.FirstOrDefault(pL => pL.PostId == postId);
+            return _context.PostLikes.FirstOrDefault(pL => pL.PostId == postId && pL.UserId == userId);
         }
 
         public PostLike? GetPostLikeByUserId(Guid userId)

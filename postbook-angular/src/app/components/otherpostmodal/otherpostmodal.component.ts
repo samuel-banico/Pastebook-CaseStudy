@@ -39,6 +39,11 @@ export class OtherpostmodalComponent {
     console.log('Selected privacy:', this.selectedPrivacy);
   }
 
+  postRemainChars: number = 10000;
+  showPostRemainingCharacters(remainChars: number):void {
+    this.postRemainChars = remainChars;
+  }
+
   onPost(): void {
     console.log('Post content:', this.post.content);
     console.log('Selected privacy:', this.selectedPrivacy);

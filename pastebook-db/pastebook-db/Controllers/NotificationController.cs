@@ -24,6 +24,10 @@ namespace pastebook_db.Controllers
             //Added for Notif Connection
             var token = Request.Headers["Authorization"];
             var user = _userRepository.GetUserByToken(token);
+
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
+
             var notifs = _repo.GetUnseenNotifications(user.Id);
 
             if (notifs == null)
@@ -35,7 +39,7 @@ namespace pastebook_db.Controllers
                 newNotifs.Add(_repo.NotifToNotifDTO(notif));
             }
 
-            return Ok(notifs);
+            return Ok(newNotifs);
         }
 
         [HttpGet("allNotification")]
@@ -44,17 +48,28 @@ namespace pastebook_db.Controllers
             //Added for Notif Connection
             var token = Request.Headers["Authorization"];
             var user = _userRepository.GetUserByToken(token);
+
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
+
             var notifs = _repo.GetAllNotifications(user.Id);
 
             if (notifs == null)
                 return NotFound(new { result = "no_notification" });
 
-            return Ok(notifs);
+            List<NotifDTO> newNotifs = new();
+            foreach (var notif in notifs)
+            {
+                newNotifs.Add(_repo.NotifToNotifDTO(notif));
+            }
+
+            return Ok(newNotifs);
         }
 
         [HttpPut]
-        public ActionResult<Notification> SeenNotification(Guid notifId)
+        public ActionResult<Notification> SeenNotification()
         {
+            var notifId = Guid.Parse(Request.Query["notifId"]);
             _repo.SeenNotification(notifId);
 
             return Ok(new { result = "notification_seen"});
@@ -66,6 +81,8 @@ namespace pastebook_db.Controllers
             var token = Request.Headers["Authorization"];
             var user = _userRepository.GetUserByToken(token);
 
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
 
             _repo.ClearNotification(user.Id);
 

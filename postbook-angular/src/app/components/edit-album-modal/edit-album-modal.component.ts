@@ -7,6 +7,7 @@ import { SessionService } from '@services/session.service';
 
 import { Album } from '@models/album';
 import Swal from 'sweetalert2';
+import { TokenService } from '@services/token.service';
 
 @Component({
   selector: 'app-edit-album-modal',
@@ -21,8 +22,12 @@ export class EditAlbumModalComponent{
     private route : ActivatedRoute,
 
     private albumService : AlbumService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private tokenService: TokenService
   ) {
+    this.tokenService.validateToken();
+
+
     albumService.getAlbumById(this.sessionService.getAlbum()).subscribe((response:Object) => {
       this.album = response;
       console.log(this.album);
@@ -31,6 +36,16 @@ export class EditAlbumModalComponent{
 
   closeModal() {
     this.modalRef.close();
+  }
+
+  albumNameRemainChars: number = 50;
+  showAlbumNameRemainingCharacters(remainChars: number):void {
+    this.albumNameRemainChars = remainChars;
+  }
+
+  albumDescRemainChars: number = 500;
+  showAlbumDescRemainingCharacters(remainChars: number):void {
+    this.albumDescRemainChars = remainChars;
   }
 
   //Edit the Album Image

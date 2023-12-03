@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { UserService } from '@services/user.service';
+import { TokenService } from '@services/token.service';
 
 @Component({
   selector: 'app-editprofilepicmodal',
@@ -14,8 +15,12 @@ export class EditprofilepicmodalComponent {
 
   constructor(
     public modalRef: MdbModalRef<EditprofilepicmodalComponent>,
-    private userServive: UserService
-  ) {}
+    private userServive: UserService,
+    private tokenService: TokenService
+  ) {
+    this.tokenService.validateToken();
+
+  }
 
   @ViewChild('fileInput') fileInput: ElementRef | undefined;
 

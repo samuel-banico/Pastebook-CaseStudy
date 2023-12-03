@@ -12,21 +12,29 @@ namespace pastebook_db.Controllers
     public class AlbumImageController : ControllerBase
     {
         private readonly AlbumImageRepository _albumImageRepository;
+        private readonly UserRepository _userRepository;
 
-        public AlbumImageController(AlbumImageRepository albumImageRepository)
+        public AlbumImageController(AlbumImageRepository albumImageRepository, UserRepository userRepository)
         {
             _albumImageRepository = albumImageRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet]
         public ActionResult<AlbumImage> GetAlbumImageById(Guid id)
         {
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
+
             var album = _albumImageRepository.GetAlbumImageById(id);
 
             if(album == null)
                 return NotFound(new { result = "album_does_not_exist"});
 
-            var newAlbum = _albumImageRepository.ConvertAlbumImageToDTO(album);
+            var newAlbum = _albumImageRepository.ConvertAlbumImageToDTO(album, user.Id);
 
             return Ok(newAlbum);
         }

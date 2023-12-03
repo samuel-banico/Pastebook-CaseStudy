@@ -25,6 +25,7 @@ namespace pastebook_db.Data
         {
             return _context.FriendRequests
                 .Include(x => x.User_Friend)
+                .Include(x => x.User)
                 .Where(r => r.User_FriendId == id)
                 .ToList();    
         }

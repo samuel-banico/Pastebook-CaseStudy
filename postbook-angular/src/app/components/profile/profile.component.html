@@ -16,10 +16,11 @@
       <p class="blurb">{{ user.userBio }}
         <img src="assets/images/edit.png" alt="Edit" class="edit-icon" (click)="startEditingBio()">
       </p>
-    </div>
+    </div>  
     <div *ngIf="isEditingBio">
-      <textarea [(ngModel)]="editedBio" class="form-control" rows="5"></textarea>
-      <button class="btn btn-success mt-2" (click)="saveEditedBio()">Save</button>
+      <textarea [(ngModel)]="editedBio" class="form-control" rows="5" [appInputLength]="2000" (remainingCharacters)="showBioRemainingCharacters($event)"></textarea>
+      <span *ngIf="bioRemainChars < 2000">{{bioRemainChars}}</span>
+      <button class="btn btn-success mt-2 ms-auto" (click)="saveEditedBio()">Save</button>
     </div>
   </div>
 
@@ -44,7 +45,8 @@
                     </div>
                     <div class="d-flex">
                         <img src="../../../assets/images/phone.png" style="width: 30px; height: 30px; margin-right: 8px;">
-                        <p>{{user.mobileNumber}}</p>
+                        <p *ngIf="user.mobileNumber">{{user.mobileNumber}}</p>
+                        <p *ngIf="!user.mobileNumber">-</p>
                     </div>
                     <div class="d-flex">
                         <img src="../../../assets/images/cake.png" style="width: 30px; height: 30px; margin-right: 8px;">

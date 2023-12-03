@@ -26,8 +26,10 @@ namespace pastebook_db.Data
                 .Include(a => a.AlbumImageList)
                 .Include(a => a.AlbumImageList)
                 .ThenInclude(aL => aL.AlbumImageLikesList)
+                .ThenInclude(u => u.User)
                 .Include(a => a.AlbumImageList)
                 .ThenInclude(aC => aC.AlbumImageCommentsList)
+                .ThenInclude(u => u.User)
                 .FirstOrDefault(p => p.Id == id);
             }
             catch (Exception e)
@@ -106,7 +108,7 @@ namespace pastebook_db.Data
         }
 
         // Album DTO
-        public AlbumDTO ConvertAlbumToAlbumDTO(Album album)
+        public AlbumDTO ConvertAlbumToAlbumDTO(Album album, Guid loggedUserId)
         {
             var albumDTO = new AlbumDTO()
             {
@@ -132,7 +134,7 @@ namespace pastebook_db.Data
                 var imageList = new List<AlbumImageDTO>();
                 foreach (var image in album.AlbumImageList) 
                 {
-                    imageList.Add(_albumImageRepository.ConvertAlbumImageToDTO(image));
+                    imageList.Add(_albumImageRepository.ConvertAlbumImageToDTO(image, loggedUserId));
                 }
 
                 albumDTO.ImageList = imageList;  

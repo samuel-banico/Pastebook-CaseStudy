@@ -5,6 +5,7 @@ import { HomeService } from '@services/home.service';
 import { DataTransferService } from '@services/data-transfer.service';
 import { SessionService } from '@services/session.service';
 import { User } from '@models/user';
+import { TokenService } from '@services/token.service';
 
 @Component({
   selector: 'app-results',
@@ -21,8 +22,11 @@ export class ResultsComponent implements OnInit{
     public router: Router,
     public homeService: HomeService,
     public sessionService: SessionService,
-    public dataTransfer: DataTransferService
+    public dataTransfer: DataTransferService,
+    private tokenService: TokenService
   ){
+    this.tokenService.validateToken();
+
     this.getResults();
   }
 
@@ -56,8 +60,9 @@ export class ResultsComponent implements OnInit{
 
   userClicked(clickedUser: User) {
     this.sessionService.setUser(clickedUser.id!);
-    this.router.navigate(["Profile/"+clickedUser.firstName + "_" + clickedUser.lastName]).then(()=>{
-      window.location.href = "Profile/"+clickedUser.firstName + "_" + clickedUser.lastName;
+    let uniqueId = (clickedUser.firstName!+clickedUser.lastName!+clickedUser.salt!).replace(/\s/g, '');
+    this.router.navigate(["Profile/" + uniqueId]).then(()=>{
+      window.location.href = "Profile/" + uniqueId;
     });
   }
 }

@@ -34,4 +34,13 @@ export class OtherfriendsComponent {
     console.log(response);
   });
  }
+
+ userClicked(clickedUser: User) {
+    this.sessionService.clearUser();
+    this.sessionService.setUser(clickedUser.id!);
+    let uniqueId = (clickedUser.firstName!+clickedUser.lastName!+clickedUser.salt!).replace(/\s/g, '');
+    this.router.navigate(["Profile/" + uniqueId]).then(()=>{
+      window.location.href = "Profile/" + uniqueId;
+    });
+  }
 }

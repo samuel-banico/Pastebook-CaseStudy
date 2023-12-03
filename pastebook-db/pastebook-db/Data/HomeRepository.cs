@@ -27,7 +27,23 @@ namespace pastebook_db.Data
             return users;
         }
 
+        public int GetFriendRequestCount(Guid userId) 
+        {
+            var friendReq = _context.FriendRequests
+                    .Where(x => x.User_FriendId == userId)
+                    .Count();
 
+            return friendReq;
+        }
+
+        public int GetUnseenNotificationCount(Guid userId)
+        {
+            var notifCount = _context.Notifications
+                    .Where(x => x.UserId == userId && x.HasSeen == false)
+                    .Count();
+
+            return notifCount;
+        }
     }
 
 }

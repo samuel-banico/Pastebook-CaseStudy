@@ -54,10 +54,10 @@
                             <ng-template #friendsOnly>
                               <img src="assets/images/friends.png" alt="" style="height: 15px; margin-left: 5px;">
                             </ng-template>
-                            <p class="card-text">{{post.content}}</p>
+                            <p class="card-text" (click)="onPostClick(post)">{{post.content}}</p>
                         </div>
                     </div>
-                        <app-likecomment [user]="user" [post]="post"></app-likecomment>                                       
+                    <app-likecomment [post]="post"></app-likecomment>                                       
                 </div>
             </div>
       </div>     

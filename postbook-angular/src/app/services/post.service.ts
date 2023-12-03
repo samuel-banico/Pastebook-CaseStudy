@@ -62,19 +62,18 @@ export class PostService {
     };
 
     getComments(): Observable<PostComment[]>{
-      return this.http.get<PostComment[]>(this.commentUrl + 'allPostComments', {headers: this.headers})
+      return this.http.get<PostComment[]>(this.commentUrl + '/allPostComments', {headers: this.headers})
     };
 
     //Likes
-    addLike(postLike: PostLike): Observable<Object>{  
-      console.log("a");    
+    addLike(postLike: PostLike): Observable<Object>{     
       return this.http.post(this.likeUrl + '/likePost', postLike, { headers: this.headers});
     };
 
-    removeLike(postId: string): Observable<Object>{  
+    removeLike(postId: string): Observable<Object>{
       const params = new HttpParams()
-        .set('postId', postId);
-
-      return this.http.delete(this.likeUrl + '/unlikePost', { params: params});
-    };
+          .set('postId', postId);
+  
+      return this.http.delete(`${this.likeUrl}/unlikePost`, { headers: this.headers, params });
+  };
 }

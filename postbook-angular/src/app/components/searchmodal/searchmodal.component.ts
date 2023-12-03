@@ -60,8 +60,9 @@ export class SearchmodalComponent implements OnInit {
     this.sessionService.clearUser();
     this.sessionService.setUser(clickedUser.id!);
     this.close();
-    this.router.navigate(["Profile/"+clickedUser.firstName + "_" + clickedUser.lastName]).then(()=>{
-      window.location.href = "Profile/"+clickedUser.firstName + "_" + clickedUser.lastName;
+    let uniqueId = (clickedUser.firstName!+clickedUser.lastName!+clickedUser.salt!).replace(/\s/g, '');
+    this.router.navigate(["Profile/" + uniqueId]).then(()=>{
+      window.location.href = "Profile/" + uniqueId;
     });
   }
 

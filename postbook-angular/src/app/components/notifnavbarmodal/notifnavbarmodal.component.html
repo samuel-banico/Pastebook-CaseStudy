@@ -6,21 +6,25 @@
         <h5 class="notifications" id="box">Notifications</h5>
         <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
     </div>
-    <div class="modal-body">
-        <h5 *ngIf="notifs.length === 0">No Unseen Notifications</h5>
+    <div class="modal-body" style="height: 200px; overflow-y: auto;">
+        <h5 *ngIf="notifs.length === 0" class="text-center">No Unseen Notifications</h5>
         <div *ngFor="let notif of notifs">
             <div class="notifications-item" (click)="goToSinglePage(notif)">
-                <img src="./assets/images/selfie.jpg" alt="img">
+                <img [src]="notif.userRequest?.profilePicture" alt="img">
                 <div class="text">
-                    <h4><strong>{{notif.userRequest?.firstName}} {{notif.userRequest?.lastName}}</strong></h4>
+                    <div class="d-flex">
+                        <h4><strong>{{notif.userRequest?.firstName}} {{notif.userRequest?.lastName}}</strong></h4>
+                        <small><span class="ms-2" >{{notif.notificationDate}}</span></small>
+                    </div>
                     <p>{{notif.content}}</p>
                 </div>
+
             </div>
         </div>
     </div>
     
     <div class="modal-footer">
-        <button class="button rounded-pill color" (click)="clearAllNotifications()">Clear</button>
+        <button class="button rounded-pill color" (click)="clearAllNotifications()">Mark All Read</button>
         <button class="button rounded-pill button-secondary" (click)="clickedGetAllNotifications()">Show All</button>
     </div>
 </div>

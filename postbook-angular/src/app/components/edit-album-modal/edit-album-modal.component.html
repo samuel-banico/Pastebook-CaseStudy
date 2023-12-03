@@ -6,11 +6,13 @@
         <div>
             <div class="mb-3">
                 <label for="albumName" class="form-label">Album Name</label>
-                <input type="text" class="form-control" id="albumName" placeholder="Enter album name" [(ngModel)]="album.albumName">
+                <input type="text" class="form-control" id="albumName" placeholder="Enter album name" [(ngModel)]="album.albumName" [appInputLength]="50" (remainingCharacters)="showAlbumNameRemainingCharacters($event)">
+                <span *ngIf="albumNameRemainChars < 50" class="text-danger">{{albumNameRemainChars}}</span>
             </div>
             <div class="mb-3">
                 <label for="albumDescription" class="form-label">Album Description</label>
-                <textarea class="form-control" id="albumDescription" rows="3" placeholder="Enter album description" [(ngModel)]="album.albumDescription"></textarea>
+                <textarea class="form-control" id="albumDescription" rows="3" placeholder="Enter album description" [(ngModel)]="album.albumDescription" [appInputLength]="500" (remainingCharacters)="showAlbumDescRemainingCharacters($event)"></textarea>
+                <span *ngIf="albumDescRemainChars < 500" class="text-danger">{{albumDescRemainChars}}</span>
             </div>
         </div>
         <div class="d-flex justify-content-end">

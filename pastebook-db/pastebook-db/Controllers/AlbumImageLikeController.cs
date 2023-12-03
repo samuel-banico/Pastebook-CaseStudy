@@ -11,49 +11,72 @@ namespace pastebook_db.Controllers
     {
         private readonly AlbumImageLikeRepository _albumImageLikeRepository;
         private readonly NotificationRepository _notificationRepository;
+        private readonly UserRepository _userRepository;
 
-        public AlbumImageLikeController(AlbumImageLikeRepository albumImageLikeRepository, NotificationRepository notificationRepository)
+        public AlbumImageLikeController(AlbumImageLikeRepository albumImageLikeRepository, NotificationRepository notificationRepository, UserRepository userRepository)
         {
             _albumImageLikeRepository = albumImageLikeRepository;
             _notificationRepository = notificationRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet]
-        public ActionResult<Post> GetPostLikeById(Guid id)
+        public ActionResult<Post> GetAlbumLikeById(Guid id)
         {
-            var postLike = _albumImageLikeRepository.GetAlbumImageLikeById(id);
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
+
+            var postLike = _albumImageLikeRepository.GetAlbumImageLikeById(id, user.Id);
             return Ok(postLike);
         }
 
         [HttpGet("allAlbumImageLike")]
-        public ActionResult<Post> GetAllPostLike()
+        public ActionResult<Post> GetAllAlbumLikes()
         {
             var postLikes = _albumImageLikeRepository.GetAllAlbumImageLikes();
             return Ok(postLikes);
         }
 
         // A friend has liked a user's post
-        [HttpPut("likeAlbumImage")]
-        public ActionResult<Post> LikedAlbumImage(Guid albumImageId, Guid loggedUserId)
+        [HttpPost("likeAlbumImage")]
+        public ActionResult<Post> LikedAlbumImage(AlbumImageLikeDTO albumImageLike)
         {
-            var albumImageLike = new AlbumImageLike
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
+
+            var newAlbumImageLike = new AlbumImageLike
             {
-                AlbumImageId = albumImageId,
-                UserId = loggedUserId
+                AlbumImageId = albumImageLike.AlbumImageId,
+                UserId = user.Id
             };
 
-            _albumImageLikeRepository.CreateAlbumImageLike(albumImageLike);
+            _albumImageLikeRepository.CreateAlbumImageLike(newAlbumImageLike);
 
-            _notificationRepository.CreateNotifAlbumImageLike(albumImageLike);
+            _notificationRepository.CreateNotifAlbumImageLike(newAlbumImageLike);
 
             return Ok(new { result = "post_liked" });
         }
 
         // A friend has unliked a user's post
-        [HttpPut("unlikeAlbumImage")]
-        public ActionResult<Post> UnlikedAlbumImage(Guid albumImageLikeId)
+        [HttpDelete("unlikeAlbumImage")]
+        public ActionResult<Post> UnlikedAlbumImage()
         {
-            var albumImageLike = _albumImageLikeRepository.GetAlbumImageLikeById(albumImageLikeId);
+            var token = Request.Headers["Authorization"];
+            var user = _userRepository.GetUserByToken(token);
+
+            if (user == null)
+                return BadRequest(new { result = "no_user" });
+
+            var pId = Request.Query["albumImageId"];
+            var albumImageId = Guid.Parse(pId.ToString());
+
+            var albumImageLike = _albumImageLikeRepository.GetAlbumImageLikeById(albumImageId, user.Id);
 
             if (albumImageLike == null)
                 return NotFound(new { result = "post_like_not_found" });
