@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { Router } from '@angular/router';
-
+import { SharedService } from '@services/shared.service';
 import { CreatealbummodalComponent } from '@components/createalbummodal/createalbummodal.component';
 
 import { SessionService } from '@services/session.service';
@@ -26,6 +26,7 @@ export class AlbumsComponent implements OnInit {
       private sessionService: SessionService,
       private tokenService: TokenService,
       private albumService: AlbumService,
+      private sharedService: SharedService
     ) {
       this.tokenService.validateToken();
 
@@ -36,7 +37,13 @@ export class AlbumsComponent implements OnInit {
     this.albumService.getAllUserAlbum().subscribe((a: any) => {
       this.albumList = a;
     });
+    this.sharedService.dataSaved$.subscribe(() => {
+      // Trigger the reload when data is saved
+      this.tokenService.validateToken();
+    });
   }
+
+  
 
   openModal() {
     this.modalRef = this.modalService.open(CreatealbummodalComponent)
