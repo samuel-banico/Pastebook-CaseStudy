@@ -52,6 +52,7 @@ export class OtherpostmodalComponent {
     // Example: Update the 'isPublic' property based on the selected privacy
     this.post.isPublic = this.selectedPrivacy === 'Public';
 
+    console.log(this.post);
     let friend = this.sessionService.getUser();
     this.post.userId = friend;
     this.post.friendId = this.user.id;

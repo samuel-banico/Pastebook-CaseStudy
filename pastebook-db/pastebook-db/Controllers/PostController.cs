@@ -112,6 +112,7 @@ namespace pastebook_db.Controllers
 
             friendsPosts.AddRange(_postRepository.GetAllPrivatePostOfFriends(user.Id));
             friendsPosts.AddRange(_postRepository.GetAllPublicPostOfFriends(user.Id));
+            friendsPosts.AddRange(_postRepository.GetAllPostOfUserTimeline(user.Id));
 
             friendsPosts = friendsPosts.OrderByDescending(x => x.CreatedOn).ToList();
 
