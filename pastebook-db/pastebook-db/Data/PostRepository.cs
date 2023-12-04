@@ -223,8 +223,16 @@ namespace pastebook_db.Data
             var UserPostDTO = _friendRepository.ConvertUserToUserSendDTO(post.User);
             postDto.User = UserPostDTO;
 
-            if (post.Friend != null)
-                postDto.Friend = _friendRepository.ConvertFriendToUserSendDTO(post.Friend, loggedUserId);
+            if (post.Friend != null) 
+            {
+                User u = new User();
+                if (post.Friend.User == post.User)
+                    u = post.Friend.User_Friend;
+                else
+                    u = post.Friend.User;
+
+                postDto.Friend = _friendRepository.ConvertUserToUserSendDTO(u);
+            }
 
             List<PostCommentDTO> postComments = new();
             if (post.PostCommentList != null || post.PostCommentList.Count > 0)

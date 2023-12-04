@@ -47,7 +47,9 @@ namespace pastebook_db.Data
         // List of all friends which also contain their user details
         public List<User> GetAllUserFriends(Guid userId)
         {
-            var friendList = _context.Friends.Where(f => f.UserId == userId || f.User_FriendId == userId).ToList();
+            var friendList = _context.Friends
+                .Where(f => f.UserId == userId || f.User_FriendId == userId)
+                .ToList();
 
             var friendUserList = new List<User>();
 
@@ -114,7 +116,6 @@ namespace pastebook_db.Data
             if (user.FriendList != null)
             {
                 var allFriends = GetAllUserFriends(user.Id);
-                userDTO.FriendCount = allFriends.Count;
 
                 var allFriendDTO = new List<UserSendDTO>();
                 foreach (var friend in allFriends)
@@ -125,6 +126,7 @@ namespace pastebook_db.Data
                     }
                 }
 
+                userDTO.FriendCount = allFriendDTO.Count;
                 userDTO.Friends = allFriendDTO;
             }
             else
