@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { UserService } from '@services/user.service';
 import { TokenService } from '@services/token.service';
+import { SharedService } from '@services/shared.service';
 
 @Component({
   selector: 'app-editprofilepicmodal',
@@ -16,7 +17,8 @@ export class EditprofilepicmodalComponent {
   constructor(
     public modalRef: MdbModalRef<EditprofilepicmodalComponent>,
     private userServive: UserService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private sharedService: SharedService
   ) {
     this.tokenService.validateToken();
 
@@ -31,9 +33,12 @@ export class EditprofilepicmodalComponent {
   saveData() {
     this.userServive.editUserProfilePicture(this.pictureFileList[0]).subscribe(response => {
       console.log('Profile picture changed');
+      this.sharedService.emitDataSaved();
     });
   
     this.closeModal();
+    
+  
   }
   
 

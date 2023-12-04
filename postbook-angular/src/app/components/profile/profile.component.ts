@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { UserService } from '@services/user.service';
 import { SessionService } from '@services/session.service';
 import { TokenService } from '@services/token.service';
+import { SharedService } from '@services/shared.service';
 
 @Component({
   selector: 'app-profile',
@@ -28,16 +29,29 @@ export class ProfileComponent implements OnInit {
     private sessionService: SessionService,
     private router: Router,
     private tokenService : TokenService,
+    private sharedService: SharedService
   ) {
     this.tokenService.validateToken();
 
+    this.reloadProfileData();
+  }
+
+  ngOnInit(): void {
+    // Subscribe to the dataSaved$ observable from the shared service
+    this.sharedService.dataSaved$.subscribe(() => {
+      // Trigger the reload when data is saved
+      this.reloadProfileData();
+      window.location.reload();
+    });
+  }
+
+  reloadProfileData() {
     this.userService.getUserByToken().subscribe((response: any) => {
       this.user = response;
       console.log(response);
     });
   }
 
-  ngOnInit(): void {}
 
   showTimeLine: boolean = true;
   showFriends: boolean = false;
