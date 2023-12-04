@@ -75,7 +75,6 @@ namespace pastebook_db.Data
                 .Include(f => f.Friend)
                 .ThenInclude(f => f.User_Friend)
                 .Where(p => p.UserId == userId && p.IsPublic == false)
-                .OrderByDescending(p => p.CreatedOn)
                 .ToList();
         }
 
@@ -93,7 +92,6 @@ namespace pastebook_db.Data
                 .Include(f => f.Friend)
                 .ThenInclude(f => f.User_Friend)
                 .Where(p => p.UserId == userId && p.IsPublic == true)
-                .OrderByDescending(p => p.CreatedOn)
                 .ToList();
         }
 
@@ -125,8 +123,25 @@ namespace pastebook_db.Data
                 .ToList();
         }
 
+        public List<Post>? GetAllPrivatePostOfFriends(Guid userId) 
+        {
+            var friendList = _friendRepository.GetAllUserFriends(userId);
+
+            if (friendList == null)
+                return null;
+
+            List<Post> posts = new();
+
+            foreach (var friend in friendList)
+            {
+                posts.AddRange(GetAllPrivatePostOfUser(friend.Id));
+            }
+
+            return posts;
+        }
+
         //Get all post friend Id
-        public List<Post>? GetAllPostOfFriends(Guid userId)
+        public List<Post>? GetAllPublicPostOfFriends(Guid userId)
         {
             var friendList = _friendRepository.GetAllUserFriends(userId);
 
@@ -159,7 +174,6 @@ namespace pastebook_db.Data
                 .Include(f => f.Friend)
                 .ThenInclude(f => f.User_Friend)
                 .Where(p => p.IsPublic == true)
-                .OrderByDescending(p => p.CreatedOn)
                 .ToList();
             }
             catch (Exception e)
@@ -204,11 +218,13 @@ namespace pastebook_db.Data
 
                 UserId = post.UserId,
                 FriendId = post.FriendId,
-                Friend = post.Friend,
             };
 
             var UserPostDTO = _friendRepository.ConvertUserToUserSendDTO(post.User);
             postDto.User = UserPostDTO;
+
+            if (post.Friend != null)
+                postDto.Friend = _friendRepository.ConvertFriendToUserSendDTO(post.Friend, loggedUserId);
 
             List<PostCommentDTO> postComments = new();
             if (post.PostCommentList != null || post.PostCommentList.Count > 0)

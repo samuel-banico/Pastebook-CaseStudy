@@ -134,7 +134,7 @@ namespace pastebook_db.Data
                 PostId = notif.PostId,
                 AlbumId = notif.AlbumId,
                 UserRequestId = notif.UserRequestId,
-                UserRequest = _friendRepository.ConvertUserToUserSendDTO(notif.User)
+                UserRequest = _friendRepository.ConvertUserToUserSendDTO(notif.UserRequest)
             };
 
             return newNotif;

@@ -19,6 +19,7 @@ export class Post {
     public postCommentList: PostComment[] = [];
 
     public friendId?: string;
+    public friend?: User;
 }
 
 export class PostLike {
