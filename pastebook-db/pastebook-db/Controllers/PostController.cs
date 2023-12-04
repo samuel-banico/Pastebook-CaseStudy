@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using pastebook_db.Data;
 using pastebook_db.Models;
+using pastebook_db.Services.FunctionCollection;
 
 namespace pastebook_db.Controllers
 {
@@ -127,6 +128,8 @@ namespace pastebook_db.Controllers
                 feed.Add(postDto);
             }
 
+            feed = feed.Distinct(new PostComparer()).ToList();
+
             return Ok(feed);
         }
 
@@ -186,6 +189,21 @@ namespace pastebook_db.Controllers
             _postRepository.DeletePost(postToDelete);
 
             return Ok(new { result = "post_deleted" });
+        }
+    }
+
+    public class PostComparer : IEqualityComparer<PostDTO>
+    {
+        public bool Equals(PostDTO x, PostDTO y)
+        {
+            // Check if the 'Id' properties are equal
+            return x.Id == y.Id;
+        }
+
+        public int GetHashCode(PostDTO obj)
+        {
+            // Return the hash code of the 'Id' property
+            return obj.Id.GetHashCode();
         }
     }
 }
