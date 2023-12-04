@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { Router } from '@angular/router';
-
+import { SharedService } from '@services/shared.service';
 import { AlbumService } from '@services/album.service';
 import { SessionService } from '@services/session.service';
 import { TokenService } from '@services/token.service';
@@ -27,8 +27,8 @@ export class AddphotomodalComponent implements OnInit {
     private albumService: AlbumService,
     private tokenService: TokenService,
     private sessionService: SessionService,
-
-    private router: Router
+    private router: Router,
+    private sharedService: SharedService
   ) {
     this.tokenService.validateToken();
 
@@ -49,6 +49,7 @@ export class AddphotomodalComponent implements OnInit {
   saveData() {
     this.pictureFileList.forEach(element => {
       this.albumService.createAlbumImage(this.id, element).subscribe((a:any) => {
+        this.sharedService.emitDataSaved();
         Swal.fire('New Photo/s Create', 'Your photo/s has been added to the album', 'success');
       });
     });

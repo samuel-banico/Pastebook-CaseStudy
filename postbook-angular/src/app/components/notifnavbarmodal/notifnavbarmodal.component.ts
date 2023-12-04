@@ -40,6 +40,7 @@ export class NotifnavbarmodalComponent implements OnInit {
 
     clickedGetAllNotifications():void{
       this.router.navigate(['/AllNotifications']);
+      this.close();
     }
 
     //Get Unseen Notifications
@@ -81,5 +82,6 @@ export class NotifnavbarmodalComponent implements OnInit {
       this.notifService.clearNotif().subscribe((response:any)=>{
         Swal.fire('Notification', 'All your notifications are marked read', 'success');
       })
+      this.close();
     }
 }

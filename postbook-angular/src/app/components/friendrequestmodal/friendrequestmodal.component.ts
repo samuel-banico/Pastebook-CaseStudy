@@ -65,7 +65,7 @@ export class FriendrequestmodalComponent implements OnInit {
       showCancelButton: true
       })
     })
-
+    this.close();
     this.getAllFriendRequest();
   }
 
@@ -78,7 +78,7 @@ export class FriendrequestmodalComponent implements OnInit {
       this.friendService.rejectFriendRequest(request).subscribe(r => {
       })
     })
-
+    this.close();
     this.getAllFriendRequest();
   }
 }
