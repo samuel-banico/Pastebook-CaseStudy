@@ -11,6 +11,7 @@ import { TokenService } from '@services/token.service';
 import { Album, AlbumImage } from '@models/album';
 import { SinglephotomodalComponent } from '@components/singlephotomodal/singlephotomodal.component';
 import { User } from '@models/user';
+import { SharedService } from '@services/shared.service';
 
 @Component({
     selector: 'CreateAlbumComponent',
@@ -35,7 +36,8 @@ export class CreateAlbumComponent implements OnInit {
         private modalService: MdbModalService,
         private tokenService: TokenService,
         private userService: UserService,
-        private albumService: AlbumService
+        private albumService: AlbumService,
+        private sharedService: SharedService
     ){
         this.tokenService.validateToken();
         this.userService.getUserByToken().subscribe((response: Object) => {
@@ -48,7 +50,20 @@ export class CreateAlbumComponent implements OnInit {
     }
 
     ngOnInit(): void {
-    }
+        // Subscribe to the dataSaved$ observable from the shared service
+        this.sharedService.dataSaved$.subscribe(() => {
+          // Trigger the reload when data is saved
+          this.tokenService.validateToken();
+        this.userService.getUserByToken().subscribe((response: Object) => {
+            this.user = response;
+        });
+        this.albumId = this.sessionService.getAlbum();
+
+        console.log(this.albumId);
+        this.loadData();
+        });
+      }
+    
 
     loadData() {
         console.log('start');

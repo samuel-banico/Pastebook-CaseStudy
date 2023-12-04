@@ -1,11 +1,10 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import Swal from 'sweetalert2';
-
+import { HttpClient } from '@angular/common/http';
 import { SessionService } from '@services/session.service';
 import { PostService } from '@services/post.service';
 import { AlbumService } from '@services/album.service';
 import { UserService } from '@services/user.service';
-
 import { User } from '@models/user';
 import { Album, AlbumImage, AlbumImageLike, AlbumImageComment } from '@models/album';
 import { Post, PostComment, PostLike } from '@models/post';
@@ -29,6 +28,7 @@ export class LikecommentComponent implements OnChanges {
     private postService:PostService,
     private albumService: AlbumService,
     private sessionService: SessionService,
+    private http: HttpClient,
     private tokenService: TokenService
   ){
     this.tokenService.validateToken();
@@ -57,7 +57,7 @@ export class LikecommentComponent implements OnChanges {
 
     let postId = this.sessionService.getPost();
     let albumImageId = this.sessionService.getAlbumImage();
-
+    window.location.reload();
     if(this.post.id || postId) {
       let postLike: PostLike = new PostLike();
       postLike.postId = this.post.id;
@@ -97,6 +97,7 @@ export class LikecommentComponent implements OnChanges {
       postComment.comment = this.comment;
 
       this.postService.addComment(postComment).subscribe(r => {
+        window.location.reload();
         Swal.fire('Comment Successful', 'You have commented on the post', 'success');
       });
 

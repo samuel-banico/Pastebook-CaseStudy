@@ -1,7 +1,7 @@
 import { Component} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
-
+import { SharedService } from '@services/shared.service';
 import { AlbumService } from '@services/album.service';
 import { SessionService } from '@services/session.service';
 
@@ -20,10 +20,10 @@ export class EditAlbumModalComponent{
   constructor(
     public modalRef : MdbModalRef<EditAlbumModalComponent>,
     private route : ActivatedRoute,
-
     private albumService : AlbumService,
     private sessionService: SessionService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private sharedService: SharedService
   ) {
     this.tokenService.validateToken();
 
@@ -52,6 +52,7 @@ export class EditAlbumModalComponent{
   updateAlbum(){
     this.albumService.editAlbum(this.album).subscribe((response: Album) => {
      this.album = response;
+     this.sharedService.emitDataSaved();
      Swal.fire('Edit Album', 'Successfully edited your album', 'success');
     })
 
