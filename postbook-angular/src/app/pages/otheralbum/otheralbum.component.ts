@@ -34,8 +34,16 @@ export class OtheralbumComponent {
   ngOnInit(): void {
     this.user = this.sessionService.getUser();
     this.albumService.getAllFriendAlbum(this.user).subscribe((a: any) => {
-      this.albumList = a;
-      console.log(this.albumList);
+      console.log(a);
+      if(a){
+        this.albumList = a;
+        console.log(this.albumList);
+      }
+
+    }, (err : Record<string, any>) => {
+        if (err['error']['result'] === 'no_album') {
+          this.albumList = [];
+      }
     });
   }
 
@@ -45,7 +53,7 @@ export class OtheralbumComponent {
 
   toAlbum(albumId: string) {
     this.sessionService.setAlbum(albumId);
-    //this.router.navigate(['Album/'+albumId]);
+    this.router.navigate(['Album/'+albumId]);
     console.log(albumId);
   }
 }

@@ -115,6 +115,7 @@ export class NavbarComponent implements OnInit {
   }
 
   toProfile(){
+    this.sessionService.setShowProfileTab("1","","")
     let uniqueId = (this.user.firstName!+this.user.lastName!+this.user.salt!).replace(/\s/g, '');
     this.router.navigate(['YourProfile/'+uniqueId])
   }

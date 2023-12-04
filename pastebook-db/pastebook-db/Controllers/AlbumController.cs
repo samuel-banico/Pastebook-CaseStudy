@@ -76,10 +76,11 @@ namespace pastebook_db.Controllers
 
             var albums = _albumRepository.GetAllAlbumByOther(retrievedUserId, loggedUserId.Id);
 
-            if (albums.Count == 0)
-                return Ok(new { result = "no_album" });
-
             var otherAlbums = new List<AlbumDTO>();
+
+            if (albums.Count == 0)
+                return Ok(otherAlbums);
+
             foreach (var album in albums)
             {
                 var albumDto = _albumRepository.ConvertAlbumToAlbumDTO(album, loggedUserId.Id);

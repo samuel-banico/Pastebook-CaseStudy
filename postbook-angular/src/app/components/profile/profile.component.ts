@@ -21,6 +21,9 @@ export class ProfileComponent implements OnInit {
   // New properties for editable bio
   isEditingBio = false;
   editedBio: string = ''; // Initialize with an empty string
+  showTimeLine: boolean = !!this.sessionService.getTimelineTab();
+  showFriends: boolean = !!this.sessionService.getFriendsTab();
+  showAlbums: boolean = !!this.sessionService.getAlbumsTab();
 
   constructor(
     private modalService: MdbModalService,
@@ -35,30 +38,40 @@ export class ProfileComponent implements OnInit {
       this.user = response;
       console.log(response);
     });
+    
   }
 
   ngOnInit(): void {}
 
-  showTimeLine: boolean = true;
-  showFriends: boolean = false;
-  showAlbums: boolean = false;
+  onGetTab(){
+    this.showTimeLine = !!this.sessionService.getTimelineTab();
+    this.showFriends = !!this.sessionService.getFriendsTab();
+    this.showAlbums = !!this.sessionService.getAlbumsTab();
+  }
+  
 
   displayTimeline(): void {
-    this.showTimeLine = true;
-    this.showFriends = false;
-    this.showAlbums = false;
+    this.sessionService.setShowProfileTab("1","","");
+    this.onGetTab();
+    // this.showTimeLine = true;
+    // this.showFriends = false;
+    // this.showAlbums = false;
   }
 
   displayFriends(): void {
-    this.showTimeLine = false;
-    this.showFriends = true;
-    this.showAlbums = false;
+    this.sessionService.setShowProfileTab("","1","");
+    this.onGetTab();
+    // this.showTimeLine = false;
+    // this.showFriends = true;
+    // this.showAlbums = false;
   }
 
   displayAlbums(): void {
-    this.showTimeLine = false;
-    this.showFriends = false;
-    this.showAlbums = true;
+    this.sessionService.setShowProfileTab("","","1");
+    this.onGetTab();
+    // this.showTimeLine = false;
+    // this.showFriends = false;
+    // this.showAlbums = true;
   }
 
   showOverlay() {
