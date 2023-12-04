@@ -70,7 +70,7 @@ onScroll() {
   this.scrollService.loadData();
 }
 
-openModal() {
+postModal() {
   this.modalRef = this.modalService.open(PostmodalComponent)
 }
 
@@ -102,4 +102,22 @@ openModal() {
     let uniqueId = (this.user.firstName!+this.user.lastName!+this.user.salt!).replace(/\s/g, '');
     this.router.navigate(["YourProfile/"+uniqueId]);
   }
+
+ // Function to check if the clicked user is the currently logged-in user
+isCurrentUser(user: User | undefined): boolean {
+  return !!user && !!this.user && user.id === this.user.id;
+}
+
+// Function to handle user click
+onUserClick(clickedUser: User | undefined): void {
+  if (clickedUser && this.isCurrentUser(clickedUser)) {
+    // Redirect to a different route for the user's own profile
+    let uniqueId = (this.user.firstName!+this.user.lastName!+this.user.salt!).replace(/\s/g, '');
+    this.router.navigate(['YourProfile/'+uniqueId])
+  } else if (clickedUser) {
+    // Handle the logic for other users' profiles
+    this.onFriendClick(clickedUser);
+  }
+}
+
 }

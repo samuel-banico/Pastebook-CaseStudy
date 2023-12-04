@@ -108,15 +108,18 @@ namespace pastebook_db.Controllers
             if (user.ViewPublicPost)
                 friendsPosts = _postRepository.GetAllPublicPosts();
             else
-                friendsPosts = _postRepository.GetAllPostOfFriends(user.Id);
+                friendsPosts = _postRepository.GetAllPublicPostOfFriends(user.Id);
 
-            friendsPosts.AddRange(_postRepository.GetAllPrivatePostOfUser(user.Id));
+            friendsPosts.AddRange(_postRepository.GetAllPrivatePostOfFriends(user.Id));
+            friendsPosts.AddRange(_postRepository.GetAllPublicPostOfFriends(user.Id));
+            friendsPosts.AddRange(_postRepository.GetAllPostOfUserTimeline(user.Id));
+
+            friendsPosts = friendsPosts.OrderByDescending(x => x.CreatedOn).ToList();
 
             if (friendsPosts == null)
                 return NotFound(new { result = "no_post" });
 
             var feed = new List<PostDTO>();
-
             foreach (var post in friendsPosts) 
             {
                 var postDto = _postRepository.ConvertPostToPostDTO(post, user.Id);

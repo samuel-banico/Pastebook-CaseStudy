@@ -34,7 +34,7 @@
       <div class="rounded-3 shadow container-fluid border mt-3 p-3" style="border-color: #e0e0e0;">
           <form class="form-inline">
             <div class="input-group w-100">
-              <input type="text" name="message" id="message" placeholder="What's on your mind?" class="form-control form-control-md" (click)="openModal()">
+              <input type="text" name="message" id="message" placeholder="What's on your mind?" class="form-control form-control-md" (click)="postModal()">
               <div class="input-group-append">
               </div>
             </div>
@@ -46,16 +46,23 @@
                 <div class="card mb-3 post" *ngFor="let post of posts">
                     <div class="card-body">
                       <div class="media">
-                        <img [src]="post.user?.profilePicture" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
+                        <img *ngIf="post.friendId" [src]="post.friend?.profilePicture" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
+                        <img  *ngIf="!post.friendId" [src]="post.user?.profilePicture" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
                         <div class="media-body mb-4 post">
-                            <h5 class="datetime">{{post.user?.firstName}} {{post.user?.lastName}}</h5>
-                            <small><span>{{post.createdOn}}</span></small>
-                            <img *ngIf="post.isPublic; else friendsOnly" src="assets/images/public.png" alt="" style="height: 15px; margin-left: 5px;">
-                            <ng-template #friendsOnly>
-                              <img src="assets/images/friends.png" alt="" style="height: 15px; margin-left: 5px;">
-                            </ng-template>
-                            <p class="card-text" (click)="onPostClick(post)">{{post.content}}</p>
-                        </div>
+                          <div class="d-flex">
+                            <h5 style="cursor: pointer;" class="datetime"
+                                (click)="onUserClick(post.user)"
+                                [routerLink]="isCurrentUser(post.user) ? ['profile/'+user.firstName+'_'+user.lastName] : ['Profile/' + post.user?.firstName + '_' + post.user?.lastName]">
+                              {{ post.user?.firstName }} {{ post.user?.lastName }}
+                            </h5>
+                            <span *ngIf="post.friendId" class="ms-2"><small>By {{post.friend?.firstName}} {{post.friend?.lastName}}</small></span>
+                          </div>
+                        <h5 *ngIf="!post.friendId" class="datetime">{{post.user?.firstName}} {{post.user?.lastName}}</h5>
+                        <small><span>{{post.createdOn}}</span></small>
+                        <img *ngIf="post.isPublic" src="assets/images/public.png" alt="" style="height: 15px; margin-left: 5px;">
+                        <img *ngIf="!post.isPublic" src="assets/images/friends.png" alt="" style="height: 15px; margin-left: 5px;">
+                        <p class="card-text" (click)="onPostClick(post)">{{post.content}}</p>
+                    </div>
                     </div>
                     <app-likecomment [post]="post"></app-likecomment>                                       
                 </div>

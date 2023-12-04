@@ -46,6 +46,7 @@ export class NotifnavbarmodalComponent implements OnInit {
     getUnseenNotifications(){
       this.notifService.getUnseenNotif().subscribe((response:any)=>{
         this.notifs = response;
+        console.log(this.notifs);
       })
     }
 

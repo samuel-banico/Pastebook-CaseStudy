@@ -58,9 +58,9 @@
   }
   
   .post-button {
-    color: pink;
+    color: #F875AA;;
     background-color: #fff;
-    border: 1px solid pink;
+    border: 1px solid #F875AA;
     border-radius: 5px;
     padding: 10px 20px;
     cursor: pointer;
@@ -68,7 +68,7 @@
   }
   
   .post-button:hover {
-    background-color: pink;
+    background-color: #F875AA;
     color: #fff;
     border: 1px solid #fff;
   }

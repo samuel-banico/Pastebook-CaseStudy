@@ -26,7 +26,10 @@ namespace pastebook_db.Data
         // Friend table
         public Friend? GetFriendship(Guid userId, Guid friendId)
         {
-            var friend = _context.Friends.FirstOrDefault(x => (x.UserId == friendId && x.User_FriendId == userId) || (x.User_FriendId == friendId && x.UserId == userId));
+            var friend = _context.Friends
+                .Include(x => x.User_Friend)
+                .Include(x => x.User)
+                .FirstOrDefault(x => (x.UserId == friendId && x.User_FriendId == userId) || (x.User_FriendId == friendId && x.UserId == userId));
 
             return friend;
         }
@@ -34,7 +37,9 @@ namespace pastebook_db.Data
         // List of all friends but does not contain their user details
         public List<Friend> GetAllFriends(Guid userId)
         {
-            var friendList = _context.Friends.Where(f => f.UserId == userId || f.User_FriendId == userId).ToList();
+            var friendList = _context.Friends
+                .Where(f => f.UserId == userId || f.User_FriendId == userId)
+                .ToList();
 
             return friendList;
         }
@@ -116,7 +121,7 @@ namespace pastebook_db.Data
                 {
                     if (friend.IsCurrentlyActive)
                     {
-                        allFriendDTO.Add(ConvertFriendToUserSendDTO(friend));
+                        allFriendDTO.Add(ConvertUserToUserSendDTO(friend));
                     }
                 }
 
@@ -161,32 +166,15 @@ namespace pastebook_db.Data
             return userDTO;
         }
 
-        public UserSendDTO ConvertFriendToUserSendDTO(User user)
+        public UserSendDTO ConvertFriendToUserSendDTO(Friend friend, Guid loggedUser)
         {
-            var userDTO = new UserSendDTO()
-            {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Password = user.Password,
-                Birthday = user.Birthday.ToString("yyyy-MM-dd"),
-                Gender = (int)user.Gender,
-                UserBio = user.UserBio,
-                MobileNumber = user.MobileNumber,
-                ViewPublic = user.ViewPublicPost,
-                Salt = user.Salt
-
-            };
-
-            if (File.Exists(user.ProfilePicture))
-            {
-                userDTO.ProfilePicture = HelperFunction.SendImageToAngular(user.ProfilePicture);
-            }
+            var userFriend = new User();
+            if (friend.UserId == loggedUser)
+                userFriend = friend.User_Friend;
             else
-            {
-                userDTO.ProfilePicture = HelperFunction.SendImageToAngular(Path.Combine("wwwroot", "images", "default.png"));
-            }
+                userFriend = friend.User;
+
+            var userDTO = ConvertUserToUserSendDTO(userFriend);
 
             return userDTO;
         }
