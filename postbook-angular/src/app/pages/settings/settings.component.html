@@ -100,7 +100,7 @@
               <!-- Password Input -->
               <!-- Inside the form for Security tab -->
               <div *ngIf="!isPasswordCorrect" class="form-group">
-                <label for="Password">Password</label>
+                <label for="Password">Current  Password</label>
                 <input type="password" class="form-control" placeholder="Enter password" [(ngModel)]="securityPassword" name="password" (keyup.enter)="passwordVerify($event)">
               </div>
 
