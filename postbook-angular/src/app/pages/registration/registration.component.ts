@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router'; 
 import Swal from 'sweetalert2';
 
@@ -11,7 +11,8 @@ import { User } from '@models/user';
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css']
+  styleUrls: ['./registration.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class RegistrationComponent implements OnInit {
   user: User = new User();
