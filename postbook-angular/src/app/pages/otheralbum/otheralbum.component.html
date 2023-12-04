@@ -1,6 +1,5 @@
 <div class="pale-background my-3 mx-3 mx-md-5">
     <div class="item">
-       
     </div>
 
     <div class="d-flex align-items-center" *ngIf="albumList.length === 0; else albums">
@@ -8,10 +7,10 @@
     </div>
     <ng-template #albums>
         <div class="row">
-            <div *ngFor="let album of albumList" class=" col-12 col-md-4 mb-4">
+            <div *ngFor="let album of albumList" class="col-12 col-md-3 mb-4">
                 <button class="bg-transparent" href="" class="btn p-0 m-0" (click)="toAlbum(album.id!)">
                     <div class="card bg-transparent border-0 p-0 m-0">
-                        <img [src]="album.coverAlbumImage" alt="" class="img-fluid rounded-2">
+                        <img [src]="album.coverAlbumImage" alt="" class="img-fluid rounded-2 thumbnail-image">
                         <div class="card-body p-0 d-flex flex-column align-items-start pl-1">
                             <h5 class="card-title p-0 m-0">{{album.albumName}}</h5>
                             <p class="card-text p-0 m-0">{{album.imageCount}} items</p>
@@ -22,11 +21,3 @@
         </div>
     </ng-template>
 </div>
-
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-
