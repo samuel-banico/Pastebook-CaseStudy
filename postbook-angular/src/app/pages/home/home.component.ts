@@ -116,9 +116,11 @@ isCurrentUser(user: User | undefined): boolean {
 
 // Function to handle user click
 onUserClick(clickedUser: User | undefined): void {
+  console.log(clickedUser);
   if (clickedUser && this.isCurrentUser(clickedUser)) {
+    this.sessionService.setUser(clickedUser.id!)
     // Redirect to a different route for the user's own profile
-    let uniqueId = (this.user.firstName!+this.user.lastName!+this.user.salt!).replace(/\s/g, '');
+    let uniqueId = (clickedUser.firstName!+clickedUser.lastName!+clickedUser.salt!).replace(/\s/g, '');
     this.router.navigate(['YourProfile/'+uniqueId])
   } else if (clickedUser) {
     // Handle the logic for other users' profiles
