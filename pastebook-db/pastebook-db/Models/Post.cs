@@ -45,7 +45,7 @@ namespace pastebook_db.Models
 
 
         public Guid? FriendId { get; set; }
-        public Friend? Friend { get; set; }
+        public UserSendDTO? Friend { get; set; }
 
         public ICollection<PostLikeDTO>? PostLikeList { get; set; }
         public ICollection<PostCommentDTO>? PostCommentList { get; set; }
