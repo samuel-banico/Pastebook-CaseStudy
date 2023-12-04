@@ -23,13 +23,15 @@ export class PostComponent implements OnInit {
   modalRef: MdbModalRef<PostlikelistComponent> | null = null
   postId: string = "";
   post: Post = new Post();
+  user: User = new User();
 
   constructor(
     private router: Router,
     private modalService: MdbModalService,
     private sessionService: SessionService,
     private postService: PostService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private userService: UserService
   ){
     this.tokenService.validateToken();
 
@@ -39,6 +41,10 @@ export class PostComponent implements OnInit {
         this.router.navigate(['']);
       })
     }
+
+    this.userService.getUserByToken().subscribe( (r:any) => {
+      this.user = r;
+    })
 
     this.getPost();
   }
@@ -56,5 +62,27 @@ export class PostComponent implements OnInit {
     this.modalRef = this.modalService.open(PostlikelistComponent)
   }
 
+  isCurrentUser(user: User | undefined): boolean {
+    return !!user && !!this.user && user.id === this.user.id;
+  }
+
+  onUserClick(clickedUser: User | undefined): void {
+    console.log(clickedUser);
+    if (clickedUser && this.isCurrentUser(clickedUser)) {
+      this.sessionService.setUser(clickedUser.id!)
+      // Redirect to a different route for the user's own profile
+      let uniqueId = (clickedUser.firstName!+clickedUser.lastName!+clickedUser.salt!).replace(/\s/g, '');
+      this.router.navigate(['YourProfile/'+uniqueId])
+    } else if (clickedUser) {
+      // Handle the logic for other users' profiles
+      this.onFriendClick(clickedUser);
+    }
+  }
+
+  onFriendClick(clickedFriend:User){
+    this.sessionService.setUser(clickedFriend.id!);
+    let uniqueId = (clickedFriend.firstName!+clickedFriend.lastName!+clickedFriend.salt!).replace(/\s/g, '');
+    this.router.navigate(["Profile/"+uniqueId]);
+  }
   
 }
