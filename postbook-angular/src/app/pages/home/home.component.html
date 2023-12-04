@@ -53,9 +53,9 @@
                             <h5 style="cursor: pointer;" class="datetime"
                                 (click)="onUserClick(post.user)"
                                 [routerLink]="isCurrentUser(post.user) ? ['profile/'+user.firstName+'_'+user.lastName] : ['Profile/' + post.user?.firstName + '_' + post.user?.lastName]">
-                              {{ post.user?.firstName }} {{ post.user?.lastName }}
+                              {{ post.friend?.firstName }} {{ post.friend?.lastName }}
                             </h5>
-                            <span *ngIf="post.friendId" class="ms-2"><small>By {{post.friend?.firstName}} {{post.friend?.lastName}}</small></span>
+                            <span *ngIf="post.friendId" class="ms-2"><small>posted to <strong>{{post.user?.firstName}} {{post.user?.lastName}}</strong></small></span>
                           </div>
                         <h5 *ngIf="!post.friendId" class="datetime">{{post.user?.firstName}} {{post.user?.lastName}}</h5>
                         <small><span>{{post.createdOn}}</span></small>

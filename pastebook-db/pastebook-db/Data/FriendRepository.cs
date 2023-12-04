@@ -17,10 +17,10 @@ namespace pastebook_db.Data
         }
 
         // To get friend by user id
-        public Friend? GetFriendById(Guid? id)
+        public Friend? GetFriendById(Guid? loggedUserId, Guid? visitId)
         {
             return _context.Friends
-                .FirstOrDefault(x => x.User_FriendId == id || x.UserId == id);
+                .FirstOrDefault(x => (x.User_FriendId == loggedUserId && x.UserId == visitId) || (x.User_FriendId == visitId && x.UserId == loggedUserId));
         }
 
         // Friend table
@@ -170,9 +170,9 @@ namespace pastebook_db.Data
         {
             var userFriend = new User();
             if (friend.UserId == loggedUser)
-                userFriend = friend.User_Friend;
-            else
                 userFriend = friend.User;
+            else
+                userFriend = friend.User_Friend;
 
             var userDTO = ConvertUserToUserSendDTO(userFriend);
 
