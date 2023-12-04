@@ -7,7 +7,7 @@
           <span class="mt-2">{{ user.firstName }} {{ user.lastName }}</span>
         </div>
         <div class="privacy-dropdown">
-          <select class="form-select">
+          <select class="form-select" [(ngModel)]="selectedPrivacy" (click)="onPrivacySelect()">
             <option value="Public">Public</option>
             <option value="Friends Only">Friends Only</option>
           </select>
