@@ -7,7 +7,7 @@
     </div>
     <ng-template #albums>
         <div class="row">
-            <div *ngFor="let album of albumList" class="col-12 col-md-3 mb-4">
+            <div *ngFor="let album of albumList" class="col-md-6 col-lg-4 col-xl-3  mb-4">
                 <button class="bg-transparent" href="" class="btn p-0 m-0" (click)="toAlbum(album.id!)">
                     <div class="card bg-transparent border-0 p-0 m-0">
                         <img [src]="album.coverAlbumImage" alt="" class="img-fluid rounded-2 thumbnail-image">

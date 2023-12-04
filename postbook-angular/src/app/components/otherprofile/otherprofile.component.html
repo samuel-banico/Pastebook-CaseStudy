@@ -39,22 +39,22 @@
                     <div class="card-body">
                         <h4>About</h4>
                         <!-- Email, Birthday, gender, mobile number -->
-                        <div class="d-flex">
-                            <img src="../../../assets/images/email.png" style="width: 30px; height: 30px; margin-right: 8px;">
-                            <p>{{user.email}}</p>
+                        <div class="d-flex" >
+                            <img src="../../../assets/images/email.png" style="width: 30px; height: 30px;">
+                            <p class="container-fluid ">{{user.email}}</p>
                         </div>
                         <div class="d-flex">
-                            <img src="../../../assets/images/phone.png" style="width: 30px; height: 30px; margin-right: 8px;">
-                            <p *ngIf="user.mobileNumber">{{user.mobileNumber}}</p>
-                            <p *ngIf="!user.mobileNumber">-</p>
+                            <img src="../../../assets/images/phone.png" style="width: 30px; height: 30px;">
+                            <p class="container-fluid" *ngIf="user.mobileNumber">{{user.mobileNumber}}</p>
+                            <p class="container-fluid" *ngIf="!user.mobileNumber">-</p>
                         </div>
                         <div class="d-flex">
-                            <img src="../../../assets/images/cake.png" style="width: 30px; height: 30px; margin-right: 8px;">
-                            <p>{{user.birthday}}</p>
+                            <img src="../../../assets/images/cake.png" style="width: 30px; height: 30px;">
+                            <p class="container-fluid">{{user.birthday}}</p>
                         </div>
                         <div class="d-flex">
-                            <img src="../../../assets/images/gender.png" style="width: 30px; height: 30px; margin-right: 8px;">
-                            <p>{{ user.gender === 0 ? 'Male' : (user.gender === 1 ? 'Female' : 'Other') }}</p>
+                            <img src="../../../assets/images/gender.png" style="width: 30px; height: 30px;">
+                            <p class="container-fluid">{{ user.gender === 0 ? 'Male' : (user.gender === 1 ? 'Female' : 'Other') }}</p>
                         </div>
                     </div>
                 </div>

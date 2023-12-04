@@ -1,5 +1,6 @@
 ﻿using System.Net.Mail;
 using System.Net;
+using pastebook_db.Models;
 
 namespace pastebook_db.Services.FunctionCollection
 {
@@ -95,7 +96,7 @@ namespace pastebook_db.Services.FunctionCollection
             return isEmailSent;
         }
 
-        public static string TimeDifference(DateTime past, DateTime now) 
+        public static string TimeDifference(DateTime past, DateTime now)
         {
             TimeSpan diff = (now - past);
             var seconds = diff.TotalSeconds;
@@ -176,4 +177,6 @@ namespace pastebook_db.Services.FunctionCollection
             return new string(randomArray);
         }
     }
+
+    
 }

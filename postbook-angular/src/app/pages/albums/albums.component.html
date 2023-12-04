@@ -9,12 +9,13 @@
     <div class="d-flex align-items-center">
         <h1 *ngIf="albumList.length === 0; else albums">No Albums</h1>
     </div>
+    
     <ng-template #albums>
         <div class="row">
-            <div *ngFor="let album of albumList" class="col-md-3 mb-4">
+            <div *ngFor="let album of albumList" class="col-md-6 col-lg-4 col-xl-3 mb-4">
                 <button class="bg-transparent btn p-0 m-0" (click)="toAlbum(album.id!)">
                     <div class="card bg-transparent border-0">
-                        <img [src]="album.coverAlbumImage" alt="" class="img-fluid rounded-2 thumbnail-image">
+                        <img [src]="album.coverAlbumImage" alt="" class="img-fluid rounded-2" style="height: 200px;">
                         <div class="card-body p-0 d-flex flex-column align-items-start pl-1">
                             <h5 class="card-title p-0 m-0">{{album.albumName}}</h5>
                             <p class="card-text p-0 m-0">{{album.imageCount}} items</p>
