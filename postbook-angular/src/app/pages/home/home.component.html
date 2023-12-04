@@ -4,7 +4,7 @@
 
   <div class="container">
     <div class="left-column d-none d-md-block col-md-3">
-      <a [routerLink]="['profile/'+user.firstName+'_'+user.lastName]" class="text-decoration-none text-dark"><div class="rounded-3 shadow mb-3 border" style="border-color: #e0e0e0;" >
+      <a (click)="onProfileClick()" [routerLink]="" class="text-decoration-none text-dark"><div class="rounded-3 shadow mb-3 border" style="border-color: #e0e0e0;" >
         <div class="text-center pt-4">
           <img [src]="user.profilePicture" alt="Profile" width="120px" height="120px" class="rounded-circle">
           <a  class="text-decoration-none text-dark post">
@@ -22,8 +22,8 @@
             <li class="nav-item px-2"><strong>Online</strong></li> {{user.friendCount}}
           </a>
         </ul>
-        <div *ngFor="let u of user.friends" >
-          <a (click)="onFriendClick(u)" [routerLink]="['Profile/'+u.firstName+'_'+u.lastName]" class="d-flex text-decoration-none text-dark">
+        <div *ngFor="let u of user.friends" class="click">
+          <a (click)="onFriendClick(u)" [routerLink]="" class="d-flex text-decoration-none text-dark">
             <img [src]="u.profilePicture" alt="" class="rounded-circle me-2" style="width: 25px; height: 25px;">
             <p>{{u.firstName}} {{u.lastName}}</p>
           </a>

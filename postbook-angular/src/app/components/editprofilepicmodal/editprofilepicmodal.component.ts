@@ -16,9 +16,10 @@ export class EditprofilepicmodalComponent {
 
   constructor(
     public modalRef: MdbModalRef<EditprofilepicmodalComponent>,
-    private userServive: UserService,
+    private userService: UserService,
     private tokenService: TokenService,
     private sharedService: SharedService
+
   ) {
     this.tokenService.validateToken();
 
@@ -31,7 +32,7 @@ export class EditprofilepicmodalComponent {
   }
 
   saveData() {
-    this.userServive.editUserProfilePicture(this.pictureFileList[0]).subscribe(response => {
+    this.userService.editUserProfilePicture(this.pictureFileList[0]).subscribe(response => {
       console.log('Profile picture changed');
       this.sharedService.emitDataSaved();
     });

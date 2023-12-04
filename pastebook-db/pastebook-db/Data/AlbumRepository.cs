@@ -103,6 +103,13 @@ namespace pastebook_db.Data
                 _context.AlbumImages.RemoveRange(album.AlbumImageList);
             }
 
+            var albumNotifs = _context.Notifications.Where(n => n.AlbumId == album.Id).ToList();
+            if (albumNotifs.Count != 0)
+            {
+                _context.Notifications.RemoveRange(albumNotifs);
+                _context.SaveChanges();
+            }
+
             _context.Albums.Remove(album);
             _context.SaveChanges();
         }
