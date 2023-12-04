@@ -11,6 +11,7 @@ import { TokenService } from '@services/token.service';
 import { User } from '@models/user';
 import { Post, PostLike, PostComment } from '@models/post';
 import { interval, Subscription } from 'rxjs';
+import { SharedService } from '@services/shared.service';
 
 @Component({
   selector: 'app-home',
@@ -35,7 +36,8 @@ export class HomeComponent implements OnInit, OnDestroy{
     private scrollService: ScrollService,
     private tokenService: TokenService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private sharedService: SharedService
     ){
       this.tokenService.validateToken();
       this.userService.getUserByTokenHome().subscribe((response: Object) => {
@@ -51,6 +53,10 @@ export class HomeComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.getFeed(); // Initial data fetch
     this.setupAutoRefresh();
+    this.sharedService.dataSaved$.subscribe(() => {
+      // Trigger the reload when data is saved
+      this.getFeed();
+    });
     
   }
 
