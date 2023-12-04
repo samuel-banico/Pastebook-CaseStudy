@@ -1,6 +1,6 @@
-<!-- app.component.html -->
 <div class="main-container">
   <app-navbar class="navbar"></app-navbar>
+  
 
   <div class="container">
     <div class="left-column d-none d-md-block col-md-3">
@@ -23,7 +23,7 @@
           </a>
         </ul>
         <div *ngFor="let u of user.friends" >
-          <a (click)="onFriendClick(u)" [routerLink]="['Profile/'+u.firstName+'_'+u.lastName]" class="d-flex text-decoration-none text-dark">
+          <a (click)="onFriendClick(u)" [routerLink]="['Profile/'+u.firstName+'_'+u.lastName]" class="dee-flex text-decoration-none text-dark">
             <img [src]="u.profilePicture" alt="" class="rounded-circle me-2" style="width: 25px; height: 25px;">
             <p>{{u.firstName}} {{u.lastName}}</p>
           </a>
