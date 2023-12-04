@@ -1,34 +1,19 @@
 <app-navbar></app-navbar>
 
-<div class="container-fluid mt-5 pt-5">
-    
-    <div class="row mb-3">
-        <div class="col-md-2"></div>
-        <div class="col-md-4" style="color: #0b2154">
-            <h2>ALL SEARCH RESULTS</h2>
-        </div>
-        <div class="col-md-5"></div>
-    </div>
-</div>
+<h2 class="text-center mt-5 pt-5 mb-3" style="color: #0b2154;">ALL SEARCH RESULTS</h2>
 
 <div class="container-fluid">
     <h1 *ngIf="noMatchingUser; else userExist" class="text-center">No Results Found</h1>
     <ng-template #userExist>
-    <div class="row mb-2" *ngFor="let user of users">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-        <div class="d-flex align-items-center justify-content-start pale-background" (click)="userClicked(user)" style="cursor:pointer">
-            <img [src]="user.profilePicture" alt="User 1" class="rounded-circle" width="60px" height="60px">
-            <div class="ml-3">
-            <h4 class="profile-name" style="font-size: 20px;">{{user.firstName}} {{user.lastName}}</h4>
+        <div class="row mb-2">
+            <div *ngFor="let user of users" class="col-md-6 mb-2">
+                <div class="d-flex align-items-center justify-content-start pale-background" (click)="userClicked(user)" style="cursor:pointer">
+                    <img [src]="user.profilePicture" alt="User 1" class="rounded-circle" width="60px" height="60px">
+                    <div class="ml-3">
+                        <h4 class="profile-name" style="font-size: 20px;">{{user.firstName}} {{user.lastName}}</h4>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-md-3"></div>
-        </div>
-    </div>
     </ng-template>
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
