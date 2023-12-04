@@ -1,5 +1,5 @@
-<div *ngIf="post" class="d-flex row justify-content-center">
-    <div class="col-6 d-flex justify-content-center text-center">
+<div *ngIf="post" class="row justify-content-center">
+    <div class="col-6 justify-content-center text-center">
         <a (click)="toggleLike()">
             <img [src]="isLiked ? '../../../assets/images/liked.png' : '../../../assets/images/like.png'" alt="img" width="30px" height="30px" class="mr-3 cursor">
         </a>
@@ -25,7 +25,7 @@
     </div>
     
     <div class="col-6 text-center">
-        <a (click)="toggleCommentsVisibility()" class="d-flex justify-content-center">
+        <a (click)="toggleCommentsVisibility()" class="justify-content-center">
             <img src="../../../assets/images/comment.png" alt="img" width="25px" height="25px" class="mr-3 cursor">
             <div *ngIf="post.id; else hasCommentAlbum">
                 <span *ngIf="post.commentCount! > 0">{{post.commentCount}}</span>
@@ -37,8 +37,8 @@
     </div>
     
 <!-- Comments section -->
-    <div *ngIf="showComments" class="bg-light p-2">
-        <div class="d-flex flex-row align-items-start">
+    <div *ngIf="showComments" class="comment p-2">
+        <div class="dee-flex flex-row align-items-start">
             <img class="rounded-circle" [src]="user.profilePicture" width="40">
             <textarea class="form-control ml-1 shadow-none textarea" [(ngModel)]="comment"></textarea>
         </div>

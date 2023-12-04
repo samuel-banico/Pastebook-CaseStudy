@@ -1,9 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap/dist/css/bootstrap.min.css';    
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
 /* .container {
   f
 } */
@@ -31,10 +28,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       position: absolute;
       top: calc(100% + 10px);
       flex-direction: column;
-      border: 1px solid #ccc; /* Use a lighter border color for a more modern look */
-      background-color: #fff; /* Add a background color to the dropdown */
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
-      padding: 10px; /* Adjust padding for a more compact appearance */
+      border: 1px solid #ccc;
+      background-color: #fff; 
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 10px; 
       right: 0;
     }
     
@@ -116,10 +113,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap/dist/css/bootstrap.min.css';    
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
 
 .main-container {
     display: flex;
@@ -278,6 +271,16 @@ body.dark-mode .banner {
   .dark-mode .form-inline {
     background-color: #333;
   }
+
+.dark-mode .comment {
+    background-color: #000; 
+    color: #ffffff;
+}
+
+.comment {
+    background-color: #fff; 
+    color: #000;
+}
 
 .dee-flex {
     display: flex;

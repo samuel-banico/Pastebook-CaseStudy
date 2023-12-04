@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Obj } from '@popperjs/core';
 import Swal from 'sweetalert2';
@@ -14,7 +14,8 @@ import { TokenService } from '@services/token.service';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.css']
+  styleUrls: ['./settings.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class SettingsComponent implements OnInit{
   userDefault: User = new User();
