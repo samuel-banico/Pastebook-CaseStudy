@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import Swal from 'sweetalert2';
-
+import { SharedService } from '@services/shared.service';
 import { PostService } from '@services/post.service';
 import { UserService } from '@services/user.service';
 import { Post } from '@models/post';
@@ -24,7 +24,8 @@ export class PostmodalComponent {
     public modalRef: MdbModalRef<PostmodalComponent>,
     private postService: PostService,
     private userService: UserService,
-    private sessionService:SessionService
+    private sessionService:SessionService,
+    private sharedService: SharedService
   ) {
     userService.getUserByToken().subscribe((response: Object) => {
       this.user = response as User;
@@ -48,6 +49,7 @@ export class PostmodalComponent {
   onPost(): void {
     console.log('Post content:', this.post.content);
     console.log('Selected privacy:', this.selectedPrivacy);
+    
 
     // Add your logic to post the content with the selected privacy
     // Example: Update the 'isPublic' property based on the selected privacy
@@ -58,6 +60,7 @@ export class PostmodalComponent {
     this.postService.createPost(this.post).subscribe((response: Record<string, any>) => {
       if (response['result'] === 'new_post') {
         Swal.fire('Posted', 'Your status was posted', 'success');
+        this.sharedService.emitDataSaved();
         this.close(); // Close the modal after posting
       }
     });
