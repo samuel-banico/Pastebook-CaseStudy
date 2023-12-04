@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Google.Apis.Drive.v3.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using pastebook_db.Database;
 using pastebook_db.Models;
@@ -124,18 +125,21 @@ namespace pastebook_db.Data
 
         public NotifDTO NotifToNotifDTO(Notification notif) 
         {
-            var newNotif = new NotifDTO
+            var newNotif = new NotifDTO();
+            newNotif.Id = notif.Id;
+            newNotif.HasSeen = notif.HasSeen;
+            newNotif.NotificationDate = HelperFunction.TimeDifference(notif.NotificationDate, DateTime.Now);
+            newNotif.Content = notif.Content;
+            newNotif.UserId = notif.UserId;
+            newNotif.PostId = notif.PostId;
+            newNotif.AlbumId = notif.AlbumId;
+
+            if (notif.UserRequest != null) 
             {
-                Id = notif.Id,
-                HasSeen = notif.HasSeen,
-                NotificationDate = HelperFunction.TimeDifference(notif.NotificationDate, DateTime.Now),
-                Content = notif.Content,
-                UserId = notif.UserId,
-                PostId = notif.PostId,
-                AlbumId = notif.AlbumId,
-                UserRequestId = notif.UserRequestId,
-                UserRequest = _friendRepository.ConvertUserToUserSendDTO(notif.UserRequest)
-            };
+                newNotif.UserRequestId = notif.UserRequestId;
+                newNotif.UserRequest = _friendRepository.ConvertUserToUserSendDTO(notif.UserRequest);
+            }
+            
 
             return newNotif;
         }
