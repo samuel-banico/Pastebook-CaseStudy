@@ -1,5 +1,3 @@
-/* styles.css or your component-specific stylesheet */
-
 .main-container {
     display: flex;
     flex-direction: column; /* Stack columns vertically on smaller screens if needed */

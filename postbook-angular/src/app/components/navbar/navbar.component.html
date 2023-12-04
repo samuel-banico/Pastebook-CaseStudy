@@ -2,8 +2,8 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
 <link rel="stylesheet" href="navbar.component.css">
 
-<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:#F875AA">
-    <a (click)="toProfile()" class="navbar-brand"><img src="assets/images/logo.png" alt="logo" class="img-fluid" width="30px" height="50px"></a>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top">
+    <a routerLink="/" class="navbar-brand"><img src="favicon.ico" alt="logo" class="img-fluid" width="35px" height="35px"></a>
 
     <button class="navbar-toggler" data-toggle="collapse" data-target="#responsive"><span class="navbar-toggler-icon"></span></button>
 
@@ -31,6 +31,7 @@
             <div class="dropdown text-start" style="z-index: 2;">
                 <a routerLink="/settings">Settings</a>
                 <a (click)="logout()">Logout</a>
+                <app-dark-mode-toggle></app-dark-mode-toggle>
             </div>
         </div>
     </div>

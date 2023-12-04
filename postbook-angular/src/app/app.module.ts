@@ -48,6 +48,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { NgIdleModule } from '@ng-idle/core';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { InputLengthDirective } from './directives/input-length.directive';
+import { DarkModeToggleComponent } from './components/dark-mode-toggle/dark-mode-toggle.component';
 
 
 
@@ -119,6 +120,7 @@ const appRoutes: Routes = [
     OthersinglealbumComponent,
     OtherpostmodalComponent,
     InputLengthDirective,
+    DarkModeToggleComponent,
  
 
   ],

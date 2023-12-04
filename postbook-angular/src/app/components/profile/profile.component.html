@@ -1,8 +1,10 @@
 <app-navbar></app-navbar>
 
 <div class="banner mt-5 pt-5">
-  <div class="banner-title d-flex flex-column justify-content-center align-items-center">
-    <div style="cursor: pointer;" (click)="changeImage()" class="profile-picture-container" (mouseover)="showOverlay()" (mouseout)="hideOverlay()">
+
+  <div class="banner-title dee-flex flex-column justify-content-center align-items-center">
+    <div (click)="changeImage()" class="profile-picture-container" (mouseover)="showOverlay()" (mouseout)="hideOverlay()">
+
       <img [src]="user.profilePicture" alt="img" class="profile-picture" width="150px" height="150px">
       <div class="overlay">
         <img src="assets/images/camera.png" alt="Icon">

@@ -1,6 +1,10 @@
 /* .container {
   f
 } */
+
+.navbar {
+  background-color: #F875AA;
+}
 #cursor {
   cursor: pointer;
 }
