@@ -45,7 +45,7 @@ export class OtheralbumComponent {
 
   toAlbum(albumId: string) {
     this.sessionService.setAlbum(albumId);
-    //this.router.navigate(['Album/'+albumId]);
+    this.router.navigate(['Album/'+albumId]);
     console.log(albumId);
   }
 }
