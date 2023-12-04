@@ -10,8 +10,10 @@
             <div class="pale-background media mb-2" *ngFor="let notif of notifs" (click)="goToSinglePage(notif)" >
                 <img [src]="notif.userRequest?.profilePicture" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
                 <div class="media-body mb-4">
-                    <h5>{{notif.userRequest?.firstName}} {{notif.userRequest?.lastName}}</h5>
-                    <!-- if posted, commented, liked -->
+                    <div class="d-flex">
+                        <h4><strong>{{notif.userRequest?.firstName}} {{notif.userRequest?.lastName}}</strong></h4>
+                        <small><span class="ms-2" >{{notif.notificationDate}}</span></small>
+                    </div>
                     <p class="card-text">{{notif.content}}</p>
                 </div>
             </div>

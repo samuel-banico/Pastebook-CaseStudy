@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 
 <div class="mt-5 pt-5"></div>
-<div class="card mx-auto my-5" style="width: 50rem;">
+<!-- <div class="card mx-auto my-5" style="width: 50rem;">
     <div class="card-body">
         <div *ngIf="post" class="media">
             <img [src]="post.user?.profilePicture" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
@@ -15,4 +15,26 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
+<div class="card-body">
+    <div class="media">
+      <img *ngIf="post.friendId" [src]="post.friend?.profilePicture" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
+      <img  *ngIf="!post.friendId" [src]="post.user?.profilePicture" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
+      <div class="media-body mb-4 post">
+        <div class="d-flex">
+          <h5 style="cursor: pointer;" class="datetime" (click)="onUserClick(post.friend)"
+              >
+            {{ post.friend?.firstName }} {{ post.friend?.lastName }}
+          </h5>
+          <span style="cursor: pointer;" *ngIf="post.friendId" class="ms-2" (click)="onUserClick(post.user)"><small>posted to <strong>{{post.user?.firstName}} {{post.user?.lastName}}</strong></small></span>
+        </div>
+      <h5 style="cursor: pointer;" *ngIf="!post.friendId" class="datetime" (click)="onUserClick(post.user)"
+      [routerLink]="isCurrentUser(post.user) ? ['profile/'+user.firstName+'_'+user.lastName] : ['Profile/' + post.user?.firstName + '_' + post.user?.lastName]">{{post.user?.firstName}} {{post.user?.lastName}}</h5>
+      <small><span>{{post.createdOn}}</span></small>
+      <img *ngIf="post.isPublic" src="assets/images/public.png" alt="" style="height: 15px; margin-left: 5px;">
+      <img *ngIf="!post.isPublic" src="assets/images/friends.png" alt="" style="height: 15px; margin-left: 5px;">
+      <p class="text-justify">{{post.content}}</p>
+
+  </div>
+  </div>
+  <app-likecomment [post]="post"></app-likecomment>      
