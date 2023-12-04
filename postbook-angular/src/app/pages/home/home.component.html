@@ -1,4 +1,3 @@
-<!-- app.component.html -->
 <div class="main-container">
   <app-navbar class="navbar"></app-navbar>
 
@@ -49,13 +48,9 @@
                         <img *ngIf="post.friendId" [src]="post.friend?.profilePicture" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
                         <img  *ngIf="!post.friendId" [src]="post.user?.profilePicture" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
                         <div class="media-body mb-4 post">
-                          <div class="d-flex">
-                            <h5 style="cursor: pointer;" class="datetime"
-                                (click)="onUserClick(post.user)"
-                                [routerLink]="isCurrentUser(post.user) ? ['profile/'+user.firstName+'_'+user.lastName] : ['Profile/' + post.user?.firstName + '_' + post.user?.lastName]">
-                              {{ post.user?.firstName }} {{ post.user?.lastName }}
-                            </h5>
-                            <span *ngIf="post.friendId" class="ms-2"><small>By {{post.friend?.firstName}} {{post.friend?.lastName}}</small></span>
+                          <div *ngIf="post.friendId" class="d-flex">
+                              <h5 class="datetime">{{post.friend?.firstName}} {{post.friend?.lastName}}</h5>
+                              <span *ngIf="post.friendId" class="ms-2"><small>posted to <strong>{{post.user?.firstName}} {{post.user?.lastName}}</strong></small></span>
                           </div>
                         <h5 *ngIf="!post.friendId" class="datetime">{{post.user?.firstName}} {{post.user?.lastName}}</h5>
                         <small><span>{{post.createdOn}}</span></small>

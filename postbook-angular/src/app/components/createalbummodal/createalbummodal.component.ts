@@ -1,7 +1,7 @@
 import { Component, Input,ElementRef, ViewChild  } from '@angular/core';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import Swal from 'sweetalert2';
-
+import { SharedService } from '@services/shared.service';
 import { AlbumService } from '@services/album.service';
 import { SessionService } from '@services/session.service';
 import { Router } from '@angular/router';
@@ -28,7 +28,8 @@ export class CreatealbummodalComponent {
       private albumService: AlbumService,
       private tokenService: TokenService,
       private router: Router,
-      private sessionService: SessionService
+      private sessionService: SessionService,
+      private sharedService: SharedService
     ) {
       this.tokenService.validateToken();
     }
@@ -53,6 +54,7 @@ export class CreatealbummodalComponent {
     this.albumService.createAlbum(this.album).subscribe((response: any) => {
       console.log(response);
       this.id = response.id;
+      this.sharedService.emitDataSaved();
 
       for (let i = 0; i < this.pictureFileList.length; i++) {
         const image = this.pictureFileList[i];
