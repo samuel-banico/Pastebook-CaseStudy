@@ -146,7 +146,7 @@ namespace pastebook_db.Controllers
             // Set FriendId based on the logic you need
             if (addPost.FriendId != null)
             {
-                var friend = _friendRepository.GetFriendById(addPost.FriendId);
+                var friend = _friendRepository.GetFriendById(addPost.UserId, addPost.FriendId);
                 newPost.FriendId = friend.Id;
 
             }

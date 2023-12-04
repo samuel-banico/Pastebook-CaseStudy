@@ -81,6 +81,24 @@ export class SessionService {
     sessionStorage.setItem('image', value);
   }
 
+  setShowProfileTab(showTimeLine: string, showFriends: string, showAlbums: string): void {
+    sessionStorage.setItem('show-timeline', showTimeLine);
+    sessionStorage.setItem('show-friends', showFriends);
+    sessionStorage.setItem('show-albums',showAlbums)
+  }
+
+  getTimelineTab(): string {
+      return sessionStorage.getItem('show-timeline')!;
+  }
+
+  getFriendsTab(): string {
+    return sessionStorage.getItem('show-friends')!;
+  }
+
+  getAlbumsTab(): string {
+    return sessionStorage.getItem('show-albums')!;
+  }
+
   getSearchUser(): string {
     return sessionStorage.getItem('search')!;
   }

@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy  } from '@angular/core';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { PostmodalComponent } from '@components/postmodal/postmodal.component';
 import { PostService } from '@services/post.service';
@@ -9,12 +8,10 @@ import { UserService } from '@services/user.service';
 import { SessionService } from '@services/session.service';
 import { ScrollService } from '@services/scroll.service';
 import { TokenService } from '@services/token.service';
-import { PostLikesService } from '@services/post-likes.service';
-import { DataTransferService } from '@services/data-transfer.service';
 import { User } from '@models/user';
 import { Post, PostLike, PostComment } from '@models/post';
-import { Obj } from '@popperjs/core';
 import { interval, Subscription } from 'rxjs';
+import { SharedService } from '@services/shared.service';
 
 @Component({
   selector: 'app-home',
@@ -38,11 +35,9 @@ export class HomeComponent implements OnInit, OnDestroy{
     private sessionService: SessionService,
     private scrollService: ScrollService,
     private tokenService: TokenService,
-    private dataTransfer: DataTransferService,
-    private postLikeService:PostLikesService,
-    private httpClient: HttpClient,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private sharedService: SharedService
     ){
       this.tokenService.validateToken();
       this.userService.getUserByTokenHome().subscribe((response: Object) => {
@@ -58,6 +53,10 @@ export class HomeComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.getFeed(); // Initial data fetch
     this.setupAutoRefresh();
+    this.sharedService.dataSaved$.subscribe(() => {
+      // Trigger the reload when data is saved
+      this.getFeed();
+    });
     
   }
 
@@ -77,7 +76,7 @@ onScroll() {
   this.scrollService.loadData();
 }
 
-openModal() {
+postModal() {
   this.modalRef = this.modalService.open(PostmodalComponent)
 }
 
@@ -103,4 +102,28 @@ openModal() {
     let uniqueId = (clickedFriend.firstName!+clickedFriend.lastName!+clickedFriend.salt!).replace(/\s/g, '');
     this.router.navigate(["Profile/"+uniqueId]);
   }
+
+  onProfileClick(){
+    this.sessionService.setShowProfileTab("1","","")
+    let uniqueId = (this.user.firstName!+this.user.lastName!+this.user.salt!).replace(/\s/g, '');
+    this.router.navigate(["YourProfile/"+uniqueId]);
+  }
+
+ // Function to check if the clicked user is the currently logged-in user
+isCurrentUser(user: User | undefined): boolean {
+  return !!user && !!this.user && user.id === this.user.id;
+}
+
+// Function to handle user click
+onUserClick(clickedUser: User | undefined): void {
+  if (clickedUser && this.isCurrentUser(clickedUser)) {
+    // Redirect to a different route for the user's own profile
+    let uniqueId = (this.user.firstName!+this.user.lastName!+this.user.salt!).replace(/\s/g, '');
+    this.router.navigate(['YourProfile/'+uniqueId])
+  } else if (clickedUser) {
+    // Handle the logic for other users' profiles
+    this.onFriendClick(clickedUser);
+  }
+}
+
 }

@@ -6,10 +6,11 @@ import { EditAlbumModalComponent } from '@components/edit-album-modal/edit-album
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { SessionService } from '@services/session.service';
 import { AlbumService } from '@services/album.service';
-import { DataTransferService } from '@services/data-transfer.service';
+import { UserService } from '@services/user.service';
 import { TokenService } from '@services/token.service';
 import { Album, AlbumImage } from '@models/album';
 import { SinglephotomodalComponent } from '@components/singlephotomodal/singlephotomodal.component';
+import { User } from '@models/user';
 
 @Component({
     selector: 'CreateAlbumComponent',
@@ -26,16 +27,20 @@ export class CreateAlbumComponent implements OnInit {
     isEditing: boolean = false;
     albumName: string = 'Album Name Here';
     editedAlbumName: string = '';
+    user: User = new User();
 
     constructor(
         private router: Router,
         private sessionService: SessionService,
         private modalService: MdbModalService,
         private tokenService: TokenService,
+        private userService: UserService,
         private albumService: AlbumService
     ){
         this.tokenService.validateToken();
-        
+        this.userService.getUserByToken().subscribe((response: Object) => {
+            this.user = response;
+        });
         this.albumId = this.sessionService.getAlbum();
 
         console.log(this.albumId);
@@ -73,7 +78,8 @@ export class CreateAlbumComponent implements OnInit {
                             'Your album has been deleted.',
                             'success'
                         ).then( a => {
-                            this.router.navigate(['profile']);
+                            let uniqueId = (this.user.firstName!+this.user.lastName!+this.user.salt!).replace(/\s/g, '');
+                            this.router.navigate(['YourProfile/'+uniqueId])
                         });
 
                     },

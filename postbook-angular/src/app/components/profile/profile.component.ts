@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { UserService } from '@services/user.service';
 import { SessionService } from '@services/session.service';
 import { TokenService } from '@services/token.service';
+import { SharedService } from '@services/shared.service';
 
 @Component({
   selector: 'app-profile',
@@ -21,6 +22,9 @@ export class ProfileComponent implements OnInit {
   // New properties for editable bio
   isEditingBio = false;
   editedBio: string = ''; // Initialize with an empty string
+  showTimeLine: boolean = !!this.sessionService.getTimelineTab();
+  showFriends: boolean = !!this.sessionService.getFriendsTab();
+  showAlbums: boolean = !!this.sessionService.getAlbumsTab();
 
   constructor(
     private modalService: MdbModalService,
@@ -28,37 +32,60 @@ export class ProfileComponent implements OnInit {
     private sessionService: SessionService,
     private router: Router,
     private tokenService : TokenService,
+    private sharedService: SharedService
   ) {
     this.tokenService.validateToken();
 
+    this.reloadProfileData();
+  }
+
+  ngOnInit(): void {
+    // Subscribe to the dataSaved$ observable from the shared service
+    this.sharedService.dataSaved$.subscribe(() => {
+      // Trigger the reload when data is saved
+      this.reloadProfileData();
+      window.location.reload();
+    });
+  }
+
+  reloadProfileData() {
     this.userService.getUserByToken().subscribe((response: any) => {
       this.user = response;
       console.log(response);
     });
+    
   }
 
-  ngOnInit(): void {}
 
-  showTimeLine: boolean = true;
-  showFriends: boolean = false;
-  showAlbums: boolean = false;
+  onGetTab(){
+    this.showTimeLine = !!this.sessionService.getTimelineTab();
+    this.showFriends = !!this.sessionService.getFriendsTab();
+    this.showAlbums = !!this.sessionService.getAlbumsTab();
+  }
+  
 
   displayTimeline(): void {
-    this.showTimeLine = true;
-    this.showFriends = false;
-    this.showAlbums = false;
+    this.sessionService.setShowProfileTab("1","","");
+    this.onGetTab();
+    // this.showTimeLine = true;
+    // this.showFriends = false;
+    // this.showAlbums = false;
   }
 
   displayFriends(): void {
-    this.showTimeLine = false;
-    this.showFriends = true;
-    this.showAlbums = false;
+    this.sessionService.setShowProfileTab("","1","");
+    this.onGetTab();
+    // this.showTimeLine = false;
+    // this.showFriends = true;
+    // this.showAlbums = false;
   }
 
   displayAlbums(): void {
-    this.showTimeLine = false;
-    this.showFriends = false;
-    this.showAlbums = true;
+    this.sessionService.setShowProfileTab("","","1");
+    this.onGetTab();
+    // this.showTimeLine = false;
+    // this.showFriends = false;
+    // this.showAlbums = true;
   }
 
   showOverlay() {

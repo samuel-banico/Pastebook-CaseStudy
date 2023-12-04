@@ -34,7 +34,7 @@
       <div class="rounded-3 shadow container-fluid border mt-3 p-3" style="border-color: #e0e0e0;">
           <form class="form-inline">
             <div class="input-group w-100">
-              <input type="text" name="message" id="message" placeholder="What's on your mind?" class="form-control form-control-md" (click)="openModal()">
+              <input type="text" name="message" id="message" placeholder="What's on your mind?" class="form-control form-control-md" (click)="postModal()">
               <div class="input-group-append">
               </div>
             </div>
@@ -49,9 +49,13 @@
                         <img *ngIf="post.friendId" [src]="post.friend?.profilePicture" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
                         <img  *ngIf="!post.friendId" [src]="post.user?.profilePicture" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
                         <div class="media-body mb-4 post">
-                          <div *ngIf="post.friendId" class="d-flex">
-                              <h5 class="datetime">{{post.friend?.firstName}} {{post.friend?.lastName}}</h5>
-                              <span *ngIf="post.friendId" class="ms-2"><small>posted to <strong>{{post.user?.firstName}} {{post.user?.lastName}}</strong></small></span>
+                          <div class="d-flex">
+                            <h5 style="cursor: pointer;" class="datetime"
+                                (click)="onUserClick(post.user)"
+                                [routerLink]="isCurrentUser(post.user) ? ['profile/'+user.firstName+'_'+user.lastName] : ['Profile/' + post.user?.firstName + '_' + post.user?.lastName]">
+                              {{ post.friend?.firstName }} {{ post.friend?.lastName }}
+                            </h5>
+                            <span *ngIf="post.friendId" class="ms-2"><small>posted to <strong>{{post.user?.firstName}} {{post.user?.lastName}}</strong></small></span>
                           </div>
                         <h5 *ngIf="!post.friendId" class="datetime">{{post.user?.firstName}} {{post.user?.lastName}}</h5>
                         <small><span>{{post.createdOn}}</span></small>
@@ -63,4 +67,4 @@
                     <app-likecomment [post]="post"></app-likecomment>                                       
                 </div>
             </div>
-      </div>     
+      </div>
