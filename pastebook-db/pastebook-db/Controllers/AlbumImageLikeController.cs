@@ -11,13 +11,17 @@ namespace pastebook_db.Controllers
     {
         private readonly AlbumImageLikeRepository _albumImageLikeRepository;
         private readonly NotificationRepository _notificationRepository;
+        private readonly AlbumRepository _albumRepository;
+        private readonly AlbumImageRepository _albumImageRepository;
         private readonly UserRepository _userRepository;
 
-        public AlbumImageLikeController(AlbumImageLikeRepository albumImageLikeRepository, NotificationRepository notificationRepository, UserRepository userRepository)
+        public AlbumImageLikeController(AlbumImageLikeRepository albumImageLikeRepository, NotificationRepository notificationRepository, UserRepository userRepository, AlbumRepository albumRepository, AlbumImageRepository albumImageRepository)
         {
             _albumImageLikeRepository = albumImageLikeRepository;
             _notificationRepository = notificationRepository;
             _userRepository = userRepository;
+            _albumRepository = albumRepository;
+            _albumImageRepository = albumImageRepository;
         }
 
         [HttpGet]
@@ -58,7 +62,10 @@ namespace pastebook_db.Controllers
 
             _albumImageLikeRepository.CreateAlbumImageLike(newAlbumImageLike);
 
-            _notificationRepository.CreateNotifAlbumImageLike(newAlbumImageLike);
+            var album = _albumRepository.GetAlbumById(_albumImageRepository.GetAlbumImageById(albumImageLike.AlbumImageId).AlbumId);
+
+            if (album.UserId != user.Id)
+                _notificationRepository.CreateNotifAlbumImageLike(newAlbumImageLike);
 
             return Ok(new { result = "post_liked" });
         }
