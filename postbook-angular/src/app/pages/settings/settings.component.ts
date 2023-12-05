@@ -62,6 +62,7 @@ newPassword: string = '';
 confirmNewPassword: string = '';
 
 onUpdateSecurity() {
+  this.user.password = this.newPassword;
   this.userService.updateSecurity(this.user).subscribe((response: User)=>{
     if(response) {
       Swal.fire('Update Successful','Profile updated successfully','success');
