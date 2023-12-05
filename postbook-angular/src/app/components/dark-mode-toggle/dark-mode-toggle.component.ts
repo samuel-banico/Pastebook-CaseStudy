@@ -9,8 +9,11 @@ import { DarkModeService } from 'angular-dark-mode';
   styleUrls: ['./dark-mode-toggle.component.css']
 })
 export class DarkModeToggleComponent {
-
-  constructor(private darkModeService: DarkModeService) { }
+  darkMode: boolean = false;
+  constructor(private darkModeService: DarkModeService) {
+    let x = JSON.parse(localStorage.getItem('dark-mode')!);
+    this.darkMode = x.darkMode;
+   }
 
   toggleDarkMode() {
     this.darkModeService.toggle();
