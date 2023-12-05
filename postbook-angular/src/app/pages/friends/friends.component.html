@@ -1,6 +1,6 @@
 <div class="pale-background my-3 mx-3 mx-md-5">
   <!-- First User -->
-  <h1 *ngIf="friends.length === 0; else hasFriends" class="d-flex justify-content-center align-items-center my-5">Currently No Friends 😥</h1>
+  <h1 *ngIf="friends.length === 0; else hasFriends" class="d-flex justify-content-center align-items-center my-5 profile-name">Currently No Friends 😥</h1>
 
   <ng-template #hasFriends>
     <div class="row">

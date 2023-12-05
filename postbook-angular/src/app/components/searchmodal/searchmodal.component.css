@@ -9,3 +9,13 @@
     background: #f8c6da;
     cursor: pointer;
 }
+
+.modal-title {
+    color: #0B2154;
+    font-weight: 700;
+}
+
+.profile-name {
+    color: #0B2154;
+    font-weight: 700;
+}

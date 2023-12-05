@@ -6,7 +6,6 @@ body{
     transform: translateY(50px);
     background-color: #F5F8FA;
     font-family: 'Poppins', sans-serif;
- /*   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;*/
     margin: 0;
     font-weight: 300;
     line-height: 1.6;
@@ -14,8 +13,13 @@ body{
     text-align: left;
 }
 
-.profile-name, .album-name {
+.album-name {
     font-weight: 700;
+    color: #0b2154;
+}
+
+.info-name {
+    font-weight: 400;
     color: #0b2154;
 }
 
@@ -45,11 +49,6 @@ body{
     object-fit: cover;
 }
 
-/* .item {
-    width: 50%;
-    height: 50%;
-} */
-
 .pale-background {
     background-color: #f2f2f2; /* Adjust the color as needed */
     padding: 20px; /* Adjust the padding as needed */
@@ -59,16 +58,16 @@ body{
 .photo-link {
     text-decoration: none;
     color: #000;
-  }
-  
-  .album-photo {
+}
+
+.album-photo {
     border-radius: 8px;
     transition: transform 0.2s ease-in-out;
-  }
-  
-  .album-photo:hover {
+}
+
+.album-photo:hover {
     transform: scale(1.1);
-  }
+}
 
 
 
