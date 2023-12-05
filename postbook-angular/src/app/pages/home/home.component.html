@@ -24,7 +24,7 @@
         </ul>
         <div *ngFor="let u of user.friends" >
           <a (click)="onFriendClick(u)" [routerLink]="['Profile/'+u.firstName+'_'+u.lastName]" class="dee-flex text-decoration-none text-dark">
-            <img [src]="u.profilePicture" alt="" class="rounded-circle me-2" style="width: 25px; height: 25px;">
+            <img [src]="u.profilePicture" alt="" class="rounded-circle me-2 mb-3" style="width: 25px; height: 25px;">
             <p>{{u.firstName}} {{u.lastName}}</p>
           </a>
         </div>
