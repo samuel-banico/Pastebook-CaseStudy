@@ -15,7 +15,7 @@
 
     <!-- Editable Bio Section -->
     <div *ngIf="!isEditingBio">
-      <p class="blurb">{{ user.userBio }}
+      <p class="blurb container text-center">{{ user.userBio }}
         <img src="assets/images/edit.png" alt="Edit" class="edit-icon" (click)="startEditingBio()">
       </p>
     </div>  
