@@ -14,12 +14,14 @@ namespace pastebook_db.Controllers
         private readonly PostCommentRepository _postCommentRepository;
         private readonly NotificationRepository _notificationRepository;
         private readonly UserRepository _userRepository;
+        private readonly PostRepository _postRepository;
 
-        public PostCommentController(PostCommentRepository postCommentRepository, NotificationRepository notificationRepository, UserRepository userRepository)
+        public PostCommentController(PostCommentRepository postCommentRepository, NotificationRepository notificationRepository, UserRepository userRepository, PostRepository postRepository)
         {
             _postCommentRepository = postCommentRepository;
             _notificationRepository = notificationRepository;
             _userRepository = userRepository;
+            _postRepository = postRepository;
         }
 
         [HttpGet]
@@ -64,7 +66,10 @@ namespace pastebook_db.Controllers
 
             _postCommentRepository.CreatePostComment(postComment);
 
-            _notificationRepository.CreateNotifPostComment(postComment);
+            var postCom = _postRepository.GetPostById(post.PostId);
+
+            if (postCom.UserId != user.Id)
+                _notificationRepository.CreateNotifPostComment(postComment);
 
             return Ok(new { result = "post_comment" });
         }

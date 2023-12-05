@@ -12,12 +12,14 @@ namespace pastebook_db.Controllers
         private readonly PostLikeRepository _postLikeRepository;
         private readonly NotificationRepository _notificationRepository;
         private readonly UserRepository _userRepository;
+        private readonly PostRepository _postRepository;
 
-        public PostLikeController(PostLikeRepository postLikeRepository, NotificationRepository notificationRepository, UserRepository userRepository)
+        public PostLikeController(PostLikeRepository postLikeRepository, NotificationRepository notificationRepository, UserRepository userRepository, PostRepository postRepository)
         {
             _postLikeRepository = postLikeRepository;
             _notificationRepository = notificationRepository;
             _userRepository = userRepository;
+            _postRepository = postRepository;
         }
 
         [HttpGet]
@@ -58,7 +60,10 @@ namespace pastebook_db.Controllers
             };
             _postLikeRepository.CreatePostLike(postLike);
 
-            _notificationRepository.CreateNotifPostLike(postLike);
+            var post = _postRepository.GetPostById(like.PostId);
+
+            if(post.UserId != user.Id)
+                _notificationRepository.CreateNotifPostLike(postLike);
 
             return Ok(new { result = "post_liked" });
         }
