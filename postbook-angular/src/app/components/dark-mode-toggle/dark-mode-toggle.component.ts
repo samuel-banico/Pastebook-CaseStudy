@@ -1,5 +1,3 @@
-// dark-mode-toggle.component.ts
-
 import { Component } from '@angular/core';
 import { DarkModeService } from 'angular-dark-mode';
 
