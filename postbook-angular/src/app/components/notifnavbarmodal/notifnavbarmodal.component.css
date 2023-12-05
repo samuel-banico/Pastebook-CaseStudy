@@ -11,6 +11,11 @@ body {
     font-family: 'Manrope', sans-serif;
 }
 
+.modal-header{
+   color: #0B2154;
+   font-weight: 700;
+}
+
 nav {
     display: flex;
     align-items: center;
@@ -101,8 +106,6 @@ nav {
     font-size: 12px;
 }
 
-/* Add this to your component's CSS file, or in your global styles, depending on your project structure */
-
 .button {
     padding: 10px 20px;
     cursor: pointer;
@@ -115,15 +118,12 @@ nav {
   }
   
   .color {
-    background-color: #AEDEFC; /* Set the background color for the "Clear" button */
-    color: #fff; /* Set the text color for the "Clear" button */
+    background-color: #AEDEFC;
+    color: #fff;
   }
-  
-  /* Add any other styles you may need for the second button */
-  
-  /* Example styles for the second button */
+
   .button-secondary {
-    background-color: #F875AA; /* Set the background color for the second button */
-    color: #fff; /* Set the text color for the second button */
+    background-color: #F875AA;
+    color: #fff;
   }
   

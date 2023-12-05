@@ -9,16 +9,16 @@
             </div>
         </div>
         <div>
-            <p>{{album.albumDescription}}</p>
-            <p>{{album.createdOn}}</p>
+            <p class="info-name">{{album.albumDescription}}</p>
+            <p class="info-name">{{album.createdOn}}</p>
         </div>
     </div>
 
     <div class="pale-background mt-3">
         <div class="grid-template container row">
             <!-- No Image Placeholder -->
-            <div *ngIf="album.imageList?.length === 0" class="col-12 text-center">
-                <h1>No Image</h1>
+            <div *ngIf="album.imageList?.length === 0" class="col-12 text-center album-name">
+                <h1>No Images</h1>
             </div>
 
             <!-- Album Images -->

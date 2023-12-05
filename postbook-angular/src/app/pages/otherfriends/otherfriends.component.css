@@ -3,3 +3,8 @@
     padding: 20px; /* Adjust the padding as needed */
     border-radius: 10px;
 }
+
+.profile-name {
+    font-weight: 700;
+    color: #0b2154;
+}

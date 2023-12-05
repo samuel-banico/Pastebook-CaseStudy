@@ -1,11 +1,11 @@
 <div class="pale-background my-3 mx-3 mx-md-5">
   <!-- First User -->
-  <h1 *ngIf="friends.length === 0; else hasFriends" class="d-flex justify-content-center align-items-center my-5">Currently No Friends 😥</h1>
+  <h1 *ngIf="friends.length === 0; else hasFriends" class="d-flex justify-content-center align-items-center my-5 profile-name">Currently No Friends 😥</h1>
 
   <ng-template #hasFriends>
     <div class="row">
       <div *ngFor="let friend of friends" class="col-12 col-md-6" (click)="userClicked(friend)">
-        <div class="d-flex justify-content-start align-items-center border rounded-2 m-2 p-3">
+        <div class="dee-flex justify-content-start align-items-center border rounded-2 m-2 p-3">
           <img [src]="friend.profilePicture" alt="User 1" class="rounded-circle" width="60px" height="60px">
           <div class="ml-3">
             <h5 class="profile-name" style="font-size: 18px;">{{friend.firstName}} {{friend.lastName}}</h5>

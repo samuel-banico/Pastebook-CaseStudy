@@ -3,3 +3,7 @@
     padding: 20px; /* Adjust the padding as needed */
     border-radius: 10px;
 }
+
+.card-text {
+    color: #33007C;
+}

@@ -1,7 +1,7 @@
-  .btn {
-    font-weight: 500;
-    text-transform: uppercase;
-    transition: .5s;
+.btn {
+font-weight: 500;
+text-transform: uppercase;
+transition: .5s;
 }
 
 .btn .btn-primary,
@@ -33,4 +33,14 @@
     justify-content: center;
     font-weight: normal;
     border-radius: 2px;
+}
+
+.modal-header {
+    color: #0B2154;
+    font-weight: 700;
+}
+
+.req-info {
+    color: #0B2154;
+    font-weight: 400;
 }

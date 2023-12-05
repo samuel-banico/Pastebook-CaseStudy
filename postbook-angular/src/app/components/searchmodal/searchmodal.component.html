@@ -9,7 +9,7 @@
       <input placeholder="Search Pastebook" style="width: 70%;" name="searchUser" (input)="onType($event)" [(ngModel)]="searchUser">
       <button type="button" class="red" style="width: 30%;" (click)="showAllResults()">Show All Results</button>
     </div>
-    <h1 *ngIf="noMatchingUser; else userExist">No User Found</h1>
+    <h1 *ngIf="noMatchingUser; else userExist" class="modal-title">No User Found</h1>
     <ng-template #userExist>
       <div *ngFor="let u of user" class="click" (click)="userClicked(u)">
         <div class="row mt-3"> 
