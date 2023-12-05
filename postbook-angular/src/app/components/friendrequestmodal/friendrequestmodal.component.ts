@@ -25,6 +25,7 @@ export class FriendrequestmodalComponent implements OnInit {
     private sessionService: SessionService,
     private tokenService: TokenService,
     private router: Router
+    
   ) {
     this.tokenService.validateToken();
 
@@ -66,7 +67,8 @@ export class FriendrequestmodalComponent implements OnInit {
       })
     })
     this.close();
-    this.getAllFriendRequest();
+    this.getAllFriendRequest(); 
+    
   }
 
   reject(request: FriendRequest): void {
@@ -80,5 +82,7 @@ export class FriendrequestmodalComponent implements OnInit {
     })
     this.close();
     this.getAllFriendRequest();
+    
+   
   }
 }
