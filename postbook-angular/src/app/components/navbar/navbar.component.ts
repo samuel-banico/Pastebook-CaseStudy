@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import Swal from 'sweetalert2';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
-
+import { SharedService } from '@services/shared.service';
 import { User } from '@models/user';
 
 import { UserService } from '@services/user.service';
@@ -37,7 +37,8 @@ export class NavbarComponent implements OnInit {
     private userService: UserService,
     private navbarcountService: NavbarcountService, // Inject the service
     private homeService: HomeService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private sharedService: SharedService
   ) {
       this.tokenService.validateToken();
 

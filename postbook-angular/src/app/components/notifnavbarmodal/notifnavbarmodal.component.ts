@@ -9,6 +9,7 @@ import { UserService } from '@services/user.service';
 import { SessionService } from '@services/session.service';
 import Swal from 'sweetalert2';
 import { TokenService } from '@services/token.service';
+import { NavbarcountService } from '@services/navbarcount.service';
 
 @Component({
   selector: 'app-notifnavbarmodal',
@@ -24,7 +25,9 @@ export class NotifnavbarmodalComponent implements OnInit {
       private notifService:NotifNavbarModalService,
       private userService: UserService,
       private sessionService: SessionService,
-      private tokenService: TokenService
+      private tokenService: TokenService,
+      private navbarcountService: NavbarcountService
+      
     ) {
       this.tokenService.validateToken();
      }
@@ -82,6 +85,8 @@ export class NotifnavbarmodalComponent implements OnInit {
       this.notifService.clearNotif().subscribe((response:any)=>{
         Swal.fire('Notification', 'All your notifications are marked read', 'success');
       })
+      this.navbarcountService.updateNotificationCount(0);
       this.close();
+      
     }
 }
