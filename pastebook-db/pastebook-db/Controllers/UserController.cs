@@ -148,7 +148,7 @@ namespace pastebook_db.Controllers
             retreivedUser.MobileNumber = user.MobileNumber;
 
             if(user.Password != null && user.Password != "")
-                retreivedUser.Password = _passwordHasher.HashPassword(user.Password);
+                retreivedUser.Password = _passwordHasher.HashPassword($"{user.Password}_{retreivedUser.Salt}");
 
             if (!_userRepository.UpdateUser(retreivedUser, emailHasBeenEdited))
                 return BadRequest(new { result = "not_legitimate_email" });
